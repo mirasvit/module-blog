@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Backend:etc/menu.xsd">
+    <menu>
+        <add id="Mirasvit_Blog::blog" title="Blog" module="Mirasvit_Blog" sortOrder="700" resource="Mirasvit_Blog::blog" parent="Magento_Backend::content_elements" action="blog/post" />
+    </menu>
+</config>

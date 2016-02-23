@@ -1,0 +1,16 @@
+<?php
+// @codingStandardsIgnoreFile
+/** @var \Mirasvit\Blog\Block\Adminhtml\Post\Edit\Form $block */
+?>
+<form id="edit_form" action="<?= $block->getSaveUrl() ?>" method="post" enctype="multipart/form-data" class="admin__scope-old">
+    <?= $block->getBlockHtml('formkey') ?>
+
+    <?= $block->getChildHtml('message') ?>
+
+    <?= $this->getChildHtml('sidebar') ?>
+
+    <div class="blog__post-details">
+        <?= $this->getChildHtml('tabs') ?>
+        <div id="blog_details"></div>
+    </div>
+</form>
