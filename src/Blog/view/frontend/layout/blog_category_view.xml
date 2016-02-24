@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"  layout="2columns-right" >
+    <body>
+        <!--<referenceBlock name="sidebar.additional" remove="true" />-->
+        <!--<move element="page.main.title" destination="kb.category.article.list.additional" before="-"/>-->
+        <!--<referenceContainer name="root"/>-->
+        <referenceContainer name="content">
+            <block name="blog.category.view" class="Mirasvit\Blog\Block\Category\View" template="category/view.phtml">
+                <block class="Mirasvit\Blog\Block\Post\PostList" name="blog.post.list" template="post/list.phtml">
+                    <container name="blog.post.list.additional" />
+
+                    <block class="Mirasvit\Blog\Block\Post\PostList\Toolbar" name="blog.post.list.toolbar" template="post/list/toolbar.phtml">
+                        <block class="Magento\Theme\Block\Html\Pager" name="pager"/>
+                    </block>
+
+                    <action method="setToolbarBlockName">
+                        <argument name="name" xsi:type="string">blog.post.list.toolbar</argument>
+                    </action>
+                </block>
+
+                <!--<block name="kb.search.form" class="Mirasvit\Kb\Block\Search\Form" template="search/form.phtml"/>-->
+                <!--<block class="Mirasvit\Kb\Block\Category\View" name="kb.category.articles" template="Mirasvit_Kb::category/articles.phtml">-->
+                    <!--<block class="Mirasvit\Kb\Block\Article\ListArticle" name="kb.category.articles.list" as="kb.article_list" template="Mirasvit_Kb::article/list.phtml">-->
+                        <!--<container name="kb.category.article.list.additional" as="kb.additional" />-->
+                        <!--<block class="Magento\Framework\View\Element\RendererList" name="kb.category.article.type.details.renderers" as="kb.details.renderers">-->
+                            <!--<block class="Magento\Framework\View\Element\Template" as="kb.default"/>-->
+                        <!--</block>-->
+                        <!--<block class="Mirasvit\Kb\Block\Article\ArticleList\Toolbar" name="kb.article_list_toolbar" template="Mirasvit_Kb::article/list/toolbar.phtml">-->
+                            <!--<block class="Magento\Theme\Block\Html\Pager" name="article_list_toolbar_pager"/>-->
+                        <!--</block>-->
+                        <!--<action method="setToolbarBlockName">-->
+                            <!--<argument name="name" xsi:type="string">kb.article_list_toolbar</argument>-->
+                        <!--</action>-->
+                    <!--</block>-->
+                <!--</block>-->
+            </block>
+        </referenceContainer>
+        <!--<referenceContainer name="sidebar.main" htmlTag="div" htmlClass="widget kb-sidebar__categories" >-->
+            <!--<block name="kb.category.sidebar" class="Mirasvit\Kb\Block\Category\Sidebar" template="category/sidebar.phtml"/>-->
+        <!--</referenceContainer>-->
+    </body>
+</page>

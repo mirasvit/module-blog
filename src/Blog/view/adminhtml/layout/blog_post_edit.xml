@@ -2,13 +2,7 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
       layout="admin-1column">
-    <head>
-        <css src="Magento_Catalog::catalog/category-selector.css"/>
-    </head>
     <body>
-        <referenceContainer name="left">
-
-        </referenceContainer>
         <referenceContainer name="content">
             <block class="Mirasvit\Blog\Block\Adminhtml\Post\Edit" name="edit">
                 <block class="Mirasvit\Blog\Block\Adminhtml\Post\Edit\Form" template="post/edit/form.phtml" name="form">

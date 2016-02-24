@@ -4,15 +4,15 @@ namespace Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar;
 
 use Magento\Framework\Data\FormFactory;
 use Magento\Framework\Registry;
-use Mirasvit\Blog\Model\Post\Attribute\Source\Status;
+use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 use Magento\Backend\Block\Widget\Context;
 
 class Categories extends \Magento\Backend\Block\Widget\Form
 {
     /**
-     * @var Status
+     * @var CategoryCollectionFactory
      */
-    protected $status;
+    protected $categoryCollectionFactory;
 
     /**
      * @var FormFactory
@@ -26,13 +26,13 @@ class Categories extends \Magento\Backend\Block\Widget\Form
 
 
     public function __construct(
-        Status $status,
+        CategoryCollectionFactory $categoryCollectionFactory,
         FormFactory $formFactory,
         Registry $registry,
         Context $context,
         array $data = []
     ) {
-        $this->status = $status;
+        $this->categoryCollectionFactory = $categoryCollectionFactory;
         $this->formFactory = $formFactory;
         $this->registry = $registry;
 
@@ -57,20 +57,13 @@ class Categories extends \Magento\Backend\Block\Widget\Form
             'legend' => __('Categories'),
         ]);
 
-        $fieldset->addField('status', 'select', [
-            'label'  => __('Status'),
-            'name'   => 'status',
-            'value'  => $post->getStatus(),
-            'values' => $this->status->toOptionArray(),
-        ]);
+        $collection = $this->categoryCollectionFactory->create()
+            ->addAttributeToSelect('*');
 
-        $dateFormat = $this->_localeDate->getDateFormat(\IntlDateFormatter::SHORT);
-
-        $fieldset->addField('created_at', 'date', [
-            'label'       => __('Published on'),
-            'name'        => 'created_at',
-            'value'       => $post->getCreatedAt(),
-            'date_format' => $dateFormat
+        $fieldset->addField('category_ids', 'checkboxes', [
+            'name'   => 'category_ids[]',
+            'value'  => $post->getCategoryIds(),
+            'values' => $collection->toOptionArray()
         ]);
 
         return parent::_prepareForm();

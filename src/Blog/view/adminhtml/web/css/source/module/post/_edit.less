@@ -31,7 +31,6 @@
 }
 
 .blog__post-fieldset {
-    //background: transparent !important;
 
     .admin__field {
         margin-left: 0;
@@ -46,13 +45,22 @@
         .admin__field-control {
             width: 100% !important;
             float: none;
-            margin-left: 0;
+            margin-left: 0 !important;
 
             input[type="text"], select, textarea {
                 width: 100%;
 
                 &.hasDatepicker {
                     width: 85%;
+                }
+            }
+        }
+
+
+        &.field-category_ids {
+            .admin__field-control {
+                .admin__field-option {
+                    margin-bottom: 1rem;
                 }
             }
         }

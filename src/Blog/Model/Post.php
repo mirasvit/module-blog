@@ -19,4 +19,19 @@ class Post extends AbstractExtensibleModel
     {
         $this->_init('Mirasvit\Blog\Model\ResourceModel\Post');
     }
+
+    /**
+     * Retrieve assigned category Ids
+     *
+     * @return array
+     */
+    public function getCategoryIds()
+    {
+        if (!$this->hasData('category_ids')) {
+            $ids = $this->getResource()->getCategoryIds($this);
+            $this->setData('category_ids', $ids);
+        }
+
+        return (array)$this->_getData('category_ids');
+    }
 }

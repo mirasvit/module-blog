@@ -5,13 +5,13 @@ namespace Mirasvit\Blog\Controller\Adminhtml;
 abstract class Post extends \Magento\Backend\App\Action
 {
     public function __construct(
-        \Mirasvit\Blog\Model\PostFactory $postFactory,
+        \Mirasvit\Blog\Model\PostFactory $categoryFactory,
         \Magento\Framework\Stdlib\DateTime\TimezoneInterface $localeDate,
         \Magento\Framework\Registry $registry,
         \Magento\Backend\App\Action\Context $context
     ) {
 
-        $this->postFactory = $postFactory;
+        $this->postFactory = $categoryFactory;
         $this->localeDate = $localeDate;
         $this->registry = $registry;
         $this->context = $context;

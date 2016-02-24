@@ -28,9 +28,54 @@ class InstallSchema implements InstallSchemaInterface
 
         $this->installPostEntity($installer);
         $this->installCategoryEntity($installer);
+
+        $table = $installer->getConnection()
+            ->newTable($installer->getTable('mst_blog_category_post'))
+            ->addColumn(
+                'category_id',
+                Table::TYPE_INTEGER,
+                null,
+                ['unsigned' => true, 'nullable' => false, 'primary' => true, 'default' => '0'],
+                'Category ID'
+            )->addColumn(
+                'post_id',
+                Table::TYPE_INTEGER,
+                null,
+                ['unsigned' => true, 'nullable' => false, 'primary' => true, 'default' => '0'],
+                'Post ID'
+            )->addIndex(
+                $installer->getIdxName('mst_blog_category_post', ['post_id']),
+                ['post_id']
+            )->addForeignKey(
+                $installer->getFkName(
+                    'mst_blog_category_post',
+                    'category_id',
+                    'mst_blog_category_entity',
+                    'entity_id'
+                ),
+                'category_id',
+                $installer->getTable('mst_blog_category_entity'),
+                'entity_id',
+                Table::ACTION_CASCADE
+            )->addForeignKey(
+                $installer->getFkName(
+                    'mst_blog_category_post',
+                    'post_id',
+                    'mst_blog_post_entity',
+                    'entity_id'
+                ),
+                'post_id',
+                $installer->getTable('mst_blog_post_entity'),
+                'entity_id',
+                Table::ACTION_CASCADE
+            )->setComment('Blog Post To Category Linkage Table');
+        $installer->getConnection()->createTable($table);
     }
 
-    protected function installPostEntity($installer)
+    /**
+     * @param SchemaSetupInterface $installer
+     */
+    protected function installPostEntity(SchemaSetupInterface $installer)
     {
         $table = $installer->getConnection()
             ->newTable($installer->getTable('mst_blog_post_entity'))
@@ -529,7 +574,10 @@ class InstallSchema implements InstallSchemaInterface
         $installer->getConnection()->createTable($table);
     }
 
-    protected function installCategoryEntity($installer)
+    /**
+     * @param SchemaSetupInterface $installer
+     */
+    protected function installCategoryEntity(SchemaSetupInterface $installer)
     {
         $table = $installer->getConnection()
             ->newTable($installer->getTable('mst_blog_category_entity'))
@@ -563,6 +611,12 @@ class InstallSchema implements InstallSchemaInterface
                 null,
                 ['unsigned' => true, 'nullable' => false, 'default' => 0],
                 'Level'
+            )->addColumn(
+                'children_count',
+                Table::TYPE_INTEGER,
+                null,
+                ['unsigned' => true, 'nullable' => false, 'default' => 0],
+                'Children count'
             )->addColumn(
                 'created_at',
                 Table::TYPE_TIMESTAMP,

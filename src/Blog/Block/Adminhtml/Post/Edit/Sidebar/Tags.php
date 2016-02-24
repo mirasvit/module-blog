@@ -58,7 +58,6 @@ class Tags extends \Magento\Backend\Block\Widget\Form
         ]);
 
         $fieldset->addField('tags', 'textarea', [
-            'label'  => ' ',
             'name'   => 'status',
             'value'  => $post->getStatus(),
         ]);

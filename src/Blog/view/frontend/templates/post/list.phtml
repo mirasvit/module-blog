@@ -1,0 +1,18 @@
+<?php
+/** @var \Mirasvit\Blog\Block\Post\PostList $block */
+$collection = $block->getPostCollection();
+?>
+
+<?php if ($collection->count()): ?>
+    <?php echo $block->getToolbarHtml() ?>
+
+    <ol>
+        <?php foreach ($collection as $post): ?>
+            <li><?= $post->getName() ?></li>
+        <?php endforeach ?>
+    </ol>
+
+    <?php echo $block->getToolbarHtml() ?>
+<?php else: ?>
+    <p><?= __('There are no posts available for this category') ?></p>
+<?php endif ?>

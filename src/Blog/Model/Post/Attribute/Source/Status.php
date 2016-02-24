@@ -5,7 +5,6 @@ use Magento\Eav\Model\Entity\Attribute\Source\AbstractSource;
 use Magento\Eav\Model\Entity\Attribute\Source\SourceInterface;
 use Magento\Framework\Data\OptionSourceInterface;
 
-
 class Status extends AbstractSource implements SourceInterface, OptionSourceInterface
 {
     const STATUS_DRAFT = 0;

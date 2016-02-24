@@ -28,7 +28,7 @@ class Save extends Post
                 }
 
                 $this->_redirect('*/*/');
-                return
+                return;
             } catch (\Exception $e) {
                 $this->messageManager->addError($e->getMessage());
                 $this->backendSession->setFormData($data);

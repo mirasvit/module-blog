@@ -5,40 +5,7 @@ namespace Mirasvit\Blog\Block\Adminhtml\Post\Edit;
 class Tabs extends \Magento\Backend\Block\Widget\Tabs
 {
     /**
-     * @var \Magento\Backend\Block\Widget\Context
-     */
-    protected $context;
-
-    /**
-     * @var \Magento\Framework\Json\EncoderInterface
-     */
-    protected $jsonEncoder;
-
-    /**
-     * @var \Magento\Backend\Model\Auth\Session
-     */
-    protected $authSession;
-
-    /**
-     * @param \Magento\Backend\Block\Widget\Context    $context
-     * @param \Magento\Framework\Json\EncoderInterface $jsonEncoder
-     * @param \Magento\Backend\Model\Auth\Session      $authSession
-     * @param array                                    $data
-     */
-    public function __construct(
-        \Magento\Backend\Block\Widget\Context $context,
-        \Magento\Framework\Json\EncoderInterface $jsonEncoder,
-        \Magento\Backend\Model\Auth\Session $authSession,
-        array $data = []
-    ) {
-        $this->context = $context;
-        $this->jsonEncoder = $jsonEncoder;
-        $this->authSession = $authSession;
-        parent::__construct($context, $jsonEncoder, $authSession, $data);
-    }
-
-    /**
-     *
+     * {@inheritdoc}
      */
     protected function _construct()
     {
@@ -48,9 +15,7 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
     }
 
     /**
-     * @return $this
-     * @throws \Exception
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * {@inheritdoc}
      */
     protected function _beforeToHtml()
     {
@@ -70,6 +35,4 @@ class Tabs extends \Magento\Backend\Block\Widget\Tabs
 
         return parent::_beforeToHtml();
     }
-
-    /************************/
 }

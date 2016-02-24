@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+      layout="admin-2columns-left">
+    <body>
+        <referenceContainer name="left">
+            <block class="Mirasvit\Blog\Block\Adminhtml\Category\Edit\Tabs"/>
+        </referenceContainer>
+
+        <referenceContainer name="content">
+            <block class="Mirasvit\Blog\Block\Adminhtml\Category\Edit"/>
+        </referenceContainer>
+    </body>
+</page>

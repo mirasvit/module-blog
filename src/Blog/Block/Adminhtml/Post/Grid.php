@@ -11,12 +11,12 @@ class Grid extends \Magento\Backend\Block\Widget\Grid\Extended
 
 
     public function __construct(
-        \Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory $postCollectionFactory,
+        \Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory $categoryCollectionFactory,
         \Magento\Backend\Block\Widget\Context $context,
         \Magento\Backend\Helper\Data $backendHelper,
         array $data = []
     ) {
-        $this->postCollectionFactory = $postCollectionFactory;
+        $this->postCollectionFactory = $categoryCollectionFactory;
         $this->context = $context;
         $this->backendHelper = $backendHelper;
         parent::__construct($context, $backendHelper, $data);
