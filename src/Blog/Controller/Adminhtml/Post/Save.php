@@ -29,7 +29,6 @@ class Save extends Post
                 } else {
                     $model->save();
                 }
-
                 $this->messageManager->addSuccess(__('Post was successfully saved'));
                 $this->context->getSession()->setFormData(false);
 

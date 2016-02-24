@@ -7,6 +7,9 @@ use Mirasvit\Blog\Model\Post\Attribute\Source\Status;
 
 class Collection extends AbstractCollection
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function _construct()
     {
         $this->_init('Mirasvit\Blog\Model\Post', 'Mirasvit\Blog\Model\ResourceModel\Post');
@@ -33,6 +36,16 @@ class Collection extends AbstractCollection
                 AS `category_post`
                 WHERE e.entity_id = category_post.post_id
                 AND category_post.category_id in (?))", [0, $category->getId()]);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function addPostFilter()
+    {
+        $this->addFieldToFilter('type', \Mirasvit\Blog\Model\Post::TYPE_POST);
 
         return $this;
     }

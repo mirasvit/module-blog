@@ -4,16 +4,11 @@ namespace Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar;
 
 use Magento\Framework\Data\FormFactory;
 use Magento\Framework\Registry;
-use Mirasvit\Blog\Model\Post\Attribute\Source\Status;
+use Magento\Backend\Block\Widget\Form;
 use Magento\Backend\Block\Widget\Context;
 
-class Tags extends \Magento\Backend\Block\Widget\Form
+class Tags extends Form
 {
-    /**
-     * @var Status
-     */
-    protected $status;
-
     /**
      * @var FormFactory
      */
@@ -24,19 +19,20 @@ class Tags extends \Magento\Backend\Block\Widget\Form
      */
     protected $registry;
 
-
+    /**
+     * @param FormFactory $formFactory
+     * @param Registry    $registry
+     * @param Context     $context
+     */
     public function __construct(
-        Status $status,
         FormFactory $formFactory,
         Registry $registry,
-        Context $context,
-        array $data = []
+        Context $context
     ) {
-        $this->status = $status;
         $this->formFactory = $formFactory;
         $this->registry = $registry;
 
-        parent::__construct($context, $data);
+        parent::__construct($context);
     }
 
     /**
@@ -58,8 +54,8 @@ class Tags extends \Magento\Backend\Block\Widget\Form
         ]);
 
         $fieldset->addField('tags', 'textarea', [
-            'name'   => 'status',
-            'value'  => $post->getStatus(),
+            'name'  => 'tags',
+            'value' => $post->getTags(),
         ]);
 
         return parent::_prepareForm();

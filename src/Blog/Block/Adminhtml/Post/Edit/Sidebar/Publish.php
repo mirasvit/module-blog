@@ -24,7 +24,13 @@ class Publish extends \Magento\Backend\Block\Widget\Form
      */
     protected $registry;
 
-
+    /**
+     * @param Status      $status
+     * @param FormFactory $formFactory
+     * @param Registry    $registry
+     * @param Context     $context
+     * @param array       $data
+     */
     public function __construct(
         Status $status,
         FormFactory $formFactory,
@@ -64,13 +70,15 @@ class Publish extends \Magento\Backend\Block\Widget\Form
             'values' => $this->status->toOptionArray(),
         ]);
 
-        $dateFormat = $this->_localeDate->getDateFormat(\IntlDateFormatter::SHORT);
+        $dateFormat = $this->_localeDate->getDateFormat(\IntlDateFormatter::MEDIUM);
+        $timeFormat = $this->_localeDate->getTimeFormat(\IntlDateFormatter::SHORT);
 
         $fieldset->addField('created_at', 'date', [
             'label'       => __('Published on'),
             'name'        => 'created_at',
             'value'       => $post->getCreatedAt(),
-            'date_format' => $dateFormat
+            'date_format' => $dateFormat,
+            'time_format' => $timeFormat
         ]);
 
         return parent::_prepareForm();

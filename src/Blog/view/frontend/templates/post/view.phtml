@@ -3,6 +3,8 @@
 $post = $block->getPost();
 ?>
 
-<?= $post->getShortContent() ?>
+<div class="blog__post-view">
+    <?= $post->getShortContent() ?>
 
-<?= $post->getContent() ?>
+    <?= $post->getContent() ?>
+</div>

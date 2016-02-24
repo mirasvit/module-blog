@@ -19,6 +19,7 @@ use Magento\Framework\UrlInterface;
  * @method string getMetaDescription()
  * @method string getMetaKeywords()
  * @method int getStatus()
+ * @method string getCreatedAt()
  *
  * @method int getParentId()
  * @method $this setParentId($parent)
@@ -49,6 +50,15 @@ class Post extends AbstractExtensibleModel
      */
     protected $categoryFactory;
 
+    /**
+     * @param CategoryFactory            $categoryFactory
+     * @param UrlInterface               $urlManager
+     * @param StoreManagerInterface      $storeManager
+     * @param Context                    $context
+     * @param Registry                   $registry
+     * @param ExtensionAttributesFactory $extensionFactory
+     * @param AttributeValueFactory      $customAttributeFactory
+     */
     public function __construct(
         CategoryFactory $categoryFactory,
         UrlInterface $urlManager,
@@ -65,6 +75,9 @@ class Post extends AbstractExtensibleModel
         parent::__construct($context, $registry, $extensionFactory, $customAttributeFactory);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function _construct()
     {
         $this->_init('Mirasvit\Blog\Model\ResourceModel\Post');
@@ -112,9 +125,14 @@ class Post extends AbstractExtensibleModel
             ->setType(self::TYPE_REVISION)
             ->save();
 
-        echo '<pre>';
-        print_r($clone->getData());
-
         return $clone;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->urlManager->getUrl('blog/post/view', ['id' => $this->getId()]);
     }
 }

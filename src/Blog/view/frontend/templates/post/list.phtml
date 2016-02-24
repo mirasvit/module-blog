@@ -6,9 +6,12 @@ $collection = $block->getPostCollection();
 <?php if ($collection->count()): ?>
     <?php echo $block->getToolbarHtml() ?>
 
-    <ol>
+    <ol class="blog__post-list">
         <?php foreach ($collection as $post): ?>
-            <li><?= $post->getName() ?></li>
+            <li class="blog__post-list-item">
+                <h2><a href="<?= $post->getUrl() ?>" class="post-link"><?= $post->getName() ?></a></h2>
+                <?= $post->getShortContent() ?>
+            </li>
         <?php endforeach ?>
     </ol>
 

@@ -6,6 +6,9 @@ use Magento\Framework\App\ObjectManager;
 
 class Collection extends AbstractCollection
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function _construct()
     {
         $this->_init('Mirasvit\Blog\Model\Category', 'Mirasvit\Blog\Model\ResourceModel\Category');
@@ -50,6 +53,9 @@ class Collection extends AbstractCollection
         return $list;
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function _toOptionArray($valueField = 'id', $labelField = 'name', $additional = [])
     {
         $result = [];
@@ -57,7 +63,7 @@ class Collection extends AbstractCollection
         foreach ($this->getTree() as $item) {
             $result[] = [
                 'value' => $item->getId(),
-                'label' => str_repeat('&nbsp;', $item->getLevel() * 5) . $item->getName()
+                'label' => str_repeat(' ', $item->getLevel() * 5) . $item->getName()
             ];
         }
 

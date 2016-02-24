@@ -8,8 +8,15 @@ use Magento\Framework\Registry;
 use Magento\Backend\App\Action\Context;
 use Magento\Store\Model\StoreManagerInterface;
 
+use Magento\Framework\Controller\Result\JsonFactory;
+
 abstract class Post extends Action
 {
+    /**
+     * @var PostFactory
+     */
+    protected $postFactory;
+
     /**
      * @var Context
      */
@@ -20,14 +27,33 @@ abstract class Post extends Action
      */
     protected $storeManager;
 
+    /**
+     * @var Registry
+     */
+    protected $registry;
+
+    /**
+     * @var JsonFactory
+     */
+    protected $jsonFactory;
+
+    /**
+     * @param PostFactory           $postFactory
+     * @param StoreManagerInterface $storeManager
+     * @param JsonFactory           $jsonFactory
+     * @param Registry              $registry
+     * @param Context               $context
+     */
     public function __construct(
         PostFactory $postFactory,
         StoreManagerInterface $storeManager,
+        JsonFactory $jsonFactory,
         Registry $registry,
         Context $context
     ) {
         $this->postFactory = $postFactory;
         $this->storeManager = $storeManager;
+        $this->jsonFactory = $jsonFactory;
         $this->registry = $registry;
         $this->context = $context;
 

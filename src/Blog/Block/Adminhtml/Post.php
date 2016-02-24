@@ -2,10 +2,12 @@
 
 namespace Mirasvit\Blog\Block\Adminhtml;
 
-class Post extends \Magento\Backend\Block\Widget\Grid\Container
+use Magento\Backend\Block\Widget\Grid\Container;
+
+class Post extends Container
 {
     /**
-     *
+     * {@inheritdoc}
      */
     protected function _construct()
     {

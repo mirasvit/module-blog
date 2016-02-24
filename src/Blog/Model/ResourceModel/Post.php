@@ -6,6 +6,9 @@ use Magento\Eav\Model\Entity\AbstractEntity;
 
 class Post extends AbstractEntity
 {
+    /**
+     * {@inheritdoc}
+     */
     public function getEntityType()
     {
         if (empty($this->_type)) {
@@ -31,6 +34,18 @@ class Post extends AbstractEntity
         );
 
         return $connection->fetchCol($select);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _beforeSave(DataObject $post)
+    {
+        if (!$post->hasData('type')) {
+            $post->setData('type', \Mirasvit\Blog\Model\Post::TYPE_POST);
+        }
+
+        return parent::_beforeSave($post);
     }
 
     /**

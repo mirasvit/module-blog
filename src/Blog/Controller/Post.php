@@ -21,6 +21,11 @@ abstract class Post extends Action
      */
     protected $registry;
 
+    /**
+     * @param PostFactory $postFactory
+     * @param Registry    $registry
+     * @param Context     $context
+     */
     public function __construct(
         PostFactory $postFactory,
         Registry $registry,

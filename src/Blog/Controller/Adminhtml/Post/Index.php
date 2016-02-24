@@ -25,9 +25,6 @@ class Index extends Post
         $this->initPage($resultPage)
             ->getConfig()->getTitle()->prepend(__('All Posts'));
 
-        $this->_addContent($resultPage->getLayout()
-            ->createBlock('\Mirasvit\Blog\Block\Adminhtml\Post'));
-
         return $resultPage;
     }
 }

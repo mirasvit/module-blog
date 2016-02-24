@@ -3,56 +3,56 @@
 namespace Mirasvit\Blog\Block\Post;
 
 use Magento\Framework\View\Element\Template;
+use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
+use Mirasvit\Blog\Model\Config;
+use Magento\Framework\Registry;
+use Magento\Framework\View\Element\Template\Context;
 
 class View extends Template
 {
     /**
-     * @var \Mirasvit\Kb\Model\ResourceModel\Category\CollectionFactory
+     * @var CategoryCollectionFactory
      */
     protected $categoryCollectionFactory;
 
     /**
-     * @var \Mirasvit\Kb\Model\Config
-     */
-    protected $config;
-
-    /**
-     * @var \Mirasvit\Kb\Helper\Data
-     */
-    protected $kbData;
-
-    /**
-     * @var \Magento\Catalog\Helper\Data
-     */
-    protected $catalogData;
-
-    /**
-     * @var \Magento\Framework\Registry
+     * @var Registry
      */
     protected $registry;
 
     /**
-     * @var \Magento\Framework\View\Element\Template\Context
+     * @var Context
      */
     protected $context;
 
+    /**
+     * @var Config
+     */
+    protected $config;
 
+    /**
+     * @param CategoryCollectionFactory $categoryCollectionFactory
+     * @param Config                    $config
+     * @param Registry                  $registry
+     * @param Context                   $context
+     */
     public function __construct(
-        \Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory,
-        \Mirasvit\Blog\Model\Config $config,
-        \Magento\Catalog\Helper\Data $catalogData,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\View\Element\Template\Context $context
+        CategoryCollectionFactory $categoryCollectionFactory,
+        Config $config,
+        Registry $registry,
+        Context $context
     ) {
         $this->categoryCollectionFactory = $categoryCollectionFactory;
         $this->config = $config;
-        $this->catalogData = $catalogData;
         $this->registry = $registry;
         $this->context = $context;
 
         parent::__construct($context);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function _prepareLayout()
     {
         parent::_prepareLayout();
@@ -93,9 +93,11 @@ class View extends Template
 
             $category = $post->getCategory();
             if ($category) {
+                $ids = $category->getParentIds();
+                $ids[] = 0;
                 $parents = $this->categoryCollectionFactory->create()
                     ->addNameToSelect()
-                    ->addFieldToFilter('entity_id', $category->getParentIds())
+                    ->addFieldToFilter('entity_id', $ids)
                     ->setOrder('level', 'asc');
 
                 foreach ($parents as $cat) {
