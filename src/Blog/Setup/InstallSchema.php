@@ -86,11 +86,23 @@ class InstallSchema implements InstallSchemaInterface
                 ['identity' => true, 'unsigned' => true, 'nullable' => false, 'primary' => true],
                 'Entity ID'
             )->addColumn(
-                'user_id',
+                'author_id',
                 Table::TYPE_INTEGER,
                 null,
                 ['unsigned' => true, 'nullable' => true],
-                'User Id'
+                'Author Id'
+            )->addColumn(
+                'type',
+                Table::TYPE_TEXT,
+                255,
+                ['unsigned' => true, 'nullable' => true],
+                'Post type'
+            )->addColumn(
+                'parent_id',
+                Table::TYPE_INTEGER,
+                null,
+                ['unsigned' => true, 'nullable' => false, 'default' => 0],
+                'Parent Post Id'
             )->addColumn(
                 'created_at',
                 Table::TYPE_TIMESTAMP,

@@ -2,20 +2,35 @@
 
 namespace Mirasvit\Blog\Controller\Adminhtml;
 
-abstract class Post extends \Magento\Backend\App\Action
-{
-    public function __construct(
-        \Mirasvit\Blog\Model\PostFactory $categoryFactory,
-        \Magento\Framework\Stdlib\DateTime\TimezoneInterface $localeDate,
-        \Magento\Framework\Registry $registry,
-        \Magento\Backend\App\Action\Context $context
-    ) {
+use Magento\Backend\App\Action;
+use Mirasvit\Blog\Model\PostFactory;
+use Magento\Framework\Registry;
+use Magento\Backend\App\Action\Context;
+use Magento\Store\Model\StoreManagerInterface;
 
-        $this->postFactory = $categoryFactory;
-        $this->localeDate = $localeDate;
+abstract class Post extends Action
+{
+    /**
+     * @var Context
+     */
+    protected $context;
+
+    /**
+     * @var StoreManagerInterface
+     */
+    protected $storeManager;
+
+    public function __construct(
+        PostFactory $postFactory,
+        StoreManagerInterface $storeManager,
+        Registry $registry,
+        Context $context
+    ) {
+        $this->postFactory = $postFactory;
+        $this->storeManager = $storeManager;
         $this->registry = $registry;
         $this->context = $context;
-        $this->backendSession = $context->getSession();
+
         $this->resultFactory = $context->getResultFactory();
 
         parent::__construct($context);
@@ -34,6 +49,7 @@ abstract class Post extends \Magento\Backend\App\Action
 
         return $resultPage;
     }
+
     /**
      * @return \Mirasvit\Blog\Model\Post
      */
@@ -56,6 +72,4 @@ abstract class Post extends \Magento\Backend\App\Action
     {
         return $this->context->getAuthorization()->isAllowed('Mirasvit_Blog::blog_post');
     }
-
-    /************************/
 }

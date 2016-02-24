@@ -67,6 +67,12 @@ class Meta extends \Magento\Backend\Block\Widget\Form
             'value' => $post->getMetaKeywords(),
         ]);
 
+        $fieldset->addField('url_key', 'text', [
+            'label' => __('URL Key'),
+            'name'  => 'url_key',
+            'value' => $post->getUrlKey(),
+        ]);
+
         return parent::_prepareForm();
     }
 }

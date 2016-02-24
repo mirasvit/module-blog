@@ -12,6 +12,12 @@ class Index extends Post
      */
     public function execute()
     {
+        $emptyPosts = $this->postFactory->create()->getCollection()
+            ->addAttributeToFilter('name', ['eq' => '']);
+
+        foreach ($emptyPosts as $post) {
+            $post->delete();
+        }
 
         /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);

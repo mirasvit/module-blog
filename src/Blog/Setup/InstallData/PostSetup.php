@@ -52,7 +52,19 @@ class PostSetup extends EavSetup
                 'entity_model' => 'Mirasvit\Blog\Model\ResourceModel\Post',
                 'table'        => 'mst_blog_post_entity',
                 'attributes'   => [
-                    'name' => [
+                    'author_id' => [
+                        'type'   => 'static',
+                        'label'  => 'Author Id',
+                        'input'  => 'select',
+                        'global' => ScopedAttributeInterface::SCOPE_GLOBAL,
+                    ],
+                    'type'      => [
+                        'type'   => 'static',
+                        'label'  => 'Type',
+                        'input'  => 'text',
+                        'global' => ScopedAttributeInterface::SCOPE_GLOBAL,
+                    ],
+                    'name'      => [
                         'type'   => 'varchar',
                         'label'  => 'Name',
                         'input'  => 'text',

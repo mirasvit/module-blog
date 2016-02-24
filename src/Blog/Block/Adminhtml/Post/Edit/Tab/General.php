@@ -4,8 +4,11 @@ namespace Mirasvit\Blog\Block\Adminhtml\Post\Edit\Tab;
 
 use Magento\Framework\Data\FormFactory;
 use Magento\Framework\Registry;
+use Magento\Backend\Block\Widget\Context;
+use Magento\Backend\Block\Widget\Form;
+use Magento\Cms\Model\Wysiwyg\Config as WysiwygConfig;
 
-class General extends \Magento\Backend\Block\Widget\Form
+class General extends Form
 {
     /**
      * @var FormFactory
@@ -18,24 +21,27 @@ class General extends \Magento\Backend\Block\Widget\Form
     protected $registry;
 
     /**
-     * @var \Mirasvit\Blog\Model\Post\Attribute\Source\Status
+     * @var WysiwygConfig
      */
-    protected $status;
+    protected $wysiwygConfig;
 
+    /**
+     * @param WysiwygConfig $wysiwygConfig
+     * @param FormFactory   $formFactory
+     * @param Registry      $registry
+     * @param Context       $context
+     */
     public function __construct(
-        \Magento\Store\Model\System\Store $systemStore,
+        WysiwygConfig $wysiwygConfig,
         FormFactory $formFactory,
         Registry $registry,
-        \Magento\Backend\Block\Widget\Context $context,
-        \Mirasvit\Blog\Model\Post\Attribute\Source\Status $status,
-        array $data = []
+        Context $context
     ) {
+        $this->wysiwygConfig = $wysiwygConfig;
         $this->formFactory = $formFactory;
         $this->registry = $registry;
-        $this->context = $context;
-        $this->status = $status;
 
-        parent::__construct($context, $data);
+        parent::__construct($context);
     }
 
     /**
@@ -69,26 +75,23 @@ class General extends \Magento\Backend\Block\Widget\Form
             'required' => true,
         ]);
 
-        $fieldset->addField('short_content', 'editor', [
-            'label'   => __('Short Content'),
-            'name'    => 'short_content',
-            'value'   => $post->getShortContent(),
-            'wysiwyg' => true,
-            'style'   => 'height:10em',
-        ]);
+        $editorConfig = $this->wysiwygConfig->getConfig(['tab_id' => $this->getTabId()]);
 
         $fieldset->addField('content', 'editor', [
-            'label'   => __('Content'),
             'name'    => 'content',
             'value'   => $post->getContent(),
             'wysiwyg' => true,
             'style'   => 'height:35em',
+            'config'  => $editorConfig,
         ]);
 
-        $fieldset->addField('url_key', 'text', [
-            'label' => __('URL Key'),
-            'name'  => 'url_key',
-            'value' => $post->getUrlKey(),
+        $fieldset->addField('short_content', 'editor', [
+            'label'   => __('Excerpt'),
+            'name'    => 'short_content',
+            'value'   => $post->getShortContent(),
+            'wysiwyg' => true,
+            'style'   => 'height:5em',
+            'config'  => $editorConfig
         ]);
 
 

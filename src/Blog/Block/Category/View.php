@@ -84,6 +84,7 @@ class View extends Template
                 ->addFieldToFilter('entity_id', $ids)
                 ->addNameToSelect()
                 ->setOrder('level', 'asc');
+
             /** @var \Mirasvit\Blog\Model\Category $cat */
             foreach ($parents as $cat) {
                 $breadcrumbs->addCrumb($cat->getId(), [

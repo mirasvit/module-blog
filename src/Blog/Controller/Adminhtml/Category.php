@@ -25,11 +25,11 @@ abstract class Category extends Action
     protected $context;
 
     public function __construct(
-        CategoryFactory $categoryFactory,
+        CategoryFactory $postFactory,
         Registry $registry,
         Context $context
     ) {
-        $this->categoryFactory = $categoryFactory;
+        $this->categoryFactory = $postFactory;
         $this->registry = $registry;
         $this->context = $context;
 

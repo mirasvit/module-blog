@@ -1,5 +1,42 @@
+<?php
+// @codingStandardsIgnoreFile
+/** @var \Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar $block */
+?>
+
+<a href="<?= $this->getUrl('blog/post/view', ['id' => $block->getPost()->getId()]) ?>"
+   class="action-default" id="post-preview-button" target="_blank"><?= __('Preview Changes') ?></a>
+
+<input type="hidden" name="preview" id="preview" value="">
+
 <div class="blog__post-sidebar">
     <?= $this->getChildHtml('publish') ?>
     <?= $this->getChildHtml('categories') ?>
     <?= $this->getChildHtml('tags') ?>
+    <?= $this->getChildHtml('author') ?>
 </div>
+
+<script>
+    require([
+        'jquery'
+    ], function ($) {
+        var $form = $('#post-preview-button');
+
+        $('.page-actions').prepend($form);
+
+        $('#edit_form input, select, textarea').on('change keypress', function () {
+            $('#post-preview-button').show();
+        });
+
+        $('#edit_form input#name').on('keypress', function(e) {
+            var text = $(e.currentTarget).val();
+            $('h1.page-title').html(text);
+        });
+
+        $form.on('click', function (e) {
+            e.preventDefault();
+            $('#preview').val('1');
+            $('#edit_form').attr('target', 'preview').submit().attr('target', '');
+            $('#preview').val('0');
+        });
+    });
+</script>

@@ -11,9 +11,10 @@
                         <block name="publish" class="Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar\Publish"/>
                         <block name="categories" class="Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar\Categories"/>
                         <block name="tags" class="Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar\Tags"/>
+                        <block name="author" class="Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar\Author"/>
                     </block>
 
-                    <block name="tabs" class="Mirasvit\Blog\Block\Adminhtml\Post\Edit\Tabs" />
+                    <block name="tabs" class="Mirasvit\Blog\Block\Adminhtml\Post\Edit\Tabs"/>
                 </block>
             </block>
         </referenceContainer>

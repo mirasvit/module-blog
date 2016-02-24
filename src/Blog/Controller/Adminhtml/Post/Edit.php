@@ -12,19 +12,19 @@ class Edit extends Post
      */
     public function execute()
     {
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        /** @var \Magento\Backend\Model\View\Result\Page\Interceptor $resultPage */
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
+        $id = $this->getRequest()->getParam('id');
         $model = $this->initModel();
 
-        if ($model->getId()) {
-            $this->initPage($resultPage)
-                ->getConfig()->getTitle()->prepend($model->getName());
-
-            return $resultPage;
-        } else {
+        if ($id && !$model->getId()) {
             $this->messageManager->addError(__('This post no longer exists.'));
-            $this->_redirect('*/*/');
+            return $this->resultRedirectFactory->create()->setPath('*/*/');
         }
+
+        $this->initPage($resultPage)->getConfig()->getTitle()->prepend($model->getName() ? $model->getName() : __('New Post'));
+
+        return $resultPage;
     }
 }

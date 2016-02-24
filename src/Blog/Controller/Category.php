@@ -6,21 +6,31 @@ use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Customer\Model\Session;
+use Mirasvit\Blog\Model\CategoryFactory;
+use Magento\Framework\Registry;
 
 abstract class Category extends Action
 {
-    public function __construct(
-        \Mirasvit\Blog\Model\CategoryFactory $categoryFactory,
-        \Magento\Catalog\Model\Session $session,
-        \Magento\Framework\Registry $registry,
-        \Magento\Framework\App\Action\Context $context
-    ) {
-        $this->categoryFactory = $categoryFactory;
-        $this->session = $session;
+    /**
+     * @var CategoryFactory
+     */
+    protected $categoryFactory;
 
+    /**
+     * @var Registry
+     */
+    protected $registry;
+
+    public function __construct(
+        CategoryFactory $postFactory,
+        Registry $registry,
+        Context $context
+    ) {
+        $this->categoryFactory = $postFactory;
         $this->registry = $registry;
         $this->context = $context;
         $this->resultFactory = $context->getResultFactory();
+
         parent::__construct($context);
     }
 

@@ -56,7 +56,6 @@
             }
         }
 
-
         &.field-category_ids {
             .admin__field-control {
                 .admin__field-option {
@@ -68,7 +67,6 @@
 }
 
 .blog__post-sidebar {
-
     #mix-grid .column(3, 12);
     margin-left: 0;
 
@@ -76,6 +74,20 @@
         background: #f1f1f1;
         color: #666666;
         padding: 1rem 2rem 2rem 2rem;
+
+        legend.legend {
+            border-bottom: 1px solid #e3e3e3;
+            margin: 0 0 1rem;
+
+            span {
+                padding: 0.5rem 0;
+                color: #666666;
+            }
+        }
+
+        .field {
+            margin-bottom: 1rem;
+        }
     }
 }
 
@@ -83,4 +95,17 @@
     #mix-grid .width(9, 12);
 
     float: right;
+}
+
+#post-preview-button {
+    -ms-flex-order: -100;
+    -webkit-order: -100;
+    order: -100;
+    font-size: 1.6rem;
+    letter-spacing: .025em;
+    padding-bottom: 0.6875em;
+    padding-top: 0.6875em;
+    margin-right: 4rem;
+    border: none;
+    display: none;
 }
