@@ -1,0 +1,16 @@
+<?php
+/** @var $block \Mirasvit\Blog\Block\Category\Sidebar */
+?>
+
+<div class="block block-collapsible-nav blog__category-sidebar">
+    <div class="title block-collapsible-nav-title"><?= __('Categories') ?></div>
+    <div class="block-collapsible-content content">
+        <ul class="items">
+            <?php foreach ($block->getTree() as $category): ?>
+                <li class="item level-<?= $category->getLevel() ?> <?php if ($block->isCurrent($category)): ?>current<?php endif ?>">
+                    <a href="<?= $category->getUrl() ?>"><?= $category->getName() ?></a>
+                </li>
+            <?php endforeach ?>
+        </ul>
+    </div>
+</div>

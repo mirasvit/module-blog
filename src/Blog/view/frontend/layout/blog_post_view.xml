@@ -2,9 +2,12 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"  layout="2columns-right" >
     <body>
-        <!--<referenceBlock name="sidebar.additional" remove="true" />-->
-        <!--<move element="page.main.title" destination="kb.category.article.list.additional" before="-"/>-->
-        <!--<referenceContainer name="root"/>-->
+        <referenceBlock name="sidebar.additional" remove="true" />
+
+        <referenceContainer name="sidebar.main" htmlTag="div" htmlClass="widget kb-sidebar__categories" >
+            <block class="Mirasvit\Blog\Block\Category\Sidebar" name="blog.category.sidebar" template="category/sidebar.phtml" />
+        </referenceContainer>
+
         <referenceContainer name="content">
             <block name="blog.post.view" class="Mirasvit\Blog\Block\Post\View" template="post/view.phtml">
 
