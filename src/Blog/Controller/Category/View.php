@@ -7,17 +7,17 @@ use Magento\Framework\Controller\ResultFactory;
 class View extends \Mirasvit\Blog\Controller\Category
 {
     /**
-     * @return bool|\Magento\Backend\Model\View\Result\Page
+     * @return \Magento\Backend\Model\View\Result\Page
      */
     public function execute()
     {
-        if ($category = $this->initCategory()) {
+        if ($this->initCategory()) {
             /* @var \Magento\Backend\Model\View\Result\Page $resultPage */
             $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
             return $resultPage;
         } else {
-            return $this->resultForwardFactory->create()->forward('noroute');
+            $this->_forward('no_route');
         }
     }
 }

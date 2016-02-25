@@ -31,16 +31,16 @@ class PostList extends Template implements IdentityInterface
     protected $collection;
 
     /**
-     * @param PostCollectionFactory $postCollectionFactory
+     * @param PostCollectionFactory $tagCollectionFactory
      * @param Registry              $registry
      * @param Context               $context
      */
     public function __construct(
-        PostCollectionFactory $postCollectionFactory,
+        PostCollectionFactory $tagCollectionFactory,
         Registry $registry,
         Context $context
     ) {
-        $this->postCollectionFactory = $postCollectionFactory;
+        $this->postCollectionFactory = $tagCollectionFactory;
         $this->registry = $registry;
 
         parent::__construct($context);
@@ -135,17 +135,18 @@ class PostList extends Template implements IdentityInterface
      */
     public function getIdentities()
     {
-        die(__METHOD__);
-        $identities = [];
-        foreach ($this->getPostCollection() as $item) {
-            $identities = array_merge($identities, $item->getIdentities());
-        }
-        $category = $this->getCategory();
-        if ($category) {
-            $identities[] = Article::CACHE_KB_ARTICLE_CATEGORY . '_' . $category->getId();
-        }
-
-        return $identities;
+        return [];
+        //        die(__METHOD__);
+        //        $identities = [];
+        //        foreach ($this->getPostCollection() as $item) {
+        //            $identities = array_merge($identities, $item->getIdentities());
+        //        }
+        //        $category = $this->getCategory();
+        //        if ($category) {
+        //            $identities[] = Article::CACHE_KB_ARTICLE_CATEGORY . '_' . $category->getId();
+        //        }
+        //
+        //        return $identities;
     }
 
     /**

@@ -10,6 +10,11 @@ use Magento\Backend\Block\Widget\Context;
 class Tags extends Form
 {
     /**
+     * @var string
+     */
+    protected $_template = 'post/edit/sidebar/tags.phtml';
+
+    /**
      * @var FormFactory
      */
     protected $formFactory;
@@ -36,28 +41,13 @@ class Tags extends Form
     }
 
     /**
-     * @return $this
-     *
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @return \Mirasvit\Blog\Model\ResourceModel\Tag\Collection
      */
-    protected function _prepareForm()
+    public function getTags()
     {
-        $form = $this->formFactory->create();
-        $this->setForm($form);
-
         /** @var \Mirasvit\Blog\Model\Post $post */
         $post = $this->registry->registry('current_model');
 
-        $fieldset = $form->addFieldset('tags_fieldset', [
-            'class'  => 'blog__post-fieldset',
-            'legend' => __('Tags'),
-        ]);
-
-        $fieldset->addField('tags', 'textarea', [
-            'name'  => 'tags',
-            'value' => $post->getTags(),
-        ]);
-
-        return parent::_prepareForm();
+        return $post->getTags();
     }
 }

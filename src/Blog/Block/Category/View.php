@@ -30,6 +30,13 @@ class View extends Template
      */
     protected $context;
 
+    /**
+     * @param PostCollectionFactory     $postCollectionFactory
+     * @param CategoryCollectionFactory $categoryCollectionFactory
+     * @param Registry                  $registry
+     * @param Context                   $context
+     * @param array                     $data
+     */
     public function __construct(
         PostCollectionFactory $postCollectionFactory,
         CategoryCollectionFactory $categoryCollectionFactory,

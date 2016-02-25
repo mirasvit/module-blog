@@ -4,9 +4,43 @@ namespace Mirasvit\Blog\Model\ResourceModel;
 use Magento\Framework\DataObject;
 use Magento\Eav\Model\Entity\AbstractEntity;
 use Magento\Framework\App\ObjectManager;
+use Magento\Eav\Model\Entity\Context;
+use Mirasvit\Blog\Model\Config;
+use Magento\Framework\Filter\FilterManager;
 
 class Category extends AbstractEntity
 {
+    /**
+     * @var Config
+     */
+    protected $config;
+
+    /**
+     * @var FilterManager
+     */
+    protected $filter;
+
+    /**
+     * @param Config        $config
+     * @param FilterManager $filter
+     * @param Context       $context
+     * @param array         $data
+     */
+    public function __construct(
+        Config $config,
+        FilterManager $filter,
+        Context $context,
+        $data = []
+    ) {
+        $this->config = $config;
+        $this->filter = $filter;
+
+        parent::__construct($context, $data);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getEntityType()
     {
         if (empty($this->_type)) {
@@ -18,45 +52,50 @@ class Category extends AbstractEntity
     /**
      * {@inheritdoc}
      */
-    protected function _beforeSave(DataObject $object)
+    protected function _beforeSave(DataObject $category)
     {
-        /** @var \Mirasvit\Blog\Model\Category $object */
+        /** @var \Mirasvit\Blog\Model\Category $category */
 
-        parent::_beforeSave($object);
+        parent::_beforeSave($category);
 
-        if (!$object->getChildrenCount()) {
-            $object->setChildrenCount(0);
+        if (!$category->getChildrenCount()) {
+            $category->setChildrenCount(0);
         }
 
-        if ($object->isObjectNew()) {
-            if (!$object->hasParentId()) {
-                $object->setParentId(1);
+        if (!$category->getData('url_key')) {
+            $category->setData('url_key', $this->filter->translitUrl($category->getName()));
+        }
+
+        if ($category->isObjectNew()) {
+            if (!$category->hasParentId()) {
+                $category->setParentId(1);
             }
 
+            /** @var \Mirasvit\Blog\Model\Category $parent */
             $parent = ObjectManager::getInstance()
                 ->create('Mirasvit\Blog\Model\Category')
-                ->load($object->getParentId());
+                ->load($category->getParentId());
 
-            $object->setPath($parent->getPath());
+            $category->setPath($parent->getPath());
 
-            if ($object->getPosition() === null) {
-                $object->setPosition($this->getMaxPosition($object->getPath()) + 1);
+            if ($category->getPosition() === null) {
+                $category->setPosition($this->getMaxPosition($category->getPath()) + 1);
             }
 
-            $path = explode('/', $object->getPath());
-            $level = count($path) - ($object->getId() ? 1 : 0);
-            $toUpdateChild = array_diff($path, [$object->getId()]);
+            $path = explode('/', $category->getPath());
+            $level = count($path) - ($category->getId() ? 1 : 0);
+            $toUpdateChild = array_diff($path, [$category->getId()]);
 
-            if (!$object->hasPosition()) {
-                $object->setPosition($this->getMaxPosition(implode('/', $toUpdateChild)) + 1);
+            if (!$category->hasPosition()) {
+                $category->setPosition($this->getMaxPosition(implode('/', $toUpdateChild)) + 1);
             }
 
-            if (!$object->hasLevel()) {
-                $object->setLevel($level);
+            if (!$category->hasLevel()) {
+                $category->setLevel($level);
             }
 
-            if (!$object->getId() && $object->getPath()) {
-                $object->setPath($object->getPath() . '/');
+            if (!$category->getId() && $category->getPath()) {
+                $category->setPath($category->getPath() . '/');
             }
 
             $this->getConnection()->update(

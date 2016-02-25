@@ -1,0 +1,31 @@
+<?php
+/** @var \Mirasvit\BLog\Block\Adminhtml\Post\Edit\Sidebar\Tags $block */
+?>
+<div class="entry-edit form-inline">
+    <fieldset class="fieldset admin__fieldset blog__post-fieldset" id="tags_fieldset">
+        <legend class="admin__legend legend">
+            <span>Tags</span>
+        </legend>
+        <br>
+
+        <ul id="myTags" class="blog__post-tags">
+            <?php foreach ($block->getTags() as $tag): ?>
+                <li><?= $tag->getTag() ?></li>
+            <?php endforeach ?>
+        </ul>
+    </fieldset>
+</div>
+
+
+<script>
+    require([
+        'jquery',
+        'Mirasvit_Blog/js/tag-it'
+    ], function ($) {
+        $("#myTags").tagit({
+            fieldName: 'tag_names[]',
+            allowSpaces: true,
+            caseSensitive: false
+        });
+    });
+</script>

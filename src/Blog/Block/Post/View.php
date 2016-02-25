@@ -31,18 +31,18 @@ class View extends Template
     protected $config;
 
     /**
-     * @param CategoryCollectionFactory $postCollectionFactory
+     * @param CategoryCollectionFactory $tagCollectionFactory
      * @param Config                    $config
      * @param Registry                  $registry
      * @param Context                   $context
      */
     public function __construct(
-        CategoryCollectionFactory $postCollectionFactory,
+        CategoryCollectionFactory $tagCollectionFactory,
         Config $config,
         Registry $registry,
         Context $context
     ) {
-        $this->categoryCollectionFactory = $postCollectionFactory;
+        $this->categoryCollectionFactory = $tagCollectionFactory;
         $this->config = $config;
         $this->registry = $registry;
         $this->context = $context;

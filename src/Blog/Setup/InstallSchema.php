@@ -70,10 +70,65 @@ class InstallSchema implements InstallSchemaInterface
                 Table::ACTION_CASCADE
             )->setComment('Blog Post To Category Linkage Table');
         $installer->getConnection()->createTable($table);
+
+        $table = $installer->getConnection()
+            ->newTable($installer->getTable('mst_blog_tag'))
+            ->addColumn(
+                'tag_id',
+                Table::TYPE_INTEGER,
+                null,
+                ['identity' => true, 'nullable' => false, 'primary' => true],
+                'Tag ID'
+            )->addColumn(
+                'tag',
+                Table::TYPE_TEXT,
+                255,
+                [],
+                'tag'
+            )->setComment('Tag Table');
+        $installer->getConnection()->createTable($table);
+
+        $table = $installer->getConnection()
+            ->newTable($installer->getTable('mst_blog_tag_post'))
+            ->addColumn(
+                'tag_id',
+                Table::TYPE_INTEGER,
+                null,
+                ['unsigned' => true, 'nullable' => false, 'primary' => true, 'default' => '0'],
+                'Tag ID'
+            )->addColumn(
+                'post_id',
+                Table::TYPE_INTEGER,
+                null,
+                ['unsigned' => true, 'nullable' => false, 'primary' => true, 'default' => '0'],
+                'Post ID'
+            )->addColumn(
+                'store_id',
+                Table::TYPE_SMALLINT,
+                null,
+                ['unsigned' => true, 'nullable' => false, 'default' => '0'],
+                'Store ID'
+            )->addIndex(
+                $installer->getIdxName('mst_blog_tag_post', ['post_id']),
+                ['post_id']
+            )->addForeignKey(
+                $installer->getFkName(
+                    'mst_blog_tag_post',
+                    'post_id',
+                    'mst_blog_post_entity',
+                    'entity_id'
+                ),
+                'post_id',
+                $installer->getTable('mst_blog_post_entity'),
+                'entity_id',
+                Table::ACTION_CASCADE
+            )->setComment('Blog Post To Tag Linkage Table');
+        $installer->getConnection()->createTable($table);
     }
 
     /**
      * @param SchemaSetupInterface $installer
+     * @return void
      */
     protected function installPostEntity(SchemaSetupInterface $installer)
     {
@@ -195,7 +250,6 @@ class InstallSchema implements InstallSchemaInterface
             )
             ->setComment('Blog Post Datetime Attribute Backend Table');
         $installer->getConnection()->createTable($table);
-
 
         $table = $installer->getConnection()
             ->newTable($installer->getTable('mst_blog_post_entity_decimal'))
@@ -588,6 +642,7 @@ class InstallSchema implements InstallSchemaInterface
 
     /**
      * @param SchemaSetupInterface $installer
+     * @return void
      */
     protected function installCategoryEntity(SchemaSetupInterface $installer)
     {
@@ -854,7 +909,12 @@ class InstallSchema implements InstallSchemaInterface
                 'attribute_id',
                 Table::ACTION_CASCADE
             )->addForeignKey(
-                $installer->getFkName('mst_blog_category_entity_int', 'entity_id', 'mst_blog_category_entity', 'entity_id'),
+                $installer->getFkName(
+                    'mst_blog_category_entity_int',
+                    'entity_id',
+                    'mst_blog_category_entity',
+                    'entity_id'
+                ),
                 'entity_id',
                 $installer->getTable('mst_blog_category_entity'),
                 'entity_id',

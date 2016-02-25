@@ -46,11 +46,14 @@ $collection = $block->getPostCollection();
                             <a href="<?= $category->getUrl() ?>" rel="category tag"><?= $category->getName() ?></a>
                         <?php endforeach ?>
                     </span>
+                    <?php if ($post->getTags()->count()): ?>
                     <span class="blog__post-footer-tags">
                         <i class="fa fa-fw fa-tags"></i>
-                        <a href="#" rel="tag">cookies</a>
-                        <a href="#" rel="tag">peanut butter</a>
+                        <?php foreach ($post->getTags() as $tag): ?>
+                        <a href="<?=$tag->getUrl() ?>" rel="tag"><?=$tag->getTag() ?></a>
+                        <?php endforeach ?>
                     </span>
+                    <?php endif ?>
                 </footer>
             </li>
         <?php endforeach ?>

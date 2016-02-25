@@ -8,18 +8,29 @@ use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;
 use Magento\Framework\Api\ExtensionAttributesFactory;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\Framework\UrlInterface;
 
 /**
  * @method string getName()
  * @method string getContent()
  * @method string getUrlKey()
+ *
  * @method string getPath()
+ * @method $this setPath($path)
+ *
+ * @method int getChildrenCount()
+ * @method $this setChildrenCount($count)
+ *
+ * @method int getPosition()
+ * @method $this setPosition($position)
+ *
  * @method string getMetaTitle()
  * @method string getMetaDescription()
  * @method string getMetaKeywords()
  * @method int getStatus()
+ *
  * @method int getParentId()
+ * @method $this setParentId($id)
+ * @method bool hasParentId()
  */
 class Category extends AbstractExtensibleModel
 {
@@ -31,33 +42,41 @@ class Category extends AbstractExtensibleModel
     protected $storeManager;
 
     /**
-     * @var UrlInterface
+     * @var Url
      */
-    protected $urlManager;
+    protected $url;
 
+    /**
+     * @param Url                        $url
+     * @param StoreManagerInterface      $storeManager
+     * @param Context                    $context
+     * @param Registry                   $registry
+     * @param ExtensionAttributesFactory $extensionFactory
+     * @param AttributeValueFactory      $customAttributeFactory
+     */
     public function __construct(
-        UrlInterface $urlManager,
+        Url $url,
         StoreManagerInterface $storeManager,
         Context $context,
         Registry $registry,
         ExtensionAttributesFactory $extensionFactory,
         AttributeValueFactory $customAttributeFactory
     ) {
-        $this->urlManager = $urlManager;
+        $this->url = $url;
         $this->storeManager = $storeManager;
 
         parent::__construct($context, $registry, $extensionFactory, $customAttributeFactory);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     protected function _construct()
     {
         $this->_init('Mirasvit\Blog\Model\ResourceModel\Category');
     }
 
     /**
-     * Get array categories ids which are part of category path
-     * Result array contain id of current category because it is part of the path
-     *
      * @return array
      */
     public function getPathIds()
@@ -86,6 +105,6 @@ class Category extends AbstractExtensibleModel
      */
     public function getUrl()
     {
-        return $this->urlManager->getUrl('blog/category/view', ['id' => $this->getId()]);
+        return $this->url->getCategoryUrl($this);
     }
 }

@@ -25,6 +25,8 @@ abstract class Post extends Action
      * @param PostFactory $postFactory
      * @param Registry    $registry
      * @param Context     $context
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
+     * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
      */
     public function __construct(
         PostFactory $postFactory,
@@ -34,7 +36,7 @@ abstract class Post extends Action
         $this->postFactory = $postFactory;
         $this->registry = $registry;
         $this->context = $context;
-        $this->resultFactory = $context->getResultFactory();
+        $this->resultFactory = $context->getResultFactory();;
 
         parent::__construct($context);
     }

@@ -133,3 +133,35 @@
     display: none;
 }
 
+.blog__post-tags {
+    list-style: none;
+
+    li {
+        float: left;
+        margin: 5px 15px 5px 0;
+        .tagit-close {
+            margin-left: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            color: #999;
+
+            &:hover {
+                text-decoration: none;
+                color: #000;
+            }
+        }
+
+        &.tagit-new {
+            float: none;
+            width: 100%;
+
+            input {
+                width: 100%;
+            }
+
+            span {
+                display: none;
+            }
+        }
+    }
+}

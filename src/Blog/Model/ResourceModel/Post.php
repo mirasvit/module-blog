@@ -5,6 +5,8 @@ use Magento\Framework\DataObject;
 use Magento\Eav\Model\Entity\AbstractEntity;
 use Magento\Eav\Model\Entity\Context;
 use Mirasvit\Blog\Model\Config;
+use Magento\Framework\Filter\FilterManager;
+use Mirasvit\Blog\Model\TagFactory as TagModelFactory;
 
 class Post extends AbstractEntity
 {
@@ -14,16 +16,32 @@ class Post extends AbstractEntity
     protected $config;
 
     /**
-     * @param Config  $config
-     * @param Context $context
-     * @param array   $data
+     * @var FilterManager
+     */
+    protected $filter;
+
+    /**
+     * @var TagModelFactory
+     */
+    protected $tagFactory;
+
+    /**
+     * @param Config          $config
+     * @param TagModelFactory $tagFactory
+     * @param FilterManager   $filter
+     * @param Context         $context
+     * @param array           $data
      */
     public function __construct(
         Config $config,
+        TagModelFactory $tagFactory,
+        FilterManager $filter,
         Context $context,
         $data = []
     ) {
+        $this->tagFactory = $tagFactory;
         $this->config = $config;
+        $this->filter = $filter;
 
         parent::__construct($context, $data);
     }
@@ -59,12 +77,37 @@ class Post extends AbstractEntity
     }
 
     /**
+     * @param \Mirasvit\Blog\Model\Post $post
+     * @return array
+     */
+    public function getTagIds($post)
+    {
+        $connection = $this->getConnection();
+
+        $select = $connection->select()->from(
+            $this->getTable('mst_blog_tag_post'),
+            'tag_id'
+        )->where(
+            'post_id = ?',
+            (int)$post->getId()
+        );
+
+        return $connection->fetchCol($select);
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function _beforeSave(DataObject $post)
     {
+        /** @var \Mirasvit\Blog\Model\Post $post */
+
         if (!$post->hasData('type')) {
             $post->setData('type', \Mirasvit\Blog\Model\Post::TYPE_POST);
+        }
+
+        if (!$post->getData('url_key')) {
+            $post->setData('url_key', $this->filter->translitUrl($post->getName()));
         }
 
         $this->saveImage($post);
@@ -79,6 +122,7 @@ class Post extends AbstractEntity
     {
         /** @var \Mirasvit\Blog\Model\Post $post */
         $this->saveCategories($post);
+        $this->saveTags($post);
 
         return parent::_afterSave($post);
     }
@@ -125,6 +169,60 @@ class Post extends AbstractEntity
         if (!empty($delete)) {
             foreach ($delete as $categoryId) {
                 $where = ['post_id = ?' => (int)$post->getId(), 'category_id = ?' => (int)$categoryId];
+                $connection->delete($table, $where);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param \Mirasvit\Blog\Model\Post $post
+     * @return $this
+     */
+    protected function saveTags($post)
+    {
+        $table = $this->getTable('mst_blog_tag_post');
+
+        if (!$post->hasTagNames()) {
+            return $this;
+        }
+
+        $oldTagIds = $post->getTagIds();
+        $tagIds = [];
+
+        foreach ($post->getTagNames() as $tag) {
+            $tagIds[] = $this->tagFactory->create()
+                ->getOrCreate($tag)
+                ->getId();
+        }
+
+        $tagIds = array_unique($tagIds);
+
+        $insert = array_diff($tagIds, $oldTagIds);
+        $delete = array_diff($oldTagIds, $tagIds);
+
+        $connection = $this->getConnection();
+        if (!empty($insert)) {
+            $data = [];
+            foreach ($insert as $tagId) {
+                if (empty($tagId)) {
+                    continue;
+                }
+                $data[] = [
+                    'tag_id'  => (int)$tagId,
+                    'post_id' => (int)$post->getId()
+                ];
+            }
+
+            if ($data) {
+                $connection->insertMultiple($table, $data);
+            }
+        }
+
+        if (!empty($delete)) {
+            foreach ($delete as $tagId) {
+                $where = ['post_id = ?' => (int)$post->getId(), 'tag_id = ?' => (int)$tagId];
                 $connection->delete($table, $where);
             }
         }

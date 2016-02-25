@@ -8,8 +8,8 @@ use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;
 use Magento\Framework\Api\ExtensionAttributesFactory;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\Framework\UrlInterface;
 use Magento\User\Model\UserFactory;
+use Mirasvit\Blog\Model\ResourceModel\Tag\CollectionFactory as TagCollectionFactory;
 
 /**
  * @method string getName()
@@ -37,9 +37,9 @@ class Post extends AbstractExtensibleModel
     const TYPE_REVISION = 'revision';
 
     /**
-     * @var UrlInterface
+     * @var Url
      */
-    protected $urlManager;
+    protected $url;
 
     /**
      * @var StoreManagerInterface
@@ -52,6 +52,11 @@ class Post extends AbstractExtensibleModel
     protected $categoryFactory;
 
     /**
+     * @var TagCollectionFactory
+     */
+    protected $tagCollectionFactory;
+
+    /**
      * @var UserFactory
      */
     protected $userFactory;
@@ -62,10 +67,11 @@ class Post extends AbstractExtensibleModel
     protected $config;
 
     /**
-     * @param CategoryFactory            $postFactory
+     * @param CategoryFactory            $tagFactory
+     * @param TagCollectionFactory       $tagCollectionFactory
      * @param UserFactory                $userFactory
      * @param Config                     $config
-     * @param UrlInterface               $urlManager
+     * @param Url                        $url
      * @param StoreManagerInterface      $storeManager
      * @param Context                    $context
      * @param Registry                   $registry
@@ -73,20 +79,22 @@ class Post extends AbstractExtensibleModel
      * @param AttributeValueFactory      $customAttributeFactory
      */
     public function __construct(
-        CategoryFactory $postFactory,
+        CategoryFactory $tagFactory,
+        TagCollectionFactory $tagCollectionFactory,
         UserFactory $userFactory,
         Config $config,
-        UrlInterface $urlManager,
+        Url $url,
         StoreManagerInterface $storeManager,
         Context $context,
         Registry $registry,
         ExtensionAttributesFactory $extensionFactory,
         AttributeValueFactory $customAttributeFactory
     ) {
-        $this->categoryFactory = $postFactory;
+        $this->categoryFactory = $tagFactory;
+        $this->tagCollectionFactory = $tagCollectionFactory;
         $this->userFactory = $userFactory;
         $this->config = $config;
-        $this->urlManager = $urlManager;
+        $this->url = $url;
         $this->storeManager = $storeManager;
 
         parent::__construct($context, $registry, $extensionFactory, $customAttributeFactory);
@@ -147,6 +155,28 @@ class Post extends AbstractExtensibleModel
     }
 
     /**
+     * @return array
+     */
+    public function getTagIds()
+    {
+        return (array)$this->getResource()->getTagIds($this);
+    }
+
+    /**
+     * @return ResourceModel\Tag\Collection
+     */
+    public function getTags()
+    {
+        $ids = $this->getTagIds();
+        $ids[] = 0;
+
+        $collection = $this->tagCollectionFactory->create()
+            ->addFieldToFilter('tag_id', $ids);
+
+        return $collection;
+    }
+
+    /**
      * @return Post
      */
     public function saveAsRevision()
@@ -165,7 +195,7 @@ class Post extends AbstractExtensibleModel
      */
     public function getUrl()
     {
-        return $this->urlManager->getUrl('blog/post/view', ['id' => $this->getId()]);
+        return $this->url->getPostUrl($this);
     }
 
     /**
