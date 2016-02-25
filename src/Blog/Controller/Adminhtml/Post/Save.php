@@ -16,6 +16,14 @@ class Save extends Post
         if ($data = $this->getRequest()->getParams()) {
             $model = $this->initModel();
 
+            if (!isset($data['is_pinned'])) {
+                $data['is_pinned'] = false;
+            }
+
+            if (is_array($data['featured_image'])) {
+                unset($data['featured_image']);
+            }
+
             $model->addData($data);
 
             try {

@@ -1,19 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"  layout="2columns-right" >
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
+      layout="2columns-right">
     <body>
-        <referenceBlock name="sidebar.additional" remove="true" />
+        <referenceBlock name="sidebar.additional" remove="true"/>
 
-        <referenceContainer name="sidebar.main" htmlTag="div" htmlClass="widget kb-sidebar__categories" >
-            <block class="Mirasvit\Blog\Block\Category\Sidebar" name="blog.category.sidebar" template="category/sidebar.phtml" />
+        <referenceContainer name="sidebar.main" htmlTag="div" htmlClass="widget kb-sidebar__categories">
+            <block class="Mirasvit\Blog\Block\Category\Sidebar" name="blog.category.sidebar"
+                   template="category/sidebar.phtml"/>
+            <block class="Mirasvit\Blog\Block\Post\Recent" name="blog.post.recent" template="post/recent.phtml"/>
         </referenceContainer>
 
         <referenceContainer name="content">
             <block name="blog.category.view" class="Mirasvit\Blog\Block\Category\View" template="category/view.phtml">
-                <block class="Mirasvit\Blog\Block\Post\PostList" name="blog.post.list" template="post/list.phtml">
-                    <container name="blog.post.list.additional" />
+                <block class="Mirasvit\Blog\Block\Post\Pinned" name="blog.post.pinned" template="post/pinned.phtml" />
 
-                    <block class="Mirasvit\Blog\Block\Post\PostList\Toolbar" name="blog.post.list.toolbar" template="post/list/toolbar.phtml">
+                <block class="Mirasvit\Blog\Block\Post\PostList" name="blog.post.list" template="post/list.phtml">
+                    <container name="blog.post.list.additional"/>
+
+                    <block class="Mirasvit\Blog\Block\Post\PostList\Toolbar" name="blog.post.list.toolbar"
+                           template="post/list/toolbar.phtml">
                         <block class="Magento\Theme\Block\Html\Pager" name="pager"/>
                     </block>
 
@@ -23,8 +29,5 @@
                 </block>
             </block>
         </referenceContainer>
-        <!--<referenceContainer name="sidebar.main" htmlTag="div" htmlClass="widget kb-sidebar__categories" >-->
-            <!--<block name="kb.category.sidebar" class="Mirasvit\Kb\Block\Category\Sidebar" template="category/sidebar.phtml"/>-->
-        <!--</referenceContainer>-->
     </body>
 </page>

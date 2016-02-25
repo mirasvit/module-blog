@@ -57,7 +57,7 @@ class Toolbar extends Template
      *
      * @var string
      */
-    protected $direction = 'asc';
+    protected $direction = 'desc';
 
     /**
      * Default View mode.
@@ -136,7 +136,7 @@ class Toolbar extends Template
      * Memorize parameter value for session.
      *
      * @param string $param Parameter name.
-     * @param mixed  $value Parameter value.
+     * @param string $value Parameter value.
      *
      * @return $this
      */

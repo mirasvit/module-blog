@@ -3,9 +3,31 @@ namespace Mirasvit\Blog\Model\ResourceModel;
 
 use Magento\Framework\DataObject;
 use Magento\Eav\Model\Entity\AbstractEntity;
+use Magento\Eav\Model\Entity\Context;
+use Mirasvit\Blog\Model\Config;
 
 class Post extends AbstractEntity
 {
+    /**
+     * @var Config
+     */
+    protected $config;
+
+    /**
+     * @param Config  $config
+     * @param Context $context
+     * @param array   $data
+     */
+    public function __construct(
+        Config $config,
+        Context $context,
+        $data = []
+    ) {
+        $this->config = $config;
+
+        parent::__construct($context, $data);
+    }
+
     /**
      * {@inheritdoc}
      */
@@ -44,6 +66,8 @@ class Post extends AbstractEntity
         if (!$post->hasData('type')) {
             $post->setData('type', \Mirasvit\Blog\Model\Post::TYPE_POST);
         }
+
+        $this->saveImage($post);
 
         return parent::_beforeSave($post);
     }
@@ -106,5 +130,63 @@ class Post extends AbstractEntity
         }
 
         return $this;
+    }
+
+    /**
+     * @param \Mirasvit\Blog\Model\Post $post
+     * @return $this
+     * @throws \Exception
+     */
+    protected function saveImage($post)
+    {
+        if (!isset($_FILES['featured_image']) || !$_FILES['featured_image']['name']) {
+            return $this;
+        }
+
+        $image = $_FILES['featured_image'];
+
+        $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
+        $oldFileName = $post->getFeaturedImage();
+        $newFileName = $post->getId() . '_' . md5($image['name']) . '.' . $ext;
+
+        $allowedFileExtensions = ['png', 'jpeg', 'jpg', 'gif'];
+        $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
+
+        if (!in_array($ext, $allowedFileExtensions)) {
+            throw new \Exception(
+                __('File type not allowed (only JPG, JPEG, PNG & GIF files are allowed)')
+            );
+        }
+
+        $uploader = new \Magento\Framework\File\Uploader($_FILES['featured_image']);
+        $uploader->setAllowedExtensions($allowedFileExtensions)
+            ->setAllowRenameFiles(false)
+            ->setFilesDispersion(false)
+            ->setAllowCreateFolders(true)
+            ->setAllowRenameFiles(false)
+            ->setFilesDispersion(false);
+        $uploader->save($this->config->getMediaPath(), $newFileName);
+
+        $post->setFeaturedImage($newFileName);
+
+        if ($newFileName != $oldFileName) {
+            $this->deleteImage($oldFileName);
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param string $fileName
+     * @return void
+     */
+    private function deleteImage($fileName)
+    {
+        $path = $this->config->getMediaPath();
+        if ($fileName && file_exists($path . '/' . $fileName)) {
+            unlink($path . '/' . $fileName);
+        }
+
+        return;
     }
 }

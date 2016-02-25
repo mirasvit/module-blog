@@ -81,6 +81,13 @@ class Publish extends \Magento\Backend\Block\Widget\Form
             'time_format' => $timeFormat
         ]);
 
+        $fieldset->addField('is_pinned', 'checkbox', [
+            'label'   => __('Pin post at the top'),
+            'name'    => 'is_pinned',
+            'value'   => 1,
+            'checked' => $post->getIsPinned(),
+        ]);
+
         return parent::_prepareForm();
     }
 }

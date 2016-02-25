@@ -4,13 +4,54 @@ $collection = $block->getPostCollection();
 ?>
 
 <?php if ($collection->count()): ?>
-    <?php echo $block->getToolbarHtml() ?>
-
     <ol class="blog__post-list">
+        <?php /** @var \Mirasvit\Blog\Model\Post $post */ ?>
         <?php foreach ($collection as $post): ?>
-            <li class="blog__post-list-item">
-                <h2><a href="<?= $post->getUrl() ?>" class="post-link"><?= $post->getName() ?></a></h2>
-                <?= $post->getShortContent() ?>
+            <li class="blog__post-item">
+                <header class="blog__post-header">
+                    <h1 class="blog__post-title" itemprop="headline">
+                        <a href="<?= $post->getUrl() ?>" rel="bookmark"><?= $post->getName() ?></a>
+                    </h1>
+                    <p class="blog__post-meta">
+                        <time class="blog__post-meta-time" itemprop="datePublished"
+                              datetime="2014-04-02T13:31:52+00:00">
+                            <i class="fa fa-fw fa-calendar"></i>
+                            <?= $block->formatDate($post->getCreatedAt(), \IntlDateFormatter::MEDIUM) ?>
+                        </time>
+
+                        <span class="blog__post-meta-author" itemprop="author" itemscope=""
+                              itemtype="http://schema.org/Person">
+                            <i class="fa fa-fw fa-user"></i>
+                            <span itemprop="name">
+                                <?= $post->getAuthor()->getName() ?>
+                            </span>
+                        </span>
+                    </p>
+                </header>
+
+                <div class="blog__post-excerpt" itemprop="text">
+                    <?php if ($post->getFeaturedImageUrl()): ?>
+                        <img src="<?= $post->getFeaturedImageUrl() ?>"/>
+                    <?php endif ?>
+
+                    <?= $post->getShortContent() ?>
+
+                    <a class="read-more" href="<?= $post->getUrl() ?>"><?= __('Read more...') ?></a>
+                </div>
+
+                <footer class="blog__post-footer">
+                    <span class="blog__post-footer-categories">
+                        <i class="fa fa-fw fa-folder-open"></i>
+                        <?php foreach ($post->getCategories() as $category): ?>
+                            <a href="<?= $category->getUrl() ?>" rel="category tag"><?= $category->getName() ?></a>
+                        <?php endforeach ?>
+                    </span>
+                    <span class="blog__post-footer-tags">
+                        <i class="fa fa-fw fa-tags"></i>
+                        <a href="#" rel="tag">cookies</a>
+                        <a href="#" rel="tag">peanut butter</a>
+                    </span>
+                </footer>
             </li>
         <?php endforeach ?>
     </ol>

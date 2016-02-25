@@ -1,0 +1,23 @@
+<?php
+/** @var \Mirasvit\Blog\Block\Post\Recent $block */
+$collection = $block->getCollection()
+    ->setPageSize(5);
+?>
+<div class="block blog__post-recent">
+    <div class="block-title">
+        <strong><?= __('Recent Posts') ?></strong>
+    </div>
+    <div class="block-content">
+        <ol class="items">
+            <?php foreach ($collection as $post): ?>
+                <li class="item">
+                    <?php if ($post->getFeaturedImageUrl()): ?>
+                        <img src="<?= $post->getFeaturedImageUrl() ?>" class="blog__post-featured-image"/>
+                    <?php endif ?>
+
+                    <a href="<?= $post->getUrl() ?>"><?= $post->getName() ?></a>
+                </li>
+            <?php endforeach ?>
+        </ol>
+    </div>
+</div>

@@ -1,0 +1,26 @@
+<?php
+/** @var \Mirasvit\Blog\Block\Post\Pinned $block */
+$collection = $block->getCollection()
+    ->setPageSize(3);
+?>
+
+<?php if ($collection->getSize() == 3): ?>
+    <div class="blog__post-pinned">
+        <div class="block-title">
+            <?= __('Featured Posts') ?>
+        </div>
+        <ol class="items">
+            <?php foreach ($collection as $post): ?>
+                <li class="item">
+                    <?php if ($post->getFeaturedImageUrl()): ?>
+                        <img src="<?= $post->getFeaturedImageUrl() ?>" class="blog__post-featured-image"/>
+                    <?php endif ?>
+
+                    <h2>
+                        <a class="title" href="<?= $post->getUrl() ?>"><?= $post->getName() ?></a>
+                    </h2>
+                </li>
+            <?php endforeach ?>
+        </ol>
+    </div>
+<?php endif ?>

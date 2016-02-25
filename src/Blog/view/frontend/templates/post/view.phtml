@@ -4,7 +4,41 @@ $post = $block->getPost();
 ?>
 
 <div class="blog__post-view">
+
+    <p class="blog__post-meta">
+        <time class="blog__post-meta-time" itemprop="datePublished">
+            <i class="fa fa-fw fa-calendar"></i>
+            <?= $block->formatDate($post->getCreatedAt(), \IntlDateFormatter::MEDIUM) ?>
+        </time>
+
+        <span class="blog__post-meta-author" itemprop="author" itemscope=""
+              itemtype="http://schema.org/Person">
+              <i class="fa fa-fw fa-user"></i>
+              <span itemprop="name">
+                    <?= $post->getAuthor()->getName() ?>
+              </span>
+        </span>
+    </p>
+
+    <?php if ($post->getFeaturedImageUrl()): ?>
+        <img src="<?= $post->getFeaturedImageUrl() ?>" class="blog__post-featured-image"/>
+    <?php endif ?>
+
     <?= $post->getShortContent() ?>
 
     <?= $post->getContent() ?>
+
+    <footer class="blog__post-footer">
+        <span class="blog__post-footer-categories">
+            <i class="fa fa-fw fa-folder-open"></i>
+            <?php foreach ($post->getCategories() as $category): ?>
+                <a href="<?= $category->getUrl() ?>" rel="category tag"><?= $category->getName() ?></a>
+            <?php endforeach ?>
+        </span>
+        <span class="blog__post-footer-tags">
+            <i class="fa fa-fw fa-tags"></i>
+            <a href="#" rel="tag">cookies</a>
+            <a href="#" rel="tag">peanut butter</a>
+        </span>
+    </footer>
 </div>

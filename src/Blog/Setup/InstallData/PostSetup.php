@@ -100,6 +100,20 @@ class PostSetup extends EavSetup
                         'global' => ScopedAttributeInterface::SCOPE_STORE,
                     ],
 
+                    'featured_image' => [
+                        'type'   => 'text',
+                        'label'  => 'Featured Image',
+                        'input'  => 'text',
+                        'global' => ScopedAttributeInterface::SCOPE_STORE,
+                    ],
+
+                    'is_pinned' => [
+                        'type'   => 'int',
+                        'label'  => 'Is pinned?',
+                        'input'  => 'text',
+                        'global' => ScopedAttributeInterface::SCOPE_STORE,
+                    ],
+
                     'meta_title'       => [
                         'type'   => 'varchar',
                         'label'  => 'Meta Title',

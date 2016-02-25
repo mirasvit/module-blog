@@ -1,18 +1,18 @@
 <?php
 
-namespace Mirasvit\Blog\Block\Category;
+namespace Mirasvit\Blog\Block\Post;
 
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template\Context;
-use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
+use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
 
-class Sidebar extends Template
+class Recent extends Template
 {
     /**
-     * @var CategoryCollectionFactory
+     * @var PostCollectionFactory
      */
-    protected $categoryCollectionFactory;
+    protected $postCollectionFactory;
 
     /**
      * @var Registry
@@ -25,18 +25,18 @@ class Sidebar extends Template
     protected $context;
 
     /**
-     * @param CategoryCollectionFactory $postCollectionFactory
-     * @param Registry                  $registry
-     * @param Context                   $context
-     * @param array                     $data
+     * @param PostCollectionFactory $postCollectionFactory
+     * @param Registry              $registry
+     * @param Context               $context
+     * @param array                 $data
      */
     public function __construct(
-        CategoryCollectionFactory $postCollectionFactory,
+        PostCollectionFactory $postCollectionFactory,
         Registry $registry,
         Context $context,
         array $data = []
     ) {
-        $this->categoryCollectionFactory = $postCollectionFactory;
+        $this->postCollectionFactory = $postCollectionFactory;
         $this->registry = $registry;
         $this->context = $context;
 
@@ -44,12 +44,12 @@ class Sidebar extends Template
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Category[]
+     * @return \Mirasvit\Blog\Model\Post[]
      */
-    public function getTree()
+    public function getCollection()
     {
-        return $this->categoryCollectionFactory->create()
-            ->getTree();
+        return $this->postCollectionFactory->create()
+            ->addAttributeToSelect('*');
     }
 
     /**

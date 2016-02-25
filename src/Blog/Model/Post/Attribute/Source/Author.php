@@ -6,7 +6,6 @@ use Magento\Eav\Model\Entity\Attribute\Source\SourceInterface;
 use Magento\Framework\Data\OptionSourceInterface;
 use Magento\User\Model\ResourceModel\User\CollectionFactory as UserCollectionFactory;
 
-
 class Author extends AbstractSource implements SourceInterface, OptionSourceInterface
 {
     /**

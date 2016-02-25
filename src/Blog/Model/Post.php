@@ -9,6 +9,7 @@ use Magento\Framework\Registry;
 use Magento\Framework\Api\ExtensionAttributesFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\UrlInterface;
+use Magento\User\Model\UserFactory;
 
 /**
  * @method string getName()
@@ -51,7 +52,19 @@ class Post extends AbstractExtensibleModel
     protected $categoryFactory;
 
     /**
-     * @param CategoryFactory            $categoryFactory
+     * @var UserFactory
+     */
+    protected $userFactory;
+
+    /**
+     * @var Config
+     */
+    protected $config;
+
+    /**
+     * @param CategoryFactory            $postFactory
+     * @param UserFactory                $userFactory
+     * @param Config                     $config
      * @param UrlInterface               $urlManager
      * @param StoreManagerInterface      $storeManager
      * @param Context                    $context
@@ -60,7 +73,9 @@ class Post extends AbstractExtensibleModel
      * @param AttributeValueFactory      $customAttributeFactory
      */
     public function __construct(
-        CategoryFactory $categoryFactory,
+        CategoryFactory $postFactory,
+        UserFactory $userFactory,
+        Config $config,
         UrlInterface $urlManager,
         StoreManagerInterface $storeManager,
         Context $context,
@@ -68,7 +83,9 @@ class Post extends AbstractExtensibleModel
         ExtensionAttributesFactory $extensionFactory,
         AttributeValueFactory $customAttributeFactory
     ) {
-        $this->categoryFactory = $categoryFactory;
+        $this->categoryFactory = $postFactory;
+        $this->userFactory = $userFactory;
+        $this->config = $config;
         $this->urlManager = $urlManager;
         $this->storeManager = $storeManager;
 
@@ -115,6 +132,21 @@ class Post extends AbstractExtensibleModel
     }
 
     /**
+     * @return ResourceModel\Category\Collection
+     */
+    public function getCategories()
+    {
+        $ids = $this->getCategoryIds();
+        $ids[] = 0;
+
+        $collection = $this->categoryFactory->create()->getCollection()
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter('entity_id', $ids);
+
+        return $collection;
+    }
+
+    /**
      * @return Post
      */
     public function saveAsRevision()
@@ -134,5 +166,25 @@ class Post extends AbstractExtensibleModel
     public function getUrl()
     {
         return $this->urlManager->getUrl('blog/post/view', ['id' => $this->getId()]);
+    }
+
+    /**
+     * @return \Magento\User\Model\User
+     */
+    public function getAuthor()
+    {
+        if (!$this->hasData('author')) {
+            $this->setData('author', $this->userFactory->create()->load($this->getAuthorId()));
+        }
+
+        return $this->getData('author');
+    }
+
+    /**
+     * @return string
+     */
+    public function getFeaturedImageUrl()
+    {
+        return $this->config->getMediaUrl($this->getFeaturedImage());
     }
 }
