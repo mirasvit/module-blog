@@ -41,6 +41,21 @@ class Collection extends AbstractCollection
     }
 
     /**
+     * @param \Mirasvit\Blog\Model\Tag $tag
+     * @return $this
+     */
+    public function addTagFilter($tag)
+    {
+        $this->getSelect()
+            ->where("EXISTS (SELECT * FROM `{$this->getTable('mst_blog_tag_post')}`
+                AS `tag_post`
+                WHERE e.entity_id = tag_post.post_id
+                AND tag_post.tag_id in (?))", [0, $tag->getId()]);
+
+        return $this;
+    }
+
+    /**
      * @return $this
      */
     public function addPostFilter()

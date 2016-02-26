@@ -4,10 +4,36 @@ namespace Mirasvit\Blog\Model;
 
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractModel;
+use Magento\Framework\Model\Context;
+use Magento\Framework\Registry;
 
+/**
+ * @method string getName()
+ * @method $this setName($name)
+ */
 class Tag extends AbstractModel implements IdentityInterface
 {
     const CACHE_TAG = 'blog_tag';
+
+    /**
+     * @var Url
+     */
+    protected $url;
+
+    /**
+     * @param Url      $url
+     * @param Context  $context
+     * @param Registry $registry
+     */
+    public function __construct(
+        Url $url,
+        Context $context,
+        Registry $registry
+    ) {
+        $this->url = $url;
+
+        parent::__construct($context, $registry);
+    }
 
     /**
      * Get identities.
@@ -34,13 +60,21 @@ class Tag extends AbstractModel implements IdentityInterface
     public function getOrCreate($tag)
     {
         $tag = trim($tag);
-        $this->load($tag, 'tag');
+        $this->load($tag, 'name');
 
         if (!$this->getId()) {
-            $this->setTag($tag)
+            $this->setName($tag)
                 ->save();
         }
 
         return $this;
+    }
+
+    /**
+     * @return string
+     */
+    public function getUrl()
+    {
+        return $this->url->getTagUrl($this);
     }
 }

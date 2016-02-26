@@ -23,6 +23,11 @@ class Url
     protected $categoryFactory;
 
     /**
+     * @var TagFactory
+     */
+    protected $tagFactory;
+
+    /**
      * @var UrlInterface
      */
     protected $urlManager;
@@ -31,17 +36,20 @@ class Url
      * @param ScopeConfigInterface $scopeConfig
      * @param PostFactory          $postFactory
      * @param CategoryFactory      $categoryFactory
+     * @param TagFactory           $tagFactory
      * @param UrlInterface         $urlManager
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         PostFactory $postFactory,
         CategoryFactory $categoryFactory,
+        TagFactory $tagFactory,
         UrlInterface $urlManager
     ) {
         $this->scopeConfig = $scopeConfig;
         $this->postFactory = $postFactory;
         $this->categoryFactory = $categoryFactory;
+        $this->tagFactory = $tagFactory;
         $this->urlManager = $urlManager;
     }
 
@@ -72,6 +80,15 @@ class Url
     }
 
     /**
+     * @param Tag $tag
+     * @return string
+     */
+    public function getTagUrl($tag)
+    {
+        return $this->urlManager->getUrl($this->getBasePath() . '/tag/' . strtolower($tag->getName()));
+    }
+
+    /**
      * @param string $pathInfo
      * @return bool|DataObject
      */
@@ -90,6 +107,7 @@ class Url
 
         if (count($parts) > 1) {
             unset($parts[0]);
+            $parts = array_values($parts);
             $urlKey = implode('/', $parts);
             $urlKey = urldecode($urlKey);
             $urlKey = $this->trimSuffix($urlKey);
@@ -97,6 +115,22 @@ class Url
             $urlKey = '';
         }
 
+        if ($parts[0] == 'tag' && isset($parts[1])) {
+            $tag = $this->tagFactory->create()->getCollection()
+                ->addFieldToFilter('url_key', $parts[1])
+                ->getFirstItem();
+
+            if ($tag->getId()) {
+                return new DataObject([
+                    'module_name'     => 'blog',
+                    'controller_name' => 'tag',
+                    'action_name'     => 'view',
+                    'params'          => ['id' => $tag->getId()],
+                ]);
+            } else {
+                return false;
+            }
+        }
 
         $post = $this->postFactory->create()->getCollection()
             ->addAttributeToFilter('url_key', $urlKey)

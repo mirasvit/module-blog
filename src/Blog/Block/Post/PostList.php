@@ -89,6 +89,7 @@ class PostList extends Template implements IdentityInterface
     public function getToolbarBlock()
     {
         $blockName = $this->getToolbarBlockName();
+
         if ($blockName) {
             $block = $this->getLayout()->getBlock($blockName);
             if ($block) {
@@ -160,11 +161,11 @@ class PostList extends Template implements IdentityInterface
     }
 
     /**
-     * @return \Mirasvit\Kb\Model\Tag
+     * @return \Mirasvit\Blog\Model\Tag
      */
     public function getTag()
     {
-        return $this->registry->registry('current_tag');
+        return $this->registry->registry('current_blog_tag');
     }
 
     /**
@@ -172,7 +173,7 @@ class PostList extends Template implements IdentityInterface
      */
     public function getSearchQuery()
     {
-        return $this->registry->registry('search_query');
+        return $this->registry->registry('current_blog_search_query');
     }
 
     /**
@@ -190,7 +191,7 @@ class PostList extends Template implements IdentityInterface
             if ($category = $this->getCategory()) {
                 $collection->addCategoryFilter($category);
             } elseif ($tag = $this->getTag()) {
-                $collection->addTagFilter($tag->getId());
+                $collection->addTagFilter($tag);
             } elseif ($q = $this->getSearchQuery()) {
                 $this->kbData->addSearchFilter($collection, $q);
             }

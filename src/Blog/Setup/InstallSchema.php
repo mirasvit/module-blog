@@ -80,11 +80,17 @@ class InstallSchema implements InstallSchemaInterface
                 ['identity' => true, 'nullable' => false, 'primary' => true],
                 'Tag ID'
             )->addColumn(
-                'tag',
+                'name',
                 Table::TYPE_TEXT,
                 255,
                 [],
-                'tag'
+                'Name'
+            )->addColumn(
+                'url_key',
+                Table::TYPE_TEXT,
+                255,
+                [],
+                'Url Key'
             )->setComment('Tag Table');
         $installer->getConnection()->createTable($table);
 

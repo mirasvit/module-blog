@@ -6,7 +6,7 @@ $max = $block->getMaxPopularity();
     <div class="block-content">
         <?php foreach ($block->getCollection() as $tag): ?>
             <a href="<?= $tag->getUrl() ?>" style="font-size: <?= ($tag->getPopularity() / $max * 3.0) ?>em">
-                <?= $tag->getTag() ?>
+                <?= $tag->getName() ?>
             </a>
         <?php endforeach ?>
     </div>

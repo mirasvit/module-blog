@@ -39,7 +39,7 @@ $post = $block->getPost();
             <span class="blog__post-footer-tags">
                 <i class="fa fa-fw fa-tags"></i>
                 <?php foreach ($post->getTags() as $tag): ?>
-                    <a href="<?= $tag->getUrl() ?>" rel="tag"><?= $tag->getTag() ?></a>
+                    <a href="<?= $tag->getUrl() ?>" rel="tag"><?= $tag->getName() ?></a>
                 <?php endforeach ?>
             </span>
         <?php endif ?>

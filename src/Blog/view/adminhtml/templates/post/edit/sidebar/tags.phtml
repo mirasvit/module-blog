@@ -10,7 +10,7 @@
 
         <ul id="myTags" class="blog__post-tags">
             <?php foreach ($block->getTags() as $tag): ?>
-                <li><?= $tag->getTag() ?></li>
+                <li><?= $tag->getName() ?></li>
             <?php endforeach ?>
         </ul>
     </fieldset>
