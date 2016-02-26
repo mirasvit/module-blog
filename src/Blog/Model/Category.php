@@ -18,6 +18,8 @@ use Magento\Framework\DataObject\IdentityInterface;
  * @method string getPath()
  * @method $this setPath($path)
  *
+ * @method int getLevel()
+ *
  * @method int getChildrenCount()
  * @method $this setChildrenCount($count)
  *
@@ -79,6 +81,9 @@ class Category extends AbstractExtensibleModel implements IdentityInterface
         $this->_init('Mirasvit\Blog\Model\ResourceModel\Category');
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getIdentities()
     {
         return [self::CACHE_TAG . '_' . $this->getId()];

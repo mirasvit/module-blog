@@ -49,6 +49,9 @@ class Sidebar extends Template
     public function getTree()
     {
         return $this->categoryCollectionFactory->create()
+            ->addAttributeToSelect('*')
+            ->addVisibilityFilter()
+            ->excludeRoot()
             ->getTree();
     }
 

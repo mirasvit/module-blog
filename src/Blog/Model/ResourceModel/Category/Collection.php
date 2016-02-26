@@ -7,6 +7,11 @@ use Magento\Framework\App\ObjectManager;
 class Collection extends AbstractCollection
 {
     /**
+     * @var bool
+     */
+    protected $fromRoot = true;
+
+    /**
      * {@inheritdoc}
      */
     protected function _construct()
@@ -23,6 +28,25 @@ class Collection extends AbstractCollection
     }
 
     /**
+     * @return $this
+     */
+    public function addVisibilityFilter()
+    {
+        $this->addAttributeToFilter('status', 1);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
+    public function excludeRoot()
+    {
+        $this->fromRoot = false;
+        return $this->addFieldToFilter('entity_id', ['neq' => 1]);
+    }
+
+    /**
      * @param int|null $parentId
      * @return \Mirasvit\Blog\Model\Category[]
      */
@@ -31,20 +55,18 @@ class Collection extends AbstractCollection
         $list = [];
 
         if ($parentId == null) {
-            $parentId = 0;
+            $parentId = $this->fromRoot ? 0 : 1;
         }
 
-        $collection = ObjectManager::getInstance()
-            ->create('Mirasvit\Blog\Model\ResourceModel\Category\Collection')
-            ->addAttributeToSelect('*')
-            ->addFieldToFilter('parent_id', $parentId)
+        $collection = clone $this;
+        $collection->addFieldToFilter('parent_id', $parentId)
             ->setOrder('position', 'asc');
 
         foreach ($collection as $item) {
             $list[$item->getId()] = $item;
             if ($item->getChildrenCount()) {
-                $childrens = $this->getTree($item->getId());
-                foreach ($childrens as $child) {
+                $items = $this->getTree($item->getId());
+                foreach ($items as $child) {
                     $list[$child->getId()] = $child;
                 }
             }
@@ -60,7 +82,7 @@ class Collection extends AbstractCollection
     {
         $result = [];
 
-        foreach ($this->getTree() as $item) {
+        foreach ($this->getTree(0) as $item) {
             $result[] = [
                 'value' => $item->getId(),
                 'label' => str_repeat(' ', $item->getLevel() * 5) . $item->getName()

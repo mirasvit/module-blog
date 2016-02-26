@@ -32,7 +32,9 @@ class TopMenuObserver implements ObserverInterface
         /** @var \Magento\Framework\Data\Tree\Node $menu */
         $menu = $observer->getData('menu');
 
-        $categories = $this->categoryCollectionFactory->create();
+        $categories = $this->categoryCollectionFactory->create()
+            ->addAttributeToSelect('*')
+            ->addVisibilityFilter();
 
         $tree = $categories->getTree();
 

@@ -46,7 +46,7 @@ class Meta extends Form
         $category = $this->registry->registry('current_model');
 
         $fieldset = $form->addFieldset('edit_fieldset', [
-            'legend' => __('Meta Information')
+            'legend' => __('Search Engine Optimization')
         ]);
 
         $fieldset->addField('meta_title', 'text', [

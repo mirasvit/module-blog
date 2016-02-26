@@ -37,6 +37,7 @@ class Grid extends ExtendedGrid
     protected function _construct()
     {
         parent::_construct();
+
         $this->setId('blog_category_grid');
         $this->setDefaultSort('entity_id');
         $this->setDefaultDir('DESC');
@@ -62,24 +63,18 @@ class Grid extends ExtendedGrid
      */
     protected function _prepareColumns()
     {
-        $this->addColumn('entity_id', [
-            'header' => __('ID'),
-            'index'  => 'entity_id'
-        ]);
-
         $this->addColumn('name', [
             'header' => __('Title'),
             'index'  => 'name'
         ]);
 
-        $this->addColumn('is_active', [
-            'header'       => __('Active'),
-            'index'        => 'is_active',
-            'filter_index' => 'main_table.is_active',
-            'type'         => 'options',
-            'options'      => [
-                0 => __('No'),
-                1 => __('Yes'),
+        $this->addColumn('status', [
+            'header'  => __('Status'),
+            'index'   => 'status',
+            'type'    => 'options',
+            'options' => [
+                0 => __('Disabled'),
+                1 => __('Enabled'),
             ],
         ]);
 
