@@ -3,12 +3,13 @@
 namespace Mirasvit\Blog\Block\Post;
 
 use Magento\Framework\View\Element\Template;
-use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
-use Mirasvit\Blog\Model\Config;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template\Context;
+use Magento\Framework\DataObject\IdentityInterface;
+use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
+use Mirasvit\Blog\Model\Config;
 
-class View extends Template
+class View extends Template implements IdentityInterface
 {
     /**
      * @var CategoryCollectionFactory
@@ -128,16 +129,6 @@ class View extends Template
     }
 
     /**
-     * @return string
-     *
-     * @throws \Magento\Framework\Exception\LocalizedException
-     */
-    public function getKbPageTitle()
-    {
-        return $this->getLayout()->getBlock('page.main.title')->toHtml();
-    }
-
-    /**
      * @return \Mirasvit\Blog\Model\Post
      */
     public function getPost()
@@ -145,15 +136,8 @@ class View extends Template
         return $this->registry->registry('current_blog_post');
     }
 
-    /**
-     * @return \Mirasvit\Kb\Model\ResourceModel\Category\Collection
-     */
-    public function getCategories()
+    public function getIdentities()
     {
-        $collection = $this->getArticle()->getCategories()
-            ->addFieldToFilter('is_active', true);
-
-        return $collection;
+        return $this->getPost()->getIdentities();
     }
-
 }

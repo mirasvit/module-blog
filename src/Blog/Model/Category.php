@@ -8,6 +8,7 @@ use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;
 use Magento\Framework\Api\ExtensionAttributesFactory;
 use Magento\Store\Model\StoreManagerInterface;
+use Magento\Framework\DataObject\IdentityInterface;
 
 /**
  * @method string getName()
@@ -32,9 +33,11 @@ use Magento\Store\Model\StoreManagerInterface;
  * @method $this setParentId($id)
  * @method bool hasParentId()
  */
-class Category extends AbstractExtensibleModel
+class Category extends AbstractExtensibleModel implements IdentityInterface
 {
     const ENTITY = 'blog_category';
+
+    const CACHE_TAG = 'blog_category';
 
     /**
      * @var StoreManagerInterface
@@ -74,6 +77,11 @@ class Category extends AbstractExtensibleModel
     protected function _construct()
     {
         $this->_init('Mirasvit\Blog\Model\ResourceModel\Category');
+    }
+
+    public function getIdentities()
+    {
+        return [self::CACHE_TAG . '_' . $this->getId()];
     }
 
     /**

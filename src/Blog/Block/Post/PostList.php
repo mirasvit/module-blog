@@ -136,18 +136,13 @@ class PostList extends Template implements IdentityInterface
      */
     public function getIdentities()
     {
-        return [];
-        //        die(__METHOD__);
-        //        $identities = [];
-        //        foreach ($this->getPostCollection() as $item) {
-        //            $identities = array_merge($identities, $item->getIdentities());
-        //        }
-        //        $category = $this->getCategory();
-        //        if ($category) {
-        //            $identities[] = Article::CACHE_KB_ARTICLE_CATEGORY . '_' . $category->getId();
-        //        }
-        //
-        //        return $identities;
+        $identities = [];
+
+        foreach ($this->getPostCollection() as $post) {
+            $identities = array_merge($identities, $post->getIdentities());
+        }
+
+        return $identities;
     }
 
     /**

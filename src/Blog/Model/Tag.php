@@ -10,6 +10,8 @@ use Magento\Framework\Registry;
 /**
  * @method string getName()
  * @method $this setName($name)
+ *
+ * @method string getUrlKey()
  */
 class Tag extends AbstractModel implements IdentityInterface
 {

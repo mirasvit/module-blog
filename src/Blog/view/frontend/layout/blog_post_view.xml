@@ -10,8 +10,7 @@
         </referenceContainer>
 
         <referenceContainer name="content">
-            <block name="blog.post.view" class="Mirasvit\Blog\Block\Post\View" template="post/view.phtml">
-
+            <block name="blog.post.view" class="Mirasvit\Blog\Block\Post\View" template="post/view.phtml" cacheable="true">
             </block>
         </referenceContainer>
     </body>

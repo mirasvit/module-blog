@@ -9,6 +9,7 @@ use Magento\Framework\Registry;
 use Magento\Framework\Api\ExtensionAttributesFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\User\Model\UserFactory;
+use Magento\Framework\DataObject\IdentityInterface;
 use Mirasvit\Blog\Model\ResourceModel\Tag\CollectionFactory as TagCollectionFactory;
 
 /**
@@ -29,9 +30,10 @@ use Mirasvit\Blog\Model\ResourceModel\Tag\CollectionFactory as TagCollectionFact
  * @method $this setType($type)
  * @method ResourceModel\Post getResource()
  */
-class Post extends AbstractExtensibleModel
+class Post extends AbstractExtensibleModel implements IdentityInterface
 {
     const ENTITY = 'blog_post';
+    const CACHE_TAG = 'blog_post';
 
     const TYPE_POST = 'post';
     const TYPE_REVISION = 'revision';
@@ -106,6 +108,14 @@ class Post extends AbstractExtensibleModel
     protected function _construct()
     {
         $this->_init('Mirasvit\Blog\Model\ResourceModel\Post');
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getIdentities()
+    {
+        return [self::CACHE_TAG . '_' . $this->getId()];
     }
 
     /**

@@ -85,7 +85,7 @@ class Url
      */
     public function getTagUrl($tag)
     {
-        return $this->urlManager->getUrl($this->getBasePath() . '/tag/' . strtolower($tag->getName()));
+        return $this->urlManager->getUrl($this->getBasePath() . '/tag/' . strtolower($tag->getUrlKey()));
     }
 
     /**
