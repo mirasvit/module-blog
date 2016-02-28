@@ -1,4 +1,15 @@
-# Magento 2 Blog Module
+# Live Blog | Magento 2 Blog Module by [Mirasvit](https://mirasvit.com/)
+
+## Key Features
+
+* SEO friendly URLs
+* Multi-level categories
+* Ability to preview post before publication or before save changes
+* RSS Feed
+* Tags
+* Disqus comments
+* Featured image
+* Ability to pin post at the top
 
 ## Installation
 
