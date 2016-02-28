@@ -82,6 +82,8 @@ class Collection extends AbstractCollection
     {
         $result = [];
 
+        $this->addAttributeToSelect('name');
+
         foreach ($this->getTree(0) as $item) {
             $result[] = [
                 'value' => $item->getId(),

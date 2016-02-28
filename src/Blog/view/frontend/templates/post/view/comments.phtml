@@ -1,0 +1,23 @@
+<?php
+//@codingStandardsIgnoreFile
+
+/** @var \Mirasvit\Blog\Block\Post\Meta $block */
+?>
+
+<?php if ($block->getCommentProvider()): ?>
+    <div id="disqus_thread"></div>
+    <script>
+        var disqus_config = function () {
+            this.page.url = '<?=$block->getPost()->getUrl() ?>';
+            this.page.identifier = '<?=$block->getPost()->getUrlKey() ?>';
+        };
+        (function () {
+            var d = document, s = d.createElement('script');
+
+            s.src = '//<?=$block->getDisqusShortname() ?>.disqus.com/embed.js';
+
+            s.setAttribute('data-timestamp', +new Date());
+            (d.head || d.body).appendChild(s);
+        })();
+    </script>
+<?php endif ?>

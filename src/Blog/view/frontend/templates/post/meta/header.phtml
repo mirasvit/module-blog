@@ -1,0 +1,29 @@
+<?php
+//@codingStandardsIgnoreFile
+
+/** @var \Mirasvit\Blog\Block\Post\Meta $block */
+
+$post = $block->getPost();
+?>
+<p class="blog__post-meta">
+    <time class="blog__post-meta-time" itemprop="datePublished">
+        <i class="fa fa-fw fa-calendar"></i>
+        <?= $block->formatDate($post->getCreatedAt(), \IntlDateFormatter::MEDIUM) ?>
+    </time>
+
+    <span class="blog__post-meta-author" itemprop="author" itemscope=""
+          itemtype="http://schema.org/Person">
+        <i class="fa fa-fw fa-user"></i>
+        <span itemprop="name">
+            <?= $post->getAuthor()->getName() ?>
+        </span>
+    </span>
+
+    <?php if ($block->getCommentProvider()): ?>
+    <span class="blog__post-meta-comments">
+        <i class="fa fa-fw fa-comments"></i>
+        <span class="disqus-comment-count"
+              data-disqus-identifier="<?= $block->getPost()->getUrlKey() ?>"><?= __('0 Comments') ?></span>
+    </span>
+    <?php endif ?>
+</p>

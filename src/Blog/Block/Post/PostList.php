@@ -3,22 +3,17 @@
 namespace Mirasvit\Blog\Block\Post;
 
 use Magento\Framework\DataObject\IdentityInterface;
-use Magento\Framework\View\Element\Template;
+use Mirasvit\Blog\Model\Config;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\Registry;
 use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
 
-class PostList extends Template implements IdentityInterface
+class PostList extends AbstractBlock implements IdentityInterface
 {
     /**
      * @var string
      */
     protected $defaultToolbarBlock = 'Mirasvit\Blog\Block\Post\PostList\Toolbar';
-
-    /**
-     * @var \Magento\Framework\Registry
-     */
-    protected $registry;
 
     /**
      * @var PostCollectionFactory
@@ -32,18 +27,19 @@ class PostList extends Template implements IdentityInterface
 
     /**
      * @param PostCollectionFactory $tagCollectionFactory
+     * @param Config                $config
      * @param Registry              $registry
      * @param Context               $context
      */
     public function __construct(
         PostCollectionFactory $tagCollectionFactory,
+        Config $config,
         Registry $registry,
         Context $context
     ) {
         $this->postCollectionFactory = $tagCollectionFactory;
-        $this->registry = $registry;
 
-        parent::__construct($context);
+        parent::__construct($config, $registry, $context);
     }
 
     /**

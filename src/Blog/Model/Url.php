@@ -33,6 +33,12 @@ class Url
     protected $urlManager;
 
     /**
+     * @var Config
+     */
+    protected $config;
+
+    /**
+     * @param Config               $config
      * @param ScopeConfigInterface $scopeConfig
      * @param PostFactory          $postFactory
      * @param CategoryFactory      $categoryFactory
@@ -40,12 +46,14 @@ class Url
      * @param UrlInterface         $urlManager
      */
     public function __construct(
+        Config $config,
         ScopeConfigInterface $scopeConfig,
         PostFactory $postFactory,
         CategoryFactory $categoryFactory,
         TagFactory $tagFactory,
         UrlInterface $urlManager
     ) {
+        $this->config = $config;
         $this->scopeConfig = $scopeConfig;
         $this->postFactory = $postFactory;
         $this->categoryFactory = $categoryFactory;
@@ -56,9 +64,9 @@ class Url
     /**
      * @return string
      */
-    public function getBasePath()
+    public function getBaseUrl()
     {
-        return 'blog';
+        return $this->urlManager->getUrl($this->config->getBaseRoute());
     }
 
     /**
@@ -67,7 +75,7 @@ class Url
      */
     public function getPostUrl($post)
     {
-        return $this->urlManager->getUrl($this->getBasePath() . '/' . $post->getUrlKey());
+        return $this->urlManager->getUrl($this->config->getBaseRoute() . '/' . $post->getUrlKey());
     }
 
     /**
@@ -76,7 +84,7 @@ class Url
      */
     public function getCategoryUrl($category)
     {
-        return $this->urlManager->getUrl($this->getBasePath() . '/' . $category->getUrlKey());
+        return $this->urlManager->getUrl($this->config->getBaseRoute() . '/' . $category->getUrlKey());
     }
 
     /**
@@ -85,7 +93,7 @@ class Url
      */
     public function getTagUrl($tag)
     {
-        return $this->urlManager->getUrl($this->getBasePath() . '/tag/' . strtolower($tag->getUrlKey()));
+        return $this->urlManager->getUrl($this->config->getBaseRoute() . '/tag/' . strtolower($tag->getUrlKey()));
     }
 
     /**
@@ -101,7 +109,7 @@ class Url
             $parts[0] = $this->trimSuffix($parts[0]);
         }
 
-        if ($parts[0] != $this->getBasePath()) {
+        if ($parts[0] != $this->config->getBaseRoute()) {
             return false;
         }
 
@@ -113,6 +121,15 @@ class Url
             $urlKey = $this->trimSuffix($urlKey);
         } else {
             $urlKey = '';
+        }
+
+        if ($urlKey == '') {
+            return new DataObject([
+                'module_name'     => 'blog',
+                'controller_name' => 'category',
+                'action_name'     => 'index',
+                'params'          => [],
+            ]);
         }
 
         if ($parts[0] == 'tag' && isset($parts[1])) {

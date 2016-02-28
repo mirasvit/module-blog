@@ -1,0 +1,9 @@
+<?php
+//@codingStandardsIgnoreFile
+
+/** @var \Mirasvit\Blog\Block\Post\Meta $block */
+?>
+
+<?php if ($block->getCommentProvider()): ?>
+    <script id="dsq-count-scr" src="//<?= $block->getDisqusShortname() ?>.disqus.com/count.js"></script>
+<?php endif ?>

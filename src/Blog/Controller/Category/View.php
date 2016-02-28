@@ -3,8 +3,9 @@
 namespace Mirasvit\Blog\Controller\Category;
 
 use Magento\Framework\Controller\ResultFactory;
+use Mirasvit\Blog\Controller\Category;
 
-class View extends \Mirasvit\Blog\Controller\Category
+class View extends Category
 {
     /**
      * @return \Magento\Backend\Model\View\Result\Page

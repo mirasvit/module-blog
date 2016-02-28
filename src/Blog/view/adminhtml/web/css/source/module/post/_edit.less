@@ -83,7 +83,8 @@
 }
 
 .blog__post-sidebar {
-    #mix-grid .column(3, 12);
+    float: left;
+    width: calc(~"(100%) * 0.25 - 10px");
     margin-left: 0;
 
     .blog__post-fieldset {
@@ -119,8 +120,7 @@
 }
 
 .blog__post-details {
-    #mix-grid .width(9, 12);
-
+    width: calc(~"(100%) * 0.75 - 10px");
     float: right;
 }
 

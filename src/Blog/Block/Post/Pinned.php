@@ -51,8 +51,11 @@ class Pinned extends Template
         $collection = $this->postCollectionFactory->create()
             ->addAttributeToSelect('*')
             ->addVisibilityFilter()
-            ->addAttributeToFilter('is_pinned', 1)
-            ->addCategoryFilter($this->getCurrentCategory());
+            ->addAttributeToFilter('is_pinned', 1);
+
+        if ($this->getCategory()) {
+            $collection->addCategoryFilter($this->getCategory());
+        }
 
         return $collection;
     }
@@ -60,7 +63,7 @@ class Pinned extends Template
     /**
      * @return \Mirasvit\Blog\Model\Category|false
      */
-    public function getCurrentCategory()
+    public function getCategory()
     {
         return $this->registry->registry('current_blog_category');
     }

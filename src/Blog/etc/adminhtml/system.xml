@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="mirasvit" translate="label" sortOrder="550">
+            <label>Mirasvit Extensions</label>
+        </tab>
+
+        <section id="blog" showInDefault="1" showInWebsite="1" showInStore="1" type="text" translate="label" sortOrder="100">
+            <label>Blog</label>
+            <tab>mirasvit</tab>
+            <resource>Mirasvit_Blog::blog_configuration</resource>
+
+            <group id="appearance" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10">
+                <label>Appearance</label>
+
+                <field id="menu_title" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Top Menu Title</label>
+                </field>
+
+                <field id="blog_name" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Blog Name</label>
+                </field>
+            </group>
+
+            <group id="seo" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+                <label>Search Engine Optimization</label>
+
+                <field id="base_route" translate="label" type="text" sortOrder="10" showInDefault="1">
+                    <label>Base URL</label>
+                </field>
+
+                <field id="base_meta_title" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Base Meta Title</label>
+                </field>
+
+                <field id="base_meta_description" translate="label" type="textarea" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Base Meta Description</label>
+                </field>
+
+                <field id="base_meta_keywords" translate="label" type="textarea" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Base Meta Keywords</label>
+                </field>
+            </group>
+
+            <group id="comments" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+                <label>Comments</label>
+
+                <field id="provider" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Provider</label>
+                    <source_model>\Mirasvit\Blog\Model\Config\Source\CommentProvider</source_model>
+                </field>
+
+                <field id="disqus_shortname" translate="label" type="text" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Disqus Blog Shortname</label>
+                    <depends>
+                        <field id="*/*/provider">disqus</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

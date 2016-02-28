@@ -8,6 +8,7 @@ use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template\Context;
 use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
 use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
+use Mirasvit\Blog\Model\Config;
 
 class View extends Template implements IdentityInterface
 {
@@ -32,8 +33,14 @@ class View extends Template implements IdentityInterface
     protected $context;
 
     /**
+     * @var Config
+     */
+    protected $config;
+
+    /**
      * @param PostCollectionFactory     $postCollectionFactory
      * @param CategoryCollectionFactory $categoryCollectionFactory
+     * @param Config                    $config
      * @param Registry                  $registry
      * @param Context                   $context
      * @param array                     $data
@@ -41,12 +48,14 @@ class View extends Template implements IdentityInterface
     public function __construct(
         PostCollectionFactory $postCollectionFactory,
         CategoryCollectionFactory $categoryCollectionFactory,
+        Config $config,
         Registry $registry,
         Context $context,
         array $data = []
     ) {
         $this->postCollectionFactory = $postCollectionFactory;
         $this->categoryCollectionFactory = $categoryCollectionFactory;
+        $this->config = $config;
         $this->registry = $registry;
         $this->context = $context;
 
@@ -55,8 +64,8 @@ class View extends Template implements IdentityInterface
 
     /**
      * @return $this
-     *
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
      */
     protected function _prepareLayout()
     {
@@ -64,48 +73,66 @@ class View extends Template implements IdentityInterface
 
         $category = $this->getCategory();
 
-        $metaTitle = $category->getMetaTitle();
-        if (!$metaTitle) {
-            $metaTitle = $category->getName();
-        }
+        $title = $category ? $category->getName() : $this->config->getBlogName();
 
-        $metaDescription = $category->getMetaDescription();
-        if (!$metaDescription) {
-            $metaDescription = $metaTitle;
-        }
+        $metaTitle = $category
+            ? ($category->getMetaTitle() ? $category->getMetaTitle() : $category->getName())
+            : $this->config->getBaseMetaTitle();
+
+        $metaDescription = $category
+            ? ($category->getMetaDescription() ? $category->getMetaDescription() : $category->getName())
+            : $this->config->getBaseMetaDescription();
+
+        $metaKeywords = $category
+            ? ($category->getMetaKeywords() ? $category->getMetaKeywords() : $category->getName())
+            : $this->config->getBaseMetaKeywords();
 
         $this->pageConfig->getTitle()->set($metaTitle);
         $this->pageConfig->setDescription($metaDescription);
-        $this->pageConfig->setKeywords($category->getMetaKeywords());
+        $this->pageConfig->setKeywords($metaKeywords);
 
-        if ($category && ($breadcrumbs = $this->getLayout()->getBlock('breadcrumbs'))) {
+        /** @var \Magento\Theme\Block\Html\Title $pageMainTitle */
+        $pageMainTitle = $this->getLayout()->getBlock('page.main.title');
+        if ($pageMainTitle) {
+            $pageMainTitle->setPageTitle($title);
+        }
+
+        /** @var \Magento\Theme\Block\Html\Breadcrumbs $breadcrumbs */
+        if ($breadcrumbs = $this->getLayout()->getBlock('breadcrumbs')) {
             $breadcrumbs->addCrumb('home', [
                 'label' => __('Home'),
                 'title' => __('Go to Home Page'),
                 'link'  => $this->context->getUrlBuilder()->getBaseUrl(),
+            ])->addCrumb('blog', [
+                'label' => $this->config->getBlogName(),
+                'title' => $this->config->getBlogName(),
+                'link'  => $this->config->getBaseUrl()
             ]);
 
-            $ids = $category->getParentIds();
+            if ($category) {
+                $ids = $category->getParentIds();
 
-            $ids[] = 0;
-            $parents = $this->categoryCollectionFactory->create()
-                ->addFieldToFilter('entity_id', $ids)
-                ->addNameToSelect()
-                ->setOrder('level', 'asc');
+                $ids[] = 0;
+                $parents = $this->categoryCollectionFactory->create()
+                    ->addFieldToFilter('entity_id', $ids)
+                    ->addNameToSelect()
+                    ->excludeRoot()
+                    ->setOrder('level', 'asc');
 
-            /** @var \Mirasvit\Blog\Model\Category $cat */
-            foreach ($parents as $cat) {
-                $breadcrumbs->addCrumb($cat->getId(), [
-                    'label' => $cat->getName(),
-                    'title' => $cat->getName(),
-                    'link'  => $cat->getUrl(),
+                /** @var \Mirasvit\Blog\Model\Category $cat */
+                foreach ($parents as $cat) {
+                    $breadcrumbs->addCrumb($cat->getId(), [
+                        'label' => $cat->getName(),
+                        'title' => $cat->getName(),
+                        'link'  => $cat->getUrl(),
+                    ]);
+                }
+
+                $breadcrumbs->addCrumb($category->getId(), [
+                    'label' => $category->getName(),
+                    'title' => $category->getName(),
                 ]);
             }
-
-            $breadcrumbs->addCrumb($category->getId(), [
-                'label' => $category->getName(),
-                'title' => $category->getName(),
-            ]);
         }
 
         return $this;

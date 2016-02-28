@@ -5,6 +5,7 @@ use Magento\Framework\Event\Observer as EventObserver;
 use Magento\Framework\Event\ObserverInterface;
 use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 use Magento\Framework\Data\Tree\Node as TreeNode;
+use Mirasvit\Blog\Model\Config;
 
 class TopMenuObserver implements ObserverInterface
 {
@@ -14,11 +15,19 @@ class TopMenuObserver implements ObserverInterface
     protected $categoryCollectionFactory;
 
     /**
+     * @var Config
+     */
+    protected $config;
+
+    /**
+     * @param Config                    $config
      * @param CategoryCollectionFactory $categoryCollectionFactory
      */
     public function __construct(
+        Config $config,
         CategoryCollectionFactory $categoryCollectionFactory
     ) {
+        $this->config = $config;
         $this->categoryCollectionFactory = $categoryCollectionFactory;
     }
 
@@ -34,15 +43,28 @@ class TopMenuObserver implements ObserverInterface
 
         $categories = $this->categoryCollectionFactory->create()
             ->addAttributeToSelect('*')
+            ->excludeRoot()
             ->addVisibilityFilter();
 
         $tree = $categories->getTree();
+
+        $rootNode = new TreeNode(
+            [
+                'id'   => 'blog-node-root',
+                'name' => $this->config->getMenuTitle(),
+                'url'  => $this->config->getBaseUrl()
+            ],
+            'id',
+            $menu->getTree(),
+            null
+        );
+        $menu->addChild($rootNode);
 
         foreach ($tree as $category) {
             if (isset($tree[$category->getParentId()])) {
                 $parentNode = $tree[$category->getParentId()]->getData('node');
             } else {
-                $parentNode = null;
+                $parentNode = $rootNode;
             }
 
             $node = new TreeNode(
