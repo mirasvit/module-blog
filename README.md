@@ -14,7 +14,10 @@ bin/magento setup:static-content:deploy
 ```
 
 ## Demo
-[http://blog.m2.mirasvit.com/](http://blog.m2.mirasvit.com/)
+[http://blog.m2.mirasvit.com/blog/fashion/](http://blog.m2.mirasvit.com/blog/fashion/)
+
+## Sample Data
+[https://github.com/mirasvit/module-blog-sample-data](https://github.com/mirasvit/module-blog-sample-data)
 
 ## Support
 [https://mirasvit.com/](https://mirasvit.com/)
