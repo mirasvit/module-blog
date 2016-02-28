@@ -25,18 +25,18 @@ class Recent extends Template
     protected $context;
 
     /**
-     * @param PostCollectionFactory $tagCollectionFactory
+     * @param PostCollectionFactory $postCollectionFactory
      * @param Registry              $registry
      * @param Context               $context
      * @param array                 $data
      */
     public function __construct(
-        PostCollectionFactory $tagCollectionFactory,
+        PostCollectionFactory $postCollectionFactory,
         Registry $registry,
         Context $context,
         array $data = []
     ) {
-        $this->postCollectionFactory = $tagCollectionFactory;
+        $this->postCollectionFactory = $postCollectionFactory;
         $this->registry = $registry;
         $this->context = $context;
 

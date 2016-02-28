@@ -88,6 +88,19 @@ class Url
     }
 
     /**
+     * @param Category $category
+     * @return string
+     */
+    public function getRssUrl($category = null)
+    {
+        if ($category) {
+            return $this->urlManager->getUrl($this->config->getBaseRoute() . '/rss/' . $category->getUrlKey());
+        }
+
+        return $this->urlManager->getUrl($this->config->getBaseRoute() . '/rss');
+    }
+
+    /**
      * @param Tag $tag
      * @return string
      */
@@ -147,6 +160,30 @@ class Url
             } else {
                 return false;
             }
+        }
+
+        if ($parts[0] == 'rss' && isset($parts[1])) {
+            $category = $this->categoryFactory->create()->getCollection()
+                ->addFieldToFilter('url_key', $parts[1])
+                ->getFirstItem();
+
+            if ($category->getId()) {
+                return new DataObject([
+                    'module_name'     => 'blog',
+                    'controller_name' => 'category',
+                    'action_name'     => 'rss',
+                    'params'          => ['id' => $category->getId()],
+                ]);
+            } else {
+                return false;
+            }
+        } elseif ($parts[0] == 'rss') {
+            return new DataObject([
+                'module_name'     => 'blog',
+                'controller_name' => 'category',
+                'action_name'     => 'rss',
+                'params'          => [],
+            ]);
         }
 
         $post = $this->postFactory->create()->getCollection()

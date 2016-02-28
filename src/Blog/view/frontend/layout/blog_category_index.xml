@@ -12,6 +12,8 @@
             <block class="Mirasvit\Blog\Block\Post\Recent" name="blog.post.recent" template="post/recent.phtml"/>
 
             <block class="Mirasvit\Blog\Block\Tag\Cloud" name="blog.tag.cloud" template="tag/cloud.phtml"/>
+
+            <block class="Mirasvit\Blog\Block\Category\Rss" name="blog.category.rss" template="category/rss/link.phtml"/>
         </referenceContainer>
 
         <referenceContainer name="content">

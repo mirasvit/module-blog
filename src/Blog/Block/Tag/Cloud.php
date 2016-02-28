@@ -30,18 +30,18 @@ class Cloud extends Template
     protected $collection;
 
     /**
-     * @param TagCollectionFactory $tagCollectionFactory
+     * @param TagCollectionFactory $postCollectionFactory
      * @param Registry             $registry
      * @param Context              $context
      * @param array                $data
      */
     public function __construct(
-        TagCollectionFactory $tagCollectionFactory,
+        TagCollectionFactory $postCollectionFactory,
         Registry $registry,
         Context $context,
         array $data = []
     ) {
-        $this->tagCollectionFactory = $tagCollectionFactory;
+        $this->tagCollectionFactory = $postCollectionFactory;
         $this->registry = $registry;
         $this->context = $context;
 

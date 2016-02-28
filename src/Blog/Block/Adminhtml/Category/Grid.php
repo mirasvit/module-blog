@@ -15,18 +15,18 @@ class Grid extends ExtendedGrid
     protected $categoryCollectionFactory;
 
     /**
-     * @param CategoryCollectionFactory $tagCollectionFactory
+     * @param CategoryCollectionFactory $postCollectionFactory
      * @param Context                   $context
      * @param BackendHelper             $backendHelper
      * @param array                     $data
      */
     public function __construct(
-        CategoryCollectionFactory $tagCollectionFactory,
+        CategoryCollectionFactory $postCollectionFactory,
         Context $context,
         BackendHelper $backendHelper,
         array $data = []
     ) {
-        $this->categoryCollectionFactory = $tagCollectionFactory;
+        $this->categoryCollectionFactory = $postCollectionFactory;
 
         parent::__construct($context, $backendHelper, $data);
     }

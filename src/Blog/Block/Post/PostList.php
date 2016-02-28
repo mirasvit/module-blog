@@ -26,18 +26,18 @@ class PostList extends AbstractBlock implements IdentityInterface
     protected $collection;
 
     /**
-     * @param PostCollectionFactory $tagCollectionFactory
+     * @param PostCollectionFactory $postCollectionFactory
      * @param Config                $config
      * @param Registry              $registry
      * @param Context               $context
      */
     public function __construct(
-        PostCollectionFactory $tagCollectionFactory,
+        PostCollectionFactory $postCollectionFactory,
         Config $config,
         Registry $registry,
         Context $context
     ) {
-        $this->postCollectionFactory = $tagCollectionFactory;
+        $this->postCollectionFactory = $postCollectionFactory;
 
         parent::__construct($config, $registry, $context);
     }

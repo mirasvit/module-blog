@@ -69,7 +69,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     protected $config;
 
     /**
-     * @param CategoryFactory            $tagFactory
+     * @param CategoryFactory            $postFactory
      * @param TagCollectionFactory       $tagCollectionFactory
      * @param UserFactory                $userFactory
      * @param Config                     $config
@@ -81,7 +81,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
      * @param AttributeValueFactory      $customAttributeFactory
      */
     public function __construct(
-        CategoryFactory $tagFactory,
+        CategoryFactory $postFactory,
         TagCollectionFactory $tagCollectionFactory,
         UserFactory $userFactory,
         Config $config,
@@ -92,7 +92,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
         ExtensionAttributesFactory $extensionFactory,
         AttributeValueFactory $customAttributeFactory
     ) {
-        $this->categoryFactory = $tagFactory;
+        $this->categoryFactory = $postFactory;
         $this->tagCollectionFactory = $tagCollectionFactory;
         $this->userFactory = $userFactory;
         $this->config = $config;

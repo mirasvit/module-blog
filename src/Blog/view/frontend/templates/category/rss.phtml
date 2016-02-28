@@ -1,0 +1,34 @@
+<?php
+//@codingStandardsIgnoreFile
+
+/** @var \Mirasvit\Blog\Block\Category\Rss $block */
+$config = $block->getConfig();
+?>
+<rss xmlns:content="http://purl.org/rss/1.0/modules/content/" xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+     xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:atom="http://www.w3.org/2005/Atom"
+     xmlns:sy="http://purl.org/rss/1.0/modules/syndication/" xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+     version="2.0">
+    <channel>
+        <title><![CDATA[<?= $config->getBlogName() ?>]]></title>
+        <atom:link href="https://mirasvit.com/blog/category/updates/feed/" rel="self" type="application/rss+xml"/>
+        <link>
+        <![CDATA[<?= $config->getBaseUrl() ?>]]></link>
+        <description><![CDATA[<?= $config->getBaseMetaDescription() ?>]]></description>
+        <lastBuildDate><?=date('D, d M Y H:i:s +0000') ?></lastBuildDate>
+        <sy:updatePeriod>hourly</sy:updatePeriod>
+        <sy:updateFrequency>1</sy:updateFrequency>
+        <?php foreach ($block->getCollection() as $post): ?>
+            <item>
+                <title><![CDATA[<?=$post->getName() ?>]]></title>
+                <link><![CDATA[<?=$post->getUrl() ?>]]></link>
+                <pubDate><?=date('D, d M Y H:i:s +0000', strtotime($post->getCreatedAt())) ?></pubDate>
+                <dc:creator><?=$post->getAuthor()->getName() ?></dc:creator>
+                <guid isPermaLink="false"><![CDATA[<?=$post->getUrl() ?>]]></guid>
+                <description><![CDATA[<?=$post->getShortContent() ?>]]></description>
+                <image>
+                    <url><?=$post->getFeaturedImageUrl() ?></url>
+                </image>
+            </item>
+        <?php endforeach ?>
+    </channel>
+</rss>

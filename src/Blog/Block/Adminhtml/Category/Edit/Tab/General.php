@@ -26,20 +26,20 @@ class General extends Form
     protected $categoryCollectionFactory;
 
     /**
-     * @param CategoryCollectionFactory $tagCollectionFactory
+     * @param CategoryCollectionFactory $postCollectionFactory
      * @param FormFactory               $formFactory
      * @param Registry                  $registry
      * @param Context                   $context
      * @param array                     $data
      */
     public function __construct(
-        CategoryCollectionFactory $tagCollectionFactory,
+        CategoryCollectionFactory $postCollectionFactory,
         FormFactory $formFactory,
         Registry $registry,
         Context $context,
         array $data = []
     ) {
-        $this->categoryCollectionFactory = $tagCollectionFactory;
+        $this->categoryCollectionFactory = $postCollectionFactory;
         $this->formFactory = $formFactory;
         $this->registry = $registry;
 

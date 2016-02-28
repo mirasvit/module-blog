@@ -1,13 +1,15 @@
 <?php
 
-namespace Mirasvit\Blog\Block\Post;
+namespace Mirasvit\Blog\Block\Category;
 
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template\Context;
 use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
+use Mirasvit\Blog\Model\Config;
+use Mirasvit\Blog\Model\Url;
 
-class Pinned extends Template
+class Rss extends Template
 {
     /**
      * @var PostCollectionFactory
@@ -20,27 +22,43 @@ class Pinned extends Template
     protected $registry;
 
     /**
-     * @var Context
+     * @var Config
      */
-    protected $context;
+    protected $config;
+
+    /**
+     * @var Url
+     */
+    protected $url;
 
     /**
      * @param PostCollectionFactory $postCollectionFactory
+     * @param Config                $config
+     * @param Url                   $url
      * @param Registry              $registry
      * @param Context               $context
-     * @param array                 $data
      */
     public function __construct(
         PostCollectionFactory $postCollectionFactory,
+        Config $config,
+        Url $url,
         Registry $registry,
-        Context $context,
-        array $data = []
+        Context $context
     ) {
         $this->postCollectionFactory = $postCollectionFactory;
+        $this->config = $config;
+        $this->url = $url;
         $this->registry = $registry;
-        $this->context = $context;
 
-        parent::__construct($context, $data);
+        parent::__construct($context);
+    }
+
+    /**
+     * @return \Mirasvit\Blog\Model\Category|false
+     */
+    public function getCategory()
+    {
+        return $this->registry->registry('current_blog_category');
     }
 
     /**
@@ -51,20 +69,28 @@ class Pinned extends Template
         $collection = $this->postCollectionFactory->create()
             ->addAttributeToSelect('*')
             ->addVisibilityFilter()
-            ->addAttributeToFilter('is_pinned', 1);
-
-        if ($this->getCategory()) {
-            $collection->addCategoryFilter($this->getCategory());
+            ->setOrder('created_at')
+            ->setPageSize(10);
+        if ($category = $this->getCategory()) {
+            $collection->addCategoryFilter($category);
         }
 
         return $collection;
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Category|false
+     * @return Config
      */
-    public function getCategory()
+    public function getConfig()
     {
-        return $this->registry->registry('current_blog_category');
+        return $this->config;
+    }
+
+    /**
+     * @return string
+     */
+    public function getRssUrl()
+    {
+        return $this->url->getRssUrl($this->getCategory());
     }
 }

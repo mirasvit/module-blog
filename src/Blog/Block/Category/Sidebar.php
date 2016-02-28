@@ -25,18 +25,18 @@ class Sidebar extends Template
     protected $context;
 
     /**
-     * @param CategoryCollectionFactory $tagCollectionFactory
+     * @param CategoryCollectionFactory $postCollectionFactory
      * @param Registry                  $registry
      * @param Context                   $context
      * @param array                     $data
      */
     public function __construct(
-        CategoryCollectionFactory $tagCollectionFactory,
+        CategoryCollectionFactory $postCollectionFactory,
         Registry $registry,
         Context $context,
         array $data = []
     ) {
-        $this->categoryCollectionFactory = $tagCollectionFactory;
+        $this->categoryCollectionFactory = $postCollectionFactory;
         $this->registry = $registry;
         $this->context = $context;
 

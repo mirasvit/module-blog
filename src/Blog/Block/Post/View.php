@@ -21,18 +21,18 @@ class View extends AbstractBlock implements IdentityInterface
     protected $config;
 
     /**
-     * @param CategoryCollectionFactory $tagCollectionFactory
+     * @param CategoryCollectionFactory $postCollectionFactory
      * @param Config                    $config
      * @param Registry                  $registry
      * @param Context                   $context
      */
     public function __construct(
-        CategoryCollectionFactory $tagCollectionFactory,
+        CategoryCollectionFactory $postCollectionFactory,
         Config $config,
         Registry $registry,
         Context $context
     ) {
-        $this->categoryCollectionFactory = $tagCollectionFactory;
+        $this->categoryCollectionFactory = $postCollectionFactory;
         $this->config = $config;
 
         parent::__construct($config, $registry, $context);
