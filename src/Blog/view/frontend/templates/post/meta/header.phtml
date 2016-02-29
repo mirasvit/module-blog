@@ -26,4 +26,8 @@ $post = $block->getPost();
               data-disqus-identifier="<?= $block->getPost()->getUrlKey() ?>"><?= __('0 Comments') ?></span>
     </span>
     <?php endif ?>
+
+    <?php if (!$block->getCategory()): ?>
+    <span class="addthis_sharing_toolbox blog__post-meta-sharing"></span>
+    <?php endif ?>
 </p>

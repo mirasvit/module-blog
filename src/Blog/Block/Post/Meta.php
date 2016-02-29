@@ -17,6 +17,14 @@ class Meta extends AbstractBlock
     }
 
     /**
+     * @return \Mirasvit\Blog\Model\Category
+     */
+    public function getCategory()
+    {
+        return $this->registry->registry('current_blog_category');
+    }
+
+    /**
      * @return string
      */
     public function getCommentProvider()
