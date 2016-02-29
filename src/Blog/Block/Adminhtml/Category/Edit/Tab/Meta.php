@@ -49,6 +49,12 @@ class Meta extends Form
             'legend' => __('Search Engine Optimization')
         ]);
 
+        $fieldset->addField('url_key', 'text', [
+            'label' => __('URL Key'),
+            'name'  => 'url_key',
+            'value' => $category->getUrlKey(),
+        ]);
+
         $fieldset->addField('meta_title', 'text', [
             'label' => __('Meta Title'),
             'name'  => 'meta_title',

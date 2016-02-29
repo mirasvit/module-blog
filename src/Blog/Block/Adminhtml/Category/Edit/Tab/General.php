@@ -85,16 +85,17 @@ class General extends Form
             $fieldset->addField('parent_id', 'radios', [
                 'label'    => __('Parent Category'),
                 'name'     => 'parent_id',
-                'value'    => $category->getParentId(),
+                'value'    => $category->getParentId() ? $category->getParentId() : 1,
                 'values'   => $categories,
                 'required' => true,
             ]);
         }
 
-        $fieldset->addField('url_key', 'text', [
-            'label' => __('URL Key'),
-            'name'  => 'url_key',
-            'value' => $category->getUrlKey(),
+        $fieldset->addField('status', 'select', [
+            'label'  => __('Status'),
+            'name'   => 'status',
+            'value'  => $category->getStatus(),
+            'values' => ['0' => __('Disabled'), '1' => __('Enabled')]
         ]);
 
         return parent::_prepareForm();
