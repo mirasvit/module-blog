@@ -50,9 +50,10 @@ class Grid extends ExtendedGrid
     protected function _prepareCollection()
     {
         $collection = $this->categoryCollectionFactory->create();
-        $this->setCollection($collection);
 
-        $collection->addAttributeToSelect('*');
+        $collection = $collection->addAttributeToSelect('*');
+
+        $this->setCollection($collection);
 
         return parent::_prepareCollection();
     }
@@ -64,15 +65,19 @@ class Grid extends ExtendedGrid
     protected function _prepareColumns()
     {
         $this->addColumn('name', [
-            'header' => __('Title'),
-            'index'  => 'name'
+            'header'   => __('Title'),
+            'index'    => 'name',
+            'filter'   => false,
+            'sortable' => false,
+            'renderer' => 'Mirasvit\Blog\Block\Adminhtml\Category\Grid\Renderer\Title'
         ]);
 
         $this->addColumn('status', [
-            'header'  => __('Status'),
-            'index'   => 'status',
-            'type'    => 'options',
-            'options' => [
+            'header'   => __('Status'),
+            'index'    => 'status',
+            'type'     => 'options',
+            'sortable' => false,
+            'options'  => [
                 0 => __('Disabled'),
                 1 => __('Enabled'),
             ],

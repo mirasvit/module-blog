@@ -6,7 +6,7 @@
         </tab>
 
         <section id="blog" showInDefault="1" showInWebsite="1" showInStore="1" type="text" translate="label" sortOrder="100">
-            <label>Blog</label>
+            <label>Blog MX</label>
             <tab>mirasvit</tab>
             <resource>Mirasvit_Blog::blog_configuration</resource>
 

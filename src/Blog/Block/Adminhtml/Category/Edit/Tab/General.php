@@ -77,18 +77,19 @@ class General extends Form
             'required' => true,
         ]);
 
+        if ($category->getId() != 1) {
+            $categories = $this->categoryCollectionFactory->create()
+                ->addAttributeToSelect('name')
+                ->toOptionArray();
 
-        $categories = $this->categoryCollectionFactory->create()
-            ->addAttributeToSelect('name')
-            ->toOptionArray();
-
-        $fieldset->addField('parent_id', 'radios', [
-            'label'    => __('Parent Category'),
-            'name'     => 'parent_id',
-            'value'    => $category->getParentId(),
-            'values'   => $categories,
-            'required' => true,
-        ]);
+            $fieldset->addField('parent_id', 'radios', [
+                'label'    => __('Parent Category'),
+                'name'     => 'parent_id',
+                'value'    => $category->getParentId(),
+                'values'   => $categories,
+                'required' => true,
+            ]);
+        }
 
         $fieldset->addField('url_key', 'text', [
             'label' => __('URL Key'),
