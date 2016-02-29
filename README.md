@@ -10,6 +10,7 @@
 * Disqus comments
 * Featured image
 * Ability to pin post at the top
+* Sharing buttons
 
 ## Installation
 
