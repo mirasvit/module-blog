@@ -1,4 +1,4 @@
-# Live Blog | Magento 2 Blog Module by [Mirasvit](https://mirasvit.com/)
+# Blog MX | Magento 2 Blog Module by [Mirasvit](https://mirasvit.com/)
 
 ## Key Features
 
