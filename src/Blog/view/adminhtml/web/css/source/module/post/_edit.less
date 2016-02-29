@@ -170,3 +170,25 @@
         }
     }
 }
+
+.blog__post-grid-actions {
+    white-space: nowrap;
+
+    span {
+        &:after {
+            content: ' | ';
+            margin-left: 10px;
+            margin-right: 10px;
+            display: inline-block;
+            color: #ddd;
+        }
+
+        &:last-child {
+            &:after {
+                content: '';
+                margin: 0;
+            }
+        }
+    }
+
+}

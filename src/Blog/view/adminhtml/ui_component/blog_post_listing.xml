@@ -289,6 +289,7 @@
                     <item name="resizeEnabled" xsi:type="boolean">false</item>
                     <item name="resizeDefaultWidth" xsi:type="string">107</item>
                     <item name="indexField" xsi:type="string">entity_id</item>
+                    <item name="bodyTmpl" xsi:type="string">blog/grid/cells/actions</item>
                 </item>
             </argument>
         </actionsColumn>

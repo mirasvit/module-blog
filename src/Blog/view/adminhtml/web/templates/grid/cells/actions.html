@@ -1,0 +1,16 @@
+<div class="blog__post-grid-actions">
+    <span data-bind="
+            repeat: {
+                foreach: $col.getVisibleActions($row()._rowIndex),
+                item: '$action'
+            }">
+        <a class="action-menu-item"
+           data-bind="
+            attr: {
+                href: $action().href
+            },
+            click: $col.getActionHandler($action()),
+            text: $action().label"
+        ></a>
+    </span>
+</div>
