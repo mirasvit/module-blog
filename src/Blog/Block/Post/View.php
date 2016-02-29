@@ -7,6 +7,7 @@ use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\DataObject\IdentityInterface;
 use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 use Mirasvit\Blog\Model\Config;
+use Magento\Cms\Model\Template\FilterProvider;
 
 class View extends AbstractBlock implements IdentityInterface
 {
@@ -21,19 +22,27 @@ class View extends AbstractBlock implements IdentityInterface
     protected $config;
 
     /**
+     * @var FilterProvider
+     */
+    protected $filterProvider;
+
+    /**
      * @param CategoryCollectionFactory $postCollectionFactory
      * @param Config                    $config
+     * @param FilterProvider            $filterProvider
      * @param Registry                  $registry
      * @param Context                   $context
      */
     public function __construct(
         CategoryCollectionFactory $postCollectionFactory,
         Config $config,
+        FilterProvider $filterProvider,
         Registry $registry,
         Context $context
     ) {
         $this->categoryCollectionFactory = $postCollectionFactory;
         $this->config = $config;
+        $this->filterProvider = $filterProvider;
 
         parent::__construct($config, $registry, $context);
     }
@@ -128,5 +137,13 @@ class View extends AbstractBlock implements IdentityInterface
     public function getIdentities()
     {
         return $this->getPost()->getIdentities();
+    }
+
+    /**
+     * @return string
+     */
+    public function getPostContent()
+    {
+        return $this->filterProvider->getPageFilter()->filter($this->getPost()->getContent());
     }
 }
