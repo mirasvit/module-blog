@@ -20,7 +20,7 @@ class Save extends Post
                 $data['is_pinned'] = false;
             }
 
-            if (is_array($data['featured_image'])) {
+            if (isset($data['featured_image']) && is_array($data['featured_image'])) {
                 unset($data['featured_image']);
             }
 
