@@ -35,7 +35,7 @@ class Edit extends Container
                         'data_attribute' => [
                             'mage-init' => [
                                 'button' => [
-                                    'event'  => 'saveAndContinueEdit',
+                                    'event'  => 'save',
                                     'target' => '#edit_form'
                                 ]
                             ]
@@ -43,11 +43,11 @@ class Edit extends Container
                     ],
                     [
                         'id'             => 'save-continue-button',
-                        'label'          => __('Save & Close'),
+                        'label'          => __('Save & Continue Edit'),
                         'data_attribute' => [
                             'mage-init' => [
                                 'button' => [
-                                    'event'  => 'save',
+                                    'event'  => 'saveAndContinueEdit',
                                     'target' => '#edit_form'
                                 ]
                             ]
