@@ -74,8 +74,8 @@ class PostActions extends Column
                             self::POST_URL_PATH_DELETE, ['id' => $item['entity_id']]),
                         'label'   => __('Delete'),
                         'confirm' => [
-                            'title'   => __('Delete ${ $.$data.title }'),
-                            'message' => __('Are you sure you wan\'t to delete a ${ $.$data.title } record?')
+                            'title'   => __('Delete ${ $.$data.name }'),
+                            'message' => __('Are you sure you wan\'t to delete a ${ $.$data.name } record?')
                         ]
                     ];
                 }
