@@ -151,6 +151,10 @@ class View extends Template implements IdentityInterface
      */
     public function getIdentities()
     {
-        return $this->getCategory()->getIdentities();
+        if ($this->getCategory()) {
+            return $this->getCategory()->getIdentities();
+        }
+
+        return [];
     }
 }
