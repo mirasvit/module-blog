@@ -5,5 +5,9 @@
         <referenceContainer name="content">
             <block name="blog.post.comments.count" class="Mirasvit\Blog\Block\Post\Meta" template="post/meta/js.phtml" after="-"/>
         </referenceContainer>
+        
+        <referenceContainer name="sidebar.main">
+            <block name="blog.post.search" class="Mirasvit\Blog\Block\Post\Search" template="post/search.phtml" before="-"/>
+        </referenceContainer>
     </body>
 </page>

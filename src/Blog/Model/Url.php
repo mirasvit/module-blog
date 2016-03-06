@@ -110,6 +110,14 @@ class Url
     }
 
     /**
+     * @return string
+     */
+    public function getSearchUrl()
+    {
+        return $this->urlManager->getUrl($this->config->getBaseRoute() . '/search/');
+    }
+
+    /**
      * @param string $pathInfo
      * @return bool|DataObject
      */
@@ -141,6 +149,15 @@ class Url
                 'module_name'     => 'blog',
                 'controller_name' => 'category',
                 'action_name'     => 'index',
+                'params'          => [],
+            ]);
+        }
+
+        if ($parts[0] == 'search') {
+            return new DataObject([
+                'module_name'     => 'blog',
+                'controller_name' => 'post',
+                'action_name'     => 'search',
                 'params'          => [],
             ]);
         }

@@ -56,6 +56,23 @@ class Collection extends AbstractCollection
     }
 
     /**
+     * @param string $q
+     * @return $this
+     */
+    public function addSearchFilter($q)
+    {
+        $likeExpression = $this->_resourceHelper->addLikeEscape($q, ['position' => 'any']);
+
+        $this->addAttributeToFilter([
+            ['attribute' => 'name', 'like' => $likeExpression],
+            ['attribute' => 'content', 'like' => $likeExpression],
+            ['attribute' => 'short_content', 'like' => $likeExpression]
+        ]);
+
+        return $this;
+    }
+
+    /**
      * @return $this
      */
     public function addPostFilter()

@@ -164,7 +164,7 @@ class PostList extends AbstractBlock implements IdentityInterface
      */
     public function getSearchQuery()
     {
-        return $this->registry->registry('current_blog_search_query');
+        return $this->registry->registry('current_blog_query');
     }
 
     /**
@@ -184,7 +184,7 @@ class PostList extends AbstractBlock implements IdentityInterface
             } elseif ($tag = $this->getTag()) {
                 $collection->addTagFilter($tag);
             } elseif ($q = $this->getSearchQuery()) {
-                $this->kbData->addSearchFilter($collection, $q);
+                $collection->addSearchFilter($q);
             }
 
             $collection->setCurPage($this->getCurrentPage());
