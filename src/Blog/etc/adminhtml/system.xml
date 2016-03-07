@@ -20,6 +20,10 @@
                 <field id="blog_name" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
                     <label>Blog Name</label>
                 </field>
+
+                <field id="date_format" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Date Format</label>
+                </field>
             </group>
 
             <group id="seo" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">

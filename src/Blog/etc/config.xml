@@ -6,6 +6,7 @@
             <appearance>
                 <menu_title>Blog</menu_title>
                 <blog_name>Blog</blog_name>
+                <date_format>F j, Y</date_format>
             </appearance>
 
             <seo>

@@ -39,4 +39,13 @@ class Meta extends AbstractBlock
     {
         return $this->config->getDisqusShortname();
     }
+
+    /**
+     * @param string $date
+     * @return string
+     */
+    public function toDateFormat($date)
+    {
+        return date($this->config->getDateFormat(), strtotime($date));
+    }
 }
