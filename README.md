@@ -24,6 +24,7 @@ Log in to the Magento server, go to your Magento install dir and run these comma
 composer config repositories.mirasvit-blog vcs https://github.com/mirasvit/module-blog
 composer require mirasvit/module-blog:dev-master
 
+bin/magento module:enable Mirasvit_Blog
 bin/magento setup:upgrade
 
 rm -rf pub/static/*; rm -rf var/view_preprocessed/*;
