@@ -2,22 +2,10 @@
 <page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd"
       layout="2columns-right">
+
+    <update handle="blog_default"/>
+
     <body>
-        <referenceBlock name="sidebar.additional" remove="true"/>
-
-        <referenceContainer name="sidebar.main" htmlTag="div" htmlClass="widget blog-sidebar__categories">
-            <block name="blog.post.search" class="Mirasvit\Blog\Block\Post\Search" template="post/search.phtml" before="-"/>
-
-            <block class="Mirasvit\Blog\Block\Category\Sidebar" name="blog.category.sidebar"
-                   template="category/sidebar.phtml"/>
-
-            <block class="Mirasvit\Blog\Block\Post\Recent" name="blog.post.recent" template="post/recent.phtml"/>
-
-            <block class="Mirasvit\Blog\Block\Tag\Cloud" name="blog.tag.cloud" template="tag/cloud.phtml"/>
-
-            <block class="Mirasvit\Blog\Block\Category\Rss" name="blog.category.rss" template="category/rss/link.phtml"/>
-        </referenceContainer>
-
         <referenceContainer name="content">
             <block name="blog.category.view" class="Mirasvit\Blog\Block\Category\View" template="category/view.phtml">
                 <block class="Mirasvit\Blog\Block\Post\Pinned" name="blog.post.pinned" template="post/pinned.phtml" />

@@ -70,15 +70,15 @@ class Publish extends \Magento\Backend\Block\Widget\Form
             'values' => $this->status->toOptionArray(),
         ]);
 
-        $dateFormat = $this->_localeDate->getDateFormat(\IntlDateFormatter::MEDIUM);
-        $timeFormat = $this->_localeDate->getTimeFormat(\IntlDateFormatter::SHORT);
+//        $dateFormat = $this->_localeDate->getDateFormat(\IntlDateFormatter::MEDIUM);
+//        $timeFormat = $this->_localeDate->getTimeFormat(\IntlDateFormatter::SHORT);
 
         $fieldset->addField('created_at', 'date', [
             'label'       => __('Published on'),
             'name'        => 'created_at',
             'value'       => $post->getCreatedAt(),
-            'date_format' => $dateFormat,
-            'time_format' => $timeFormat
+            'date_format' => 'MMM d, y',
+            'time_format' => 'h:mm a'
         ]);
 
         $fieldset->addField('is_pinned', 'checkbox', [

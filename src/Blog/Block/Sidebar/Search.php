@@ -1,44 +1,29 @@
 <?php
 
-namespace Mirasvit\Blog\Block\Post;
+namespace Mirasvit\Blog\Block\Sidebar;
 
 use Magento\Framework\View\Element\Template;
-use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template\Context;
 use Mirasvit\Blog\Model\Url;
 
 class Search extends Template
 {
     /**
-     * @var Registry
-     */
-    protected $registry;
-
-    /**
-     * @var Context
-     */
-    protected $context;
-
-    /**
-     * @var
+     * @var Url
      */
     protected $url;
 
     /**
-     * @param Url      $url
-     * @param Registry $registry
-     * @param Context  $context
-     * @param array    $data
+     * @param Url     $url
+     * @param Context $context
+     * @param array   $data
      */
     public function __construct(
         Url $url,
-        Registry $registry,
         Context $context,
         array $data = []
     ) {
         $this->url = $url;
-        $this->registry = $registry;
-        $this->context = $context;
 
         parent::__construct($context, $data);
     }

@@ -1,18 +1,18 @@
 <?php
 
-namespace Mirasvit\Blog\Block\Post;
+namespace Mirasvit\Blog\Block\Sidebar;
 
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template\Context;
-use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
+use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 
-class Recent extends Template
+class CategoryTree extends Template
 {
     /**
-     * @var PostCollectionFactory
+     * @var CategoryCollectionFactory
      */
-    protected $postCollectionFactory;
+    protected $categoryCollectionFactory;
 
     /**
      * @var Registry
@@ -25,18 +25,18 @@ class Recent extends Template
     protected $context;
 
     /**
-     * @param PostCollectionFactory $postCollectionFactory
-     * @param Registry              $registry
-     * @param Context               $context
-     * @param array                 $data
+     * @param CategoryCollectionFactory $postCollectionFactory
+     * @param Registry                  $registry
+     * @param Context                   $context
+     * @param array                     $data
      */
     public function __construct(
-        PostCollectionFactory $postCollectionFactory,
+        CategoryCollectionFactory $postCollectionFactory,
         Registry $registry,
         Context $context,
         array $data = []
     ) {
-        $this->postCollectionFactory = $postCollectionFactory;
+        $this->categoryCollectionFactory = $postCollectionFactory;
         $this->registry = $registry;
         $this->context = $context;
 
@@ -44,12 +44,15 @@ class Recent extends Template
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Post[]
+     * @return \Mirasvit\Blog\Model\Category[]
      */
-    public function getCollection()
+    public function getTree()
     {
-        return $this->postCollectionFactory->create()
-            ->addAttributeToSelect('*');
+        return $this->categoryCollectionFactory->create()
+            ->addAttributeToSelect('*')
+            ->addVisibilityFilter()
+            ->excludeRoot()
+            ->getTree();
     }
 
     /**

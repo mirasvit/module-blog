@@ -156,8 +156,8 @@ class Url
         if ($parts[0] == 'search') {
             return new DataObject([
                 'module_name'     => 'blog',
-                'controller_name' => 'post',
-                'action_name'     => 'search',
+                'controller_name' => 'search',
+                'action_name'     => 'result',
                 'params'          => [],
             ]);
         }

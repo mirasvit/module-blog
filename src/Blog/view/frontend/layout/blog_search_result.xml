@@ -7,7 +7,7 @@
 
     <body>
         <referenceContainer name="content">
-            <block name="blog.category.view" class="Mirasvit\Blog\Block\Category\View" template="category/view.phtml">
+            <block name="blog.search.result" class="Mirasvit\Blog\Block\Search\Result" template="search/result.phtml">
                 <block class="Mirasvit\Blog\Block\Post\PostList" name="blog.post.list" template="post/list.phtml">
                     <container name="blog.post.list.additional"/>
 

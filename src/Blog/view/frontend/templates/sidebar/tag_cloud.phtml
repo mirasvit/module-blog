@@ -1,8 +1,10 @@
 <?php
-/** @var \Mirasvit\Blog\Block\Tag\Cloud $block */
+//@codingStandardsIgnoreFile
+
+/** @var \Mirasvit\Blog\Block\Sidebar\TagCloud $block */
 $max = $block->getMaxPopularity();
 ?>
-<div class="block blog__tag-cloud">
+<div class="block blog__sidebar-tag-cloud">
     <div class="block-content">
         <?php foreach ($block->getCollection() as $tag): ?>
             <a href="<?= $tag->getUrl() ?>" style="font-size: <?= ($tag->getPopularity() / $max * 3.0) ?>em">

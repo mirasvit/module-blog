@@ -1,0 +1,17 @@
+<?php
+//@codingStandardsIgnoreFile
+
+/** @var \Mirasvit\Blog\Block\Sidebar\Search $block */
+?>
+<div class="block blog__sidebar-search">
+    <div class="block-content">
+        <form method="get" action="<?= $block->getSearchUrl() ?>">
+            <input type="search" name="q" placeholder="<?= __('Search...') ?>"
+                   value="<?= $block->getRequest()->getParam('q') ?>"/>
+
+            <div class="actions">
+                <button type="submit"><i class="fa fa-search fa-fw"></i></button>
+            </div>
+        </form>
+    </div>
+</div>

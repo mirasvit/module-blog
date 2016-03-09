@@ -1,12 +1,15 @@
 <?php
-/** @var \Mirasvit\Blog\Block\Post\Recent $block */
+//@codingStandardsIgnoreFile
+
+/** @var \Mirasvit\Blog\Block\Sidebar\Recent $block */
 $collection = $block->getCollection()
     ->setPageSize(5);
 ?>
-<div class="block blog__post-recent">
+<div class="block blog__sidebar-recent">
     <div class="block-title">
         <strong><?= __('Recent Posts') ?></strong>
     </div>
+
     <div class="block-content">
         <ol class="items">
             <?php foreach ($collection as $post): ?>

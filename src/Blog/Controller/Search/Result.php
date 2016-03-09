@@ -1,11 +1,11 @@
 <?php
 
-namespace Mirasvit\Blog\Controller\Post;
+namespace Mirasvit\Blog\Controller\Search;
 
 use Magento\Framework\Controller\ResultFactory;
-use Mirasvit\Blog\Controller\Post;
+use Magento\Framework\App\Action\Action;
 
-class Search extends Post
+class Result extends Action
 {
     /**
      * @return \Magento\Backend\Model\View\Result\Page
@@ -13,10 +13,6 @@ class Search extends Post
     public function execute()
     {
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
-
-        if ($query = $this->getRequest()->getParam('q')) {
-            $this->registry->register('current_blog_query', $query);
-        }
 
         return $resultPage;
     }

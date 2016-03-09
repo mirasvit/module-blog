@@ -1,13 +1,13 @@
 <?php
 
-namespace Mirasvit\Blog\Block\Tag;
+namespace Mirasvit\Blog\Block\Sidebar;
 
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template\Context;
 use Mirasvit\Blog\Model\ResourceModel\Tag\CollectionFactory as TagCollectionFactory;
 
-class Cloud extends Template
+class TagCloud extends Template
 {
     /**
      * @var TagCollectionFactory

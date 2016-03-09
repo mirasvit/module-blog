@@ -1,0 +1,13 @@
+<?php
+//@codingStandardsIgnoreFile
+
+/** @var \Mirasvit\Blog\Block\Search\Result $block */
+?>
+
+<?php if ($block->getPostCollection()->count() > 0): ?>
+    <?= $block->getChildHtml('blog.post.list') ?>
+<?php else: ?>
+    <div class="message notice">
+        <div><?= __('Your search returned no results.') ?></div>
+    </div>
+<?php endif ?>

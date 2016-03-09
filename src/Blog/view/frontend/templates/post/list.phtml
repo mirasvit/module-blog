@@ -35,5 +35,7 @@ $collection = $block->getPostCollection();
 
     <?php echo $block->getToolbarHtml() ?>
 <?php else: ?>
-    <p><?= __('There are no posts available for this category') ?></p>
+    <div class="message notice">
+        <div><?= __('There are no posts available for this category.') ?></div>
+    </div>
 <?php endif ?>

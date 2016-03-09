@@ -5,13 +5,6 @@
     <update handle="blog_default"/>
 
     <body>
-        <referenceBlock name="sidebar.additional" remove="true" />
-
-        <referenceContainer name="sidebar.main" htmlTag="div" htmlClass="widget kb-sidebar__categories" >
-            <block class="Mirasvit\Blog\Block\Category\Sidebar" name="blog.category.sidebar" template="category/sidebar.phtml" />
-            <block class="Mirasvit\Blog\Block\Post\Recent" name="blog.post.recent" template="post/recent.phtml" />
-        </referenceContainer>
-
         <referenceContainer name="content">
             <block name="blog.post.view" class="Mirasvit\Blog\Block\Post\View" template="post/view.phtml" cacheable="true">
                 <block name="blog.post.comments" class="Mirasvit\Blog\Block\Post\Meta" template="post/view/comments.phtml"/>

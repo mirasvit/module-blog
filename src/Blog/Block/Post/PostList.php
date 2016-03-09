@@ -183,7 +183,7 @@ class PostList extends AbstractBlock implements IdentityInterface
                 $collection->addCategoryFilter($category);
             } elseif ($tag = $this->getTag()) {
                 $collection->addTagFilter($tag);
-            } elseif ($q = $this->getSearchQuery()) {
+            } elseif ($q = $this->getRequest()->getParam('q')) {
                 $collection->addSearchFilter($q);
             }
 
