@@ -8,7 +8,7 @@ $post = $block->getPost();
 <p class="blog__post-meta">
     <time class="blog__post-meta-time" itemprop="datePublished">
         <i class="fa fa-fw fa-calendar"></i>
-        <?= $block->formatDate($post->getCreatedAt(), \IntlDateFormatter::MEDIUM) ?>
+        <?= $block->toDateFormat($post->getCreatedAt()) ?>
     </time>
 
     <span class="blog__post-meta-author" itemprop="author" itemscope=""

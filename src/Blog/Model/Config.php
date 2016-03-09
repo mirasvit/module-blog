@@ -109,6 +109,14 @@ class Config
     /**
      * @return string
      */
+    public function getDateFormat()
+    {
+        return $this->scopeConfig->getValue('blog/appearance/date_format');
+    }
+
+    /**
+     * @return string
+     */
     public function getDefaultSortField()
     {
         return 'created_at';
