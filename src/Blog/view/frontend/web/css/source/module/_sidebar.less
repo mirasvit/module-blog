@@ -1,6 +1,16 @@
 .blog__sidebar-main {
     >.block {
-        margin-bottom: 2rem;
+        margin-bottom: 2rem !important;
+
+        .block-title {
+            font-size: 18px;
+            font-weight: 300;
+            margin-bottom: 0.5rem;
+
+            strong {
+                font-weight: 300;
+            }
+        }
     }
 }
 
@@ -70,5 +80,19 @@
 .blog__sidebar-tag-cloud {
     a {
         color: #666;
+    }
+}
+
+
+
+.blog__sidebar-rss-link {
+    text-align: center;
+    a {
+        color: #999;
+        font-size: 1.5rem;
+
+        &:hover {
+            text-decoration: none;
+        }
     }
 }

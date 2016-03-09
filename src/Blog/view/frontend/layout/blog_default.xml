@@ -18,7 +18,7 @@
 
             <block class="Mirasvit\Blog\Block\Sidebar\TagCloud" name="blog.sidebar.tag.cloud" template="sidebar/tag_cloud.phtml"/>
 
-            <block class="Mirasvit\Blog\Block\Category\Rss" name="blog.category.rss" template="category/rss/link.phtml"/>
+            <block class="Mirasvit\Blog\Block\Category\Rss" name="blog.sidebar.rss" template="sidebar/rss.phtml"/>
         </referenceContainer>
     </body>
 </page>
