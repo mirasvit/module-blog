@@ -41,16 +41,25 @@ class Collection extends AbstractCollection
     }
 
     /**
-     * @param \Mirasvit\Blog\Model\Tag $tag
+     * @param \Mirasvit\Blog\Model\Tag|array $tag
      * @return $this
      */
     public function addTagFilter($tag)
     {
+        $ids = [];
+        if (is_object($tag)) {
+            $ids[] = $tag->getId();
+        } else {
+            $ids = $tag;
+        }
+
+        $ids[] = 0;
+
         $this->getSelect()
             ->where("EXISTS (SELECT * FROM `{$this->getTable('mst_blog_tag_post')}`
                 AS `tag_post`
                 WHERE e.entity_id = tag_post.post_id
-                AND tag_post.tag_id in (?))", [0, $tag->getId()]);
+                AND tag_post.tag_id in (?))", $ids);
 
         return $this;
     }

@@ -8,6 +8,8 @@
         <referenceContainer name="content">
             <block name="blog.post.view" class="Mirasvit\Blog\Block\Post\View" template="post/view.phtml" cacheable="true">
                 <block name="blog.post.comments" class="Mirasvit\Blog\Block\Post\Meta" template="post/view/comments.phtml"/>
+
+                <block name="blog.post.related" class="Mirasvit\Blog\Block\Post\View\RelatedPosts" template="post/view/related_posts.phtml"/>
             </block>
         </referenceContainer>
     </body>

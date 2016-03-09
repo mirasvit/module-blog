@@ -1,0 +1,28 @@
+<?php
+//@codingStandardsIgnoreFile
+
+/** @var \Mirasvit\Blog\Block\Post\View\RelatedPosts $block */
+$collection = $block->getPostCollection()
+    ->setPageSize(4);
+
+if (!$collection->count()) {
+    return;
+}
+?>
+
+<div class="blog__post-view-related-posts">
+    <div class="block-title"><?=__('Related Posts') ?></div>
+    <ol>
+        <?php foreach ($collection as $post): ?>
+            <li>
+                <?php if ($post->getFeaturedImageUrl()): ?>
+                    <img src="<?= $post->getFeaturedImageUrl() ?>" class="post-image"/>
+                <?php endif ?>
+
+                <a href="<?= $post->getUrl() ?>" class="post-name"><?= $post->getName() ?></a>
+
+                <?= substr(strip_tags($post->getShortContent()), 0, 250) ?>
+            </li>
+        <?php endforeach ?>
+    </ol>
+</div>

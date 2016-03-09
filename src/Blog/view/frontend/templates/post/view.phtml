@@ -19,5 +19,7 @@ $post = $block->getPost();
 
     <?= $this->getPostMetaFooter()->toHtml() ?>
 
+    <?= $this->getChildHtml('blog.post.related') ?>
+
     <?= $this->getChildHtml('blog.post.comments') ?>
 </div>
