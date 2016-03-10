@@ -3,16 +3,16 @@
 namespace Mirasvit\Blog\Controller\Adminhtml;
 
 use Magento\Backend\App\Action;
-use Mirasvit\Blog\Model\CategoryFactory;
+use Mirasvit\Blog\Model\AuthorFactory;
 use Magento\Framework\Registry;
 use Magento\Backend\App\Action\Context;
 
-abstract class Category extends Action
+abstract class Author extends Action
 {
     /**
-     * @var CategoryFactory
+     * @var AuthorFactory
      */
-    protected $categoryFactory;
+    protected $authorFactory;
 
     /**
      * @var Registry
@@ -24,12 +24,17 @@ abstract class Category extends Action
      */
     protected $context;
 
+    /**
+     * @param AuthorFactory $authorFactory
+     * @param Registry      $registry
+     * @param Context       $context
+     */
     public function __construct(
-        CategoryFactory $authorFactory,
+        AuthorFactory $authorFactory,
         Registry $registry,
         Context $context
     ) {
-        $this->categoryFactory = $authorFactory;
+        $this->authorFactory = $authorFactory;
         $this->registry = $registry;
         $this->context = $context;
 
@@ -45,17 +50,17 @@ abstract class Category extends Action
     {
         $resultPage->setActiveMenu('Mirasvit_Blog::blog');
         $resultPage->getConfig()->getTitle()->prepend(__('Mirasvit Blog'));
-        $resultPage->getConfig()->getTitle()->prepend(__('Categories'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Authors'));
 
         return $resultPage;
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Category
+     * @return \Mirasvit\Blog\Model\Author
      */
     public function initModel()
     {
-        $model = $this->categoryFactory->create();
+        $model = $this->authorFactory->create();
         if ($this->getRequest()->getParam('id')) {
             $model->load($this->getRequest()->getParam('id'));
         }
@@ -70,6 +75,6 @@ abstract class Category extends Action
      */
     protected function _isAllowed()
     {
-        return $this->context->getAuthorization()->isAllowed('Mirasvit_Blog::blog_category');
+        return $this->context->getAuthorization()->isAllowed('Mirasvit_Blog::blog_author');
     }
 }

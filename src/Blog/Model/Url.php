@@ -28,6 +28,11 @@ class Url
     protected $tagFactory;
 
     /**
+     * @var AuthorFactory
+     */
+    protected $authorFactory;
+
+    /**
      * @var UrlInterface
      */
     protected $urlManager;
@@ -43,6 +48,7 @@ class Url
      * @param PostFactory          $postFactory
      * @param CategoryFactory      $categoryFactory
      * @param TagFactory           $tagFactory
+     * @param AuthorFactory        $authorFacotry
      * @param UrlInterface         $urlManager
      */
     public function __construct(
@@ -51,6 +57,7 @@ class Url
         PostFactory $postFactory,
         CategoryFactory $categoryFactory,
         TagFactory $tagFactory,
+        AuthorFactory $authorFactory,
         UrlInterface $urlManager
     ) {
         $this->config = $config;
@@ -58,6 +65,7 @@ class Url
         $this->postFactory = $postFactory;
         $this->categoryFactory = $categoryFactory;
         $this->tagFactory = $tagFactory;
+        $this->authorFactory = $authorFactory;
         $this->urlManager = $urlManager;
     }
 
@@ -107,6 +115,15 @@ class Url
     public function getTagUrl($tag)
     {
         return $this->urlManager->getUrl($this->config->getBaseRoute() . '/tag/' . strtolower($tag->getUrlKey()));
+    }
+
+    /**
+     * @param Author $author
+     * @return string
+     */
+    public function getAuthorUrl($author)
+    {
+        return $this->urlManager->getUrl($this->config->getBaseRoute() . '/author/' . strtolower($author->getId()));
     }
 
     /**
@@ -173,6 +190,23 @@ class Url
                     'controller_name' => 'tag',
                     'action_name'     => 'view',
                     'params'          => ['id' => $tag->getId()],
+                ]);
+            } else {
+                return false;
+            }
+        }
+
+        if ($parts[0] == 'author' && isset($parts[1])) {
+            $author = $this->authorFactory->create()->getCollection()
+                ->addFieldToFilter('user_id', $parts[1])
+                ->getFirstItem();
+
+            if ($author->getId()) {
+                return new DataObject([
+                    'module_name'     => 'blog',
+                    'controller_name' => 'author',
+                    'action_name'     => 'view',
+                    'params'          => ['id' => $author->getId()],
                 ]);
             } else {
                 return false;

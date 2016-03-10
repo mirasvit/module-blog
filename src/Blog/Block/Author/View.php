@@ -1,6 +1,6 @@
 <?php
 
-namespace Mirasvit\Blog\Block\Tag;
+namespace Mirasvit\Blog\Block\Author;
 
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\Registry;
@@ -43,11 +43,11 @@ class View extends Template
     {
         parent::_prepareLayout();
 
-        $tag = $this->getTag();
+        $author = $this->getAuthor();
 
-        $this->pageConfig->getTitle()->set(__('Tag: %1', $tag->getName()));
+        $this->pageConfig->getTitle()->set(__('Author: %1', $author->getName()));
 
-        if ($tag && ($breadcrumbs = $this->getLayout()->getBlock('breadcrumbs'))) {
+        if ($author && ($breadcrumbs = $this->getLayout()->getBlock('breadcrumbs'))) {
             $breadcrumbs->addCrumb('home', [
                 'label' => __('Home'),
                 'title' => __('Go to Home Page'),
@@ -59,9 +59,9 @@ class View extends Template
                 'title' => __('Blog'),
             ]);
 
-            $breadcrumbs->addCrumb($tag->getId(), [
-                'label' => __('Tag: %1', $tag->getName()),
-                'title' => __('Tag: %1', $tag->getName()),
+            $breadcrumbs->addCrumb($author->getId(), [
+                'label' => __('Author: %1', $author->getName()),
+                'title' => __('Author: %1', $author->getName()),
             ]);
         }
 
@@ -69,10 +69,10 @@ class View extends Template
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Tag
+     * @return \Mirasvit\Blog\Model\Author
      */
-    public function getTag()
+    public function getAuthor()
     {
-        return $this->registry->registry('current_blog_tag');
+        return $this->registry->registry('current_blog_author');
     }
 }

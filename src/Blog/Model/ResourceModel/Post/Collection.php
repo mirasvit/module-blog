@@ -84,6 +84,16 @@ class Collection extends AbstractCollection
     /**
      * @return $this
      */
+    public function addAuthorFilter($author)
+    {
+        $this->addFieldToFilter('author_id', $author->getId());
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
     public function addPostFilter()
     {
         $this->addFieldToFilter('type', \Mirasvit\Blog\Model\Post::TYPE_POST);

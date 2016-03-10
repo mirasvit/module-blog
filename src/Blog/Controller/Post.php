@@ -22,18 +22,18 @@ abstract class Post extends Action
     protected $registry;
 
     /**
-     * @param PostFactory $postFactory
+     * @param PostFactory $authorFactory
      * @param Registry    $registry
      * @param Context     $context
      * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
      */
     public function __construct(
-        PostFactory $postFactory,
+        PostFactory $authorFactory,
         Registry $registry,
         Context $context
     ) {
-        $this->postFactory = $postFactory;
+        $this->postFactory = $authorFactory;
         $this->registry = $registry;
         $this->context = $context;
         $this->resultFactory = $context->getResultFactory();;

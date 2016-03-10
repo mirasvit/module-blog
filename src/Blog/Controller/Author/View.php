@@ -1,19 +1,19 @@
 <?php
 
-namespace Mirasvit\Blog\Controller\Tag;
+namespace Mirasvit\Blog\Controller\Author;
 
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Mirasvit\Blog\Model\TagFactory;
+use Mirasvit\Blog\Model\AuthorFactory;
 use Magento\Framework\Registry;
 
 class View extends Action
 {
     /**
-     * @var TagFactory
+     * @var AuthorFactory
      */
-    protected $tagFactory;
+    protected $authorFactory;
 
     /**
      * @var Registry
@@ -26,16 +26,16 @@ class View extends Action
     protected $resultFactory;
 
     /**
-     * @param TagFactory $authorFactory
-     * @param Registry   $registry
-     * @param Context    $context
+     * @param AuthorFactory $authorFactory
+     * @param Registry      $registry
+     * @param Context       $context
      */
     public function __construct(
-        TagFactory $authorFactory,
+        AuthorFactory $authorFactory,
         Registry $registry,
         Context $context
     ) {
-        $this->tagFactory = $authorFactory;
+        $this->authorFactory = $authorFactory;
         $this->registry = $registry;
         $this->resultFactory = $context->getResultFactory();;
 
@@ -63,11 +63,11 @@ class View extends Action
     protected function initModel()
     {
         if ($id = $this->getRequest()->getParam('id')) {
-            $tag = $this->tagFactory->create()->load($id);
-            if ($tag->getId() > 0) {
-                $this->registry->register('current_blog_tag', $tag);
+            $author = $this->authorFactory->create()->load($id);
+            if ($author->getId() > 0) {
+                $this->registry->register('current_blog_author', $author);
 
-                return $tag;
+                return $author;
             }
         }
 

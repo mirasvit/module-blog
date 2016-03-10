@@ -160,6 +160,14 @@ class PostList extends AbstractBlock implements IdentityInterface
     }
 
     /**
+     * @return \Mirasvit\Blog\Model\Author
+     */
+    public function getAuthor()
+    {
+        return $this->registry->registry('current_blog_author');
+    }
+
+    /**
      * @return string
      */
     public function getSearchQuery()
@@ -183,6 +191,8 @@ class PostList extends AbstractBlock implements IdentityInterface
                 $collection->addCategoryFilter($category);
             } elseif ($tag = $this->getTag()) {
                 $collection->addTagFilter($tag);
+            } elseif ($author = $this->getAuthor()) {
+                $collection->addAuthorFilter($author);
             } elseif ($q = $this->getRequest()->getParam('q')) {
                 $collection->addSearchFilter($q);
             }

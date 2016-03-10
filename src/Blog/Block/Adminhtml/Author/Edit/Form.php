@@ -1,0 +1,83 @@
+<?php
+
+namespace Mirasvit\Blog\Block\Adminhtml\Author\Edit;
+
+use Magento\Framework\Data\FormFactory;
+use Magento\Framework\Registry;
+use Magento\Backend\Block\Widget\Form as WidgetForm;
+use Magento\Backend\Block\Widget\Context;
+
+class Form extends WidgetForm
+{
+    /**
+     * @var FormFactory
+     */
+    protected $formFactory;
+
+    /**
+     * @var Registry
+     */
+    protected $registry;
+
+    public function __construct(
+        FormFactory $formFactory,
+        Registry $registry,
+        Context $context,
+        array $data = []
+    ) {
+        $this->formFactory = $formFactory;
+        $this->registry = $registry;
+
+        parent::__construct($context, $data);
+    }
+
+    /**
+     * @return $this
+     *
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    protected function _prepareForm()
+    {
+        $form = $this->formFactory->create()->setData([
+            'id'      => 'edit_form',
+            'action'  => $this->getUrl('*/*/save', ['id' => $this->getRequest()->getParam('id')]),
+            'method'  => 'post',
+            'enctype' => 'multipart/form-data',
+        ]);
+
+        $form->setUseContainer(true);
+        $this->setForm($form);
+
+        $this->setForm($form);
+
+        /** @var \Mirasvit\Blog\Model\Author $author */
+        $author = $this->registry->registry('current_model');
+
+        $fieldset = $form->addFieldset('edit_fieldset', [
+            'legend' => __('Author Information')
+        ]);
+
+        if ($author->getId()) {
+            $fieldset->addField('user_id', 'hidden', [
+                'name'  => 'user_id',
+                'value' => $author->getId(),
+            ]);
+        }
+
+        $fieldset->addField('display_name', 'text', [
+            'label'    => __('Display Name'),
+            'name'     => 'display_name',
+            'value'    => $author->getDisplayName(),
+            'required' => true,
+        ]);
+
+        $fieldset->addField('bio', 'textarea', [
+            'label'    => __('Biographical Info'),
+            'name'     => 'bio',
+            'value'    => $author->getBio(),
+            'required' => false,
+        ]);
+
+        return parent::_prepareForm();
+    }
+}

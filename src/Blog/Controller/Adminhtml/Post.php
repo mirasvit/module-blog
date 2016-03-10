@@ -38,20 +38,20 @@ abstract class Post extends Action
     protected $jsonFactory;
 
     /**
-     * @param PostFactory           $postFactory
+     * @param PostFactory           $authorFactory
      * @param StoreManagerInterface $storeManager
      * @param JsonFactory           $jsonFactory
      * @param Registry              $registry
      * @param Context               $context
      */
     public function __construct(
-        PostFactory $postFactory,
+        PostFactory $authorFactory,
         StoreManagerInterface $storeManager,
         JsonFactory $jsonFactory,
         Registry $registry,
         Context $context
     ) {
-        $this->postFactory = $postFactory;
+        $this->postFactory = $authorFactory;
         $this->storeManager = $storeManager;
         $this->jsonFactory = $jsonFactory;
         $this->registry = $registry;

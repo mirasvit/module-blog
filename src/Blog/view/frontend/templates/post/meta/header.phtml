@@ -15,12 +15,12 @@ $post = $block->getPost();
           itemtype="http://schema.org/Person">
         <i class="fa fa-fw fa-user"></i>
         <span itemprop="name">
-            <?= $post->getAuthor()->getName() ?>
+            <a href="<?= $post->getAuthor()->getUrl() ?>"><?= $post->getAuthor()->getName() ?></a>
         </span>
     </span>
 
     <?php if ($block->getCommentProvider()): ?>
-    <span class="blog__post-meta-comments">
+        <span class="blog__post-meta-comments">
         <i class="fa fa-fw fa-comments"></i>
         <span class="disqus-comment-count"
               data-disqus-identifier="<?= $block->getPost()->getUrlKey() ?>"><?= __('0 Comments') ?></span>
@@ -28,6 +28,6 @@ $post = $block->getPost();
     <?php endif ?>
 
     <?php if (!$block->getCategory()): ?>
-    <span class="addthis_sharing_toolbox blog__post-meta-sharing"></span>
+        <span class="addthis_sharing_toolbox blog__post-meta-sharing"></span>
     <?php endif ?>
 </p>

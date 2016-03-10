@@ -8,7 +8,6 @@ use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;
 use Magento\Framework\Api\ExtensionAttributesFactory;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\User\Model\UserFactory;
 use Magento\Framework\DataObject\IdentityInterface;
 use Mirasvit\Blog\Model\ResourceModel\Tag\CollectionFactory as TagCollectionFactory;
 
@@ -59,9 +58,9 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     protected $tagCollectionFactory;
 
     /**
-     * @var UserFactory
+     * @var AuthorFactory
      */
-    protected $userFactory;
+    protected $authorFactory;
 
     /**
      * @var Config
@@ -71,7 +70,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     /**
      * @param CategoryFactory            $postFactory
      * @param TagCollectionFactory       $tagCollectionFactory
-     * @param UserFactory                $userFactory
+     * @param AuthorFactory              $authorFactory
      * @param Config                     $config
      * @param Url                        $url
      * @param StoreManagerInterface      $storeManager
@@ -83,7 +82,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     public function __construct(
         CategoryFactory $postFactory,
         TagCollectionFactory $tagCollectionFactory,
-        UserFactory $userFactory,
+        AuthorFactory $authorFactory,
         Config $config,
         Url $url,
         StoreManagerInterface $storeManager,
@@ -94,7 +93,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     ) {
         $this->categoryFactory = $postFactory;
         $this->tagCollectionFactory = $tagCollectionFactory;
-        $this->userFactory = $userFactory;
+        $this->authorFactory = $authorFactory;
         $this->config = $config;
         $this->url = $url;
         $this->storeManager = $storeManager;
@@ -209,12 +208,12 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     }
 
     /**
-     * @return \Magento\User\Model\User
+     * @return Author
      */
     public function getAuthor()
     {
         if (!$this->hasData('author')) {
-            $this->setData('author', $this->userFactory->create()->load($this->getAuthorId()));
+            $this->setData('author', $this->authorFactory->create()->load($this->getAuthorId()));
         }
 
         return $this->getData('author');
