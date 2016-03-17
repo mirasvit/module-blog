@@ -11,7 +11,6 @@ class Save extends Author
      */
     public function execute()
     {
-        die('r');
         $id = $this->getRequest()->getParam('id');
         $resultRedirect = $this->resultRedirectFactory->create();
 
@@ -19,7 +18,7 @@ class Save extends Author
             $model = $this->initModel();
 
             if (!$model->getId() && $id) {
-                $this->messageManager->addError(__('This category no longer exists.'));
+                $this->messageManager->addError(__('This author no longer exists.'));
 
                 return $resultRedirect->setPath('*/*/');
             }
@@ -28,7 +27,7 @@ class Save extends Author
 
             try {
                 $model->save();
-                $this->messageManager->addSuccess(__('Category was successfully saved'));
+                $this->messageManager->addSuccess(__('Author was successfully saved'));
                 $this->context->getSession()->setFormData(false);
 
                 if ($this->getRequest()->getParam('back')) {

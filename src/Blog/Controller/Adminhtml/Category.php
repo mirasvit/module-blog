@@ -44,7 +44,7 @@ abstract class Category extends Action
     protected function initPage($resultPage)
     {
         $resultPage->setActiveMenu('Mirasvit_Blog::blog');
-        $resultPage->getConfig()->getTitle()->prepend(__('Mirasvit Blog'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Mirasvit Blog MX'));
         $resultPage->getConfig()->getTitle()->prepend(__('Categories'));
 
         return $resultPage;
