@@ -2,16 +2,21 @@
 <config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
     <default>
-        <search>
+        <blog>
             <appearance>
-                <menu_title>Blog</menu_title>
-                <blog_name>Blog</blog_name>
+                <menu_title>Blog MX</menu_title>
+                <blog_name>Blog MX</blog_name>
                 <date_format>F j, Y</date_format>
             </appearance>
+
+            <comments>
+                <provider>disqus</provider>
+                <disqus_shortname>magento2-blog</disqus_shortname>
+            </comments>
 
             <seo>
                 <base_route>blog</base_route>
             </seo>
-        </search>
+        </blog>
     </default>
 </config>
