@@ -151,6 +151,10 @@ class Config
             $this->filesystem
                 ->getDirectoryWrite(DirectoryList::MEDIA)
                 ->create($path);
+
+            $this->filesystem
+                ->getDirectoryWrite(DirectoryList::MEDIA)
+                ->changePermissions($path, 777);
         }
 
         return $path;

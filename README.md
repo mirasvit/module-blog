@@ -42,6 +42,8 @@ bin/magento setup:static-content:deploy
 
 # Changelog
 
+
+
 ## 1.0.2
 *(2016-03-17)*
 
