@@ -41,7 +41,8 @@ bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
-## 1.0.1
+
+## 1.0.2
 *(2016-03-17)*
 
 #### Features
