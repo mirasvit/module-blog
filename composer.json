@@ -1,6 +1,6 @@
 {
     "name": "mirasvit/module-blog",
-    "description": "Mirasvit Blog",
+    "description": "Mirasvit Blog MX",
     "require": {
         "php": "~5.5.0|~5.6.0|~7.0.0",
         "magento/module-store": "100.0.*",
@@ -11,7 +11,7 @@
       "mirasvit/module-blog-sample-data": "Sample Data for Blog"
     },
     "type": "magento2-module",
-    "version": "0.0.1-alpha1",
+    "version": "1.0.0",
     "license": [
       "proprietary"
     ],

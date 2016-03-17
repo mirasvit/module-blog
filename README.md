@@ -24,6 +24,7 @@ Log in to the Magento server, go to your Magento install dir and run these comma
 composer config repositories.mirasvit-blog vcs https://github.com/mirasvit/module-blog
 composer require mirasvit/module-blog:dev-master
 
+bin/magento module:enable Mirasvit_Blog
 bin/magento setup:upgrade
 
 rm -rf pub/static/*; rm -rf var/view_preprocessed/*;
@@ -38,3 +39,31 @@ bin/magento setup:static-content:deploy
 
 ## Support
 [https://mirasvit.com/](https://mirasvit.com/)
+
+# Changelog
+
+## 1.0.0
+*(2016-02-20)*
+
+#### Features
+* RSS Feed (whole blog and per category)
+
+#### Improvements
+* Rearrange sidebar blocks
+* Search by blog
+* Ability to defined date-time format
+* Ability to search by blog posts
+* Added Disqus
+
+#### Fixed
+* BLG2-13 
+* BLG2-10 
+* BLG2-8 
+* BLG2-6 
+* BLG2-7 
+* BLG2-3 
+* BLG2-5 
+
+---
+
+
