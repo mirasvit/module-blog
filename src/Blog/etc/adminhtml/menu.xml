@@ -10,9 +10,8 @@
         <add id="Mirasvit_Blog::blog_category" title="Categories" module="Mirasvit_Blog" sortOrder="20"
              resource="Mirasvit_Blog::blog_category" parent="Mirasvit_Blog::blog" action="blog/category" />
 
-        <add id="Mirasvit_Blog::blog_author" title="Authors" module="Mirasvit_Blog" sortOrder="25"
-             resource="Mirasvit_Blog::blog_author" parent="Mirasvit_Blog::blog" action="blog/author" />
-
+        <!--<add id="Mirasvit_Blog::blog_author" title="Authors" module="Mirasvit_Blog" sortOrder="25"-->
+             <!--resource="Mirasvit_Blog::blog_author" parent="Mirasvit_Blog::blog" action="blog/author" />-->
 
         <add id="Mirasvit_Blog::blog_settings" title="Settings" module="Mirasvit_Blog" sortOrder="30"
              resource="Mirasvit_Blog::blog_settings" parent="Mirasvit_Blog::blog" action="adminhtml/system_config/edit/section/blog" />
