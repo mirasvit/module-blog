@@ -41,6 +41,17 @@ bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.1
+*(2016-03-17)*
+
+#### Features
+* Block with related posts at post view page (related by tags)
+
+#### Fixed
+* Default config
+* ACL
+
+---
 
 ## 1.0.0
 *(2016-02-20)*
