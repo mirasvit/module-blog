@@ -16,6 +16,9 @@
 
             <seo>
                 <base_route>blog</base_route>
+                <base_meta_title>Blog MX</base_meta_title>
+                <base_meta_description>Blog MX</base_meta_description>
+                <base_meta_keywords>Blog MX</base_meta_keywords>
             </seo>
         </blog>
     </default>
