@@ -22,7 +22,7 @@ FREE, fully featured, powerful Blog solution for your online store! Magento 2 Bl
 Log in to the Magento server, go to your Magento install dir and run these commands:
 ```
 composer config repositories.mirasvit-blog vcs https://github.com/mirasvit/module-blog
-composer require mirasvit/module-blog:dev-master
+composer require mirasvit/module-blog
 
 bin/magento module:enable Mirasvit_Blog
 bin/magento setup:upgrade
