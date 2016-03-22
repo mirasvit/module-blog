@@ -18,6 +18,11 @@ class RelatedPosts extends Template
      */
     protected $registry;
 
+    /**
+     * @param PostCollectionFactory $postCollectionFactory
+     * @param Registry              $registry
+     * @param Context               $context
+     */
     public function __construct(
         PostCollectionFactory $postCollectionFactory,
         Registry $registry,

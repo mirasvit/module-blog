@@ -23,7 +23,9 @@ class Edit extends Post
             return $this->resultRedirectFactory->create()->setPath('*/*/');
         }
 
-        $this->initPage($resultPage)->getConfig()->getTitle()->prepend($model->getName() ? $model->getName() : __('New Post'));
+        $this->initPage($resultPage)->getConfig()->getTitle()->prepend(
+            $model->getName() ? $model->getName() : __('New Post')
+        );
 
         return $resultPage;
     }

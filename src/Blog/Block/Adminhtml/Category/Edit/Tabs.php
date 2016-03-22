@@ -4,6 +4,9 @@ namespace Mirasvit\Blog\Block\Adminhtml\Category\Edit;
 
 class Tabs extends \Magento\Backend\Block\Widget\Tabs
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function _construct()
     {
         parent::_construct();

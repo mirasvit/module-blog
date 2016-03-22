@@ -30,6 +30,9 @@ class Form extends \Magento\Backend\Block\Widget\Form
         parent::__construct($context, $data);
     }
 
+    /**
+     * @return string
+     */
     public function getSaveUrl()
     {
         return $this->getUrl('*/*/save', ['id' => $this->getRequest()->getParam('id')]);

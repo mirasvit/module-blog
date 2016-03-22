@@ -48,7 +48,7 @@ class Url
      * @param PostFactory          $postFactory
      * @param CategoryFactory      $categoryFactory
      * @param TagFactory           $tagFactory
-     * @param AuthorFactory        $authorFacotry
+     * @param AuthorFactory        $authorFactory
      * @param UrlInterface         $urlManager
      */
     public function __construct(

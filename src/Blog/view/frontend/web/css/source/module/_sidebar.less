@@ -53,6 +53,8 @@
 }
 
 .blog__sidebar-category-tree {
+    background: #f0f0f0;
+
     li.item {
         &.level-2 {
             a {
@@ -77,13 +79,23 @@
     }
 }
 
+//
+//    Mobile
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .page-main {
+        .blog & {
+            position: relative;
+            padding-top: 41px;
+        }
+    }
+}
+
 .blog__sidebar-tag-cloud {
     a {
         color: #666;
     }
 }
-
-
 
 .blog__sidebar-rss-link {
     text-align: center;

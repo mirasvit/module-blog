@@ -19,13 +19,11 @@ class CategorySetup extends EavSetup
     private $categoryFactory;
 
     /**
-     * Init
-     *
      * @param ModuleDataSetupInterface $setup
      * @param Context                  $context
      * @param CacheInterface           $cache
      * @param CollectionFactory        $attrGroupCollectionFactory
-     * @param PostFactory              $categoryFactory
+     * @param CategoryFactory          $categoryFactory
      */
     public function __construct(
         ModuleDataSetupInterface $setup,

@@ -8,6 +8,9 @@ use Magento\Framework\Registry;
 
 class Sidebar extends Template
 {
+    /**
+     * @var string
+     */
     protected $_template = "post/edit/sidebar.phtml";
 
     /**
@@ -15,6 +18,10 @@ class Sidebar extends Template
      */
     protected $registry;
 
+    /**
+     * @param Registry $registry
+     * @param Context  $context
+     */
     public function __construct(
         Registry $registry,
         Context $context

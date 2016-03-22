@@ -11,6 +11,11 @@ use Mirasvit\Blog\Model\CategoryFactory;
 
 class InstallData implements InstallDataInterface
 {
+    /**
+     * @param PostSetupFactory     $postSetupFactory
+     * @param CategorySetupFactory $categorySetupFactory
+     * @param CategoryFactory      $categoryFactory
+     */
     public function __construct(
         PostSetupFactory $postSetupFactory,
         CategorySetupFactory $categorySetupFactory,

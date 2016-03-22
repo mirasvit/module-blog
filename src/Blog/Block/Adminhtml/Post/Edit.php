@@ -4,6 +4,9 @@ namespace Mirasvit\Blog\Block\Adminhtml\Post;
 
 class Edit extends \Magento\Backend\Block\Widget\Form\Container
 {
+    /**
+     * {@inheritdoc}
+     */
     protected function _construct()
     {
         parent::_construct();

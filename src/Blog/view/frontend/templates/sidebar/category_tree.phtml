@@ -5,11 +5,14 @@
 ?>
 
 <div class="block block-collapsible-nav blog__sidebar-category-tree">
-    <div class="title block-collapsible-nav-title"><?= __('Categories') ?></div>
-    <div class="block-collapsible-content content">
-        <ul class="items">
+    <div class="title block-collapsible-nav-title"
+         data-mage-init='{"toggleAdvanced": {"toggleContainers": "#block-collapsible-nav-blog", "selectorsToggleClass": "active"}}'>
+        <strong><?= __('Categories') ?></strong>
+    </div>
+    <div class="block-collapsible-content content" id="block-collapsible-nav-blog">
+        <ul class="nav items">
             <?php foreach ($block->getTree() as $category): ?>
-                <li class="item level-<?= $category->getLevel() ?> <?php if ($block->isCurrent($category)): ?>current<?php endif ?>">
+                <li class="nav item level-<?= $category->getLevel() ?> <?php if ($block->isCurrent($category)): ?>current<?php endif ?>">
                     <a href="<?= $category->getUrl() ?>"><?= $category->getName() ?></a>
                 </li>
             <?php endforeach ?>

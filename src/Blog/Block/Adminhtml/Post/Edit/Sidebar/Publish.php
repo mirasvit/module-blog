@@ -70,8 +70,8 @@ class Publish extends \Magento\Backend\Block\Widget\Form
             'values' => $this->status->toOptionArray(),
         ]);
 
-//        $dateFormat = $this->_localeDate->getDateFormat(\IntlDateFormatter::MEDIUM);
-//        $timeFormat = $this->_localeDate->getTimeFormat(\IntlDateFormatter::SHORT);
+        //        $dateFormat = $this->_localeDate->getDateFormat(\IntlDateFormatter::MEDIUM);
+        //        $timeFormat = $this->_localeDate->getTimeFormat(\IntlDateFormatter::SHORT);
 
         $fieldset->addField('created_at', 'date', [
             'label'       => __('Published on'),

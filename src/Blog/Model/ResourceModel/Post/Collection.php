@@ -82,6 +82,7 @@ class Collection extends AbstractCollection
     }
 
     /**
+     * @param \Mirasvit\Blog\Model\Author $author
      * @return $this
      */
     public function addAuthorFilter($author)

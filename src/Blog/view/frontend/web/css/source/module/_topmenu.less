@@ -1,3 +1,8 @@
-.navigation .level0:last-child {
-    float: right;
+//
+//    Desktop
+//--------------------------------------
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .navigation .level0:last-child {
+        float: right;
+    }
 }

@@ -6,34 +6,36 @@ $collection = $block->getPostCollection();
 ?>
 
 <?php if ($collection->count()): ?>
-    <ol class="blog__post-list">
-        <?php /** @var \Mirasvit\Blog\Model\Post $post */ ?>
-        <?php foreach ($collection as $post): ?>
-            <li class="blog__post-item">
-                <header class="blog__post-header">
-                    <h1 class="blog__post-title" itemprop="headline">
-                        <a href="<?= $post->getUrl() ?>" rel="bookmark"><?= $post->getName() ?></a>
-                    </h1>
+    <div class="blog__post-list-wrapper">
+        <ol class="blog__post-list">
+            <?php /** @var \Mirasvit\Blog\Model\Post $post */ ?>
+            <?php foreach ($collection as $post): ?>
+                <li class="blog__post-item">
+                    <header class="blog__post-header">
+                        <h1 class="blog__post-title" itemprop="headline">
+                            <a href="<?= $post->getUrl() ?>" rel="bookmark"><?= $post->getName() ?></a>
+                        </h1>
 
-                    <?= $block->getPostMetaHeader($post)->toHtml() ?>
-                </header>
+                        <?= $block->getPostMetaHeader($post)->toHtml() ?>
+                    </header>
 
-                <div class="blog__post-excerpt" itemprop="text">
-                    <?php if ($post->getFeaturedImageUrl()): ?>
-                        <img src="<?= $post->getFeaturedImageUrl() ?>"/>
-                    <?php endif ?>
+                    <div class="blog__post-excerpt" itemprop="text">
+                        <?php if ($post->getFeaturedImageUrl()): ?>
+                            <img src="<?= $post->getFeaturedImageUrl() ?>"/>
+                        <?php endif ?>
 
-                    <?= $post->getShortContent() ?>
+                        <?= $post->getShortContent() ?>
 
-                    <a class="read-more" href="<?= $post->getUrl() ?>"><?= __('Read more...') ?></a>
-                </div>
+                        <a class="read-more" href="<?= $post->getUrl() ?>"><?= __('Read more...') ?></a>
+                    </div>
 
-                <?= $block->getPostMetaFooter($post)->toHtml() ?>
-            </li>
-        <?php endforeach ?>
-    </ol>
+                    <?= $block->getPostMetaFooter($post)->toHtml() ?>
+                </li>
+            <?php endforeach ?>
+        </ol>
 
-    <?php echo $block->getToolbarHtml() ?>
+        <?php echo $block->getToolbarHtml() ?>
+    </div>
 <?php else: ?>
     <div class="message notice">
         <div><?= __('There are no posts available for this category.') ?></div>

@@ -19,17 +19,20 @@ class Meta extends Form
      */
     protected $registry;
 
-
+    /**
+     * @param FormFactory $formFactory
+     * @param Registry    $registry
+     * @param Context     $context
+     */
     public function __construct(
         FormFactory $formFactory,
         Registry $registry,
-        Context $context,
-        array $data = []
+        Context $context
     ) {
         $this->formFactory = $formFactory;
         $this->registry = $registry;
 
-        parent::__construct($context, $data);
+        parent::__construct($context);
     }
 
     /**
