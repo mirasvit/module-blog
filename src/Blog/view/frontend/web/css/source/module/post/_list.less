@@ -50,6 +50,22 @@
     }
 }
 
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .blog__post-item {
+        .blog__post-excerpt {
+            > img {
+                padding: 0 0 2rem 0;
+                max-width: 100%;
+                width: 100%;
+            }
+        }
+    }
+}
+
 .blog__post-meta {
     .lib-clearfix();
 

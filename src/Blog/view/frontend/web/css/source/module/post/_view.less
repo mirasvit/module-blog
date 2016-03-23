@@ -13,6 +13,20 @@ body.blog-post-view {
     }
 }
 
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .blog__post-view {
+        .blog__post-featured-image {
+            padding: 0 0 2rem 0;
+            width: 100%;
+            max-width: 100%;
+        }
+    }
+}
+
 .blog__post-view-related-posts {
     .lib-clearfix();
     margin: 2rem 0;
