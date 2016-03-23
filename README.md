@@ -41,6 +41,17 @@ bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.4-alpha1
+*(2016-03-23)*
+
+#### Fixed
+* Fixed issue with menu on mobile devices
+
+---
+
+
+
+
 ## 1.0.3
 *(2016-03-22)*
 
