@@ -13,8 +13,6 @@ $post = $block->getPost();
         <img src="<?= $post->getFeaturedImageUrl() ?>" class="blog__post-featured-image"/>
     <?php endif ?>
 
-    <?= $post->getShortContent() ?>
-
     <?= $block->getPostContent() ?>
 
     <?= $this->getPostMetaFooter()->toHtml() ?>
