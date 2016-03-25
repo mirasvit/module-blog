@@ -57,25 +57,25 @@ class Meta extends \Magento\Backend\Block\Widget\Form
 
         $fieldset->addField('meta_title', 'text', [
             'label' => __('Meta Title'),
-            'name'  => 'meta_title',
+            'name'  => 'post[meta_title]',
             'value' => $post->getMetaTitle(),
         ]);
 
         $fieldset->addField('meta_description', 'textarea', [
             'label' => __('Meta Description'),
-            'name'  => 'meta_description',
+            'name'  => 'post[meta_description]',
             'value' => $post->getMetaDescription(),
         ]);
 
         $fieldset->addField('meta_keywords', 'textarea', [
             'label' => __('Meta Keywords'),
-            'name'  => 'meta_keywords',
+            'name'  => 'post[meta_keywords]',
             'value' => $post->getMetaKeywords(),
         ]);
 
         $fieldset->addField('url_key', 'text', [
             'label' => __('URL Key'),
-            'name'  => 'url_key',
+            'name'  => 'post[url_key]',
             'value' => $post->getUrlKey(),
         ]);
 

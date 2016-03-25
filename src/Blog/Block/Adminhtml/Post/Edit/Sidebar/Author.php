@@ -63,7 +63,7 @@ class Author extends Form
         ]);
 
         $fieldset->addField('author_id', 'select', [
-            'name'   => 'author_id',
+            'name'   => 'post[author_id]',
             'value'  => $post->getAuthorId(),
             'values' => $this->authorSource->toOptionArray()
         ]);

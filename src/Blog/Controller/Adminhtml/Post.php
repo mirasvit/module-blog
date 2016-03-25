@@ -7,8 +7,8 @@ use Mirasvit\Blog\Model\PostFactory;
 use Magento\Framework\Registry;
 use Magento\Backend\App\Action\Context;
 use Magento\Store\Model\StoreManagerInterface;
-
 use Magento\Framework\Controller\Result\JsonFactory;
+use Magento\Backend\Helper\Js as JsHelper;
 
 abstract class Post extends Action
 {
@@ -38,9 +38,15 @@ abstract class Post extends Action
     protected $jsonFactory;
 
     /**
+     * @var JsHelper
+     */
+    protected $jsHelper;
+
+    /**
      * @param PostFactory           $authorFactory
      * @param StoreManagerInterface $storeManager
      * @param JsonFactory           $jsonFactory
+     * @param JsHelper              $jsHelper
      * @param Registry              $registry
      * @param Context               $context
      */
@@ -48,12 +54,14 @@ abstract class Post extends Action
         PostFactory $authorFactory,
         StoreManagerInterface $storeManager,
         JsonFactory $jsonFactory,
+        JsHelper $jsHelper,
         Registry $registry,
         Context $context
     ) {
         $this->postFactory = $authorFactory;
         $this->storeManager = $storeManager;
         $this->jsonFactory = $jsonFactory;
+        $this->jsHelper = $jsHelper;
         $this->registry = $registry;
         $this->context = $context;
 

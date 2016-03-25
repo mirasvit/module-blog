@@ -68,5 +68,60 @@ class UpgradeSchema implements UpgradeSchemaInterface
 
             $installer->getConnection()->createTable($table);
         }
+
+        if (version_compare($context->getVersion(), '1.0.2') < 0) {
+            $connection->dropTable($installer->getTable('mst_blog_post_product'));
+
+            $table = $installer->getConnection()
+                ->newTable($installer->getTable('mst_blog_post_product'))
+                ->addColumn(
+                    'post_id',
+                    Table::TYPE_INTEGER,
+                    null,
+                    ['unsigned' => true, 'nullable' => false, 'primary' => true, 'default' => '0'],
+                    'Post ID'
+                )->addColumn(
+                    'product_id',
+                    Table::TYPE_INTEGER,
+                    null,
+                    ['unsigned' => true, 'nullable' => false, 'primary' => true, 'default' => '0'],
+                    'Product ID'
+                )->addColumn(
+                    'position',
+                    Table::TYPE_INTEGER,
+                    null,
+                    ['unsigned' => true, 'nullable' => true, 'default' => '0'],
+                    'Position'
+                )->addIndex(
+                    $installer->getIdxName('mst_blog_post_product', ['post_id']),
+                    ['post_id']
+                )->addIndex(
+                    $installer->getIdxName('mst_blog_post_product', ['product_id']),
+                    ['product_id']
+                )->addForeignKey(
+                    $installer->getFkName(
+                        'mst_blog_post_product',
+                        'product_id',
+                        'catalog_product_entity',
+                        'entity_id'
+                    ),
+                    'product_id',
+                    $installer->getTable('catalog_product_entity'),
+                    'entity_id',
+                    Table::ACTION_CASCADE
+                )->addForeignKey(
+                    $installer->getFkName(
+                        'mst_blog_post_product',
+                        'post_id',
+                        'mst_blog_post_entity',
+                        'entity_id'
+                    ),
+                    'post_id',
+                    $installer->getTable('mst_blog_post_entity'),
+                    'entity_id',
+                    Table::ACTION_CASCADE
+                )->setComment('Blog Post To Product Linkage Table');
+            $installer->getConnection()->createTable($table);
+        }
     }
 }

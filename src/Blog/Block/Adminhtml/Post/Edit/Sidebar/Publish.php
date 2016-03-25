@@ -65,17 +65,14 @@ class Publish extends \Magento\Backend\Block\Widget\Form
 
         $fieldset->addField('status', 'select', [
             'label'  => __('Status'),
-            'name'   => 'status',
+            'name'   => 'post[status]',
             'value'  => $post->getStatus(),
             'values' => $this->status->toOptionArray(),
         ]);
 
-        //        $dateFormat = $this->_localeDate->getDateFormat(\IntlDateFormatter::MEDIUM);
-        //        $timeFormat = $this->_localeDate->getTimeFormat(\IntlDateFormatter::SHORT);
-
         $fieldset->addField('created_at', 'date', [
             'label'       => __('Published on'),
-            'name'        => 'created_at',
+            'name'        => 'post[created_at]',
             'value'       => $post->getCreatedAt(),
             'date_format' => 'MMM d, y',
             'time_format' => 'h:mm a'
@@ -83,7 +80,7 @@ class Publish extends \Magento\Backend\Block\Widget\Form
 
         $fieldset->addField('is_pinned', 'checkbox', [
             'label'   => __('Pin post at the top'),
-            'name'    => 'is_pinned',
+            'name'    => 'post[is_pinned]',
             'value'   => 1,
             'checked' => $post->getIsPinned(),
         ]);

@@ -96,6 +96,25 @@ class Post extends AbstractEntity
     }
 
     /**
+     * @param \Mirasvit\Blog\Model\Post $post
+     * @return array
+     */
+    public function getProductIds($post)
+    {
+        $connection = $this->getConnection();
+
+        $select = $connection->select()->from(
+            $this->getTable('mst_blog_post_product'),
+            'product_id'
+        )->where(
+            'post_id = ?',
+            (int)$post->getId()
+        );
+
+        return $connection->fetchCol($select);
+    }
+
+    /**
      * {@inheritdoc}
      */
     protected function _beforeSave(DataObject $post)
@@ -123,8 +142,56 @@ class Post extends AbstractEntity
         /** @var \Mirasvit\Blog\Model\Post $post */
         $this->saveCategories($post);
         $this->saveTags($post);
+        $this->saveProducts($post);
 
         return parent::_afterSave($post);
+    }
+
+    /**
+     * @param \Mirasvit\Blog\Model\Post $post
+     * @return $this
+     */
+    protected function saveProducts($post)
+    {
+        $table = $this->getTable('mst_blog_post_product');
+
+        if (!$post->hasProductIds()) {
+            return $this;
+        }
+
+        $productIds = $post->getProductIds();
+
+        $oldProductIds = $this->getProductIds($post);
+
+        $insert = array_diff($productIds, $oldProductIds);
+        $delete = array_diff($oldProductIds, $productIds);
+
+        $connection = $this->getConnection();
+        if (!empty($insert)) {
+            $data = [];
+            foreach ($insert as $productId) {
+                if (empty($productId)) {
+                    continue;
+                }
+                $data[] = [
+                    'product_id' => (int)$productId,
+                    'post_id'    => (int)$post->getId()
+                ];
+            }
+
+            if ($data) {
+                $connection->insertMultiple($table, $data);
+            }
+        }
+
+        if (!empty($delete)) {
+            foreach ($delete as $productId) {
+                $where = ['post_id = ?' => (int)$post->getId(), 'product_id = ?' => (int)$productId];
+                $connection->delete($table, $where);
+            }
+        }
+
+        return $this;
     }
 
     /**

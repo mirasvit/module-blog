@@ -16,13 +16,7 @@ class Save extends Post
         if ($data = $this->getRequest()->getParams()) {
             $model = $this->initModel();
 
-            if (!isset($data['is_pinned'])) {
-                $data['is_pinned'] = false;
-            }
-
-            if (isset($data['featured_image']) && is_array($data['featured_image'])) {
-                unset($data['featured_image']);
-            }
+            $data = $this->filterPostData($data);
 
             $model->addData($data);
 
@@ -37,6 +31,7 @@ class Save extends Post
                 } else {
                     $model->save();
                 }
+
                 $this->messageManager->addSuccess(__('Post was successfully saved'));
                 $this->context->getSession()->setFormData(false);
 
@@ -56,5 +51,33 @@ class Save extends Post
 
             return $resultRedirect;
         }
+    }
+
+    /**
+     * @param array $data
+     * @return array
+     */
+    protected function filterPostData($data)
+    {
+        $result = $data['post'];
+
+        if (!isset($result['is_pinned'])) {
+            $result['is_pinned'] = false;
+        }
+
+        if (isset($result['featured_image']) && is_array($result['featured_image'])) {
+            unset($result['featured_image']);
+        }
+
+        if (isset($data['links'])) {
+            $links = is_array($data['links']) ? $data['links'] : [];
+            foreach (['relatedproducts' => 'product_ids'] as $type => $alias) {
+                if (isset($links[$type])) {
+                    $result[$alias] = array_keys($this->jsHelper->decodeGridSerializedInput($links[$type]));
+                }
+            }
+        }
+
+        return $result;
     }
 }

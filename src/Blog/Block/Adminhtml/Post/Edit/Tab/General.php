@@ -63,14 +63,14 @@ class General extends Form
 
         if ($post->getId()) {
             $fieldset->addField('entity_id', 'hidden', [
-                'name'  => 'entity_id',
+                'name'  => 'post[entity_id]',
                 'value' => $post->getId(),
             ]);
         }
 
         $fieldset->addField('name', 'text', [
             'label'    => __('Title'),
-            'name'     => 'name',
+            'name'     => 'post[name]',
             'value'    => $post->getName(),
             'required' => true,
         ]);
@@ -78,7 +78,7 @@ class General extends Form
         $editorConfig = $this->wysiwygConfig->getConfig(['tab_id' => $this->getTabId()]);
 
         $fieldset->addField('content', 'editor', [
-            'name'    => 'content',
+            'name'    => 'post[content]',
             'value'   => $post->getContent(),
             'wysiwyg' => true,
             'style'   => 'height:35em',
@@ -87,7 +87,7 @@ class General extends Form
 
         $fieldset->addField('short_content', 'editor', [
             'label'   => __('Excerpt'),
-            'name'    => 'short_content',
+            'name'    => 'post[short_content]',
             'value'   => $post->getShortContent(),
             'wysiwyg' => true,
             'style'   => 'height:5em',

@@ -10,6 +10,7 @@ use Magento\Framework\Api\ExtensionAttributesFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\DataObject\IdentityInterface;
 use Mirasvit\Blog\Model\ResourceModel\Tag\CollectionFactory as TagCollectionFactory;
+use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
 
 /**
  * @method string getName()
@@ -58,6 +59,11 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     protected $tagCollectionFactory;
 
     /**
+     * @var ProductCollectionFactory
+     */
+    protected $productCollectionFactory;
+
+    /**
      * @var AuthorFactory
      */
     protected $authorFactory;
@@ -70,6 +76,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     /**
      * @param CategoryFactory            $postFactory
      * @param TagCollectionFactory       $tagCollectionFactory
+     * @param ProductCollectionFactory   $productCollectionFactory
      * @param AuthorFactory              $authorFactory
      * @param Config                     $config
      * @param Url                        $url
@@ -83,6 +90,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
         CategoryFactory $postFactory,
         TagCollectionFactory $tagCollectionFactory,
         AuthorFactory $authorFactory,
+        ProductCollectionFactory $productCollectionFactory,
         Config $config,
         Url $url,
         StoreManagerInterface $storeManager,
@@ -93,6 +101,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     ) {
         $this->categoryFactory = $postFactory;
         $this->tagCollectionFactory = $tagCollectionFactory;
+        $this->productCollectionFactory = $productCollectionFactory;
         $this->authorFactory = $authorFactory;
         $this->config = $config;
         $this->url = $url;
@@ -133,6 +142,21 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     }
 
     /**
+     * Retrieve assigned product Ids
+     *
+     * @return array
+     */
+    public function getRelatedProductIds()
+    {
+        if (!$this->hasData('product_ids')) {
+            $ids = $this->getResource()->getProductIds($this);
+            $this->setData('product_ids', $ids);
+        }
+
+        return (array)$this->_getData('product_ids');
+    }
+
+    /**
      * @return \Mirasvit\Blog\Model\Category|false
      */
     public function getCategory()
@@ -157,6 +181,21 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
         $ids[] = 0;
 
         $collection = $this->categoryFactory->create()->getCollection()
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter('entity_id', $ids);
+
+        return $collection;
+    }
+
+    /**
+     * @return ResourceModel\Category\Collection
+     */
+    public function getRelatedProducts()
+    {
+        $ids = $this->getRelatedProductIds();
+        $ids[] = 0;
+
+        $collection = $this->productCollectionFactory->create()
             ->addAttributeToSelect('*')
             ->addFieldToFilter('entity_id', $ids);
 

@@ -23,7 +23,7 @@
         'Mirasvit_Blog/js/tag-it'
     ], function ($) {
         $("#myTags").tagit({
-            fieldName: 'tag_names[]',
+            fieldName: 'post[tag_names][]',
             allowSpaces: true,
             caseSensitive: false
         });

@@ -6,7 +6,7 @@
 <a href="<?= $this->getUrl('blog/post/view', ['id' => $block->getPost()->getId()]) ?>"
    class="action-default" id="post-preview-button" target="_blank"><?= __('Preview Changes') ?></a>
 
-<input type="hidden" name="preview" id="preview" value="">
+<input type="hidden" name="post[preview]" id="preview" value="">
 
 <div class="blog__post-sidebar">
     <?= $this->getChildHtml('publish') ?>
