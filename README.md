@@ -41,6 +41,18 @@ bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.4-alpha2
+*(2016-03-25)*
+
+#### Improvements
+* Related Products - Backend
+
+#### Fixed
+* SeoAutolinks compatibility
+
+---
+
+
 ## 1.0.4-alpha1
 *(2016-03-23)*
 
