@@ -41,6 +41,21 @@ class Collection extends AbstractCollection
     }
 
     /**
+     * @param \Magento\Catalog\Model\Product $product
+     * @return $this
+     */
+    public function addRelatedProductFilter($product)
+    {
+        $this->getSelect()
+            ->where("EXISTS (SELECT * FROM `{$this->getTable('mst_blog_post_product')}`
+                AS `post_product`
+                WHERE e.entity_id = post_product.post_id
+                AND post_product.product_id in (?))", [0, $product->getId()]);
+
+        return $this;
+    }
+
+    /**
      * @param \Mirasvit\Blog\Model\Tag|array $tag
      * @return $this
      */

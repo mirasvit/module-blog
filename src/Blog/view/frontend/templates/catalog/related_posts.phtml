@@ -1,0 +1,25 @@
+<?php
+/** @var \Mirasvit\Blog\Block\Catalog\RelatedPosts $block */
+$collection = $block->getCollection();
+if (!$collection->count()) {
+    return;
+}
+?>
+
+<div class="blog__post-catalog-related-posts">
+    <ol>
+        <?php foreach ($collection as $post): ?>
+            <li>
+                <?php if ($post->getFeaturedImageUrl()): ?>
+                    <a href="<?= $post->getUrl() ?>">
+                        <img src="<?= $post->getFeaturedImageUrl() ?>" class="post-image"/>
+                    </a>
+                <?php endif ?>
+
+                <a href="<?= $post->getUrl() ?>" class="post-name"><?= $post->getName() ?></a>
+
+                <?= substr(strip_tags($post->getShortContent()), 0, 450) ?>
+            </li>
+        <?php endforeach ?>
+    </ol>
+</div>

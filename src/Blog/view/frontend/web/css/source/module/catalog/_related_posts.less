@@ -1,0 +1,42 @@
+.blog__post-catalog-related-posts {
+    ol {
+        list-style: none;
+        padding: 0;
+
+        li {
+            .lib-clearfix();
+            margin-bottom: 3rem;
+
+            .post-image {
+                width: 30%;
+                max-width: 10rem;
+                float: left;
+                padding: 0 1rem 1rem 0;
+                border-radius: 3px;
+            }
+
+            .post-name {
+                display: block;
+                font-weight: 500;
+            }
+        }
+    }
+}
+//
+//  Mobile
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__m) {
+    .blog__post-catalog-related-posts {
+        ol {
+            li {
+                .post-image {
+                    width: 100%;
+                    max-width: 100%;
+                    float: none;
+                    padding: 0 0 1rem 0;
+                }
+            }
+        }
+    }
+}
