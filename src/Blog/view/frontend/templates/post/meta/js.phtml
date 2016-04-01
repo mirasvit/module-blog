@@ -2,10 +2,14 @@
 //@codingStandardsIgnoreFile
 
 /** @var \Mirasvit\Blog\Block\Post\Meta $block */
+
+// solve error with template minification
+$countJs = '//';
+$countJs .= $block->getDisqusShortname() . '.disqus.com/count.js';
 ?>
 
 <?php if ($block->getCommentProvider()): ?>
-    <script id="dsq-count-scr" src="//<?= $block->getDisqusShortname() ?>.disqus.com/count.js"></script>
+    <script id="dsq-count-scr" src="<?= $countJs ?>"></script>
 <?php endif ?>
 
 <!-- Go to www.addthis.com/dashboard to customize your tools -->

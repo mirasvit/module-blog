@@ -2,6 +2,9 @@
 //@codingStandardsIgnoreFile
 
 /** @var \Mirasvit\Blog\Block\Post\Meta $block */
+// solve error with template minification
+$embedJs = '//';
+$embedJs .= $block->getDisqusShortname() . '.disqus.com/embed.js';
 ?>
 
 <?php if ($block->getCommentProvider()): ?>
@@ -14,7 +17,7 @@
         (function () {
             var d = document, s = d.createElement('script');
 
-            s.src = '//<?=$block->getDisqusShortname() ?>.disqus.com/embed.js';
+            s.src = '<?= $embedJs ?>';
 
             s.setAttribute('data-timestamp', +new Date());
             (d.head || d.body).appendChild(s);
