@@ -3,15 +3,13 @@
 
 /** @var \Mirasvit\Blog\Block\Sidebar\Search $block */
 ?>
-<div class="block blog__sidebar-search">
-    <div class="block-content">
-        <form method="get" action="<?= $block->getSearchUrl() ?>">
-            <input type="search" name="q" placeholder="<?= __('Search...') ?>"
-                   value="<?= $block->getRequest()->getParam('q') ?>"/>
+<div class=" blog__sidebar-search">
+    <form method="get" action="<?= $block->getSearchUrl() ?>">
+        <input type="search" name="q" placeholder="<?= __('Search...') ?>" class="input-text required-entry"
+               value="<?= $block->getRequest()->getParam('q') ?>"/>
 
-            <div class="actions">
-                <button type="submit"><i class="fa fa-search fa-fw"></i></button>
-            </div>
-        </form>
-    </div>
+        <button class="action primary" title="Submit" type="submit">
+            <span><i class="fa fa-fw fa-search"></i></span>
+        </button>
+    </form>
 </div>

@@ -21,6 +21,7 @@ class Collection extends AbstractCollection
     public function addVisibilityFilter()
     {
         $this->addAttributeToFilter('status', Status::STATUS_PUBLISHED);
+        $this->addFieldToFilter('type', \Mirasvit\Blog\Model\Post::TYPE_POST);
 
         return $this;
     }

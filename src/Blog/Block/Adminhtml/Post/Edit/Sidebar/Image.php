@@ -55,7 +55,7 @@ class Image extends Form
 
         $fieldset->addField('featured_image', 'image', [
             'required' => false,
-            'name'     => 'post[featured_image]',
+            'name'     => 'featured_image',
             'value'    => $post->getFeaturedImageUrl(),
         ]);
 

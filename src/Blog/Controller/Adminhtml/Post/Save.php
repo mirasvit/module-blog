@@ -65,8 +65,10 @@ class Save extends Post
             $result['is_pinned'] = false;
         }
 
-        if (isset($result['featured_image']) && is_array($result['featured_image'])) {
-            unset($result['featured_image']);
+        if (isset($data['featured_image'])
+            && is_array($data['featured_image'])
+            && isset($data['featured_image']['delete'])) {
+            $result['featured_image'] = '';
         }
 
         if (isset($data['links'])) {
