@@ -41,6 +41,17 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.4-alpha3
+*(2016-04-11)*
+
+#### Fixed
+* Fixed few small issues
+* [#11](http://some.issue.tracker.com/11)
+* Fixed an issue with syntax errors after .phtml minification
+
+---
+
+
 ## 1.0.4-alpha2
 *(2016-03-25)*
 
