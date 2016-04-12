@@ -49,6 +49,7 @@ class Recent extends Template
     public function getCollection()
     {
         return $this->postCollectionFactory->create()
+            ->addVisibilityFilter()
             ->addAttributeToSelect('*');
     }
 
