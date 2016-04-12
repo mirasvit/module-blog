@@ -41,6 +41,18 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.4-alpha4
+*(2016-04-12)*
+
+#### Improvements
+* Ablity to enable/disable AddThis sharing buttons in configuration
+
+#### Fixed
+* Fixed an issue with wrong posts in recent widget
+
+---
+
+
 ## 1.0.4-alpha3
 *(2016-04-11)*
 
