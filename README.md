@@ -45,7 +45,7 @@ php -f bin/magento setup:static-content:deploy
 *(2016-04-12)*
 
 #### Improvements
-* Ablity to enable/disable AddThis sharing buttons in configuration
+* Ability to enable/disable AddThis sharing buttons in configuration
 
 #### Fixed
 * Fixed an issue with wrong posts in recent widget
