@@ -20,6 +20,10 @@
                 <base_meta_description>Blog MX</base_meta_description>
                 <base_meta_keywords>Blog MX</base_meta_keywords>
             </seo>
+
+            <sharing>
+                <enable_addthis>1</enable_addthis>
+            </sharing>
         </blog>
     </default>
 </config>

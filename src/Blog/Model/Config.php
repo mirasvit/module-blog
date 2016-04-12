@@ -139,6 +139,14 @@ class Config
     }
 
     /**
+     * @return bool
+     */
+    public function isAddThisEnabled()
+    {
+        return $this->scopeConfig->getValue('blog/sharing/enable_addthis');
+    }
+
+    /**
      * @return string
      */
     public function getMediaPath()

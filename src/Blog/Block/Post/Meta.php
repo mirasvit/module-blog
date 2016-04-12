@@ -48,4 +48,12 @@ class Meta extends AbstractBlock
     {
         return date($this->config->getDateFormat(), strtotime($date));
     }
+
+    /**
+     * @return bool
+     */
+    public function isAddThisEnabled()
+    {
+        return $this->config->isAddThisEnabled();
+    }
 }

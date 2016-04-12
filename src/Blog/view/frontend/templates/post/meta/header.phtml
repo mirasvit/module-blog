@@ -27,7 +27,7 @@ $post = $block->getPost();
     </span>
     <?php endif ?>
 
-    <?php if (!$block->getCategory()): ?>
+    <?php if ($block->isAddThisEnabled() && !$block->getCategory()): ?>
         <span class="addthis_sharing_toolbox blog__post-meta-sharing"></span>
     <?php endif ?>
 </p>

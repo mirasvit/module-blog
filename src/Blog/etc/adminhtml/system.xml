@@ -61,6 +61,15 @@
                     </depends>
                 </field>
             </group>
+
+            <group id="sharing" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="30">
+                <label>Sharing</label>
+
+                <field id="enable_addthis" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable AddThis Sharing Buttons</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
         </section>
     </system>
 </config>
