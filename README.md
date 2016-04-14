@@ -41,6 +41,16 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.4-alpha5
+*(2016-04-14)*
+
+#### Fixed
+* Fixed an issue with sorting Recent posts
+* Removed AddThis fixed toolbar
+
+---
+
+
 ## 1.0.4-alpha4
 *(2016-04-12)*
 
