@@ -50,7 +50,8 @@ class Recent extends Template
     {
         return $this->postCollectionFactory->create()
             ->addVisibilityFilter()
-            ->addAttributeToSelect('*');
+            ->addAttributeToSelect('*')
+            ->setOrder('created_at', 'desc');
     }
 
     /**
