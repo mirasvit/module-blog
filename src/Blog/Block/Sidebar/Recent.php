@@ -9,6 +9,7 @@ use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFa
 
 class Recent extends Template
 {
+    protected $_template = 'Mirasvit_Blog::sidebar/recent.phtml';
     /**
      * @var PostCollectionFactory
      */
@@ -73,5 +74,14 @@ class Recent extends Template
         }
 
         return false;
+    }
+
+    public function getPageSize()
+    {
+        if ($this->getData('page_size')) {
+            return $this->getData('page_size');
+        }
+
+        return 5;
     }
 }
