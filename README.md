@@ -41,57 +41,24 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
-
-
-## 1.0.4-alpha5
-*(2016-04-14)*
-
-#### Fixed
-* Fixed an issue with sorting Recent posts
-* Removed AddThis fixed toolbar
-
----
-
-
-## 1.0.4-alpha4
-*(2016-04-12)*
+## 1.0.4
+*(2016-05-08)*
 
 #### Improvements
+* #16 -- added ability to set url suffix (.html)
+* #16-2
 * Ability to enable/disable AddThis sharing buttons in configuration
-
-#### Fixed
-* Fixed an issue with wrong posts in recent widget
-
----
-
-
-## 1.0.4-alpha3
-*(2016-04-11)*
-
-#### Fixed
-* Fixed few small issues
-* [#11](http://some.issue.tracker.com/11)
-* Fixed an issue with syntax errors after .phtml minification
-
----
-
-
-## 1.0.4-alpha2
-*(2016-03-25)*
-
-#### Improvements
 * Related Products - Backend
 
 #### Fixed
+* #15 -- fixed an issue with not seo friendly post image
+* Fixed an issue with sorting Recent posts
+* Removed AddThis fixed toolbar
+* Fixed an issue with wrong posts in recent widget
+* Fixed few small issues
+* #11
+* Fixed an issue with syntax errors after .phtml minification
 * SeoAutolinks compatibility
-
----
-
-## 1.0.4-alpha1
-*(2016-03-23)*
-
-#### Fixed
-* Fixed issue with menu on mobile devices
 
 ---
 
