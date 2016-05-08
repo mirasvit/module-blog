@@ -7,6 +7,7 @@ use Magento\Eav\Model\Entity\Context;
 use Mirasvit\Blog\Model\Config;
 use Magento\Framework\Filter\FilterManager;
 use Mirasvit\Blog\Model\TagFactory as TagModelFactory;
+use Magento\Framework\File\Uploader as FileUploader;
 
 class Post extends AbstractEntity
 {
@@ -54,6 +55,7 @@ class Post extends AbstractEntity
         if (empty($this->_type)) {
             $this->setType(\MIrasvit\Blog\Model\Post::ENTITY);
         }
+
         return parent::getEntityType();
     }
 
@@ -311,8 +313,9 @@ class Post extends AbstractEntity
         $image = $_FILES['featured_image'];
 
         $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
+        $name = pathinfo($image['name'], PATHINFO_FILENAME);
         $oldFileName = $post->getFeaturedImage();
-        $newFileName = $post->getId() . '_' . md5($image['name']) . '.' . $ext;
+        $newFileName = $name . '-' . $post->getId() . '.' . $ext;
 
         $allowedFileExtensions = ['png', 'jpeg', 'jpg', 'gif'];
         $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
@@ -323,7 +326,7 @@ class Post extends AbstractEntity
             );
         }
 
-        $uploader = new \Magento\Framework\File\Uploader($_FILES['featured_image']);
+        $uploader = new FileUploader($_FILES['featured_image']);
         $uploader->setAllowedExtensions($allowedFileExtensions)
             ->setAllowRenameFiles(false)
             ->setFilesDispersion(false)
