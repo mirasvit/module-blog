@@ -109,6 +109,15 @@ class Config
     /**
      * @return string
      */
+    public function getUrlSuffix()
+    {
+        return $this->scopeConfig->getValue('blog/seo/url_suffix');
+    }
+
+
+    /**
+     * @return string
+     */
     public function getDateFormat()
     {
         return $this->scopeConfig->getValue('blog/appearance/date_format');

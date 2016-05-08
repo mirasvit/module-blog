@@ -83,7 +83,7 @@ class Url
      */
     public function getPostUrl($post)
     {
-        return $this->urlManager->getUrl($this->config->getBaseRoute() . '/' . $post->getUrlKey());
+        return $this->getUrl('/' . $post->getUrlKey());
     }
 
     /**
@@ -92,7 +92,7 @@ class Url
      */
     public function getCategoryUrl($category)
     {
-        return $this->urlManager->getUrl($this->config->getBaseRoute() . '/' . $category->getUrlKey());
+        return $this->getUrl('/' . $category->getUrlKey());
     }
 
     /**
@@ -102,10 +102,10 @@ class Url
     public function getRssUrl($category = null)
     {
         if ($category) {
-            return $this->urlManager->getUrl($this->config->getBaseRoute() . '/rss/' . $category->getUrlKey());
+            return $this->getUrl('/rss/' . $category->getUrlKey(), true);
         }
 
-        return $this->urlManager->getUrl($this->config->getBaseRoute() . '/rss');
+        return $this->getUrl('/rss', true);
     }
 
     /**
@@ -114,7 +114,7 @@ class Url
      */
     public function getTagUrl($tag)
     {
-        return $this->urlManager->getUrl($this->config->getBaseRoute() . '/tag/' . strtolower($tag->getUrlKey()));
+        return $this->getUrl('/tag/' . strtolower($tag->getUrlKey()));
     }
 
     /**
@@ -123,7 +123,7 @@ class Url
      */
     public function getAuthorUrl($author)
     {
-        return $this->urlManager->getUrl($this->config->getBaseRoute() . '/author/' . strtolower($author->getId()));
+        return $this->getUrl('/author/' . strtolower($author->getId()));
     }
 
     /**
@@ -131,7 +131,23 @@ class Url
      */
     public function getSearchUrl()
     {
-        return $this->urlManager->getUrl($this->config->getBaseRoute() . '/search/');
+        return $this->getUrl('/search/', true);
+    }
+
+    /**
+     * @param string $route
+     * @param bool $system
+     * @return string
+     */
+    protected function getUrl($route, $system = false)
+    {
+        $url = $this->urlManager->getUrl($this->config->getBaseRoute() . $route);
+
+        if ($this->config->getUrlSuffix() && !$system) {
+            $url = rtrim($url, '/') . $this->config->getUrlSuffix();
+        }
+
+        return $url;
     }
 
     /**
@@ -143,8 +159,8 @@ class Url
         $identifier = trim($pathInfo, '/');
         $parts = explode('/', $identifier);
 
-        if (count($parts) == 1) {
-            $parts[0] = $this->trimSuffix($parts[0]);
+        if (count($parts) >= 1) {
+            $parts[count($parts) - 1] = $this->trimSuffix($parts[count($parts) - 1]);
         }
 
         if ($parts[0] != $this->config->getBaseRoute()) {
@@ -274,7 +290,7 @@ class Url
      */
     protected function trimSuffix($key)
     {
-        $configUrlSuffix = $this->scopeConfig->getValue('catalog/seo/product_url_suffix');
+        $configUrlSuffix = $this->config->getUrlSuffix();
         //user can enter .html or html suffix
         if ($configUrlSuffix != '' && $configUrlSuffix[0] != '.') {
             $configUrlSuffix = '.' . $configUrlSuffix;
