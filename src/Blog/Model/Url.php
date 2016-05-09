@@ -83,7 +83,7 @@ class Url
      */
     public function getPostUrl($post)
     {
-        return $this->getUrl('/' . $post->getUrlKey());
+        return $this->getUrl('/' . $post->getUrlKey(), 'post');
     }
 
     /**
@@ -92,7 +92,7 @@ class Url
      */
     public function getCategoryUrl($category)
     {
-        return $this->getUrl('/' . $category->getUrlKey());
+        return $this->getUrl('/' . $category->getUrlKey(), 'category');
     }
 
     /**
@@ -102,10 +102,10 @@ class Url
     public function getRssUrl($category = null)
     {
         if ($category) {
-            return $this->getUrl('/rss/' . $category->getUrlKey(), true);
+            return $this->getUrl('/rss/' . $category->getUrlKey(), 'rss');
         }
 
-        return $this->getUrl('/rss', true);
+        return $this->getUrl('/rss', 'rss');
     }
 
     /**
@@ -114,7 +114,7 @@ class Url
      */
     public function getTagUrl($tag)
     {
-        return $this->getUrl('/tag/' . strtolower($tag->getUrlKey()));
+        return $this->getUrl('/tag/' . strtolower($tag->getUrlKey()), 'tag');
     }
 
     /**
@@ -123,7 +123,7 @@ class Url
      */
     public function getAuthorUrl($author)
     {
-        return $this->getUrl('/author/' . strtolower($author->getId()));
+        return $this->getUrl('/author/' . strtolower($author->getId()), 'author');
     }
 
     /**
@@ -131,20 +131,24 @@ class Url
      */
     public function getSearchUrl()
     {
-        return $this->getUrl('/search/', true);
+        return $this->getUrl('/search/', 'search');
     }
 
     /**
      * @param string $route
-     * @param bool $system
+     * @param string $type
      * @return string
      */
-    protected function getUrl($route, $system = false)
+    protected function getUrl($route, $type)
     {
         $url = $this->urlManager->getUrl($this->config->getBaseRoute() . $route);
 
-        if ($this->config->getUrlSuffix() && !$system) {
-            $url = rtrim($url, '/') . $this->config->getUrlSuffix();
+        if ($type == 'post' && $this->config->getPostUrlSuffix()) {
+            $url = rtrim($url, '/') . $this->config->getPostUrlSuffix();
+        }
+
+        if ($type == 'category' && $this->config->getCategoryUrlSuffix()) {
+            $url = rtrim($url, '/') . $this->config->getCategoryUrlSuffix();
         }
 
         return $url;
@@ -290,13 +294,21 @@ class Url
      */
     protected function trimSuffix($key)
     {
-        $configUrlSuffix = $this->config->getUrlSuffix();
+        $suffix = $this->config->getCategoryUrlSuffix();
         //user can enter .html or html suffix
-        if ($configUrlSuffix != '' && $configUrlSuffix[0] != '.') {
-            $configUrlSuffix = '.' . $configUrlSuffix;
+        if ($suffix != '' && $suffix[0] != '.') {
+            $suffix = '.' . $suffix;
         }
 
-        $key = str_replace($configUrlSuffix, '', $key);
+        $key = str_replace($suffix, '', $key);
+
+        $suffix = $this->config->getPostUrlSuffix();
+        //user can enter .html or html suffix
+        if ($suffix != '' && $suffix[0] != '.') {
+            $suffix = '.' . $suffix;
+        }
+
+        $key = str_replace($suffix, '', $key);
 
         return $key;
     }

@@ -19,6 +19,8 @@
                 <base_meta_title>Blog MX</base_meta_title>
                 <base_meta_description>Blog MX</base_meta_description>
                 <base_meta_keywords>Blog MX</base_meta_keywords>
+                <post_url_suffix>.html</post_url_suffix>
+                <category_url_suffix>.html</category_url_suffix>
             </seo>
 
             <sharing>

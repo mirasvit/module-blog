@@ -45,9 +45,12 @@
                     <label>Base Meta Keywords</label>
                 </field>
 
-                <field id="url_suffix" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
-                    <label>URL Suffix</label>
-                    <comment>You need to refresh the cache.</comment>
+                <field id="post_url_suffix" translate="label" type="text" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>URL Suffix for Posts</label>
+                </field>
+
+                <field id="category_url_suffix" translate="label" type="text" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>URL Suffix for Categories</label>
                 </field>
             </group>
 

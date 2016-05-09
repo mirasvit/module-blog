@@ -109,9 +109,17 @@ class Config
     /**
      * @return string
      */
-    public function getUrlSuffix()
+    public function getPostUrlSuffix()
     {
-        return $this->scopeConfig->getValue('blog/seo/url_suffix');
+        return $this->scopeConfig->getValue('blog/seo/post_url_suffix');
+    }
+
+    /**
+     * @return string
+     */
+    public function getCategoryUrlSuffix()
+    {
+        return $this->scopeConfig->getValue('blog/seo/category_url_suffix');
     }
 
 
