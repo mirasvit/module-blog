@@ -17,6 +17,10 @@ class CommentProvider
             [
                 'label' => 'Disqus',
                 'value' => 'disqus'
+            ],
+            [
+                'label' => 'Facebook',
+                'value' => 'facebook'
             ]
         ];
 
