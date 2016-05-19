@@ -17,7 +17,7 @@
     ],
     "autoload": {
         "files": [
-            "src/Blog/registration.php"
+            "registration.php"
         ],
         "psr-4": {
             "Mirasvit\\Blog\\": ""
