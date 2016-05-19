@@ -21,7 +21,6 @@ FREE, fully featured, powerful Blog solution for your online store! Magento 2 Bl
 
 Log in to the Magento server, go to your Magento install dir and run these commands:
 ```
-composer config repositories.mirasvit-blog vcs https://github.com/mirasvit/module-blog
 composer require mirasvit/module-blog
 
 php -f bin/magento module:enable Mirasvit_Blog
@@ -41,6 +40,18 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+
+## 1.0.5
+*(2016-05-19)*
+
+#### Improvements
+* Changed repository structure. Integrated with packagist.org
+* [#18] -- integrate Facebook comments
+* [#16] Split Url suffix for posts and for categories
+
+---
+
+
 ## 1.0.4
 *(2016-05-08)*
 
