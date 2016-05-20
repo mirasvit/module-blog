@@ -17,7 +17,9 @@ $post = $block->getPost();
 
     <?= $this->getPostMetaFooter()->toHtml() ?>
 
-    <?= $this->getChildHtml('blog.post.related') ?>
+    <?= $this->getChildHtml('blog.post.related.posts') ?>
+
+    <?= $this->getChildHtml('blog.post.related.products') ?>
 
     <?= $this->getChildHtml('blog.post.comments') ?>
 </div>

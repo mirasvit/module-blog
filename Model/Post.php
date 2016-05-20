@@ -188,7 +188,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     }
 
     /**
-     * @return ResourceModel\Category\Collection
+     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
      */
     public function getRelatedProducts()
     {

@@ -1,0 +1,34 @@
+<?php
+//@codingStandardsIgnoreFile
+
+/** @var \Mirasvit\Blog\Block\Post\View\RelatedProducts $block */
+$collection = $block->getPostCollection();
+
+if (!$collection->count()) {
+    return;
+}
+?>
+
+<div class="blog__post-view-related-products">
+    <div class="block-title"><?= __('Related Products') ?></div>
+    <ol>
+        <div class="products wrapper grid products-grid">
+            <ol class="products list items product-items"><?php foreach ($collection as $product): ?><li class="item product product-item">
+                    <div class="product-item-info">
+                        <a href="<?= $block->getProductUrl($product) ?>" class="product photo product-item-photo">
+                            <?= $block->getImage($product, 'related_products_list')->toHtml() ?>
+                        </a>
+                        <div class="product details product-item-details">
+                            <strong class="product name product-item-name">
+                                <a class="product-item-link" title="<?= $block->escapeHtml($product->getName()) ?>"
+                                   href="<?= $block->getProductUrl($product) ?>">
+                                    <?= $block->escapeHtml($product->getName()) ?>
+                                </a>
+                            </strong>
+                            <?= $block->getProductPrice($product) ?>
+                        </div>
+                    </div>
+                    </li><?php endforeach ?></ol>
+        </div>
+    </ol>
+</div>
