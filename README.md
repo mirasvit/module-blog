@@ -40,6 +40,15 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.6-alpha1
+*(2016-05-20)*
+
+#### Improvements
+* Added an ability to related posts with products
+
+---
+
+
 
 ## 1.0.5
 *(2016-05-19)*
