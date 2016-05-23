@@ -40,6 +40,15 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.6-alpha2
+*(2016-05-23)*
+
+#### Fixed
+* Fixed an issue with setup:di:compile-multi-tenant
+
+---
+
+
 ## 1.0.6-alpha1
 *(2016-05-20)*
 
