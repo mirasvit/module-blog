@@ -4,9 +4,9 @@ namespace Mirasvit\Blog\Block\Post\View;
 use Magento\Framework\View\Element\Template;
 use Magento\Catalog\Block\Product\Context;
 use Magento\Framework\Registry;
-use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
+use Magento\Catalog\Block\Product\AbstractProduct;
 
-class RelatedProducts extends \Magento\Catalog\Block\Product\AbstractProduct
+class RelatedProducts extends AbstractProduct
 {
     /**
      * @var Registry
@@ -14,14 +14,12 @@ class RelatedProducts extends \Magento\Catalog\Block\Product\AbstractProduct
     protected $registry;
 
     /**
-     * @param Registry $registry
-     * @param Context  $context
+     * @param Context $context
      */
     public function __construct(
-        Registry $registry,
         Context $context
     ) {
-        $this->registry = $registry;
+        $this->registry = $context->getRegistry();
 
         parent::__construct($context);
     }
