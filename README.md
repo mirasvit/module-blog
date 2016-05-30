@@ -42,6 +42,8 @@ php -f bin/magento setup:static-content:deploy
 # Changelog
 
 
+
+
 ## 1.0.6-alpha2
 *(2016-05-23)*
 
