@@ -40,6 +40,8 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+
+
 ## 1.0.6-alpha2
 *(2016-05-23)*
 
