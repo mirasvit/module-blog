@@ -40,6 +40,15 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.6-alpha8
+*(2016-06-01)*
+
+#### Fixed
+* [#24](http://some.issue.tracker.com/24) -- fatal error on setup:install
+
+---
+
+
 ## 1.0.6-alpha7
 *(2016-05-30)*
 
