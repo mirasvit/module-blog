@@ -45,7 +45,7 @@ php -f bin/magento setup:static-content:deploy
 
 #### Fixed
 * [#22](http://some.issue.tracker.com/22) -- issue with varnish cache (related with post breadrumbs)
-* [#21](http://some.issue.tracker.com/21)
+* [#21](http://some.issue.tracker.com/21) -- division by zero (tags cloud)
 
 ---
 
