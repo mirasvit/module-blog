@@ -7,23 +7,23 @@ use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Mirasvit\Blog\Setup\InstallData\PostSetupFactory;
 use Mirasvit\Blog\Setup\InstallData\CategorySetupFactory;
-use Mirasvit\Blog\Model\CategoryFactory;
+use Magento\Eav\Model\Config;
 
 class InstallData implements InstallDataInterface
 {
     /**
      * @param PostSetupFactory     $postSetupFactory
      * @param CategorySetupFactory $categorySetupFactory
-     * @param CategoryFactory      $categoryFactory
+     * @param Config               $eavConfig
      */
     public function __construct(
         PostSetupFactory $postSetupFactory,
         CategorySetupFactory $categorySetupFactory,
-        CategoryFactory $categoryFactory
+        Config $eavConfig
     ) {
         $this->postSetupFactory = $postSetupFactory;
         $this->categorySetupFactory = $categorySetupFactory;
-        $this->categoryFactory = $categoryFactory;
+        $this->eavConfig = $eavConfig;
     }
 
     /**
@@ -31,13 +31,19 @@ class InstallData implements InstallDataInterface
      */
     public function install(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
+        $setup->startSetup();
+
         $postSetup = $this->postSetupFactory->create(['setup' => $setup]);
         $postSetup->installEntities();
 
         $categorySetup = $this->categorySetupFactory->create(['setup' => $setup]);
         $categorySetup->installEntities();
 
-        $category = $this->categoryFactory->create();
+        $setup->endSetup();
+
+        $this->eavConfig->clear();
+
+        $category = $categorySetup->getCategoryFactory()->create();
         $category
             ->setName(__('Blog'))
             ->setParentId(null)

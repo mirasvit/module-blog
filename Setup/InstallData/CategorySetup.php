@@ -100,4 +100,9 @@ class CategorySetup extends EavSetup
             ],
         ];
     }
+
+    public function getCategoryFactory()
+    {
+        return $this->categoryFactory;
+    }
 }
