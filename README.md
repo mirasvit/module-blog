@@ -40,51 +40,20 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
-## 1.0.6-alpha8
-*(2016-06-01)*
-
-#### Fixed
-* [#24](http://some.issue.tracker.com/24) -- fatal error on setup:install
-
----
-
-
-## 1.0.6-alpha7
-*(2016-05-30)*
-
-#### Fixed
-* [#22](http://some.issue.tracker.com/22) -- issue with varnish cache (related with post breadrumbs)
-* [#21](http://some.issue.tracker.com/21) -- division by zero (tags cloud)
-
----
-
-
-
-
-
-
-
-
-
-
-## 1.0.6-alpha2
-*(2016-05-23)*
-
-#### Fixed
-* Fixed an issue with setup:di:compile-multi-tenant
-
----
-
-
-## 1.0.6-alpha1
-*(2016-05-20)*
+## 1.0.6
+*(2016-06-27)*
 
 #### Improvements
 * Added an ability to related posts with products
 
+#### Fixed
+* [#25] -- Serialization issue Magento 2.1
+* [#24] -- fatal error on setup:install
+* [#22] -- issue with varnish cache (related with post breadrumbs)
+* [#21]
+* Fixed an issue with setup:di:compile-multi-tenant
+
 ---
-
-
 
 ## 1.0.5
 *(2016-05-19)*
@@ -95,7 +64,6 @@ php -f bin/magento setup:static-content:deploy
 * [#16] Split Url suffix for posts and for categories
 
 ---
-
 
 ## 1.0.4
 *(2016-05-08)*
