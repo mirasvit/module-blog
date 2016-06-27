@@ -181,7 +181,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
         $ids[] = 0;
 
         $collection = $this->categoryFactory->create()->getCollection()
-            ->addAttributeToSelect('*')
+            ->addAttributeToSelect(['name', 'url_key'])
             ->addFieldToFilter('entity_id', $ids);
 
         return $collection;

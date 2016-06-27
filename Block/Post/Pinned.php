@@ -49,7 +49,7 @@ class Pinned extends Template
     public function getCollection()
     {
         $collection = $this->postCollectionFactory->create()
-            ->addAttributeToSelect('*')
+            ->addAttributeToSelect(['name', 'featured_image', 'url_key'])
             ->addVisibilityFilter()
             ->addAttributeToFilter('is_pinned', 1);
 

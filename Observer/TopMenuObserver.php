@@ -42,7 +42,7 @@ class TopMenuObserver implements ObserverInterface
         $menu = $observer->getData('menu');
 
         $categories = $this->categoryCollectionFactory->create()
-            ->addAttributeToSelect('*')
+            ->addAttributeToSelect(['name', 'url_key'])
             ->excludeRoot()
             ->addVisibilityFilter();
 

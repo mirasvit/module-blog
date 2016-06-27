@@ -49,7 +49,7 @@ class CategoryTree extends Template
     public function getTree()
     {
         return $this->categoryCollectionFactory->create()
-            ->addAttributeToSelect('*')
+            ->addAttributeToSelect(['name', 'url_key'])
             ->addVisibilityFilter()
             ->excludeRoot()
             ->getTree();

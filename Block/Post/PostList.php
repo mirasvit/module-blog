@@ -184,7 +184,7 @@ class PostList extends AbstractBlock implements IdentityInterface
 
         if (empty($this->collection)) {
             $collection = $this->postCollectionFactory->create()
-                ->addAttributeToSelect('*')
+                ->addAttributeToSelect(['name', 'featured_image', 'short_content', 'content', 'url_key'])
                 ->addVisibilityFilter();
 
             if ($category = $this->getCategory()) {
