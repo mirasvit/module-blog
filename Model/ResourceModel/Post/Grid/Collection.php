@@ -8,7 +8,6 @@ use Mirasvit\Blog\Model\ResourceModel\Post\Collection as PostCollection;
 
 class Collection extends PostCollection implements SearchResultInterface
 {
-
     /**
      * {@inheritdoc}
      */

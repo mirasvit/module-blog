@@ -69,6 +69,7 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
         foreach ($searchResult->getItems() as $item) {
             $arrItems['items'][] = $item->getData();
         }
+
         return $arrItems;
     }
 
@@ -81,7 +82,15 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
         $collection = $this->getSearchResult();
 
         $collection
-            ->addAttributeToSelect('*')
+            ->addAttributeToSelect([
+                'name',
+                'status',
+                'content',
+                'meta_title',
+                'meta_keywords',
+                'meta_description',
+                'url_key'
+            ])
             ->addPostFilter();
 
         foreach ($collection as $post) {

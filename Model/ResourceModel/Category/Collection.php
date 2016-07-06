@@ -24,7 +24,7 @@ class Collection extends AbstractCollection
      */
     public function addNameToSelect()
     {
-        return $this->addAttributeToSelect('*');
+        return $this->addAttributeToSelect(['name']);
     }
 
     /**

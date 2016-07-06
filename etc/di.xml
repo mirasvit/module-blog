@@ -21,4 +21,13 @@
             <argument name="resourceModel" xsi:type="string">Mirasvit\Blog\Model\ResourceModel\Post</argument>
         </arguments>
     </type>
+
+    <type name="Magento\Eav\Model\Entity\AttributeCache">
+        <arguments>
+            <argument name="unsupportedTypes" xsi:type="array">
+                <item name="blog_post" xsi:type="string">blog_post</item>
+                <item name="blog_category" xsi:type="string">blog_category</item>
+            </argument>
+        </arguments>
+    </type>
 </config>

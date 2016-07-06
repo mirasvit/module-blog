@@ -11,6 +11,12 @@ use Magento\Eav\Model\Config;
 
 class InstallData implements InstallDataInterface
 {
+    protected $postSetupFactory;
+
+    protected $categorySetupFactory;
+
+    protected $eavConfig;
+
     /**
      * @param PostSetupFactory     $postSetupFactory
      * @param CategorySetupFactory $categorySetupFactory

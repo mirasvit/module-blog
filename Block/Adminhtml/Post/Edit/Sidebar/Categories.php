@@ -64,7 +64,7 @@ class Categories extends \Magento\Backend\Block\Widget\Form
         ]);
 
         $collection = $this->categoryCollectionFactory->create()
-            ->addAttributeToSelect('*');
+            ->addAttributeToSelect(['name']);
 
         $fieldset->addField('category_ids', 'checkboxes', [
             'name'   => 'post[category_ids][]',

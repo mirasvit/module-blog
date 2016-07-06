@@ -46,6 +46,7 @@ class Category extends AbstractEntity
         if (empty($this->_type)) {
             $this->setType(\Mirasvit\Blog\Model\Category::ENTITY);
         }
+
         return parent::getEntityType();
     }
 
