@@ -40,6 +40,15 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.7
+*(2016-07-06)*
+
+#### Fixed
+* Fixed issues related with M2.1 Eav
+
+---
+
+
 ## 1.0.6
 *(2016-06-27)*
 
