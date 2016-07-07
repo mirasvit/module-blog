@@ -58,7 +58,7 @@ class View extends Action
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Tag
+     * @return \Mirasvit\Blog\Model\Author
      */
     protected function initModel()
     {
