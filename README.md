@@ -66,10 +66,10 @@ php -f bin/magento setup:static-content:deploy
 * Added an ability to related posts with products
 
 #### Fixed
-* [#25] -- Serialization issue Magento 2.1
-* [#24] -- fatal error on setup:install
-* [#22] -- issue with varnish cache (related with post breadrumbs)
-* [#21]
+* [#25](../../issues/25) -- Serialization issue Magento 2.1
+* [#24](../../issues/24) -- fatal error on setup:install
+* [#22](../../issues/22) -- issue with varnish cache (related with post breadrumbs)
+* [#21](../../issues/21)
 * Fixed an issue with setup:di:compile-multi-tenant
 
 ---
@@ -79,8 +79,8 @@ php -f bin/magento setup:static-content:deploy
 
 #### Improvements
 * Changed repository structure. Integrated with packagist.org
-* [#18] -- integrate Facebook comments
-* [#16] Split Url suffix for posts and for categories
+* [#18](../../issues/18) -- integrate Facebook comments
+* [#16](../../issues/16) Split Url suffix for posts and for categories
 
 ---
 
@@ -88,18 +88,17 @@ php -f bin/magento setup:static-content:deploy
 *(2016-05-08)*
 
 #### Improvements
-* #16 -- added ability to set url suffix (.html)
-* #16-2
+* [#16](../../issues/16) -- added ability to set url suffix (.html)
 * Ability to enable/disable AddThis sharing buttons in configuration
 * Related Products - Backend
 
 #### Fixed
-* #15 -- fixed an issue with not seo friendly post image
+* [#15](../../issues/15) -- fixed an issue with not seo friendly post image
 * Fixed an issue with sorting Recent posts
 * Removed AddThis fixed toolbar
 * Fixed an issue with wrong posts in recent widget
 * Fixed few small issues
-* #11
+* [#11](../../issues/11)
 * Fixed an issue with syntax errors after .phtml minification
 * SeoAutolinks compatibility
 
