@@ -6,8 +6,9 @@ use Magento\Framework\View\Element\Template;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template\Context;
 use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
+use Magento\Widget\Block\BlockInterface;
 
-class Recent extends Template
+class Recent extends Template implements BlockInterface
 {
     protected $_template = 'Mirasvit_Blog::sidebar/recent.phtml';
     /**
