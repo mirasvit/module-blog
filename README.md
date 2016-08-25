@@ -40,6 +40,16 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.8
+*(2016-08-25)*
+
+#### Fixed
+* [#30](../../issues/30) -- Issue with recent posts widget
+* [#29](../../issues/29) -- Product Blog tab posts in ascending date order
+
+---
+
+
 ## 1.0.7
 *(2016-07-06)*
 
