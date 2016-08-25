@@ -27,7 +27,7 @@ class RelatedProducts extends AbstractProduct
     /**
      * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
      */
-    public function getPostCollection()
+    public function getRelatedProducts()
     {
         return $this->getCurrentPost()->getRelatedProducts();
     }

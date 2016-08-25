@@ -85,7 +85,7 @@ class RelatedPosts extends Template
         $collection = $this->postCollectionFactory->create()
             ->addAttributeToSelect('*')
             ->addVisibilityFilter()
-            ->setOrder('created_at');
+            ->setOrder('created_at', 'desc');
 
         if ($product = $this->getProduct()) {
             $collection->addRelatedProductFilter($product);

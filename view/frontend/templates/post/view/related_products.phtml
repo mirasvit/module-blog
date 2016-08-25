@@ -2,7 +2,7 @@
 //@codingStandardsIgnoreFile
 
 /** @var \Mirasvit\Blog\Block\Post\View\RelatedProducts $block */
-$collection = $block->getPostCollection();
+$collection = $block->getRelatedProducts();
 
 if (!$collection->count()) {
     return;
