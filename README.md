@@ -40,6 +40,15 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.9
+*(2016-09-27)*
+
+#### Fixed
+* Fixed an issue with updating Page Cache after publish post
+
+---
+
+
 ## 1.0.8
 *(2016-08-25)*
 
