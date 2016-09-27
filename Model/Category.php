@@ -86,7 +86,7 @@ class Category extends AbstractExtensibleModel implements IdentityInterface
      */
     public function getIdentities()
     {
-        return [self::CACHE_TAG . '_' . $this->getId()];
+        return [self::CACHE_TAG, self::CACHE_TAG . '_' . $this->getId()];
     }
 
     /**

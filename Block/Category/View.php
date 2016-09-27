@@ -6,6 +6,7 @@ use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template\Context;
+use Mirasvit\Blog\Model\Category;
 use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
 use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 use Mirasvit\Blog\Model\Config;
@@ -155,6 +156,6 @@ class View extends Template implements IdentityInterface
             return $this->getCategory()->getIdentities();
         }
 
-        return [];
+        return [Category::CACHE_TAG];
     }
 }

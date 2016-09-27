@@ -74,17 +74,17 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     protected $config;
 
     /**
-     * @param CategoryFactory            $postFactory
-     * @param TagCollectionFactory       $tagCollectionFactory
-     * @param ProductCollectionFactory   $productCollectionFactory
-     * @param AuthorFactory              $authorFactory
-     * @param Config                     $config
-     * @param Url                        $url
-     * @param StoreManagerInterface      $storeManager
-     * @param Context                    $context
-     * @param Registry                   $registry
+     * @param CategoryFactory $postFactory
+     * @param TagCollectionFactory $tagCollectionFactory
+     * @param ProductCollectionFactory $productCollectionFactory
+     * @param AuthorFactory $authorFactory
+     * @param Config $config
+     * @param Url $url
+     * @param StoreManagerInterface $storeManager
+     * @param Context $context
+     * @param Registry $registry
      * @param ExtensionAttributesFactory $extensionFactory
-     * @param AttributeValueFactory      $customAttributeFactory
+     * @param AttributeValueFactory $customAttributeFactory
      */
     public function __construct(
         CategoryFactory $postFactory,
@@ -98,7 +98,8 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
         Registry $registry,
         ExtensionAttributesFactory $extensionFactory,
         AttributeValueFactory $customAttributeFactory
-    ) {
+    )
+    {
         $this->categoryFactory = $postFactory;
         $this->tagCollectionFactory = $tagCollectionFactory;
         $this->productCollectionFactory = $productCollectionFactory;
@@ -123,7 +124,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
      */
     public function getIdentities()
     {
-        return [self::CACHE_TAG . '_' . $this->getId()];
+        return [Category::CACHE_TAG, self::CACHE_TAG . '_' . $this->getId()];
     }
 
     /**
