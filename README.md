@@ -1,11 +1,3 @@
-## 1.0.10
-*(2016-10-12)*
-
-#### Improvements
-* Use the same font-awesome.min.css for all extensions
-
----
-
 # Blog MX | Magento 2 Blog Module by [Mirasvit](https://mirasvit.com/)
 
 FREE, fully featured, powerful Blog solution for your online store! Magento 2 Blog MX allows you to open a blog and engage more and more customers to your shop activities using any type of content: images, video, articles etc.
@@ -48,6 +40,18 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.11
+*(2016-11-01)*
+
+#### Improvements
+* Allow custom sidebar blocks
+
+#### Fixed
+* Remove obsolete permission update
+
+---
+
+
 ## 1.0.9
 *(2016-09-27)*
 
