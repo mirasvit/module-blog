@@ -8,7 +8,7 @@
         <section id="blog" showInDefault="1" showInWebsite="1" showInStore="1" type="text" translate="label" sortOrder="100">
             <label>Blog MX</label>
             <tab>mirasvit</tab>
-            <resource>Mirasvit_Blog::blog_configuration</resource>
+            <resource>Mirasvit_Blog::blog_settings</resource>
 
             <group id="appearance" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="10">
                 <label>Appearance</label>
