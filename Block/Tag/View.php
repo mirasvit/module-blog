@@ -44,6 +44,9 @@ class View extends Template
         parent::_prepareLayout();
 
         $tag = $this->getTag();
+        if (!$tag) {
+            return $this;
+        }
 
         $this->pageConfig->getTitle()->set(__('Tag: %1', $tag->getName()));
 
