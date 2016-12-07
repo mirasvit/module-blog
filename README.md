@@ -40,6 +40,16 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.12
+*(2016-12-07)*
+
+#### Fixed
+* Varnish compatibility
+* Blog permissions
+
+---
+
+
 ## 1.0.11
 *(2016-11-01)*
 
