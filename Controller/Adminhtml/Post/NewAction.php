@@ -11,10 +11,6 @@ class NewAction extends Post
      */
     public function execute()
     {
-        $post = $this->initModel()
-            ->setName('')
-            ->save();
-
-        return $this->resultRedirectFactory->create()->setPath('*/*/edit', ['id' => $post->getId()]);
+        return $this->resultRedirectFactory->create()->setPath('*/*/edit');
     }
 }
