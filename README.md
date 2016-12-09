@@ -40,6 +40,15 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+
+## 1.0.13
+*(2016-12-09)*
+
+#### Fixed
+* Fixed an issue with empty posts 
+
+---
+
 ## 1.0.12
 *(2016-12-07)*
 
