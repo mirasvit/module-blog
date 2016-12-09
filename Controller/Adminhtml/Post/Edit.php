@@ -18,7 +18,7 @@ class Edit extends Post
         $id = $this->getRequest()->getParam('id');
         $model = $this->initModel();
 
-        if ($id && !$model->getId()) {
+        if ($id && ! is_array($id) && !$model->getId()) {
             $this->messageManager->addError(__('This post no longer exists.'));
             return $this->resultRedirectFactory->create()->setPath('*/*/');
         }

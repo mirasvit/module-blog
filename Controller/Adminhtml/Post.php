@@ -90,8 +90,10 @@ abstract class Post extends Action
     public function initModel()
     {
         $model = $this->postFactory->create();
-        if ($this->getRequest()->getParam('id')) {
-            $model->load($this->getRequest()->getParam('id'));
+        $id = $this->getRequest()->getParam('id');
+        
+        if ($id && ! is_array($id)) {
+            $model->load($id);
         }
 
         $this->registry->register('current_model', $model);
