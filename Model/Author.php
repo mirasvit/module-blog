@@ -12,7 +12,7 @@ use Magento\User\Model\User;
  *
  * @method string getUrlKey()
  */
-class Author extends User implements IdentityInterface
+class Author extends User implements IdentityInterface, UrlInterface
 {
     const CACHE_TAG = 'blog_author';
 
@@ -27,13 +27,15 @@ class Author extends User implements IdentityInterface
     }
 
     /**
+     * @param array $urlParams
      * @return string
      */
-    public function getUrl()
+    public function getUrl($urlParams = [])
     {
+        /** @var \Mirasvit\Blog\Model\Url $url */
         $url = ObjectManager::getInstance()->get('Mirasvit\Blog\Model\Url');
 
-        return $url->getAuthorUrl($this);
+        return $url->getAuthorUrl($this, $urlParams);
     }
 
     /**

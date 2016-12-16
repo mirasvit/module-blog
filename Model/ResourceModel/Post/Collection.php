@@ -88,6 +88,9 @@ class Collection extends AbstractCollection
     {
         $likeExpression = $this->_resourceHelper->addLikeEscape($q, ['position' => 'any']);
 
+        $this->addAttributeToSelect('name');
+        $this->addAttributeToSelect(['content', 'short_content'], 'left');
+
         $this->addAttributeToFilter([
             ['attribute' => 'name', 'like' => $likeExpression],
             ['attribute' => 'content', 'like' => $likeExpression],
