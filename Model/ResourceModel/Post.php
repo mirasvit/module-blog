@@ -333,7 +333,8 @@ class Post extends AbstractEntity
             ->setAllowCreateFolders(true)
             ->setAllowRenameFiles(false)
             ->setFilesDispersion(false);
-        $uploader->save($this->config->getMediaPath(), $newFileName);
+        $result = $uploader->save($this->config->getMediaPath(), $newFileName);
+        $newFileName = $result['file'];
 
         $post->setFeaturedImage($newFileName);
 
