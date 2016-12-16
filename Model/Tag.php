@@ -13,7 +13,7 @@ use Magento\Framework\Registry;
  *
  * @method string getUrlKey()
  */
-class Tag extends AbstractModel implements IdentityInterface
+class Tag extends AbstractModel implements IdentityInterface, UrlInterface
 {
     const CACHE_TAG = 'blog_tag';
 
@@ -73,10 +73,11 @@ class Tag extends AbstractModel implements IdentityInterface
     }
 
     /**
+     * @param array $urlParams
      * @return string
      */
-    public function getUrl()
+    public function getUrl($urlParams = [])
     {
-        return $this->url->getTagUrl($this);
+        return $this->url->getTagUrl($this, $urlParams);
     }
 }

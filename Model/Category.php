@@ -35,7 +35,7 @@ use Magento\Framework\DataObject\IdentityInterface;
  * @method $this setParentId($id)
  * @method bool hasParentId()
  */
-class Category extends AbstractExtensibleModel implements IdentityInterface
+class Category extends AbstractExtensibleModel implements IdentityInterface, UrlInterface
 {
     const ENTITY = 'blog_category';
 
@@ -114,10 +114,11 @@ class Category extends AbstractExtensibleModel implements IdentityInterface
     }
 
     /**
+     * @param array $urlParams
      * @return string
      */
-    public function getUrl()
+    public function getUrl($urlParams = [])
     {
-        return $this->url->getCategoryUrl($this);
+        return $this->url->getCategoryUrl($this, $urlParams);
     }
 }

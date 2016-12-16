@@ -9,6 +9,7 @@ use Magento\Framework\View\Element\Template\Context;
 use Magento\Catalog\Model\Session;
 use Mirasvit\Blog\Model\Config;
 use Magento\Framework\Url\EncoderInterface;
+use Magento\Framework\Registry;
 
 class Toolbar extends Template
 {
@@ -74,7 +75,7 @@ class Toolbar extends Template
     /**
      * @var string
      */
-    protected $template = 'article/list/toolbar.phtml';
+    protected $template = 'post/list/toolbar.phtml';
 
     /**
      * Catalog session.
@@ -99,23 +100,31 @@ class Toolbar extends Template
     protected $config;
 
     /**
+     * @var Registry
+     */
+    protected $registry;
+
+    /**
      * @param Context          $context
      * @param Session          $session
      * @param ToolbarModel     $toolbarModel
      * @param EncoderInterface $urlEncoder
      * @param Config           $config
+     * @param Registry         $registry
      */
     public function __construct(
         Context $context,
         Session $session,
         ToolbarModel $toolbarModel,
         EncoderInterface $urlEncoder,
-        Config $config
+        Config $config,
+        Registry $registry
     ) {
-        $this->session = $session;
+        $this->session      = $session;
         $this->toolbarModel = $toolbarModel;
-        $this->urlEncoder = $urlEncoder;
-        $this->config = $config;
+        $this->urlEncoder   = $urlEncoder;
+        $this->config       = $config;
+        $this->registry     = $registry;
 
         parent::__construct($context);
     }
@@ -491,11 +500,13 @@ class Toolbar extends Template
      */
     public function getPagerHtml()
     {
+        /** @var \Mirasvit\Blog\Block\Html\Pager $pagerBlock */
         $pagerBlock = $this->getChildBlock('pager');
+        if ($this->getEntity()) {
+            $pagerBlock->setEntity($this->getEntity());
+        }
 
         if ($pagerBlock instanceof \Magento\Framework\DataObject) {
-
-            /* @var $pagerBlock \Magento\Theme\Block\Html\Pager */
             $pagerBlock->setAvailableLimit($this->getAvailableLimit());
 
             $pagerBlock->setUseContainer(false)
@@ -514,6 +525,47 @@ class Toolbar extends Template
         }
 
         return '';
+    }
+
+    /**
+     * @return \Mirasvit\Blog\Model\UrlInterface|null
+     */
+    public function getEntity()
+    {
+        $entity = null;
+        if ($this->getCategory()) {
+            $entity = $this->getCategory();
+        } elseif ($this->getTag()) {
+            $entity = $this->getTag();
+        } elseif ($this->getAuthor()) {
+            $entity = $this->getAuthor();
+        }
+
+        return $entity;
+    }
+
+    /**
+     * @return \Mirasvit\Blog\Model\Category
+     */
+    public function getCategory()
+    {
+        return $this->registry->registry('current_blog_category');
+    }
+
+    /**
+     * @return \Mirasvit\Blog\Model\Tag
+     */
+    public function getTag()
+    {
+        return $this->registry->registry('current_blog_tag');
+    }
+
+    /**
+     * @return \Mirasvit\Blog\Model\Author
+     */
+    public function getAuthor()
+    {
+        return $this->registry->registry('current_blog_author');
     }
 
     /**

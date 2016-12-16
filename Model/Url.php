@@ -88,11 +88,12 @@ class Url
 
     /**
      * @param Category $category
+     * @param array    $urlParams
      * @return string
      */
-    public function getCategoryUrl($category)
+    public function getCategoryUrl($category, $urlParams = [])
     {
-        return $this->getUrl('/' . $category->getUrlKey(), 'category');
+        return $this->getUrl('/' . $category->getUrlKey(), 'category', $urlParams);
     }
 
     /**
@@ -109,49 +110,61 @@ class Url
     }
 
     /**
-     * @param Tag $tag
+     * @param Tag   $tag
+     * @param array $urlParams
      * @return string
      */
-    public function getTagUrl($tag)
+    public function getTagUrl($tag, $urlParams = [])
     {
-        return $this->getUrl('/tag/' . strtolower($tag->getUrlKey()), 'tag');
+        return $this->getUrl('/tag/' . strtolower($tag->getUrlKey()), 'tag', $urlParams);
     }
 
     /**
      * @param Author $author
+     * @param array  $urlParams
      * @return string
      */
-    public function getAuthorUrl($author)
+    public function getAuthorUrl($author, $urlParams = [])
     {
-        return $this->getUrl('/author/' . strtolower($author->getId()), 'author');
+        return $this->getUrl('/author/' . strtolower($author->getId()), 'author', $urlParams);
     }
 
     /**
+     * @param array $urlParams
      * @return string
      */
-    public function getSearchUrl()
+    public function getSearchUrl($urlParams = [])
     {
-        return $this->getUrl('/search/', 'search');
+        return $this->getUrl('/search/', 'search', $urlParams);
     }
 
     /**
      * @param string $route
      * @param string $type
+     * @param array  $urlParams
      * @return string
      */
-    protected function getUrl($route, $type)
+    protected function getUrl($route, $type, $urlParams = [])
     {
-        $url = $this->urlManager->getUrl($this->config->getBaseRoute() . $route);
+        $url = $this->urlManager->getUrl($this->config->getBaseRoute() . $route, $urlParams);
 
         if ($type == 'post' && $this->config->getPostUrlSuffix()) {
-            $url = rtrim($url, '/') . $this->config->getPostUrlSuffix();
+            $url = $this->addSuffix($url, $this->config->getPostUrlSuffix());
         }
 
         if ($type == 'category' && $this->config->getCategoryUrlSuffix()) {
-            $url = rtrim($url, '/') . $this->config->getCategoryUrlSuffix();
+            $url = $this->addSuffix($url, $this->config->getCategoryUrlSuffix());
         }
 
         return $url;
+    }
+
+    private function addSuffix($url, $suffix)
+    {
+        $parts = explode('?', $url, 2);
+        $parts[0] = rtrim($parts[0], '/') . $suffix;
+
+        return implode('?', $parts);
     }
 
     /**

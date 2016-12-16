@@ -13,7 +13,7 @@
 
                     <block class="Mirasvit\Blog\Block\Post\PostList\Toolbar" name="blog.post.list.toolbar"
                            template="post/list/toolbar.phtml">
-                        <block class="Magento\Theme\Block\Html\Pager" name="pager"/>
+                        <block class="Mirasvit\Blog\Block\Html\Pager" name="pager"/>
                     </block>
 
                     <action method="setToolbarBlockName">
