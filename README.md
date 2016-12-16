@@ -40,6 +40,13 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.14-beta
+*(2016-12-16)*
+
+#### Fixed
+* Fixed an issue with wrong paging urls
+
+---
 
 ## 1.0.13
 *(2016-12-09)*
