@@ -2,7 +2,7 @@
 namespace Mirasvit\Blog\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
-use Magento\Framework\UrlInterface;
+use Magento\Framework\UrlInterface as MagentoUrlInterface;
 use Magento\Framework\DataObject;
 
 class Url
@@ -33,7 +33,7 @@ class Url
     protected $authorFactory;
 
     /**
-     * @var UrlInterface
+     * @var MagentoUrlInterface
      */
     protected $urlManager;
 
@@ -49,7 +49,7 @@ class Url
      * @param CategoryFactory      $categoryFactory
      * @param TagFactory           $tagFactory
      * @param AuthorFactory        $authorFactory
-     * @param UrlInterface         $urlManager
+     * @param MagentoUrlInterface  $urlManager
      */
     public function __construct(
         Config $config,
@@ -58,7 +58,7 @@ class Url
         CategoryFactory $categoryFactory,
         TagFactory $tagFactory,
         AuthorFactory $authorFactory,
-        UrlInterface $urlManager
+        MagentoUrlInterface $urlManager
     ) {
         $this->config = $config;
         $this->scopeConfig = $scopeConfig;
