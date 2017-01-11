@@ -2,10 +2,8 @@
 
 namespace Mirasvit\Blog\Controller;
 
-use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Magento\Customer\Model\Session;
 use Mirasvit\Blog\Model\PostFactory;
 use Magento\Framework\Registry;
 
@@ -42,17 +40,23 @@ abstract class Post extends Action
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Post
+     * @return \Mirasvit\Blog\Model\Post|boolean
      */
     protected function initModel()
     {
-        if ($id = $this->getRequest()->getParam('id')) {
-            $post = $this->postFactory->create()->load($id);
-            if ($post->getId() > 0) {
-                $this->registry->register('current_blog_post', $post);
-
-                return $post;
-            }
+        $id = $this->getRequest()->getParam('id');
+        if (!$id) {
+            return false;
         }
+
+        $post = $this->postFactory->create()->load($id);
+
+        if (!$post->getId()) {
+            return false;
+        }
+
+        $this->registry->register('current_blog_post', $post);
+
+        return $post;
     }
 }
