@@ -40,6 +40,14 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.14
+*(2017-01-11)*
+
+#### Improvements
+* Added blog_page_render event
+
+---
+
 ## 1.0.14-beta
 *(2016-12-16)*
 
