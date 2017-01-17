@@ -2,6 +2,8 @@
 
 namespace Mirasvit\Blog\Model;
 
+use Magento\Framework\Image as MagentoImage;
+use Magento\Framework\Image\Factory as ImageFactory;
 use Magento\Framework\Model\AbstractExtensibleModel;
 use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\Model\Context;
@@ -41,6 +43,11 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     const TYPE_REVISION = 'revision';
 
     /**
+     * @var MagentoImage
+     */
+    protected $_processor;
+
+    /**
      * @var Url
      */
     protected $url;
@@ -76,17 +83,18 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     protected $config;
 
     /**
-     * @param CategoryFactory $postFactory
-     * @param TagCollectionFactory $tagCollectionFactory
-     * @param ProductCollectionFactory $productCollectionFactory
-     * @param AuthorFactory $authorFactory
-     * @param Config $config
-     * @param Url $url
-     * @param StoreManagerInterface $storeManager
-     * @param Context $context
-     * @param Registry $registry
+     * @param CategoryFactory            $postFactory
+     * @param TagCollectionFactory       $tagCollectionFactory
+     * @param ProductCollectionFactory   $productCollectionFactory
+     * @param AuthorFactory              $authorFactory
+     * @param Config                     $config
+     * @param Url                        $url
+     * @param StoreManagerInterface      $storeManager
+     * @param ImageFactory               $imageFactory
+     * @param Context                    $context
+     * @param Registry                   $registry
      * @param ExtensionAttributesFactory $extensionFactory
-     * @param AttributeValueFactory $customAttributeFactory
+     * @param AttributeValueFactory      $customAttributeFactory
      */
     public function __construct(
         CategoryFactory $postFactory,
@@ -96,19 +104,21 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
         Config $config,
         Url $url,
         StoreManagerInterface $storeManager,
+        ImageFactory $imageFactory,
         Context $context,
         Registry $registry,
         ExtensionAttributesFactory $extensionFactory,
         AttributeValueFactory $customAttributeFactory
     )
     {
-        $this->categoryFactory = $postFactory;
-        $this->tagCollectionFactory = $tagCollectionFactory;
+        $this->categoryFactory          = $postFactory;
+        $this->tagCollectionFactory     = $tagCollectionFactory;
         $this->productCollectionFactory = $productCollectionFactory;
-        $this->authorFactory = $authorFactory;
-        $this->config = $config;
-        $this->url = $url;
-        $this->storeManager = $storeManager;
+        $this->authorFactory            = $authorFactory;
+        $this->config                   = $config;
+        $this->url                      = $url;
+        $this->storeManager             = $storeManager;
+        $this->imageFactory             = $imageFactory;
 
         parent::__construct($context, $registry, $extensionFactory, $customAttributeFactory);
     }
@@ -267,5 +277,41 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     public function getFeaturedImageUrl()
     {
         return $this->config->getMediaUrl($this->getFeaturedImage());
+    }
+
+    /**
+     * @param int $width
+     * @param int $height
+     * @return string
+     */
+    public function getWidgetFeaturedImageUrl($width = 0, $height = 0)
+    {
+        $dirname = '';
+        if ($width && $height && $this->getFeaturedImage()) {
+            $dirname   = $width . 'x' . $height . DIRECTORY_SEPARATOR;
+            $filename  = $this->config->getWidgetMediaPath($dirname) . $this->getFeaturedImage();
+            $processor = $this->getImageProcessor();
+            $processor->resize($width, $height);
+            $processor->save($filename);
+        }
+
+        return $this->config->getMediaUrl($dirname . $this->getFeaturedImage());
+    }
+
+    /**
+     * @return MagentoImage
+     */
+    protected function getImageProcessor()
+    {
+        if (!$this->_processor) {
+            $filename = $this->config->getMediaPath() . DIRECTORY_SEPARATOR . $this->getFeaturedImage();
+            $this->_processor = $this->imageFactory->create($filename);
+        }
+        $this->_processor->keepAspectRatio(true);
+        $this->_processor->keepFrame(false);
+        $this->_processor->keepTransparency(true);
+        $this->_processor->constrainOnly(true);
+
+        return $this->_processor;
     }
 }

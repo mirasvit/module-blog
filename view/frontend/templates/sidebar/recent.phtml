@@ -13,10 +13,13 @@ $collection = $block->getCollection()
     <div class="block-content">
         <ol class="items">
             <?php foreach ($collection as $post): ?>
+                <?php
+                $imgPath = $post->getWidgetFeaturedImageUrl($block->getImageWidth(), $block->getImageHeight());
+                ?>
                 <li class="item">
-                    <?php if ($post->getFeaturedImageUrl()): ?>
+                    <?php if ($imgPath): ?>
                         <a href="<?= $post->getUrl() ?>">
-                            <img src="<?= $post->getFeaturedImageUrl() ?>" class="blog__post-featured-image"/>
+                            <img src="<?= $imgPath ?>" class="blog__post-featured-image"/>
                         </a>
                     <?php endif ?>
 

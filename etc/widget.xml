@@ -15,6 +15,14 @@
                 <label translate="true">Number of Posts to display</label>
                 <value>5</value>
             </parameter>
+            <parameter name="image_width" xsi:type="text" required="true" visible="true">
+                <label translate="true">Image width (px)</label>
+                <value>0</value>
+            </parameter>
+            <parameter name="image_height" xsi:type="text" required="true" visible="true">
+                <label translate="true">Image height (px)</label>
+                <value>0</value>
+            </parameter>
         </parameters>
     </widget>
 </widgets>

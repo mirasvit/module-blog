@@ -5,7 +5,7 @@ namespace Mirasvit\Blog\Model;
 use Magento\Framework\Filesystem;
 use Magento\Framework\App\Filesystem\DirectoryList;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\Framework\UrlInterface;
+use Magento\Framework\UrlInterface as MagentoUrlInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 
 class Config
@@ -28,7 +28,7 @@ class Config
     protected $scopeConfig;
 
     /**
-     * @var UrlInterface
+     * @var MagentoUrlInterface
      */
     protected $urlManager;
 
@@ -36,18 +36,18 @@ class Config
      * @param ScopeConfigInterface  $scopeConfig
      * @param StoreManagerInterface $storeManager
      * @param Filesystem            $filesystem
-     * @param UrlInterface          $urlManager
+     * @param MagentoUrlInterface   $urlManager
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         StoreManagerInterface $storeManager,
         Filesystem $filesystem,
-        UrlInterface $urlManager
+        MagentoUrlInterface $urlManager
     ) {
-        $this->scopeConfig = $scopeConfig;
+        $this->scopeConfig  = $scopeConfig;
         $this->storeManager = $storeManager;
-        $this->filesystem = $filesystem;
-        $this->urlManager = $urlManager;
+        $this->filesystem   = $filesystem;
+        $this->urlManager   = $urlManager;
     }
 
     /**
@@ -182,6 +182,22 @@ class Config
     }
 
     /**
+     * @return string
+     */
+    public function getWidgetMediaPath($dirname)
+    {
+        $path = $this->getMediaPath() . DIRECTORY_SEPARATOR . $dirname;
+
+        if (!file_exists($path) || !is_dir($path)) {
+            $this->filesystem
+                ->getDirectoryWrite(DirectoryList::MEDIA)
+                ->create($path);
+        }
+
+        return $path;
+    }
+
+    /**
      * @param string $image
      * @return string
      */
@@ -192,7 +208,7 @@ class Config
         }
 
         $url = $this->storeManager->getStore()
-                ->getBaseUrl(UrlInterface::URL_TYPE_MEDIA) . self::MEDIA_FOLDER;
+                ->getBaseUrl(MagentoUrlInterface::URL_TYPE_MEDIA) . self::MEDIA_FOLDER;
 
         $url .= '/' . $image;
 

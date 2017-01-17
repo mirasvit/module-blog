@@ -11,6 +11,7 @@ use Magento\Widget\Block\BlockInterface;
 class Recent extends Template implements BlockInterface
 {
     protected $_template = 'Mirasvit_Blog::sidebar/recent.phtml';
+
     /**
      * @var PostCollectionFactory
      */
@@ -39,8 +40,8 @@ class Recent extends Template implements BlockInterface
         array $data = []
     ) {
         $this->postCollectionFactory = $postCollectionFactory;
-        $this->registry = $registry;
-        $this->context = $context;
+        $this->registry              = $registry;
+        $this->context               = $context;
 
         parent::__construct($context, $data);
     }
@@ -77,12 +78,39 @@ class Recent extends Template implements BlockInterface
         return false;
     }
 
+    /**
+     * @return int
+     */
     public function getPageSize()
     {
         if ($this->getData('page_size')) {
-            return $this->getData('page_size');
+            return (int)$this->getData('page_size');
         }
 
         return 5;
+    }
+
+    /**
+     * @return int
+     */
+    public function getImageWidth()
+    {
+        if ($this->getData('image_width')) {
+            return (int)$this->getData('image_width');
+        }
+
+        return 0;
+    }
+
+    /**
+     * @return int
+     */
+    public function getImageHeight()
+    {
+        if ($this->getData('image_height')) {
+            return (int)$this->getData('image_height');
+        }
+
+        return 0;
     }
 }
