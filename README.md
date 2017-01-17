@@ -40,6 +40,14 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.15
+*(2017-01-17)*
+
+#### Improvements
+* Added options to resize featured image in the widget
+
+---
+
 ## 1.0.14
 *(2017-01-11)*
 
