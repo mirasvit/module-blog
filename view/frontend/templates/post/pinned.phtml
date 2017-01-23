@@ -14,7 +14,7 @@ $collection = $block->getCollection()
                 <li class="item">
                     <?php if ($post->getFeaturedImageUrl()): ?>
                         <a href="<?= $post->getUrl() ?>">
-                            <img src="<?= $post->getFeaturedImageUrl() ?>" class="blog__post-featured-image"/>
+                            <img src="<?= $post->getFeaturedImageUrl() ?>" alt="<?= $post->getName() ?>" class="blog__post-featured-image"/>
                         </a>
                     <?php endif ?>
 
