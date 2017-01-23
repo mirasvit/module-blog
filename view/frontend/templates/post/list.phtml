@@ -22,7 +22,7 @@ $collection = $block->getPostCollection();
                     <div class="blog__post-excerpt" itemprop="text">
                         <?php if ($post->getFeaturedImageUrl()): ?>
                             <a href="<?= $post->getUrl() ?>">
-                                <img src="<?= $post->getFeaturedImageUrl() ?>"/>
+                                <img src="<?= $post->getFeaturedImageUrl() ?>" alt="<?= $post->getName() ?>"/>
                             </a>
                         <?php endif ?>
 
