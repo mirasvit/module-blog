@@ -12,7 +12,7 @@ if (!$collection->count()) {
             <li>
                 <?php if ($post->getFeaturedImageUrl()): ?>
                     <a href="<?= $post->getUrl() ?>">
-                        <img src="<?= $post->getFeaturedImageUrl() ?>" class="post-image"/>
+                        <img src="<?= $post->getFeaturedImageUrl() ?>" alt="<?= $post->getName() ?>" class="post-image"/>
                     </a>
                 <?php endif ?>
 
