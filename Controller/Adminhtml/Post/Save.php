@@ -64,6 +64,9 @@ class Save extends Post
         if (!isset($result['is_pinned'])) {
             $result['is_pinned'] = false;
         }
+        if (isset($result['store_ids'])) {
+            $result['store_ids'] = explode(',', $result['store_ids']);
+        }
 
         if (isset($data['featured_image'])
             && is_array($data['featured_image'])

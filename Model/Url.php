@@ -1,6 +1,7 @@
 <?php
 namespace Mirasvit\Blog\Model;
 
+use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\UrlInterface as MagentoUrlInterface;
 use Magento\Framework\DataObject;
@@ -43,15 +44,17 @@ class Url
     protected $config;
 
     /**
-     * @param Config               $config
-     * @param ScopeConfigInterface $scopeConfig
-     * @param PostFactory          $postFactory
-     * @param CategoryFactory      $categoryFactory
-     * @param TagFactory           $tagFactory
-     * @param AuthorFactory        $authorFactory
-     * @param MagentoUrlInterface  $urlManager
+     * @param StoreManagerInterface $storeManager
+     * @param Config                $config
+     * @param ScopeConfigInterface  $scopeConfig
+     * @param PostFactory           $postFactory
+     * @param CategoryFactory       $categoryFactory
+     * @param TagFactory            $tagFactory
+     * @param AuthorFactory         $authorFactory
+     * @param MagentoUrlInterface   $urlManager
      */
     public function __construct(
+        StoreManagerInterface $storeManager,
         Config $config,
         ScopeConfigInterface $scopeConfig,
         PostFactory $postFactory,
@@ -60,13 +63,14 @@ class Url
         AuthorFactory $authorFactory,
         MagentoUrlInterface $urlManager
     ) {
-        $this->config = $config;
-        $this->scopeConfig = $scopeConfig;
-        $this->postFactory = $postFactory;
+        $this->storeManager    = $storeManager;
+        $this->config          = $config;
+        $this->scopeConfig     = $scopeConfig;
+        $this->postFactory     = $postFactory;
         $this->categoryFactory = $categoryFactory;
-        $this->tagFactory = $tagFactory;
-        $this->authorFactory = $authorFactory;
-        $this->urlManager = $urlManager;
+        $this->tagFactory      = $tagFactory;
+        $this->authorFactory   = $authorFactory;
+        $this->urlManager      = $urlManager;
     }
 
     /**
@@ -272,6 +276,7 @@ class Url
 
         $post = $this->postFactory->create()->getCollection()
             ->addAttributeToFilter('url_key', $urlKey)
+            ->addStoreFilter($this->storeManager->getStore()->getId())
             ->getFirstItem();
 
         if ($post->getId()) {

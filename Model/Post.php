@@ -155,6 +155,24 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     }
 
     /**
+     * Retrieve assigned store Ids
+     *
+     * @return array
+     */
+    public function getStoreIds()
+    {
+        if (!$this->hasData('store_ids')) {
+            $ids = $this->getResource()->getStoreIds($this);
+            $this->setData('store_ids', $ids);
+        }
+        if (!$this->_getData('store_ids')) {
+            $this->setData('store_ids', [0]);
+        }
+
+        return (array)$this->_getData('store_ids');
+    }
+
+    /**
      * Retrieve assigned product Ids
      *
      * @return array
@@ -198,6 +216,31 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
             ->addFieldToFilter('entity_id', $ids);
 
         return $collection;
+    }
+
+    /**
+     * @return \Magento\Store\Model\Store|false
+     */
+    public function getStore()
+    {
+        $ids = $this->getStoreIds();
+        if (count($ids) == 0) {
+            return false;
+        }
+
+        $storeId = reset($ids);
+        $store   = $this->storeManager->getStore($storeId);
+
+        return $store;
+    }
+
+    /**
+     * @param int $storeId
+     * @return bool
+     */
+    public function isStoreAllowed($storeId)
+    {
+        return in_array($storeId, $this->getStoreIds());
     }
 
     /**

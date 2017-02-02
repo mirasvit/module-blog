@@ -51,6 +51,7 @@ class Pinned extends Template
         $collection = $this->postCollectionFactory->create()
             ->addAttributeToSelect(['name', 'featured_image', 'url_key'])
             ->addVisibilityFilter()
+            ->addStoreFilter($this->context->getStoreManager()->getStore()->getId())
             ->addAttributeToFilter('is_pinned', 1);
 
         if ($this->getCategory()) {

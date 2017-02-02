@@ -82,6 +82,25 @@ class Post extends AbstractEntity
      * @param \Mirasvit\Blog\Model\Post $post
      * @return array
      */
+    public function getStoreIds($post)
+    {
+        $connection = $this->getConnection();
+
+        $select = $connection->select()->from(
+            $this->getTable('mst_blog_store_post'),
+            'store_id'
+        )->where(
+            'post_id = ?',
+            (int)$post->getId()
+        );
+
+        return $connection->fetchCol($select);
+    }
+
+    /**
+     * @param \Mirasvit\Blog\Model\Post $post
+     * @return array
+     */
     public function getTagIds($post)
     {
         $connection = $this->getConnection();
@@ -143,6 +162,7 @@ class Post extends AbstractEntity
     {
         /** @var \Mirasvit\Blog\Model\Post $post */
         $this->saveCategories($post);
+        $this->saveStores($post);
         $this->saveTags($post);
         $this->saveProducts($post);
 
@@ -238,6 +258,55 @@ class Post extends AbstractEntity
         if (!empty($delete)) {
             foreach ($delete as $categoryId) {
                 $where = ['post_id = ?' => (int)$post->getId(), 'category_id = ?' => (int)$categoryId];
+                $connection->delete($table, $where);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @param \Mirasvit\Blog\Model\Post $post
+     * @return $this
+     */
+    protected function saveStores($post)
+    {
+        $table = $this->getTable('mst_blog_store_post');
+
+        /**
+         * If store ids data is not declared we haven't do manipulations
+         */
+        if (!$post->hasStoreIds()) {
+            return $this;
+        }
+
+        $storeIds    = $post->getStoreIds();
+        $oldStoreIds = $this->getStoreIds($post);
+
+        $insert = array_diff($storeIds, $oldStoreIds);
+        $delete = array_diff($oldStoreIds, $storeIds);
+
+        $connection = $this->getConnection();
+        if (!empty($insert)) {
+            $data = [];
+            foreach ($insert as $storeId) {
+                if (empty($storeId)) {
+                    continue;
+                }
+                $data[] = [
+                    'store_id' => (int)$storeId,
+                    'post_id'  => (int)$post->getId()
+                ];
+            }
+
+            if ($data) {
+                $connection->insertMultiple($table, $data);
+            }
+        }
+
+        if (!empty($delete)) {
+            foreach ($delete as $storeId) {
+                $where = ['post_id = ?' => (int)$post->getId(), 'store_id = ?' => (int)$storeId];
                 $connection->delete($table, $where);
             }
         }

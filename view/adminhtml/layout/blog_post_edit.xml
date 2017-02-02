@@ -10,6 +10,7 @@
                     <block name="sidebar" class="Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar">
                         <block name="publish" class="Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar\Publish"/>
                         <block name="categories" class="Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar\Categories"/>
+                        <block name="stores" class="Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar\Stores"/>
                         <block name="tags" class="Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar\Tags"/>
                         <block name="author" class="Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar\Author"/>
                         <block name="image" class="Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar\Image"/>

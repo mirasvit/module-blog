@@ -123,5 +123,51 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 )->setComment('Blog Post To Product Linkage Table');
             $installer->getConnection()->createTable($table);
         }
+
+        if (version_compare($context->getVersion(), '1.0.3') < 0) {
+            $connection->dropTable($installer->getTable('mst_blog_store_post'));
+
+            $table = $installer->getConnection()
+                ->newTable($installer->getTable('mst_blog_store_post'))
+                ->addColumn(
+                    'store_id',
+                    Table::TYPE_SMALLINT,
+                    null,
+                    ['unsigned' => true, 'nullable' => false, 'primary' => true, 'default' => '0'],
+                    'Store ID'
+                )->addColumn(
+                    'post_id',
+                    Table::TYPE_INTEGER,
+                    null,
+                    ['unsigned' => true, 'nullable' => false, 'primary' => true, 'default' => '0'],
+                    'Post ID'
+                )->addIndex(
+                    $installer->getIdxName('mst_blog_store_post', ['post_id']),
+                    ['post_id']
+                )->addForeignKey(
+                    $installer->getFkName(
+                        'mst_blog_store_post',
+                        'store_id',
+                        'store',
+                        'store_id'
+                    ),
+                    'store_id',
+                    $installer->getTable('store'),
+                    'store_id',
+                    Table::ACTION_CASCADE
+                )->addForeignKey(
+                    $installer->getFkName(
+                        'mst_blog_store_post',
+                        'post_id',
+                        'mst_blog_post_entity',
+                        'entity_id'
+                    ),
+                    'post_id',
+                    $installer->getTable('mst_blog_post_entity'),
+                    'entity_id',
+                    Table::ACTION_CASCADE
+                )->setComment('Blog Post To Store Linkage Table');
+            $installer->getConnection()->createTable($table);
+        }
     }
 }
