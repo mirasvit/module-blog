@@ -12,7 +12,7 @@ class Stores extends \Magento\Backend\Block\Widget\Form
     /**
      * @var BlogStoreview
      */
-    protected $postStoreviewFormHelper;
+    protected $blogStoreview;
 
     /**
      * @var FormFactory
