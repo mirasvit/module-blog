@@ -9,6 +9,10 @@
                 <date_format>F j, Y</date_format>
             </appearance>
 
+            <display>
+                <main_menu>1</main_menu>
+            </display>
+
             <comments>
                 <provider>disqus</provider>
                 <disqus_shortname>magento2-blog</disqus_shortname>

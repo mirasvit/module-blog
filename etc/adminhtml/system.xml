@@ -26,7 +26,16 @@
                 </field>
             </group>
 
-            <group id="seo" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+            <group id="display" showInDefault="1" showInStore="1" showInWebsite="1" sortOrder="20">
+                <label>Display</label>
+
+                <field id="main_menu" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Visible Navigation Menu</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+
+            <group id="seo" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="30">
                 <label>Search Engine Optimization</label>
 
                 <field id="base_route" translate="label" type="text" sortOrder="10" showInDefault="1">
@@ -54,7 +63,7 @@
                 </field>
             </group>
 
-            <group id="comments" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="20">
+            <group id="comments" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="40">
                 <label>Comments</label>
 
                 <field id="provider" translate="label" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
@@ -70,7 +79,7 @@
                 </field>
             </group>
 
-            <group id="sharing" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="30">
+            <group id="sharing" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="50">
                 <label>Sharing</label>
 
                 <field id="enable_addthis" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">

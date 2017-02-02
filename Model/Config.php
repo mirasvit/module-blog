@@ -77,6 +77,14 @@ class Config
     }
 
     /**
+     * @return bool
+     */
+    public function isDisplayInMenu()
+    {
+        return $this->scopeConfig->getValue('blog/display/main_menu');
+    }
+
+    /**
      * @param null|string $store
      * @return string
      */

@@ -38,6 +38,9 @@ class TopMenuObserver implements ObserverInterface
      */
     public function execute(EventObserver $observer)
     {
+        if (!$this->config->isDisplayInMenu()) {
+            return;
+        }
         /** @var \Magento\Framework\Data\Tree\Node $menu */
         $menu = $observer->getData('menu');
 
@@ -58,6 +61,12 @@ class TopMenuObserver implements ObserverInterface
             $menu->getTree(),
             null
         );
+        //@todo find correct way to add class
+        if ($menu->getPositionClass()) {
+            $menu->setPositionClass('blog-mx' . $menu->getPositionClass());
+        } else {
+            $menu->setPositionClass('blog-mx nav' . $menu->getPositionClass());
+        }
         $menu->addChild($rootNode);
 
         foreach ($tree as $category) {
