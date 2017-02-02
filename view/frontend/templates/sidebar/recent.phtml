@@ -19,7 +19,7 @@ $collection = $block->getCollection()
                 <li class="item">
                     <?php if ($imgPath): ?>
                         <a href="<?= $post->getUrl() ?>">
-                            <img src="<?= $imgPath ?>" class="blog__post-featured-image"/>
+                            <img src="<?= $imgPath ?>" alt="<?= $post->getName() ?>" class="blog__post-featured-image"/>
                         </a>
                     <?php endif ?>
 

@@ -10,7 +10,7 @@ $post = $block->getPost();
     <?= $this->getPostMetaHeader()->toHtml() ?>
 
     <?php if ($post->getFeaturedImageUrl()): ?>
-        <img src="<?= $post->getFeaturedImageUrl() ?>" class="blog__post-featured-image"/>
+        <img src="<?= $post->getFeaturedImageUrl() ?>"  alt="<?= $post->getName() ?>" class="blog__post-featured-image"/>
     <?php endif ?>
 
     <?= $block->getPostContent() ?>
