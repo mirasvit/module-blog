@@ -240,7 +240,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
      */
     public function isStoreAllowed($storeId)
     {
-        return in_array($storeId, $this->getStoreIds());
+        return in_array(0, $this->getStoreIds()) || in_array($storeId, $this->getStoreIds());
     }
 
     /**

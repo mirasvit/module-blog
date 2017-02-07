@@ -18,6 +18,7 @@ class View extends Post
 
         if (!$post) {
             throw new NotFoundException(__('Page not found'));
+            die;
         }
 
         /* @var \Magento\Backend\Model\View\Result\Page $resultPage */
