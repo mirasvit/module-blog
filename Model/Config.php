@@ -240,6 +240,7 @@ class Config
     }
 
     /**
+     * @param string $dirname
      * @return string
      */
     public function getWidgetMediaPath($dirname)

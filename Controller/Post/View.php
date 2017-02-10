@@ -11,6 +11,7 @@ class View extends Post
     /**
      * @return \Magento\Backend\Model\View\Result\Page
      * @throws NotFoundException
+     * @SuppressWarnings(PHPMD.ExitExpression)
      */
     public function execute()
     {

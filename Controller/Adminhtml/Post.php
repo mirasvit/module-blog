@@ -10,6 +10,9 @@ use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Backend\Helper\Js as JsHelper;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 abstract class Post extends Action
 {
     /**

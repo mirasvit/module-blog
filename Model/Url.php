@@ -6,6 +6,9 @@ use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\UrlInterface as MagentoUrlInterface;
 use Magento\Framework\DataObject;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class Url
 {
     /**
@@ -163,6 +166,11 @@ class Url
         return $url;
     }
 
+    /**
+     * @param string $url
+     * @param string $suffix
+     * @return string
+     */
     private function addSuffix($url, $suffix)
     {
         $parts = explode('?', $url, 2);
@@ -174,6 +182,9 @@ class Url
     /**
      * @param string $pathInfo
      * @return bool|DataObject
+     * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+     * @SuppressWarnings(PHPMD.NPathComplexity)
+     * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */
     public function match($pathInfo)
     {

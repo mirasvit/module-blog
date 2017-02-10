@@ -10,6 +10,9 @@ use Magento\Widget\Block\BlockInterface;
 
 class Recent extends Template implements BlockInterface
 {
+    /**
+     * @var string
+     */
     protected $_template = 'Mirasvit_Blog::sidebar/recent.phtml';
 
     /**

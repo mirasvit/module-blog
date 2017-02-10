@@ -8,6 +8,10 @@ use Magento\Eav\Model\Entity\Context;
 use Mirasvit\Blog\Model\Config;
 use Magento\Framework\Filter\FilterManager;
 
+/**
+ * @SuppressWarnings(PHPMD.NPathComplexity)
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+ */
 class Category extends AbstractEntity
 {
     /**

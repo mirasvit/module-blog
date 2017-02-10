@@ -11,6 +11,9 @@ use Mirasvit\Blog\Model\Config;
 use Magento\Framework\Url\EncoderInterface;
 use Magento\Framework\Registry;
 
+/**
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
+ */
 class Toolbar extends Template
 {
     /**
@@ -24,27 +27,6 @@ class Toolbar extends Template
      * @var array
      */
     protected $availableOrder = null;
-
-    /**
-     * List of available view types.
-     *
-     * @var array
-     */
-    protected $availableMode = [];
-
-    /**
-     * Is enable View switcher.
-     *
-     * @var bool
-     */
-    protected $enableViewSwitcher = true;
-
-    /**
-     * Is Expanded.
-     *
-     * @var bool
-     */
-    protected $isExpanded = true;
 
     /**
      * Default Order field.
@@ -61,21 +43,9 @@ class Toolbar extends Template
     protected $direction = 'desc';
 
     /**
-     * Default View mode.
-     *
-     * @var string
-     */
-    protected $viewMode = null;
-
-    /**
      * @var bool
      */
     protected $paramsMemorizeAllowed = true;
-
-    /**
-     * @var string
-     */
-    protected $template = 'post/list/toolbar.phtml';
 
     /**
      * Catalog session.

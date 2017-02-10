@@ -9,6 +9,10 @@ use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryColl
 use Mirasvit\Blog\Model\Config;
 use Magento\Cms\Model\Template\FilterProvider;
 
+/**
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+ * @SuppressWarnings(PHPMD.NPathComplexity)
+ */
 class View extends AbstractBlock implements IdentityInterface
 {
     /**
@@ -91,30 +95,6 @@ class View extends AbstractBlock implements IdentityInterface
                 'title' => $this->config->getBlogName(),
                 'link'  => $this->config->getBaseUrl()
             ]);
-
-//            if ($category = $post->getCategory()) {
-//                $ids = $category->getParentIds();
-//                $ids[] = 0;
-//                $parents = $this->categoryCollectionFactory->create()
-//                    ->addNameToSelect()
-//                    ->excludeRoot()
-//                    ->addFieldToFilter('entity_id', $ids)
-//                    ->setOrder('level', 'asc');
-//
-//                foreach ($parents as $cat) {
-//                    $breadcrumbs->addCrumb('blog' . $cat->getUrlKey(), [
-//                        'label' => $cat->getName(),
-//                        'title' => $cat->getName(),
-//                        'link'  => $cat->getUrl(),
-//                    ]);
-//                }
-//
-//                $breadcrumbs->addCrumb('blog' . $category->getUrlKey(), [
-//                    'label' => $category->getName(),
-//                    'title' => $category->getName(),
-//                    'link'  => $category->getUrl(),
-//                ]);
-//            }
 
             $breadcrumbs->addCrumb('postname', [
                 'label' => $title,

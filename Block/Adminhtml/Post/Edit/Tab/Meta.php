@@ -18,22 +18,20 @@ class Meta extends \Magento\Backend\Block\Widget\Form
     protected $registry;
 
     /**
-     * @param \Magento\Store\Model\System\Store     $systemStore
      * @param FormFactory                           $formFactory
      * @param Registry                              $registry
      * @param \Magento\Backend\Block\Widget\Context $context
      * @param array                                 $data
      */
     public function __construct(
-        \Magento\Store\Model\System\Store $systemStore,
         FormFactory $formFactory,
         Registry $registry,
         \Magento\Backend\Block\Widget\Context $context,
         array $data = []
     ) {
         $this->formFactory = $formFactory;
-        $this->registry = $registry;
-        $this->context = $context;
+        $this->registry    = $registry;
+        $this->context     = $context;
 
         parent::__construct($context, $data);
     }

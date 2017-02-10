@@ -33,6 +33,7 @@ use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductColl
  * @method string getType()
  * @method $this setType($type)
  * @method ResourceModel\Post getResource()
+ * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Post extends AbstractExtensibleModel implements IdentityInterface
 {
@@ -95,6 +96,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
      * @param Registry                   $registry
      * @param ExtensionAttributesFactory $extensionFactory
      * @param AttributeValueFactory      $customAttributeFactory
+     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
      */
     public function __construct(
         CategoryFactory $postFactory,
@@ -109,8 +111,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
         Registry $registry,
         ExtensionAttributesFactory $extensionFactory,
         AttributeValueFactory $customAttributeFactory
-    )
-    {
+    ) {
         $this->categoryFactory          = $postFactory;
         $this->tagCollectionFactory     = $tagCollectionFactory;
         $this->productCollectionFactory = $productCollectionFactory;

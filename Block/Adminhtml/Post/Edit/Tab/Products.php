@@ -34,8 +34,6 @@ class Products extends ExtendedGrid
 
 
     public function __construct(
-        \Magento\Store\Model\System\Store $systemStore,
-        FormFactory $formFactory,
         Registry $registry,
         ProductCollectionFactory $productCollectionFactory,
         ProductStatus $status,
@@ -44,9 +42,9 @@ class Products extends ExtendedGrid
         BackendHelper $backendHelper
     ) {
         $this->productCollectionFactory = $productCollectionFactory;
-        $this->registry = $registry;
-        $this->visibility = $visibility;
-        $this->status = $status;
+        $this->registry                 = $registry;
+        $this->visibility               = $visibility;
+        $this->status                   = $status;
 
         parent::__construct($context, $backendHelper);
     }

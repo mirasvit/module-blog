@@ -4,6 +4,10 @@ namespace Mirasvit\Blog\Controller\Adminhtml\Post;
 
 use Mirasvit\Blog\Controller\Adminhtml\Post;
 
+/**
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+ * @SuppressWarnings(PHPMD.NPathComplexity)
+ */
 class Save extends Post
 {
     /**
