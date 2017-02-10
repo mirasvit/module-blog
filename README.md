@@ -40,6 +40,20 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.16
+*(2017-02-10)*
+
+#### Improvements
+* Added alt attribute to featured image
+* Added option to hide blog menu in navigation menu
+* Added ability to assign post to Store View
+
+#### Fixed
+* Fixed an issue when config does not store for Store View
+* Fixed license in composer.json
+
+---
+
 ## 1.0.15
 *(2017-01-17)*
 
