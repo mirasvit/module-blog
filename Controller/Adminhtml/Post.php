@@ -9,6 +9,7 @@ use Magento\Backend\App\Action\Context;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Backend\Helper\Js as JsHelper;
+use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -51,6 +52,7 @@ abstract class Post extends Action
      * @param JsonFactory           $jsonFactory
      * @param JsHelper              $jsHelper
      * @param Registry              $registry
+     * @param TimezoneInterface     $localeDate
      * @param Context               $context
      */
     public function __construct(
@@ -59,14 +61,16 @@ abstract class Post extends Action
         JsonFactory $jsonFactory,
         JsHelper $jsHelper,
         Registry $registry,
+        TimezoneInterface $localeDate,
         Context $context
     ) {
-        $this->postFactory = $authorFactory;
+        $this->postFactory  = $authorFactory;
         $this->storeManager = $storeManager;
-        $this->jsonFactory = $jsonFactory;
-        $this->jsHelper = $jsHelper;
-        $this->registry = $registry;
-        $this->context = $context;
+        $this->jsonFactory  = $jsonFactory;
+        $this->jsHelper     = $jsHelper;
+        $this->registry     = $registry;
+        $this->localeDate   = $localeDate;
+        $this->context      = $context;
 
         $this->resultFactory = $context->getResultFactory();
 
