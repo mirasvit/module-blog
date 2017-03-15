@@ -56,6 +56,7 @@ class Recent extends Template implements BlockInterface
     {
         return $this->postCollectionFactory->create()
             ->addVisibilityFilter()
+            ->addStoreFilter($this->context->getStoreManager()->getStore()->getId())
             ->addAttributeToSelect(['name', 'featured_image', 'url_key'])
             ->setOrder('created_at', 'desc');
     }
