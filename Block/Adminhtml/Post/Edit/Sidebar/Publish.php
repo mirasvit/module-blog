@@ -75,7 +75,7 @@ class Publish extends \Magento\Backend\Block\Widget\Form
             'name'        => 'post[created_at]',
             'value'       => $post->getCreatedAt(),
             'date_format' => 'MMM d, y',
-            'time_format' => 'h:mm a'
+            'time_format' => 'h:mm a',
         ]);
 
         $fieldset->addField('is_pinned', 'checkbox', [

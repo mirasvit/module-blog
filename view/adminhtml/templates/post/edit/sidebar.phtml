@@ -36,4 +36,15 @@
             $('#preview').val('0');
         });
     });
+    require([
+        'jquery',
+        'mage/calendar'
+    ], function ($, Calendar) {
+        $.extend(true, $, {
+            calendarConfig: {
+                amNames: ['<?php echo $block->getLocaleData('am', 'AM'); ?>', '<?php echo __('a'); ?>'],
+                pmNames: ['<?php echo $block->getLocaleData('pm', 'PM'); ?>', '<?php echo __('p'); ?>']
+            }
+        });
+    });
 </script>
