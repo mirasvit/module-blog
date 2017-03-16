@@ -40,6 +40,15 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.17
+*(2017-03-16)*
+
+#### Fixed
+* Fixed support of multiple Store View for "Recent Posts"
+* Fixed localized date format for post's "Published on" field
+
+---
+
 ## 1.0.16
 *(2017-02-10)*
 
