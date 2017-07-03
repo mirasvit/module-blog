@@ -286,6 +286,7 @@ class Url
         }
 
         $post = $this->postFactory->create()->getCollection()
+            ->addPostFilter()
             ->addAttributeToFilter('url_key', $urlKey)
             ->addStoreFilter($this->storeManager->getStore()->getId())
             ->getFirstItem();
