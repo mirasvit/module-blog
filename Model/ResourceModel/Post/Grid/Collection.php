@@ -107,6 +107,7 @@ class Collection extends PostCollection implements SearchResultInterface
      * Joins the category / post linking table into this queyr.
      * 
      * @param \Magento\Framework\DB\Select $select
+     * @return void
      */
     private function joinCategoryIdsTable(\Magento\Framework\DB\Select $select)
     {
@@ -123,6 +124,7 @@ class Collection extends PostCollection implements SearchResultInterface
      * 
      * @param \Magento\Framework\DB\Select $select
      * @param null $condition
+     * @return void
      */
     private function addConditionToSelect(\Magento\Framework\DB\Select $select, $condition = null)
     {

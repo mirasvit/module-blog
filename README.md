@@ -40,6 +40,16 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.18
+*(2017-07-03)*
+
+#### Fixed
+* Filter blog posts by a category
+* Multistore support for "Related Posts"
+* Issue when content of new post does not show after preview
+
+---
+
 ## 1.0.17
 *(2017-03-16)*
 

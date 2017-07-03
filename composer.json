@@ -11,7 +11,7 @@
       "mirasvit/module-blog-sample-data": "Sample Data for Blog"
     },
     "type": "magento2-module",
-    "version": "1.0.17",
+    "version": "1.0.18",
     "license": [
       "OSL-3.0"
     ],
