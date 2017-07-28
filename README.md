@@ -40,6 +40,17 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
+## 1.0.19-beta
+*(2017-07-28)*
+
+#### Improvements
+* Added ability to sort category
+
+#### Fixed
+* Creation of root category
+
+---
+
 ## 1.0.18
 *(2017-07-03)*
 
