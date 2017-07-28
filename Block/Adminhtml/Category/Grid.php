@@ -59,6 +59,29 @@ class Grid extends ExtendedGrid
     }
 
     /**
+     * Sort category tree
+     *
+     * {@inheritdoc}
+     */
+    protected function _afterLoadCollection()
+    {
+        $categories = $this->categoryCollectionFactory->create()
+            ->addAttributeToSelect('name')
+            ->toOptionArray();
+
+        $collection = clone $this->getCollection();
+        $ordered = $this->getCollection()->removeAllItems();
+        foreach ($categories as $category) {
+            if ($item = $collection->getItemById($category['value'])) {
+                $ordered->addItem($item);
+            }
+        }
+
+        $this->setCollection($ordered);
+        return parent::_afterLoadCollection();
+    }
+
+    /**
      * @return $this
      * @throws \Exception
      */

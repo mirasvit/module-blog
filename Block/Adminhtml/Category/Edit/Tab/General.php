@@ -77,7 +77,7 @@ class General extends Form
             'required' => true,
         ]);
 
-        if ($category->getId() != 1) {
+        if ($category->getParentId() != 0) {
             $categories = $this->categoryCollectionFactory->create()
                 ->addAttributeToSelect('name')
                 ->toOptionArray();
@@ -96,6 +96,12 @@ class General extends Form
             'name'   => 'status',
             'value'  => $category->getStatus(),
             'values' => ['0' => __('Disabled'), '1' => __('Enabled')]
+        ]);
+
+        $fieldset->addField('sort_order', 'text', [
+            'label'  => __('Order'),
+            'name'   => 'sort_order',
+            'value'  => $category->getSortOrder(),
         ]);
 
         return parent::_prepareForm();

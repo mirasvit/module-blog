@@ -45,6 +45,17 @@ class Category extends AbstractEntity
     /**
      * {@inheritdoc}
      */
+    protected function _getDefaultAttributes()
+    {
+        $attributes = parent::_getDefaultAttributes();
+        $attributes[] = 'sort_order';
+
+        return $attributes;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function getEntityType()
     {
         if (empty($this->_type)) {

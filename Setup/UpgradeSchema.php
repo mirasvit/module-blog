@@ -170,5 +170,10 @@ class UpgradeSchema implements UpgradeSchemaInterface
                 )->setComment('Blog Post To Store Linkage Table');
             $installer->getConnection()->createTable($table);
         }
+        if (version_compare($context->getVersion(), '1.0.4') < 0) {
+            include_once 'Upgrade_1_0_4.php';
+
+            Upgrade_1_0_4::upgrade($installer, $context);
+        }
     }
 }

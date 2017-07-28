@@ -20,6 +20,18 @@ class Collection extends AbstractCollection
     }
 
     /**
+     * {@inheritdoc}
+     */
+    protected function _initSelect()
+    {
+        parent::_initSelect();
+
+        $this->getSelect()->order('sort_order');
+
+        return $this;
+    }
+
+    /**
      * @return $this
      */
     public function addNameToSelect()
@@ -40,10 +52,20 @@ class Collection extends AbstractCollection
     /**
      * @return $this
      */
+    public function addRootFilter()
+    {
+        $this->addFieldToFilter('parent_id', 0);
+
+        return $this;
+    }
+
+    /**
+     * @return $this
+     */
     public function excludeRoot()
     {
         $this->fromRoot = false;
-        return $this->addFieldToFilter('entity_id', ['neq' => 1]);
+        return $this->addFieldToFilter('entity_id', ['neq' => $this->getRootId()]);
     }
 
     /**
@@ -55,7 +77,7 @@ class Collection extends AbstractCollection
         $list = [];
 
         if ($parentId == null) {
-            $parentId = $this->fromRoot ? 0 : 1;
+            $parentId = $this->fromRoot ? 0 : $this->getRootId();
         }
 
         $collection = clone $this;
@@ -92,5 +114,17 @@ class Collection extends AbstractCollection
         }
 
         return $result;
+    }
+
+    /**
+     * @return int
+     */
+    protected function getRootId()
+    {
+        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
+        /** @var \Mirasvit\Blog\Helper\Category $helper */
+        $helper = $objectManager->get('\Mirasvit\Blog\Helper\Category');
+
+        return $helper->getRootCategory()->getId();
     }
 }

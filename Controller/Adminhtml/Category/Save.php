@@ -18,7 +18,7 @@ class Save extends Category
             $model = $this->initModel();
 
             if (!$model->getId() && $id) {
-                $this->messageManager->addError(__('This category no longer exists.'));
+                $this->messageManager->addErrorMessage(__('This category no longer exists.'));
 
                 return $resultRedirect->setPath('*/*/');
             }
@@ -27,7 +27,7 @@ class Save extends Category
 
             try {
                 $model->save();
-                $this->messageManager->addSuccess(__('Category was successfully saved'));
+                $this->messageManager->addSuccessMessage(__('Category was successfully saved'));
                 $this->context->getSession()->setFormData(false);
 
                 if ($this->getRequest()->getParam('back')) {
@@ -42,7 +42,7 @@ class Save extends Category
             }
         } else {
             $resultRedirect->setPath('*/*/');
-            $this->messageManager->addError('No data to save.');
+            $this->messageManager->addErrorMessage('No data to save.');
 
             return $resultRedirect;
         }
