@@ -77,7 +77,7 @@ class General extends Form
             'required' => true,
         ]);
 
-        if ($category->getParentId() != 0) {
+        if (!$this->isHideParent($category)) {
             $categories = $this->categoryCollectionFactory->create()
                 ->addAttributeToSelect('name')
                 ->toOptionArray();
@@ -105,5 +105,19 @@ class General extends Form
         ]);
 
         return parent::_prepareForm();
+    }
+
+    /**
+     * @param \Mirasvit\Blog\Model\Category $category
+     * @return bool
+     * @throws \Magento\Framework\Exception\LocalizedException
+     */
+    protected function isHideParent($category)
+    {
+        $categories = $this->categoryCollectionFactory->create()
+            ->addAttributeToSelect('name')
+            ->toOptionArray();
+
+        return $category->getParentId() === "0" || ($category->getParentId() === null && !count($categories));
     }
 }

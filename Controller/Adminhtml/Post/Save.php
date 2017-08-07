@@ -71,16 +71,18 @@ class Save extends Post
         if (isset($result['store_ids'])) {
             $result['store_ids'] = explode(',', $result['store_ids']);
         }
+        $formatter = new \IntlDateFormatter(
+            $this->context->getLocaleResolver()->getLocale(),
+            \IntlDateFormatter::MEDIUM,
+            \IntlDateFormatter::SHORT,
+            null,
+            null,
+            'MMM. d, y h:mm a'
+        );
         if (isset($result['created_at'])) {
-            $formatter = new \IntlDateFormatter(
-                $this->context->getLocaleResolver()->getLocale(),
-                \IntlDateFormatter::MEDIUM,
-                \IntlDateFormatter::SHORT,
-                null,
-                null,
-                'MMM. d, y h:mm a'
-            );
             $result['created_at'] = $formatter->parse($result['created_at']);
+        } else {
+            $result['created_at'] = $formatter->parse(date('Y-m-d h:i:s'));
         }
 
         if (isset($data['featured_image'])
