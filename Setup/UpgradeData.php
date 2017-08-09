@@ -8,10 +8,6 @@ use Magento\Framework\Setup\ModuleDataSetupInterface;
 use Magento\Eav\Setup\EavSetupFactory;
 use Mirasvit\Blog\Setup\InstallData\PostSetupFactory;
 
-/**
- * Upgrade Data script
- * @codeCoverageIgnore
- */
 class UpgradeData implements UpgradeDataInterface
 {
     public function __construct(PostSetupFactory $postSetupFactory, EavSetupFactory $eavSetupFactory)
@@ -27,7 +23,7 @@ class UpgradeData implements UpgradeDataInterface
     public function upgrade(ModuleDataSetupInterface $setup, ModuleContextInterface $context)
     {
         $setup->startSetup();
-        if ($context->getVersion() && version_compare($context->getVersion(), '1.0.5') < 0) {
+        if (version_compare($context->getVersion(), '1.0.5') < 0) {
             /** @var \Mirasvit\Blog\Setup\InstallData\PostSetup $postSetup */
             $postSetup = $this->postSetupFactory->create(['setup' => $setup]);
             foreach ($this->getAttributes() as $code => $data) {
