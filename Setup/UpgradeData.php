@@ -47,11 +47,11 @@ class UpgradeData implements UpgradeDataInterface
                 'global' => ScopedAttributeInterface::SCOPE_STORE,
             ],
             'featured_show_on_home' => [
-                'type'   => 'int',
-                'label'  => 'Is show on Blog Home page',
-                'input'  => 'text',
-                'global' => ScopedAttributeInterface::SCOPE_STORE,
-                'default_value'  => 1,
+                'type'    => 'int',
+                'label'   => 'Is show on Blog Home page',
+                'input'   => 'text',
+                'global'  => ScopedAttributeInterface::SCOPE_STORE,
+                'default' => 1,
             ]
         ];
     }
