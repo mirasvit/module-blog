@@ -40,14 +40,17 @@ php -f bin/magento setup:static-content:deploy
 [https://mirasvit.com/](https://mirasvit.com/)
 
 # Changelog
-## 1.0.19-beta
-*(2017-07-28)*
+## 1.0.19
+*(2017-08-09)*
 
 #### Improvements
 * Added ability to sort category
+* Added ability to hide featured image on blog home page
+* Added ability to set alt for featured image
 
 #### Fixed
 * Creation of root category
+* JS error on posts list page
 
 ---
 
