@@ -184,7 +184,10 @@ class PostList extends AbstractBlock implements IdentityInterface
 
         if (empty($this->collection)) {
             $collection = $this->postCollectionFactory->create()
-                ->addAttributeToSelect(['name', 'featured_image', 'short_content', 'content', 'url_key'])
+                ->addAttributeToSelect([
+                    'name', 'featured_image', 'featured_alt', 'featured_show_on_home',
+                    'short_content', 'content', 'url_key'
+                ])
                 ->addStoreFilter($this->context->getStoreManager()->getStore()->getId())
                 ->addVisibilityFilter();
 
@@ -218,5 +221,14 @@ class PostList extends AbstractBlock implements IdentityInterface
         }
 
         return $this->collection;
+    }
+
+    /**
+     * @param \Mirasvit\Blog\Model\Post $post
+     * @return string
+     */
+    public function getFeaturedAlt($post)
+    {
+        return $post->getFeaturedAlt() ?: $post->getName();
     }
 }

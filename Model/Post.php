@@ -23,6 +23,8 @@ use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductColl
  * @method string getMetaDescription()
  * @method string getMetaKeywords()
  * @method string getFeaturedImage()
+ * @method string getFeaturedAlt()
+ * @method string getFeaturedShowOnHome()
  * @method $this setFeaturedImage($image)
  * @method int getStatus()
  * @method string getCreatedAt()

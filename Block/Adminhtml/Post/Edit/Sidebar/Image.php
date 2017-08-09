@@ -59,6 +59,20 @@ class Image extends Form
             'value'    => $post->getFeaturedImageUrl(),
         ]);
 
+        $fieldset->addField('featured_alt', 'text', [
+            'required' => false,
+            'label'   => __('Alt'),
+            'name'     => 'post[featured_alt]',
+            'value'    => $post->getFeaturedAlt(),
+        ]);
+
+        $fieldset->addField('featured_show_on_home', 'checkbox', [
+            'label'   => __('Is show on Blog Home page'),
+            'name'    => 'post[featured_show_on_home]',
+            'value'   => 1,
+            'checked' => $post->getFeaturedShowOnHome(),
+        ]);
+
         return parent::_prepareForm();
     }
 }
