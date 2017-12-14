@@ -1,5 +1,5 @@
 <?php
-$registration = dirname(__DIR__, 4) . '/vendor/mirasvit/module-blog/registration.php';
+$registration = dirname(dirname(dirname(__DIR__))) . '/vendor/mirasvit/module-blog/registration.php';
 if (file_exists($registration)) {
     # module was already installed via composer
     return;
