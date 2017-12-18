@@ -139,4 +139,15 @@ class Collection extends AbstractCollection
 
         return $this;
     }
+
+    /**
+     * @return $this
+     */
+    public function defaultOrder()
+    {
+        $this->addAttributeToSort('is_pinned', self::SORT_ORDER_DESC);
+        $this->getSelect()->order('updated_at DESC');
+
+        return $this;
+    }
 }

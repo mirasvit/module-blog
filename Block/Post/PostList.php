@@ -216,6 +216,7 @@ class PostList extends AbstractBlock implements IdentityInterface
             if ($order = $toolbar->getCurrentOrder()) {
                 $collection->setOrder($order, $toolbar->getCurrentDirection());
             }
+            $collection->defaultOrder();
 
             $this->collection = $collection;
         }

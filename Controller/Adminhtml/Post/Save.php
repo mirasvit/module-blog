@@ -68,6 +68,9 @@ class Save extends Post
         if (!isset($result['is_pinned'])) {
             $result['is_pinned'] = false;
         }
+        if (!isset($result['featured_show_on_home'])) {
+            $result['featured_show_on_home'] = false;
+        }
         if (isset($result['store_ids'])) {
             $result['store_ids'] = explode(',', $result['store_ids']);
         }
@@ -79,9 +82,10 @@ class Save extends Post
             null,
             'MMM. d, y h:mm a'
         );
-        if (isset($result['created_at'])) {
+        if (!empty($result['created_at'])) {
             $result['created_at'] = $formatter->parse($result['created_at']);
         } else {
+            $formatter->setPattern('yyyy-MM-dd h:mm:s');
             $result['created_at'] = $formatter->parse(date('Y-m-d h:i:s'));
         }
 
