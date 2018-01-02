@@ -1,4 +1,12 @@
-# Changelog
+# Change log
+
+## 1.0.21
+*(2018-01-02)*
+
+#### Fixed
+* XSS vulnerability in search form
+
+---
 
 ### 1.0.20
 *(2017-09-29)*
