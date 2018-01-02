@@ -2,14 +2,13 @@
     "name": "mirasvit/module-blog",
     "description": "Mirasvit Blog MX",
     "require": {
-        "php": "~5.5.0|~5.6.0|~7.0.0",
         "magento/framework": "100.1.*|100.2.*|101.0.*"
     },
     "suggest": {
       "mirasvit/module-blog-sample-data": "Sample Data for Blog"
     },
     "type": "magento2-module",
-    "version": "1.0.19",
+    "version": "1.0.21",
     "license": [
       "OSL-3.0"
     ],

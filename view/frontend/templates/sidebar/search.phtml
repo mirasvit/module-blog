@@ -3,10 +3,10 @@
 
 /** @var \Mirasvit\Blog\Block\Sidebar\Search $block */
 ?>
-<div class=" blog__sidebar-search">
+<div class="blog__sidebar-search">
     <form method="get" action="<?= $block->getSearchUrl() ?>">
         <input type="search" name="q" placeholder="<?= __('Search...') ?>" class="input-text required-entry"
-               value="<?= $block->getRequest()->getParam('q') ?>"/>
+               value="<?= $block->escapeHtml($block->getRequest()->getParam('q')) ?>"/>
 
         <button class="action primary" title="Submit" type="submit">
             <span><i class="fa fa-fw fa-search"></i></span>
