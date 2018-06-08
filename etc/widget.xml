@@ -25,4 +25,22 @@
             </parameter>
         </parameters>
     </widget>
+    <widget id="blog_recent_post_large" class="Mirasvit\Blog\Block\Post\Recent">
+        <label translate="true">Blog MX: Recent Posts Large</label>
+        <description translate="true">List of Blog Posts</description>
+        <parameters>
+            <parameter name="page_size" xsi:type="text" required="true" visible="true">
+                <label translate="true">Number of Posts to display</label>
+                <value>5</value>
+            </parameter>
+            <parameter name="image_width" xsi:type="text" required="true" visible="true">
+                <label translate="true">Image width (px)</label>
+                <value>0</value>
+            </parameter>
+            <parameter name="image_height" xsi:type="text" required="true" visible="true">
+                <label translate="true">Image height (px)</label>
+                <value>0</value>
+            </parameter>
+        </parameters>
+    </widget>
 </widgets>
