@@ -298,11 +298,12 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     }
 
     /**
+     * @param bool $useSid
      * @return string
      */
-    public function getUrl()
+    public function getUrl($useSid = true)
     {
-        return $this->url->getPostUrl($this);
+        return $this->url->getPostUrl($this, $useSid);
     }
 
     /**

@@ -86,11 +86,12 @@ class Url
 
     /**
      * @param Post $post
+     * @param bool $useSid
      * @return string
      */
-    public function getPostUrl($post)
+    public function getPostUrl($post, $useSid = true)
     {
-        return $this->getUrl('/' . $post->getUrlKey(), 'post');
+        return $this->getUrl('/' . $post->getUrlKey(), 'post', ['_nosid' => !$useSid]);
     }
 
     /**
