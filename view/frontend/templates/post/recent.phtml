@@ -1,0 +1,49 @@
+<?php
+//@codingStandardsIgnoreFile
+
+/** @var \Mirasvit\Blog\Block\Post\Recent $block */
+$postCollection = $block->getCollection()
+    ->setPageSize($this->getPageSize());
+?>
+
+<div class="block blog__main-recent">
+    <div class="block-title">
+        <h2><?= __('Recent Posts') ?></h2>
+    </div>
+
+    <div class="block-content">
+
+<?php if ($postCollection->count()): ?>
+    <div class="blog__post-list-wrapper">
+        <ol class="blog__post-list">
+            <?php /** @var \Mirasvit\Blog\Model\Post $post */ ?>
+            <?php foreach ($postCollection as $post): ?>
+                <li class="blog__post-item">
+                    <header class="blog__post-header">
+                        <h3 class="blog__post-title" itemprop="headline">
+                            <a href="<?= $post->getUrl() ?>" rel="bookmark"><?= $post->getName() ?></a>
+                        </h3>
+                    </header>
+
+                    <div class="blog__post-excerpt" itemprop="text">
+                        <?php if ($post->getFeaturedImageUrl() && $post->getFeaturedShowOnHome()): ?>
+                            <a href="<?= $post->getUrl() ?>">
+                                <img src="<?= $post->getFeaturedImageUrl() ?>" alt="<?= $block->getFeaturedAlt($post) ?>"/>
+                            </a>
+                        <?php endif ?>
+
+                        <?= $post->getShortContent() ?>
+
+                        <a class="read-more" href="<?= $post->getUrl() ?>"><?= __('Read more...') ?></a>
+                    </div>
+                </li>
+            <?php endforeach ?>
+        </ol>
+    </div>
+<?php else: ?>
+    <div class="message notice">
+        <div><?= __('There are no posts available.') ?></div>
+    </div>
+<?php endif ?>
+    </div>
+</div>
