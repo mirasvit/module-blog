@@ -45,6 +45,10 @@ class View extends Template
 
         $author = $this->getAuthor();
 
+        if (!$author) {
+            return $this;
+        }
+
         $this->pageConfig->getTitle()->set(__('Author: %1', $author->getName()));
 
         if ($author && ($breadcrumbs = $this->getLayout()->getBlock('breadcrumbs'))) {
