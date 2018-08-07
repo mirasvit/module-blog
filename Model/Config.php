@@ -81,7 +81,8 @@ class Config
      */
     public function isDisplayInMenu()
     {
-        return $this->scopeConfig->getValue('blog/display/main_menu');
+        return $this->scopeConfig->getValue('blog/display/main_menu',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
     }
 
     /**
