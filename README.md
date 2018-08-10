@@ -15,8 +15,10 @@ Magento 2 Blog MX allows you to open a blog and engage more and more customers t
 - Get Support: https://github.com/mirasvit/module-blog/issues
 
 ## 2. Demo
-[http://blog.m2.mirasvit.com/blog/fashion/](http://blog.m2.mirasvit.com/blog/fashion/)
-
+- Home Page [http://blog.m2.mirasvit.com/blog/](http://blog.m2.mirasvit.com/blog/)
+- Category Page [http://blog.m2.mirasvit.com/blog/fashion.html](http://blog.m2.mirasvit.com/blog/fashion.html)
+- Post Page [http://blog.m2.mirasvit.com/blog/shopo-introduces-online-social-shopping-launches-peer-to-peer-chat-and-vernacular-content.html](http://blog.m2.mirasvit.com/blog/shopo-introduces-online-social-shopping-launches-peer-to-peer-chat-and-vernacular-content.html)
+- Admin Side [http://blog.m2.mirasvit.com/mageadmin/blog/post/index/#demo](http://blog.m2.mirasvit.com/mageadmin/blog/post/index/#demo)
 
 ## 3. Key Features
 
