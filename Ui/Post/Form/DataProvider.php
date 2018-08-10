@@ -63,7 +63,7 @@ class DataProvider extends AbstractDataProvider
                 PostInterface::STORE_IDS        => $post->getStoreIds(),
                 PostInterface::TAG_IDS          => $post->getTagIds(),
 
-                'is_short_content' => $post->getShortContent() ? 1 : 0,
+                'is_short_content' => $post->getShortContent() ? true : false,
             ];
 
             if ($post->getFeaturedImage()) {
@@ -85,7 +85,6 @@ class DataProvider extends AbstractDataProvider
                 ];
             }
         }
-
 
         return $result;
     }
