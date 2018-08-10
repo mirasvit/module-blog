@@ -3,6 +3,7 @@
 namespace Mirasvit\Blog\Block\Post;
 
 use Magento\Framework\DataObject\IdentityInterface;
+use Mirasvit\Blog\Api\Repository\PostRepositoryInterface;
 use Mirasvit\Blog\Model\Config;
 use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\Registry;
@@ -16,28 +17,22 @@ class PostList extends AbstractBlock implements IdentityInterface
     protected $defaultToolbarBlock = 'Mirasvit\Blog\Block\Post\PostList\Toolbar';
 
     /**
-     * @var PostCollectionFactory
+     * @var PostRepositoryInterface
      */
-    protected $postCollectionFactory;
+    private $postRepository;
 
     /**
      * @var \Mirasvit\Blog\Model\ResourceModel\Post\Collection
      */
     protected $collection;
 
-    /**
-     * @param PostCollectionFactory $postCollectionFactory
-     * @param Config                $config
-     * @param Registry              $registry
-     * @param Context               $context
-     */
     public function __construct(
-        PostCollectionFactory $postCollectionFactory,
+        PostRepositoryInterface $postRepository,
         Config $config,
         Registry $registry,
         Context $context
     ) {
-        $this->postCollectionFactory = $postCollectionFactory;
+        $this->postRepository = $postRepository;
 
         parent::__construct($config, $registry, $context);
     }
@@ -183,10 +178,10 @@ class PostList extends AbstractBlock implements IdentityInterface
         $toolbar = $this->getToolbarBlock();
 
         if (empty($this->collection)) {
-            $collection = $this->postCollectionFactory->create()
+            $collection = $this->postRepository->getCollection()
                 ->addAttributeToSelect([
                     'name', 'featured_image', 'featured_alt', 'featured_show_on_home',
-                    'short_content', 'content', 'url_key'
+                    'short_content', 'content', 'url_key',
                 ])
                 ->addStoreFilter($this->context->getStoreManager()->getStore()->getId())
                 ->addVisibilityFilter();
@@ -200,6 +195,7 @@ class PostList extends AbstractBlock implements IdentityInterface
             } elseif ($q = $this->getRequest()->getParam('q')) {
                 $collection->addSearchFilter($q);
             }
+
 
             $collection->setCurPage($this->getCurrentPage());
 

@@ -3,6 +3,8 @@
 namespace Mirasvit\Blog\Controller\Adminhtml;
 
 use Magento\Backend\App\Action;
+use Mirasvit\Blog\Api\Data\PostInterface;
+use Mirasvit\Blog\Api\Repository\PostRepositoryInterface;
 use Mirasvit\Blog\Model\PostFactory;
 use Magento\Framework\Registry;
 use Magento\Backend\App\Action\Context;
@@ -19,7 +21,7 @@ abstract class Post extends Action
     /**
      * @var PostFactory
      */
-    protected $postFactory;
+    protected $postRepository;
 
     /**
      * @var Context
@@ -29,7 +31,7 @@ abstract class Post extends Action
     /**
      * @var StoreManagerInterface
      */
-    protected $storeManager;
+//    protected $storeManager;
 
     /**
      * @var Registry
@@ -39,38 +41,29 @@ abstract class Post extends Action
     /**
      * @var JsonFactory
      */
-    protected $jsonFactory;
+//    protected $jsonFactory;
 
     /**
      * @var JsHelper
      */
-    protected $jsHelper;
+//    protected $jsHelper;
 
-    /**
-     * @param PostFactory           $authorFactory
-     * @param StoreManagerInterface $storeManager
-     * @param JsonFactory           $jsonFactory
-     * @param JsHelper              $jsHelper
-     * @param Registry              $registry
-     * @param TimezoneInterface     $localeDate
-     * @param Context               $context
-     */
     public function __construct(
-        PostFactory $authorFactory,
-        StoreManagerInterface $storeManager,
-        JsonFactory $jsonFactory,
-        JsHelper $jsHelper,
+        PostRepositoryInterface $postRepository,
+//        StoreManagerInterface $storeManager,
+//        JsonFactory $jsonFactory,
+//        JsHelper $jsHelper,
         Registry $registry,
-        TimezoneInterface $localeDate,
+//        TimezoneInterface $localeDate,
         Context $context
     ) {
-        $this->postFactory  = $authorFactory;
-        $this->storeManager = $storeManager;
-        $this->jsonFactory  = $jsonFactory;
-        $this->jsHelper     = $jsHelper;
-        $this->registry     = $registry;
-        $this->localeDate   = $localeDate;
-        $this->context      = $context;
+        $this->postRepository = $postRepository;
+//        $this->storeManager = $storeManager;
+//        $this->jsonFactory = $jsonFactory;
+//        $this->jsHelper = $jsHelper;
+        $this->registry = $registry;
+//        $this->localeDate = $localeDate;
+        $this->context = $context;
 
         $this->resultFactory = $context->getResultFactory();
 
@@ -92,15 +85,15 @@ abstract class Post extends Action
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Post
+     * @return PostInterface
      */
     public function initModel()
     {
-        $model = $this->postFactory->create();
-        $id = $this->getRequest()->getParam('id');
-        
-        if ($id && ! is_array($id)) {
-            $model->load($id);
+        $model = $this->postRepository->create();
+        $id = $this->getRequest()->getParam(PostInterface::ID);
+
+        if ($id && !is_array($id)) {
+            $model = $this->postRepository->get($id);
         }
 
         $this->registry->register('current_model', $model);

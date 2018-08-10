@@ -8,7 +8,7 @@ $collection = $block->getPostCollection();
 <?php if ($collection->count()): ?>
     <div class="blog__post-list-wrapper">
         <ol class="blog__post-list">
-            <?php /** @var \Mirasvit\Blog\Model\Post $post */ ?>
+            <?php /** @var \Mirasvit\Blog\Api\Data\PostInterface $post */ ?>
             <?php foreach ($collection as $post): ?>
                 <li class="blog__post-item">
                     <header class="blog__post-header">
@@ -22,7 +22,8 @@ $collection = $block->getPostCollection();
                     <div class="blog__post-excerpt" itemprop="text">
                         <?php if ($post->getFeaturedImageUrl() && $post->getFeaturedShowOnHome()): ?>
                             <a href="<?= $post->getUrl() ?>">
-                                <img src="<?= $post->getFeaturedImageUrl() ?>" alt="<?= $block->getFeaturedAlt($post) ?>"/>
+                                <img src="<?= $post->getFeaturedImageUrl() ?>"
+                                     alt="<?= $block->getFeaturedAlt($post) ?>"/>
                             </a>
                         <?php endif ?>
 
@@ -36,7 +37,7 @@ $collection = $block->getPostCollection();
             <?php endforeach ?>
         </ol>
 
-        <?php echo $block->getToolbarHtml() ?>
+        <?= $block->getToolbarHtml() ?>
     </div>
 <?php else: ?>
     <div class="message notice">

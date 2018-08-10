@@ -5,6 +5,7 @@ namespace Mirasvit\Blog\Controller;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
+use Mirasvit\Blog\Api\Data\PostInterface;
 use Mirasvit\Blog\Model\PostFactory;
 use Magento\Framework\Registry;
 
@@ -20,24 +21,16 @@ abstract class Post extends Action
      */
     protected $registry;
 
-    /**
-     * @param StoreManagerInterface $storeManager
-     * @param PostFactory           $authorFactory
-     * @param Registry              $registry
-     * @param Context               $context
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
-     * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
-     */
     public function __construct(
         StoreManagerInterface $storeManager,
         PostFactory $authorFactory,
         Registry $registry,
         Context $context
     ) {
-        $this->storeManager  = $storeManager;
-        $this->postFactory   = $authorFactory;
-        $this->registry      = $registry;
-        $this->context       = $context;
+        $this->storeManager = $storeManager;
+        $this->postFactory = $authorFactory;
+        $this->registry = $registry;
+        $this->context = $context;
         $this->resultFactory = $context->getResultFactory();;
 
         parent::__construct($context);
@@ -48,14 +41,14 @@ abstract class Post extends Action
      */
     protected function initModel()
     {
-        $id = $this->getRequest()->getParam('id');
+        $id = $this->getRequest()->getParam(PostInterface::ID);
         if (!$id) {
             return false;
         }
 
         $post = $this->postFactory->create()->load($id);
 
-        if (!$post->getId() || !$post->isStoreAllowed($this->storeManager->getStore()->getId())) {
+        if (!$post->getId()) {
             return false;
         }
 

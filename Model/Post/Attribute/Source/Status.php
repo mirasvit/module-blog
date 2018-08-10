@@ -4,7 +4,8 @@ namespace Mirasvit\Blog\Model\Post\Attribute\Source;
 use Magento\Eav\Model\Entity\Attribute\Source\AbstractSource;
 use Magento\Eav\Model\Entity\Attribute\Source\SourceInterface;
 use Magento\Framework\Data\OptionSourceInterface;
-
+\Magento\Framework\Debug::backtrace();
+die();
 class Status extends AbstractSource implements SourceInterface, OptionSourceInterface
 {
     const STATUS_DRAFT = 0;

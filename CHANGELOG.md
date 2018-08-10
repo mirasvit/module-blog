@@ -1,3 +1,17 @@
+## 1.0.23
+*(2018-08-10)*
+
+#### Improvements
+* Code API & UI interface for post edit page
+
+#### Fixed
+* Issue with toolbar
+* [#101](../../issues/101)
+* [#108](../../issues/101)
+* [#103](../../issues/101)
+
+---
+
 ## 1.0.22
 *(2018-08-02)*
 

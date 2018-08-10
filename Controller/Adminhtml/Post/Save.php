@@ -2,72 +2,141 @@
 
 namespace Mirasvit\Blog\Controller\Adminhtml\Post;
 
+use Magento\Backend\App\Action\Context;
+use Magento\Framework\App\ObjectManager;
+use Magento\Framework\Registry;
+use Mirasvit\Blog\Api\Data\PostInterface;
+use Mirasvit\Blog\Api\Repository\PostRepositoryInterface;
+use Mirasvit\Blog\Api\Repository\TagRepositoryInterface;
 use Mirasvit\Blog\Controller\Adminhtml\Post;
+use Magento\Framework\Controller\Result\JsonFactory;
 
-/**
- * @SuppressWarnings(PHPMD.CyclomaticComplexity)
- * @SuppressWarnings(PHPMD.NPathComplexity)
- */
 class Save extends Post
 {
+    /**
+     * @var TagRepositoryInterface
+     */
+    private $tagRepository;
+
+    /**
+     * @var JsonFactory
+     */
+    private $jsonFactory;
+
+
+    public function __construct(
+        TagRepositoryInterface $tagRepository,
+        JsonFactory $jsonFactory,
+        PostRepositoryInterface $postRepository,
+        Registry $registry,
+        Context $context
+    ) {
+        $this->tagRepository = $tagRepository;
+        $this->jsonFactory = $jsonFactory;
+
+        parent::__construct($postRepository, $registry, $context);
+    }
+
     /**
      * {@inheritdoc}
      */
     public function execute()
     {
+        $id = $this->getRequest()->getParam(PostInterface::ID);
         $resultRedirect = $this->resultRedirectFactory->create();
 
-        if ($data = $this->getRequest()->getParams()) {
+        $data = $this->filterPostData($this->getRequest()->getParams());
+
+        if ($data) {
+            /** @var \Mirasvit\Blog\Model\Post $model */
             $model = $this->initModel();
 
-            $data = $this->filterPostData($data);
+            if (!$model->getId() && $id) {
+                $this->messageManager->addErrorMessage(__('This post no longer exists.'));
+
+                return $resultRedirect->setPath('*/*/');
+            }
 
             $model->addData($data);
 
             try {
-                if (isset($data['preview']) && $data['preview']) {
-                    $revision = $model->saveAsRevision();
-
-                    //@todo: Improve
-                    $url = $this->storeManager->getStore()->getBaseUrl();
-                    $url .= 'blog/post/view/id/' . $revision->getId() . '/';
-                    return $resultRedirect->setUrl($url);
+                if ($this->getRequest()->getParam('isAjax')) {
+                    return $this->handlePreviewRequest($model);
                 } else {
-                    $model->save();
+                    $this->postRepository->save($model);
+
+                    $this->messageManager->addSuccessMessage(__('You saved the post.'));
+
+                    if ($this->getRequest()->getParam('back') == 'edit') {
+                        return $resultRedirect->setPath('*/*/edit', [PostInterface::ID => $model->getId()]);
+                    }
+
+                    return $this->context->getResultRedirectFactory()->create()->setPath('*/*/');
                 }
-
-                $this->messageManager->addSuccess(__('Post was successfully saved'));
-                $this->context->getSession()->setFormData(false);
-
-                if ($this->getRequest()->getParam('back')) {
-                    return $resultRedirect->setPath('*/*/edit', ['id' => $model->getId()]);
-                }
-
-                return $this->context->getResultRedirectFactory()->create()->setPath('*/*/');
             } catch (\Exception $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
 
-                return $resultRedirect->setPath('*/*/edit', ['id' => $this->getRequest()->getParam('id')]);
+                return $resultRedirect->setPath(
+                    '*/*/edit',
+                    [PostInterface::ID => $this->getRequest()->getParam(PostInterface::ID)]
+                );
             }
         } else {
             $resultRedirect->setPath('*/*/');
-            $this->messageManager->addError('No data to save.');
+            $this->messageManager->addErrorMessage('No data to save.');
 
             return $resultRedirect;
         }
     }
 
+    private function handlePreviewRequest(PostInterface $model)
+    {
+        $om = ObjectManager::getInstance();
+        $scopeResolver = $om->create('Magento\Framework\Url\ScopeResolverInterface', [
+            'areaCode' => \Magento\Framework\App\Area::AREA_FRONTEND,
+        ]);
+
+        # preview mode save as revision
+        $model->setId(false);
+        $model->setType(PostInterface::TYPE_REVISION);
+        $this->postRepository->save($model);
+
+        $resultJson = $this->jsonFactory->create();
+
+        $url = $om->create('Magento\Framework\Url', ['scopeResolver' => $scopeResolver])
+            ->getUrl('blog/post/view', [
+                PostInterface::ID => $model->getId(),
+                '_scope_to_url'   => false,
+                '_nosid'          => true,
+            ]);
+
+
+        return $resultJson->setData([
+            PostInterface::ID => $model->getId(),
+            'url'             => $url,
+        ]);
+    }
+
     /**
-     * @param array $data
+     * @param array $rawData
      * @return array
      */
-    protected function filterPostData($data)
+    private function filterPostData(array $rawData)
     {
-        $result = $data['post'];
+        $data = $rawData;
 
-        if (!isset($result['is_pinned'])) {
-            $result['is_pinned'] = false;
+        foreach ([PostInterface::FEATURED_IMAGE] as $key) {
+            if (isset($data[$key]) && is_array($data[$key])) {
+                if (!empty($data[$key]['delete'])) {
+                    $data[$key] = null;
+                } else {
+                    if (isset($data[$key][0]['name'])) {
+                        $data[$key] = $data[$key][0]['name'];
+                    }
+                }
+            }
         }
+<<<<<<< HEAD
         if (!isset($result['featured_show_on_home'])) {
             $result['featured_show_on_home'] = false;
         }
@@ -87,23 +156,37 @@ class Save extends Post
         } else {
             $formatter->setPattern('yyyy-MM-dd h:mm:s');
             $result['created_at'] = $formatter->parse(date('Y-m-d h:i:s'));
+=======
+        if (!isset($data[PostInterface::FEATURED_IMAGE])) {
+            $data[PostInterface::FEATURED_IMAGE] = '';
+>>>>>>> master
         }
 
-        if (isset($data['featured_image'])
-            && is_array($data['featured_image'])
-            && isset($data['featured_image']['delete'])) {
-            $result['featured_image'] = '';
-        }
+        if (isset($data[PostInterface::TAG_IDS])) {
+            foreach ($data[PostInterface::TAG_IDS] as $idx => $tagId) {
+                if (!is_numeric($tagId)) {
+                    $tag = $this->tagRepository->create()
+                        ->setName($tagId);
 
-        if (isset($data['links'])) {
-            $links = is_array($data['links']) ? $data['links'] : [];
-            foreach (['relatedproducts' => 'product_ids'] as $type => $alias) {
-                if (isset($links[$type])) {
-                    $result[$alias] = array_keys($this->jsHelper->decodeGridSerializedInput($links[$type]));
+                    $tag = $this->tagRepository->ensure($tag);
+
+                    $data[PostInterface::TAG_IDS][$idx] = $tag->getId();
                 }
             }
         }
 
-        return $result;
+        if (isset($data['blog_post_form_product_listing'])) {
+            $productIds = [];
+            foreach ($data['blog_post_form_product_listing'] as $item) {
+                $productIds[] = $item['entity_id'];
+            }
+            $data[PostInterface::PRODUCT_IDS] = $productIds;
+        }
+
+//        echo '<pre>';
+//        print_r($data);
+//        die();
+
+        return $data;
     }
 }

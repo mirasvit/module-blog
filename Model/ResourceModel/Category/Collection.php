@@ -1,4 +1,5 @@
 <?php
+
 namespace Mirasvit\Blog\Model\ResourceModel\Category;
 
 use Magento\Eav\Model\Entity\Collection\AbstractCollection;
@@ -96,30 +97,30 @@ class Collection extends AbstractCollection
 
         return $list;
     }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function _toOptionArray($valueField = 'id', $labelField = 'name', $additional = [])
-    {
-        $result = [];
-
-        $this->addAttributeToSelect('name');
-
-        foreach ($this->getTree(0) as $item) {
-            $result[] = [
-                'value' => $item->getId(),
-                'label' => str_repeat(' ', $item->getLevel() * 5) . $item->getName()
-            ];
-        }
-
-        return $result;
-    }
+    //
+    //    /**
+    //     * {@inheritdoc}
+    //     */
+    //    protected function _toOptionArray($valueField = 'id', $labelField = 'name', $additional = [])
+    //    {
+    //        $result = [];
+    //
+    //        $this->addAttributeToSelect('name');
+    //
+    //        foreach ($this->getTree(0) as $item) {
+    //            $result[] = [
+    //                'value' => $item->getId(),
+    //                'label' => str_repeat(' ', $item->getLevel() * 5) . $item->getName()
+    //            ];
+    //        }
+    //
+    //        return $result;
+    //    }
 
     /**
      * @return int
      */
-    protected function getRootId()
+    public function getRootId()
     {
         $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
         /** @var \Mirasvit\Blog\Helper\Category $helper */

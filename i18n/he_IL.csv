@@ -1,0 +1,115 @@
+Save,שמור
+Save & Continue Edit,שמור והמשך בעריכה
+Author Information,פרטי המחבר
+Display Name,הצג שם
+Biographical Info,מידע ביוגרפי
+Username,שם משתמש
+First Name,שם פרטי
+Last Name,שם משפחה
+General Information,מידע כללי
+Title,כותרת
+Parent Category,קטגורית אב
+Status,סטטוס
+Disabled,מבוטל
+Enabled,פעיל
+Order,הזמנה
+Search Engine Optimization,אופטימיזציה למנועי חיפוש
+URL Key,מפתח כתובת אתר
+Meta Title,כותרת מטא
+Meta Description,תיאור מטא
+Meta Keywords,מילות מפתח מטא
+Save & Close,שמור וסגור
+Author,מחבר
+Categories,קטגוריות
+Featured Image,תמונה ראשית
+Alt,Alt
+Is show on Blog Home page,האם להציג בדף הבית
+Publish,מפורסם
+Published on,פורסם ב
+Pin post at the top,הדבק לראש הדף
+Store Views,Store Views
+All Store Views,All Store Views
+Excerpt,תקציר
+Position,מיקום
+ID,מזהה
+Name,שם
+SKU,מקט
+Visibility,נראות
+Related Products,מוצרים קשורים
+Author: %1,מחבר:%1
+Home,בית
+Go to Home Page,עבור לעמוד הבית
+Blog,בלוג
+Related Posts %1,פוסטים קשורים %1
+Date,תַאֲרִיך
+Search results for: '%1',תוצאות חיפוש עבור: '%1'
+Tag: %1,תג:%1
+Mirasvit Blog MX,בלוג
+Authors,מחברים
+This author no longer exists.,מחבר זה אינו קיים עוד.
+Author was successfully saved,המחבר נשמר בהצלחה
+The category has been deleted.,הקטגוריה נמחקה.
+This category no longer exists.,קטגוריה זו לא קיימת עוד.
+New Category,קטגוריה חדשה
+Category was successfully saved,קטגוריה נשמרה בהצלחה
+Posts,פוסטים
+The post has been deleted.,הפוסט נמחק.
+This post no longer exists.,הפוסט הזה כבר לא קיים.
+New Post,פרסום חדש
+All Posts,כל הפוסטים
+Please correct the data sent.,תקן את הנתונים שנשלחו.
+Something went wrong while saving the post.,משהו השתבש בעת שמירת הפוסט.
+Post was successfully saved,הפוסט נשמר בהצלחה
+Page not found,הדף לא נמצא
+[GLOBAL],[גלוֹבָּלִי]
+Disable comments,השבת תגובות
+Draft,טְיוּטָה
+Pending Review,סקירה ממתינה
+Published,יצא לאור
+"File type not allowed (only JPG, JPEG, PNG & GIF files are allowed)","סוג הקובץ אינו מותר (רק קובצי JPG, JPEG, PNG & GIF מותרים)"
+Edit,לערוך
+Delete,למחוק
+Delete ${ $.$data.name },מחק ${ $.$data.name }
+Are you sure you wan't to delete a ${ $.$data.name } record?,האם אתה בטוח שלא תמחק רשומת ${ $.$data.name }?
+Preview Changes,הצג שינויים בתצוגה מקדימה
+a,א
+p,עמוד
+Read more...,קרא עוד...
+There are no posts available for this category.,אין פוסטים עבור קטגוריה זו.
+Items %1-%2 of %3,פריטים %1-%2 of %3
+%1 Item,פריט 1%
+%1 Items,%1 פריטים
+Show,להציג
+per page,לדף
+Sort By,מיין לפי
+Set Ascending Direction,קבע סדר עולה
+Set Descending Direction,קבע סדר יורד
+0 Comments,0 תגובות
+Featured Posts,פסטים נבחרים
+Related Posts,פוסטים קשורים
+Your search returned no results.,החיפוש שלך לא החזיר תוצאות.
+Recent Posts,פוסטים אחרונים
+Search...,חפש...
+Mirasvit Extensions,הרחבות Mirasvit
+Blog MX,בלוג MX
+Top Menu Title,כותרת תפריט עליון
+Blog Name,שם הבלוג
+Date Format,פורמט תאריך
+Visible Navigation Menu,תפריט ניווט גלוי
+Base URL,כתובת אתר בסיסית
+Base Meta Title,כותרת מטא גלובלית
+Base Meta Description,תיאור מטא גלובלי
+Base Meta Keywords,מילות מפתח מטא גלובליות
+URL Suffix for Posts,סיומת URL עבור פוסטים
+URL Suffix for Categories,סיומת URL עבור קטגוריות
+Provider,ספק
+Disqus Blog Shortname,Disqus Blog Shortname
+Enable AddThis Sharing Buttons,אפשר כפתורי שיתוף
+Blog MX: Recent Posts,בלוג MX: פוסטים אחרונים
+List of Blog Posts,רשימת פוסטי בלוג
+Number of Posts to display,מספר פוסטים להצגה
+Image width (px),רוחב תמונה (פיקסלים)
+Image height (px),גובה תמונה (פיקסלים)
+Add New Post,הוסף פוסט חדש
+Category,קטגוריה
+Published On,פורסם ב
