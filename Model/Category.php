@@ -9,33 +9,20 @@ use Magento\Framework\Registry;
 use Magento\Framework\Api\ExtensionAttributesFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\DataObject\IdentityInterface;
+use Mirasvit\Blog\Api\Data\CategoryInterface;
 
 /**
- * @method string getName()
- * @method string getContent()
- * @method string getUrlKey()
  *
- * @method string getPath()
- * @method $this setPath($path)
- *
- * @method int getLevel()
  *
  * @method int getChildrenCount()
  * @method $this setChildrenCount($count)
  *
- * @method int getPosition()
- * @method $this setPosition($position)
- *
- * @method string getMetaTitle()
- * @method string getMetaDescription()
- * @method string getMetaKeywords()
- * @method int getStatus()
  *
  * @method int getParentId()
  * @method $this setParentId($id)
  * @method bool hasParentId()
  */
-class Category extends AbstractExtensibleModel implements IdentityInterface, UrlInterface
+class Category extends AbstractExtensibleModel implements IdentityInterface, UrlInterface, CategoryInterface
 {
     const ENTITY = 'blog_category';
 
@@ -51,14 +38,6 @@ class Category extends AbstractExtensibleModel implements IdentityInterface, Url
      */
     protected $url;
 
-    /**
-     * @param Url                        $url
-     * @param StoreManagerInterface      $storeManager
-     * @param Context                    $context
-     * @param Registry                   $registry
-     * @param ExtensionAttributesFactory $extensionFactory
-     * @param AttributeValueFactory      $customAttributeFactory
-     */
     public function __construct(
         Url $url,
         StoreManagerInterface $storeManager,
@@ -87,6 +66,166 @@ class Category extends AbstractExtensibleModel implements IdentityInterface, Url
     public function getIdentities()
     {
         return [self::CACHE_TAG, self::CACHE_TAG . '_' . $this->getId()];
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getStatus()
+    {
+        return $this->getData(self::STATUS);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setStatus($value)
+    {
+        return $this->setData(self::STATUS, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getLevel()
+    {
+        return $this->getData(self::LEVEL);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setLevel($value)
+    {
+        return $this->setData(self::LEVEL, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPosition()
+    {
+        return $this->getData(self::POSITION);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setPosition($value)
+    {
+        return $this->setData(self::POSITION, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getPath()
+    {
+        return $this->getData(self::PATH);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setPath($value)
+    {
+        return $this->setData(self::PATH, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->getData(self::NAME);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setName($value)
+    {
+        return $this->setData(self::NAME, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUrlKey()
+    {
+        return $this->getData(self::URL_KEY);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUrlKey($value)
+    {
+        return $this->setData(self::URL_KEY, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getContent()
+    {
+        return $this->getData(self::CONTENT);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setContent($value)
+    {
+        return $this->setData(self::CONTENT, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMetaTitle()
+    {
+        return $this->getData(self::META_TITLE);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setMetaTitle($value)
+    {
+        return $this->setData(self::META_TITLE, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMetaDescription()
+    {
+        return $this->getData(self::META_DESCRIPTION);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setMetaDescription($value)
+    {
+        return $this->setData(self::META_DESCRIPTION, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMetaKeywords()
+    {
+        return $this->getData(self::META_KEYWORDS);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setMetaKeywords($value)
+    {
+        return $this->setData(self::META_KEYWORDS, $value);
     }
 
     /**

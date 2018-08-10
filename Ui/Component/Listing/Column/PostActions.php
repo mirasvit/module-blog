@@ -1,4 +1,5 @@
 <?php
+
 namespace Mirasvit\Blog\Ui\Component\Listing\Column;
 
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
@@ -6,6 +7,7 @@ use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
 use Magento\Cms\Block\Adminhtml\Page\Grid\Renderer\Action\UrlBuilder;
 use Magento\Framework\UrlInterface;
+use Mirasvit\Blog\Api\Data\PostInterface;
 
 class PostActions extends Column
 {
@@ -28,15 +30,6 @@ class PostActions extends Column
      */
     private $editUrl;
 
-    /**
-     * @param ContextInterface   $context
-     * @param UiComponentFactory $uiComponentFactory
-     * @param UrlBuilder         $actionUrlBuilder
-     * @param UrlInterface       $urlBuilder
-     * @param array              $components
-     * @param array              $data
-     * @param string             $editUrl
-     */
     public function __construct(
         ContextInterface $context,
         UiComponentFactory $uiComponentFactory,
@@ -64,19 +57,21 @@ class PostActions extends Column
         if (isset($dataSource['data']['items'])) {
             foreach ($dataSource['data']['items'] as &$item) {
                 $name = $this->getData('name');
-                if (isset($item['entity_id'])) {
+                if (isset($item[PostInterface::ID])) {
                     $item[$name]['edit'] = [
-                        'href'  => $this->urlBuilder->getUrl($this->editUrl, ['id' => $item['entity_id']]),
-                        'label' => __('Edit')
+                        'href'  => $this->urlBuilder->getUrl($this->editUrl, [
+                            PostInterface::ID => $item[PostInterface::ID],
+                        ]),
+                        'label' => __('Edit'),
                     ];
                     $item[$name]['delete'] = [
                         'href'    => $this->urlBuilder->getUrl(
-                            self::POST_URL_PATH_DELETE, ['id' => $item['entity_id']]),
+                            self::POST_URL_PATH_DELETE, [PostInterface::ID => $item[PostInterface::ID]]),
                         'label'   => __('Delete'),
                         'confirm' => [
                             'title'   => __('Delete ${ $.$data.name }'),
-                            'message' => __('Are you sure you wan\'t to delete a ${ $.$data.name } record?')
-                        ]
+                            'message' => __('Are you sure you wan\'t to delete a ${ $.$data.name } record?'),
+                        ],
                     ];
                 }
             }

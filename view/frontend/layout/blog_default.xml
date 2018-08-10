@@ -5,22 +5,31 @@
         <attribute name="class" value="blog"/>
 
         <referenceContainer name="content">
-            <block name="blog.post.comments.count" class="Mirasvit\Blog\Block\Post\Meta" template="post/meta/js.phtml" after="-"/>
+            <block name="blog.post.comments.count" class="Mirasvit\Blog\Block\Post\Meta" template="post/meta/js.phtml"
+                   after="-"/>
         </referenceContainer>
 
-        <referenceBlock name="sidebar.additional" remove="true" />
+        <referenceBlock name="sidebar.additional" remove="true"/>
 
         <referenceContainer name="sidebar.main" htmlTag="div" htmlClass="blog__sidebar-main">
-            <block name="blog.sidebar.search" class="Mirasvit\Blog\Block\Sidebar\Search" template="sidebar/search.phtml" before="-"/>
+            <block name="blog.sidebar.search" class="Mirasvit\Blog\Block\Sidebar\Search" template="sidebar/search.phtml"
+                   before="-"/>
 
             <block class="Mirasvit\Blog\Block\Sidebar\CategoryTree" name="blog.sidebar.category.tree"
                    template="sidebar/category_tree.phtml"/>
 
-            <block class="Mirasvit\Blog\Block\Sidebar\Recent" name="blog.sidebar.recent" template="sidebar/recent.phtml"/>
+            <block class="Mirasvit\Blog\Block\Sidebar\Recent" name="blog.sidebar.recent"
+                   template="sidebar/recent.phtml"/>
 
-            <block class="Mirasvit\Blog\Block\Sidebar\TagCloud" name="blog.sidebar.tag.cloud" template="sidebar/tag_cloud.phtml"/>
+            <block class="Mirasvit\Blog\Block\Sidebar\TagCloud" name="blog.sidebar.tag.cloud"
+                   template="sidebar/tag_cloud.phtml"/>
 
             <block class="Mirasvit\Blog\Block\Category\Rss" name="blog.sidebar.rss" template="sidebar/rss.phtml"/>
+        </referenceContainer>
+
+        <referenceContainer name="content">
+            <block class="Magento\Framework\View\Element\Template" name="blog.right" after="-"
+                   template="Mirasvit_Blog::html/copyright.phtml"/>
         </referenceContainer>
     </body>
 </page>

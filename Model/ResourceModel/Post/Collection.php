@@ -1,7 +1,9 @@
 <?php
+
 namespace Mirasvit\Blog\Model\ResourceModel\Post;
 
 use Magento\Eav\Model\Entity\Collection\AbstractCollection;
+use Mirasvit\Blog\Api\Data\PostInterface;
 use Mirasvit\Blog\Model\Post;
 use Mirasvit\Blog\Model\Post\Attribute\Source\Status;
 
@@ -15,13 +17,22 @@ class Collection extends AbstractCollection
         $this->_init('Mirasvit\Blog\Model\Post', 'Mirasvit\Blog\Model\ResourceModel\Post');
     }
 
+    public function _afterLoad()
+    {
+        foreach ($this->_items as $item) {
+            $item->load($item->getId());
+        }
+
+        return parent::_afterLoad();
+    }
+
     /**
      * @return $this
      */
     public function addVisibilityFilter()
     {
-        $this->addAttributeToFilter('status', Status::STATUS_PUBLISHED);
-        $this->addFieldToFilter('type', \Mirasvit\Blog\Model\Post::TYPE_POST);
+        $this->addAttributeToFilter(PostInterface::STATUS, PostInterface::STATUS_PUBLISHED);
+        $this->addFieldToFilter(PostInterface::TYPE, PostInterface::TYPE_POST);
 
         return $this;
     }
@@ -113,7 +124,7 @@ class Collection extends AbstractCollection
         $this->addAttributeToFilter([
             ['attribute' => 'name', 'like' => $likeExpression],
             ['attribute' => 'content', 'like' => $likeExpression],
-            ['attribute' => 'short_content', 'like' => $likeExpression]
+            ['attribute' => 'short_content', 'like' => $likeExpression],
         ]);
 
         return $this;

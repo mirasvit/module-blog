@@ -11,39 +11,27 @@ use Magento\Framework\Registry;
 use Magento\Framework\Api\ExtensionAttributesFactory;
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\DataObject\IdentityInterface;
+use Mirasvit\Blog\Api\Data\CategoryInterface;
+use Mirasvit\Blog\Api\Data\PostInterface;
+use Mirasvit\Blog\Api\Data\TagInterface;
+use Mirasvit\Blog\Api\Repository\AuthorRepositoryInterface;
+use Mirasvit\Blog\Api\Repository\CategoryRepositoryInterface;
+use Mirasvit\Blog\Api\Repository\TagRepositoryInterface;
 use Mirasvit\Blog\Model\ResourceModel\Tag\CollectionFactory as TagCollectionFactory;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
 
 /**
- * @method string getName()
- * @method string getShortContent()
- * @method string getContent()
- * @method string getUrlKey()
- * @method string getMetaTitle()
- * @method string getMetaDescription()
- * @method string getMetaKeywords()
- * @method string getFeaturedImage()
- * @method string getFeaturedAlt()
  * @method string getFeaturedShowOnHome()
- * @method $this setFeaturedImage($image)
- * @method int getStatus()
- * @method string getCreatedAt()
- *
  * @method int getParentId()
  * @method $this setParentId($parent)
  *
- * @method string getType()
- * @method $this setType($type)
  * @method ResourceModel\Post getResource()
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
-class Post extends AbstractExtensibleModel implements IdentityInterface
+class Post extends AbstractExtensibleModel implements IdentityInterface, PostInterface
 {
     const ENTITY = 'blog_post';
     const CACHE_TAG = 'blog_post';
-
-    const TYPE_POST = 'post';
-    const TYPE_REVISION = 'revision';
 
     /**
      * @var MagentoImage
@@ -61,49 +49,29 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     protected $storeManager;
 
     /**
-     * @var CategoryFactory
+     * @var CategoryRepositoryInterface
      */
-    protected $categoryFactory;
+    private $categoryRepository;
 
     /**
-     * @var TagCollectionFactory
+     * @var TagRepositoryInterface
      */
-    protected $tagCollectionFactory;
+    private $tagRepository;
 
     /**
-     * @var ProductCollectionFactory
+     * @var AuthorRepositoryInterface
      */
-    protected $productCollectionFactory;
-
-    /**
-     * @var AuthorFactory
-     */
-    protected $authorFactory;
+    private $authorRepository;
 
     /**
      * @var Config
      */
     protected $config;
 
-    /**
-     * @param CategoryFactory            $postFactory
-     * @param TagCollectionFactory       $tagCollectionFactory
-     * @param ProductCollectionFactory   $productCollectionFactory
-     * @param AuthorFactory              $authorFactory
-     * @param Config                     $config
-     * @param Url                        $url
-     * @param StoreManagerInterface      $storeManager
-     * @param ImageFactory               $imageFactory
-     * @param Context                    $context
-     * @param Registry                   $registry
-     * @param ExtensionAttributesFactory $extensionFactory
-     * @param AttributeValueFactory      $customAttributeFactory
-     * @SuppressWarnings(PHPMD.ExcessiveParameterList)
-     */
     public function __construct(
-        CategoryFactory $postFactory,
-        TagCollectionFactory $tagCollectionFactory,
-        AuthorFactory $authorFactory,
+        CategoryRepositoryInterface $categoryRepository,
+        TagRepositoryInterface $tagRepository,
+        AuthorRepositoryInterface $authorRepository,
         ProductCollectionFactory $productCollectionFactory,
         Config $config,
         Url $url,
@@ -114,14 +82,14 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
         ExtensionAttributesFactory $extensionFactory,
         AttributeValueFactory $customAttributeFactory
     ) {
-        $this->categoryFactory          = $postFactory;
-        $this->tagCollectionFactory     = $tagCollectionFactory;
+        $this->categoryRepository = $categoryRepository;
+        $this->tagRepository = $tagRepository;
+        $this->authorRepository = $authorRepository;
         $this->productCollectionFactory = $productCollectionFactory;
-        $this->authorFactory            = $authorFactory;
-        $this->config                   = $config;
-        $this->url                      = $url;
-        $this->storeManager             = $storeManager;
-        $this->imageFactory             = $imageFactory;
+        $this->config = $config;
+        $this->url = $url;
+        $this->storeManager = $storeManager;
+        $this->imageFactory = $imageFactory;
 
         parent::__construct($context, $registry, $extensionFactory, $customAttributeFactory);
     }
@@ -143,69 +111,309 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     }
 
     /**
-     * Retrieve assigned category Ids
-     *
-     * @return array
+     * {@inheritdoc}
+     */
+    public function getType()
+    {
+        return $this->getData(self::TYPE);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setType($value)
+    {
+        return $this->setData(self::TYPE, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getStatus()
+    {
+        return $this->getData(self::STATUS);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setStatus($value)
+    {
+        return $this->setData(self::STATUS, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getAuthorId()
+    {
+        return $this->getData(self::AUTHOR_ID);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setAuthorId($value)
+    {
+        return $this->setData(self::AUTHOR_ID, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->getData(self::NAME);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setName($value)
+    {
+        return $this->setData(self::NAME, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getShortContent()
+    {
+        return $this->getData(self::SHORT_CONTENT);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setShortContent($value)
+    {
+        return $this->setData(self::SHORT_CONTENT, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getContent()
+    {
+        return $this->getData(self::CONTENT);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setContent($value)
+    {
+        return $this->setData(self::CONTENT, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUrlKey()
+    {
+        return $this->getData(self::URL_KEY);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUrlKey($value)
+    {
+        return $this->setData(self::URL_KEY, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMetaTitle()
+    {
+        return $this->getData(self::META_TITLE);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setMetaTitle($value)
+    {
+        return $this->setData(self::META_TITLE, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMetaDescription()
+    {
+        return $this->getData(self::META_DESCRIPTION);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setMetaDescription($value)
+    {
+        return $this->setData(self::META_DESCRIPTION, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getMetaKeywords()
+    {
+        return $this->getData(self::META_KEYWORDS);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setMetaKeywords($value)
+    {
+        return $this->setData(self::META_KEYWORDS, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFeaturedImage()
+    {
+        return $this->getData(self::FEATURED_IMAGE);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setFeaturedImage($value)
+    {
+        return $this->setData(self::FEATURED_IMAGE, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFeaturedAlt()
+    {
+        return $this->getData(self::FEATURED_ALT);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setFeaturedAlt($value)
+    {
+        return $this->setData(self::FEATURED_ALT, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCreatedAt()
+    {
+        return $this->getData(self::CREATED_AT);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setCreatedAt($value)
+    {
+        return $this->setData(self::CREATED_AT, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function isPinned()
+    {
+        return $this->getData(self::IS_PINNED);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setIsPinned($value)
+    {
+        return $this->setData(self::IS_PINNED, $value);
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function getCategoryIds()
     {
-        if (!$this->hasData('category_ids')) {
-            $ids = $this->getResource()->getCategoryIds($this);
-            $this->setData('category_ids', $ids);
-        }
-
-        return (array)$this->_getData('category_ids');
+        return $this->getData(self::CATEGORY_IDS);
     }
 
     /**
-     * Retrieve assigned store Ids
-     *
-     * @return array
+     * {@inheritdoc}
+     */
+    public function setCategoryIds(array $value)
+    {
+        return $this->setData(self::CATEGORY_IDS, $value);
+    }
+
+    /**
+     * {@inheritdoc}
      */
     public function getStoreIds()
     {
-        if (!$this->hasData('store_ids')) {
-            $ids = $this->getResource()->getStoreIds($this);
-            $this->setData('store_ids', $ids);
-        }
-        if (!$this->_getData('store_ids')) {
-            $this->setData('store_ids', [0]);
-        }
-
-        return (array)$this->_getData('store_ids');
+        return $this->getData(self::STORE_IDS);
     }
 
     /**
-     * Retrieve assigned product Ids
-     *
-     * @return array
+     * {@inheritdoc}
      */
-    public function getRelatedProductIds()
+    public function setStoreIds(array $value)
     {
-        if (!$this->hasData('product_ids')) {
-            $ids = $this->getResource()->getProductIds($this);
-            $this->setData('product_ids', $ids);
-        }
-
-        return (array)$this->_getData('product_ids');
+        return $this->setData(self::STORE_IDS, $value);
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Category|false
+     * {@inheritdoc}
      */
-    public function getCategory()
+    public function getTagIds()
     {
-        $ids = $this->getCategoryIds();
-        if (count($ids) == 0) {
-            return false;
-        }
-
-        $categoryId = reset($ids);
-        $category = $this->categoryFactory->create()->load($categoryId);
-
-        return $category;
+        return $this->getData(self::TAG_IDS);
     }
 
+    /**
+     * {@inheritdoc}
+     */
+    public function setTagIds(array $value)
+    {
+        return $this->setData(self::TAG_IDS, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getProductIds()
+    {
+        return $this->getData(self::PRODUCT_IDS);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setProductIds(array $value)
+    {
+        return $this->setData(self::PRODUCT_IDS, $value);
+    }
+
+    //    /**
+    //     * @return \Mirasvit\Blog\Model\Category|false
+    //     */
+    //    public function getCategory()
+    //    {
+    //        $ids = $this->getCategoryIds();
+    //        if (count($ids) == 0) {
+    //            return false;
+    //        }
+    //
+    //        $categoryId = reset($ids);
+    //        $category = $this->categoryFactory->create()->load($categoryId);
+    //
+    //        return $category;
+    //    }
+    //
     /**
      * @return ResourceModel\Category\Collection
      */
@@ -214,59 +422,11 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
         $ids = $this->getCategoryIds();
         $ids[] = 0;
 
-        $collection = $this->categoryFactory->create()->getCollection()
-            ->addAttributeToSelect(['name', 'url_key'])
-            ->addFieldToFilter('entity_id', $ids);
+        $collection = $this->categoryRepository->getCollection()
+            ->addAttributeToSelect(['*'])
+            ->addFieldToFilter(CategoryInterface::ID, $ids);
 
         return $collection;
-    }
-
-    /**
-     * @return \Magento\Store\Model\Store|false
-     */
-    public function getStore()
-    {
-        $ids = $this->getStoreIds();
-        if (count($ids) == 0) {
-            return false;
-        }
-
-        $storeId = reset($ids);
-        $store   = $this->storeManager->getStore($storeId);
-
-        return $store;
-    }
-
-    /**
-     * @param int $storeId
-     * @return bool
-     */
-    public function isStoreAllowed($storeId)
-    {
-        return in_array(0, $this->getStoreIds()) || in_array($storeId, $this->getStoreIds());
-    }
-
-    /**
-     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
-     */
-    public function getRelatedProducts()
-    {
-        $ids = $this->getRelatedProductIds();
-        $ids[] = 0;
-
-        $collection = $this->productCollectionFactory->create()
-            ->addAttributeToSelect('*')
-            ->addFieldToFilter('entity_id', $ids);
-
-        return $collection;
-    }
-
-    /**
-     * @return array
-     */
-    public function getTagIds()
-    {
-        return (array)$this->getResource()->getTagIds($this);
     }
 
     /**
@@ -277,25 +437,79 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
         $ids = $this->getTagIds();
         $ids[] = 0;
 
-        $collection = $this->tagCollectionFactory->create()
-            ->addFieldToFilter('tag_id', $ids);
+        $collection = $this->tagRepository->getCollection()
+            ->addFieldToFilter(TagInterface::ID, $ids);
 
         return $collection;
     }
+    //
+    //    /**
+    //     * @return \Magento\Store\Model\Store|false
+    //     */
+    //    public function getStore()
+    //    {
+    //        $ids = $this->getStoreIds();
+    //        if (count($ids) == 0) {
+    //            return false;
+    //        }
+    //
+    //        $storeId = reset($ids);
+    //        $store = $this->storeManager->getStore($storeId);
+    //
+    //        return $store;
+    //    }
 
-    /**
-     * @return Post
-     */
-    public function saveAsRevision()
+    //    /**
+    //     * @param int $storeId
+    //     * @return bool
+    //     */
+    //    public function isStoreAllowed($storeId)
+    //    {
+    //        return in_array(0, $this->getStoreIds()) || in_array($storeId, $this->getStoreIds());
+    //    }
+    //
+    //    /**
+    //     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
+    //     */
+    public function getRelatedProducts()
     {
-        $clone = clone $this;
-        $clone->setId('')
-            ->setParentId($this->getId())
-            ->setType(self::TYPE_REVISION)
-            ->save();
+        $ids = $this->getProductIds();
+        $ids[] = 0;
 
-        return $clone;
+        $collection = $this->productCollectionFactory->create()
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter('entity_id', $ids);
+
+        return $collection;
     }
+    //
+    //    /**
+    //     * @return ResourceModel\Tag\Collection
+    //     */
+    //    public function getTags()
+    //    {
+    //        $ids = $this->getTagIds();
+    //        $ids[] = 0;
+    //
+    //        $collection = $this->tagCollectionFactory->create()
+    //            ->addFieldToFilter('tag_id', $ids);
+    //
+    //        return $collection;
+    //    }
+
+    //    /**
+    //     * @return Post
+    //     */
+    //    public function saveAsRevision()
+    //    {
+    //        $clone = clone $this;
+    //        $clone->setId('')
+    //            ->setParentId($this->getId())
+    //            ->setType(self::TYPE_REVISION)
+    //            ->save();
+    //
+    //        return $clone;
+    //    }
 
     /**
      * @param bool $useSid
@@ -312,7 +526,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     public function getAuthor()
     {
         if (!$this->hasData('author')) {
-            $this->setData('author', $this->authorFactory->create()->load($this->getAuthorId()));
+            $this->setData('author', $this->authorRepository->get($this->getAuthorId()));
         }
 
         return $this->getData('author');
@@ -325,40 +539,40 @@ class Post extends AbstractExtensibleModel implements IdentityInterface
     {
         return $this->config->getMediaUrl($this->getFeaturedImage());
     }
-
-    /**
-     * @param int $width
-     * @param int $height
-     * @return string
-     */
-    public function getWidgetFeaturedImageUrl($width = 0, $height = 0)
-    {
-        $dirname = '';
-        if ($width && $height && $this->getFeaturedImage()) {
-            $dirname   = $width . 'x' . $height . DIRECTORY_SEPARATOR;
-            $filename  = $this->config->getWidgetMediaPath($dirname) . $this->getFeaturedImage();
-            $processor = $this->getImageProcessor();
-            $processor->resize($width, $height);
-            $processor->save($filename);
-        }
-
-        return $this->config->getMediaUrl($dirname . $this->getFeaturedImage());
-    }
-
-    /**
-     * @return MagentoImage
-     */
-    protected function getImageProcessor()
-    {
-        if (!$this->_processor) {
-            $filename = $this->config->getMediaPath() . DIRECTORY_SEPARATOR . $this->getFeaturedImage();
-            $this->_processor = $this->imageFactory->create($filename);
-        }
-        $this->_processor->keepAspectRatio(true);
-        $this->_processor->keepFrame(false);
-        $this->_processor->keepTransparency(true);
-        $this->_processor->constrainOnly(true);
-
-        return $this->_processor;
-    }
+    //
+    //    /**
+    //     * @param int $width
+    //     * @param int $height
+    //     * @return string
+    //     */
+    //    public function getWidgetFeaturedImageUrl($width = 0, $height = 0)
+    //    {
+    //        $dirname = '';
+    //        if ($width && $height && $this->getFeaturedImage()) {
+    //            $dirname = $width . 'x' . $height . DIRECTORY_SEPARATOR;
+    //            $filename = $this->config->getWidgetMediaPath($dirname) . $this->getFeaturedImage();
+    //            $processor = $this->getImageProcessor();
+    //            $processor->resize($width, $height);
+    //            $processor->save($filename);
+    //        }
+    //
+    //        return $this->config->getMediaUrl($dirname . $this->getFeaturedImage());
+    //    }
+    //
+    //    /**
+    //     * @return MagentoImage
+    //     */
+    //    protected function getImageProcessor()
+    //    {
+    //        if (!$this->_processor) {
+    //            $filename = $this->config->getMediaPath() . DIRECTORY_SEPARATOR . $this->getFeaturedImage();
+    //            $this->_processor = $this->imageFactory->create($filename);
+    //        }
+    //        $this->_processor->keepAspectRatio(true);
+    //        $this->_processor->keepFrame(false);
+    //        $this->_processor->keepTransparency(true);
+    //        $this->_processor->constrainOnly(true);
+    //
+    //        return $this->_processor;
+    //    }
 }

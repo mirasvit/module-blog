@@ -1,0 +1,20 @@
+.blog__post-grid-actions {
+    white-space: nowrap;
+
+    span {
+        &:after {
+            content: ' | ';
+            margin-left: 1rem;
+            margin-right: 1rem;
+            display: inline-block;
+            color: #ddd;
+        }
+
+        &:last-child {
+            &:after {
+                content: '';
+                margin: 0;
+            }
+        }
+    }
+}

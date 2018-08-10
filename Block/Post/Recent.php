@@ -32,9 +32,9 @@ class Recent extends Template implements BlockInterface
 
     /**
      * @param PostCollectionFactory $postCollectionFactory
-     * @param Registry              $registry
-     * @param Context               $context
-     * @param array                 $data
+     * @param Registry $registry
+     * @param Context $context
+     * @param array $data
      */
     public function __construct(
         PostCollectionFactory $postCollectionFactory,
@@ -43,8 +43,8 @@ class Recent extends Template implements BlockInterface
         array $data = []
     ) {
         $this->postCollectionFactory = $postCollectionFactory;
-        $this->registry              = $registry;
-        $this->context               = $context;
+        $this->registry = $registry;
+        $this->context = $context;
 
         parent::__construct($context, $data);
     }
@@ -58,9 +58,9 @@ class Recent extends Template implements BlockInterface
             ->addVisibilityFilter()
             ->addStoreFilter($this->context->getStoreManager()->getStore()->getId())
             ->addAttributeToSelect([
-		'name', 'featured_image', 'featured_alt', 'featured_show_on_home',
-		'short_content', 'content', 'url_key'
-		])
+                'name', 'featured_image', 'featured_alt', 'featured_show_on_home',
+                'short_content', 'content', 'url_key',
+            ])
             ->setOrder('created_at', 'desc');
     }
 

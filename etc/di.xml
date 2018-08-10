@@ -1,11 +1,18 @@
 <?xml version="1.0"?>
-<!--
-/**
- * Copyright © 2015 Magento. All rights reserved.
- * See COPYING.txt for license details.
- */
--->
-<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+
+    <!--DATA-->
+    <preference for="Mirasvit\Blog\Api\Data\PostInterface" type="Mirasvit\Blog\Model\Post"/>
+    <preference for="Mirasvit\Blog\Api\Data\CategoryInterface" type="Mirasvit\Blog\Model\Category"/>
+    <preference for="Mirasvit\Blog\Api\Data\TagInterface" type="Mirasvit\Blog\Model\Tag"/>
+
+    <!--REPOSITORY-->
+    <preference for="Mirasvit\Blog\Api\Repository\PostRepositoryInterface" type="Mirasvit\Blog\Repository\PostRepository"/>
+    <preference for="Mirasvit\Blog\Api\Repository\CategoryRepositoryInterface" type="Mirasvit\Blog\Repository\CategoryRepository"/>
+    <preference for="Mirasvit\Blog\Api\Repository\TagRepositoryInterface" type="Mirasvit\Blog\Repository\TagRepository"/>
+    <preference for="Mirasvit\Blog\Api\Repository\AuthorRepositoryInterface" type="Mirasvit\Blog\Repository\AuthorRepository"/>
+
     <type name="Magento\Framework\View\Element\UiComponent\DataProvider\CollectionFactory">
         <arguments>
             <argument name="collections" xsi:type="array">

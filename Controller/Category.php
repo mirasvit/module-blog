@@ -6,6 +6,7 @@ use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
 use Magento\Customer\Model\Session;
+use Mirasvit\Blog\Api\Data\CategoryInterface;
 use Mirasvit\Blog\Model\CategoryFactory;
 use Magento\Framework\Registry;
 
@@ -21,11 +22,6 @@ abstract class Category extends Action
      */
     protected $registry;
 
-    /**
-     * @param CategoryFactory $authorFactory
-     * @param Registry        $registry
-     * @param Context         $context
-     */
     public function __construct(
         CategoryFactory $authorFactory,
         Registry $registry,
@@ -44,7 +40,7 @@ abstract class Category extends Action
      */
     protected function initCategory()
     {
-        if ($id = $this->getRequest()->getParam('id')) {
+        if ($id = $this->getRequest()->getParam(CategoryInterface::ID)) {
             $post = $this->categoryFactory->create()->load($id);
             if ($post->getId() > 0) {
                 $this->registry->register('current_blog_category', $post);

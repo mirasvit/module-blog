@@ -1,9 +1,11 @@
 <?php
+
 namespace Mirasvit\Blog\Model\ResourceModel;
 
 use Magento\Framework\DataObject;
 use Magento\Eav\Model\Entity\AbstractEntity;
 use Magento\Eav\Model\Entity\Context;
+use Mirasvit\Blog\Api\Data\PostInterface;
 use Mirasvit\Blog\Model\Config;
 use Magento\Framework\Filter\FilterManager;
 use Mirasvit\Blog\Model\TagFactory as TagModelFactory;
@@ -26,13 +28,6 @@ class Post extends AbstractEntity
      */
     protected $tagFactory;
 
-    /**
-     * @param Config          $config
-     * @param TagModelFactory $tagFactory
-     * @param FilterManager   $filter
-     * @param Context         $context
-     * @param array           $data
-     */
     public function __construct(
         Config $config,
         TagModelFactory $tagFactory,
@@ -59,11 +54,37 @@ class Post extends AbstractEntity
         return parent::getEntityType();
     }
 
+    protected function _afterLoad(DataObject $post)
+    {
+        /** @var PostInterface $post */
+
+        $post->setCategoryIds($this->getCategoryIds($post));
+        $post->setStoreIds($this->getStoreIds($post));
+        $post->setTagIds($this->getTagIds($post));
+        $post->setProductIds($this->getProductIds($post));
+
+        return parent::_afterLoad($post);
+    }
+
     /**
-     * @param \Mirasvit\Blog\Model\Post $post
+     * {@inheritdoc}
+     */
+    protected function _afterSave(DataObject $post)
+    {
+        /** @var PostInterface $post */
+        $this->saveCategoryIds($post);
+        $this->saveStoreIds($post);
+        $this->saveTagIds($post);
+        $this->saveProductIds($post);
+
+        return parent::_afterSave($post);
+    }
+
+    /**
+     * @param PostInterface $model
      * @return array
      */
-    public function getCategoryIds($post)
+    private function getCategoryIds(PostInterface $model)
     {
         $connection = $this->getConnection();
 
@@ -72,172 +93,32 @@ class Post extends AbstractEntity
             'category_id'
         )->where(
             'post_id = ?',
-            (int)$post->getId()
+            (int)$model->getId()
         );
 
         return $connection->fetchCol($select);
     }
 
     /**
-     * @param \Mirasvit\Blog\Model\Post $post
-     * @return array
-     */
-    public function getStoreIds($post)
-    {
-        $connection = $this->getConnection();
-
-        $select = $connection->select()->from(
-            $this->getTable('mst_blog_store_post'),
-            'store_id'
-        )->where(
-            'post_id = ?',
-            (int)$post->getId()
-        );
-
-        return $connection->fetchCol($select);
-    }
-
-    /**
-     * @param \Mirasvit\Blog\Model\Post $post
-     * @return array
-     */
-    public function getTagIds($post)
-    {
-        $connection = $this->getConnection();
-
-        $select = $connection->select()->from(
-            $this->getTable('mst_blog_tag_post'),
-            'tag_id'
-        )->where(
-            'post_id = ?',
-            (int)$post->getId()
-        );
-
-        return $connection->fetchCol($select);
-    }
-
-    /**
-     * @param \Mirasvit\Blog\Model\Post $post
-     * @return array
-     */
-    public function getProductIds($post)
-    {
-        $connection = $this->getConnection();
-
-        $select = $connection->select()->from(
-            $this->getTable('mst_blog_post_product'),
-            'product_id'
-        )->where(
-            'post_id = ?',
-            (int)$post->getId()
-        );
-
-        return $connection->fetchCol($select);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function _beforeSave(DataObject $post)
-    {
-        /** @var \Mirasvit\Blog\Model\Post $post */
-
-        if (!$post->hasData('type')) {
-            $post->setData('type', \Mirasvit\Blog\Model\Post::TYPE_POST);
-        }
-
-        if (!$post->getData('url_key')) {
-            $post->setData('url_key', $this->filter->translitUrl($post->getName()));
-        }
-
-        $this->saveImage($post);
-
-        return parent::_beforeSave($post);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function _afterSave(DataObject $post)
-    {
-        /** @var \Mirasvit\Blog\Model\Post $post */
-        $this->saveCategories($post);
-        $this->saveStores($post);
-        $this->saveTags($post);
-        $this->saveProducts($post);
-
-        return parent::_afterSave($post);
-    }
-
-    /**
-     * @param \Mirasvit\Blog\Model\Post $post
+     * @param PostInterface $model
      * @return $this
      */
-    protected function saveProducts($post)
+    private function saveCategoryIds(PostInterface $model)
     {
-        $table = $this->getTable('mst_blog_post_product');
-
-        if (!$post->hasProductIds()) {
-            return $this;
-        }
-
-        $productIds = $post->getProductIds();
-
-        $oldProductIds = $this->getProductIds($post);
-
-        $insert = array_diff($productIds, $oldProductIds);
-        $delete = array_diff($oldProductIds, $productIds);
-
         $connection = $this->getConnection();
-        if (!empty($insert)) {
-            $data = [];
-            foreach ($insert as $productId) {
-                if (empty($productId)) {
-                    continue;
-                }
-                $data[] = [
-                    'product_id' => (int)$productId,
-                    'post_id'    => (int)$post->getId()
-                ];
-            }
 
-            if ($data) {
-                $connection->insertMultiple($table, $data);
-            }
-        }
-
-        if (!empty($delete)) {
-            foreach ($delete as $productId) {
-                $where = ['post_id = ?' => (int)$post->getId(), 'product_id = ?' => (int)$productId];
-                $connection->delete($table, $where);
-            }
-        }
-
-        return $this;
-    }
-
-    /**
-     * @param \Mirasvit\Blog\Model\Post $post
-     * @return $this
-     */
-    protected function saveCategories($post)
-    {
         $table = $this->getTable('mst_blog_category_post');
 
-        /**
-         * If category ids data is not declared we haven't do manipulations
-         */
-        if (!$post->hasCategoryIds()) {
+        if (!$model->getCategoryIds()) {
             return $this;
         }
 
-        $categoryIds = $post->getCategoryIds();
-        $oldCategoryIds = $this->getCategoryIds($post);
+        $categoryIds = $model->getCategoryIds();
+        $oldCategoryIds = $this->getCategoryIds($model);
 
         $insert = array_diff($categoryIds, $oldCategoryIds);
         $delete = array_diff($oldCategoryIds, $categoryIds);
 
-        $connection = $this->getConnection();
         if (!empty($insert)) {
             $data = [];
             foreach ($insert as $categoryId) {
@@ -246,7 +127,7 @@ class Post extends AbstractEntity
                 }
                 $data[] = [
                     'category_id' => (int)$categoryId,
-                    'post_id'     => (int)$post->getId()
+                    'post_id'     => (int)$model->getId(),
                 ];
             }
 
@@ -257,7 +138,7 @@ class Post extends AbstractEntity
 
         if (!empty($delete)) {
             foreach ($delete as $categoryId) {
-                $where = ['post_id = ?' => (int)$post->getId(), 'category_id = ?' => (int)$categoryId];
+                $where = ['post_id = ?' => (int)$model->getId(), 'category_id = ?' => (int)$categoryId];
                 $connection->delete($table, $where);
             }
         }
@@ -266,27 +147,47 @@ class Post extends AbstractEntity
     }
 
     /**
-     * @param \Mirasvit\Blog\Model\Post $post
+     * @param PostInterface $model
+     * @return array
+     */
+    private function getStoreIds(PostInterface $model)
+    {
+        $connection = $this->getConnection();
+
+        $select = $connection->select()->from(
+            $this->getTable('mst_blog_store_post'),
+            'store_id'
+        )->where(
+            'post_id = ?',
+            (int)$model->getId()
+        );
+
+        return $connection->fetchCol($select);
+    }
+
+    /**
+     * @param PostInterface $model
      * @return $this
      */
-    protected function saveStores($post)
+    private function saveStoreIds(PostInterface $model)
     {
+        $connection = $this->getConnection();
+
         $table = $this->getTable('mst_blog_store_post');
 
         /**
          * If store ids data is not declared we haven't do manipulations
          */
-        if (!$post->hasStoreIds()) {
+        if (!$model->getStoreIds()) {
             return $this;
         }
 
-        $storeIds    = $post->getStoreIds();
-        $oldStoreIds = $this->getStoreIds($post);
+        $storeIds = $model->getStoreIds();
+        $oldStoreIds = $this->getStoreIds($model);
 
         $insert = array_diff($storeIds, $oldStoreIds);
         $delete = array_diff($oldStoreIds, $storeIds);
 
-        $connection = $this->getConnection();
         if (!empty($insert)) {
             $data = [];
             foreach ($insert as $storeId) {
@@ -295,7 +196,7 @@ class Post extends AbstractEntity
                 }
                 $data[] = [
                     'store_id' => (int)$storeId,
-                    'post_id'  => (int)$post->getId()
+                    'post_id'  => (int)$model->getId(),
                 ];
             }
 
@@ -306,7 +207,7 @@ class Post extends AbstractEntity
 
         if (!empty($delete)) {
             foreach ($delete as $storeId) {
-                $where = ['post_id = ?' => (int)$post->getId(), 'store_id = ?' => (int)$storeId];
+                $where = ['post_id = ?' => (int)$model->getId(), 'store_id = ?' => (int)$storeId];
                 $connection->delete($table, $where);
             }
         }
@@ -315,32 +216,43 @@ class Post extends AbstractEntity
     }
 
     /**
-     * @param \Mirasvit\Blog\Model\Post $post
+     * @param PostInterface $model
+     * @return array
+     */
+    private function getTagIds(PostInterface $model)
+    {
+        $connection = $this->getConnection();
+        $select = $connection->select()->from(
+            $this->getTable('mst_blog_tag_post'),
+            'tag_id'
+        )->where(
+            'post_id = ?',
+            (int)$model->getId()
+        );
+
+        return $connection->fetchCol($select);
+    }
+
+    /**
+     * @param PostInterface $model
      * @return $this
      */
-    protected function saveTags($post)
+    private function saveTagIds(PostInterface $model)
     {
+        $connection = $this->getConnection();
+
         $table = $this->getTable('mst_blog_tag_post');
 
-        if (!$post->hasTagNames()) {
+        if (!$model->getTagIds()) {
             return $this;
         }
 
-        $oldTagIds = $post->getTagIds();
-        $tagIds = [];
-
-        foreach ($post->getTagNames() as $tag) {
-            $tagIds[] = $this->tagFactory->create()
-                ->getOrCreate($tag)
-                ->getId();
-        }
-
-        $tagIds = array_unique($tagIds);
+        $tagIds = $model->getTagIds();
+        $oldTagIds = $this->getTagIds($model);
 
         $insert = array_diff($tagIds, $oldTagIds);
         $delete = array_diff($oldTagIds, $tagIds);
 
-        $connection = $this->getConnection();
         if (!empty($insert)) {
             $data = [];
             foreach ($insert as $tagId) {
@@ -349,7 +261,7 @@ class Post extends AbstractEntity
                 }
                 $data[] = [
                     'tag_id'  => (int)$tagId,
-                    'post_id' => (int)$post->getId()
+                    'post_id' => (int)$model->getId(),
                 ];
             }
 
@@ -360,7 +272,7 @@ class Post extends AbstractEntity
 
         if (!empty($delete)) {
             foreach ($delete as $tagId) {
-                $where = ['post_id = ?' => (int)$post->getId(), 'tag_id = ?' => (int)$tagId];
+                $where = ['post_id = ?' => (int)$model->getId(), 'tag_id = ?' => (int)$tagId];
                 $connection->delete($table, $where);
             }
         }
@@ -369,62 +281,69 @@ class Post extends AbstractEntity
     }
 
     /**
-     * @param \Mirasvit\Blog\Model\Post $post
-     * @return $this
-     * @throws \Exception
+     * @param PostInterface $model
+     * @return array
      */
-    protected function saveImage($post)
+    private function getProductIds(PostInterface $model)
     {
-        if (!isset($_FILES['featured_image']) || !$_FILES['featured_image']['name']) {
+        $connection = $this->getConnection();
+
+        $select = $connection->select()->from(
+            $this->getTable('mst_blog_post_product'),
+            'product_id'
+        )->where(
+            'post_id = ?',
+            (int)$model->getId()
+        );
+
+        return $connection->fetchCol($select);
+    }
+
+    /**
+     * @param PostInterface $model
+     * @return $this
+     */
+    private function saveProductIds(PostInterface $model)
+    {
+        $connection = $this->getConnection();
+
+        $table = $this->getTable('mage_mst_blog_post_product');
+
+        if (!$model->getProductIds()) {
             return $this;
         }
 
-        $image = $_FILES['featured_image'];
+        $productIds = $model->getProductIds();
+        $oldProductIds = $this->getProductIds($model);
 
-        $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
-        $name = pathinfo($image['name'], PATHINFO_FILENAME);
-        $oldFileName = $post->getFeaturedImage();
-        $newFileName = $name . '-' . $post->getId() . '.' . $ext;
+        $insert = array_diff($productIds, $oldProductIds);
+        $delete = array_diff($oldProductIds, $productIds);
 
-        $allowedFileExtensions = ['png', 'jpeg', 'jpg', 'gif'];
-        $ext = pathinfo($image['name'], PATHINFO_EXTENSION);
+        if (!empty($insert)) {
+            $data = [];
+            foreach ($insert as $productId) {
+                if (empty($productId)) {
+                    continue;
+                }
+                $data[] = [
+                    'product_id' => (int)$productId,
+                    'post_id'    => (int)$model->getId(),
+                ];
+            }
 
-        if (!in_array($ext, $allowedFileExtensions)) {
-            throw new \Exception(
-                __('File type not allowed (only JPG, JPEG, PNG & GIF files are allowed)')
-            );
+            if ($data) {
+                $connection->insertMultiple($table, $data);
+            }
         }
 
-        $uploader = new FileUploader($_FILES['featured_image']);
-        $uploader->setAllowedExtensions($allowedFileExtensions)
-            ->setAllowRenameFiles(false)
-            ->setFilesDispersion(false)
-            ->setAllowCreateFolders(true)
-            ->setAllowRenameFiles(false)
-            ->setFilesDispersion(false);
-        $result = $uploader->save($this->config->getMediaPath(), $newFileName);
-        $newFileName = $result['file'];
-
-        $post->setFeaturedImage($newFileName);
-
-        if ($newFileName != $oldFileName) {
-            $this->deleteImage($oldFileName);
+        if (!empty($delete)) {
+            foreach ($delete as $productId) {
+                $where = ['post_id = ?' => (int)$model->getId(), 'product_id = ?' => (int)$productId];
+                $connection->delete($table, $where);
+            }
         }
 
         return $this;
     }
 
-    /**
-     * @param string $fileName
-     * @return void
-     */
-    private function deleteImage($fileName)
-    {
-        $path = $this->config->getMediaPath();
-        if ($fileName && file_exists($path . '/' . $fileName)) {
-            unlink($path . '/' . $fileName);
-        }
-
-        return;
-    }
 }

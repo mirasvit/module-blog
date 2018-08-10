@@ -6,14 +6,9 @@ use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;
+use Mirasvit\Blog\Api\Data\TagInterface;
 
-/**
- * @method string getName()
- * @method $this setName($name)
- *
- * @method string getUrlKey()
- */
-class Tag extends AbstractModel implements IdentityInterface, UrlInterface
+class Tag extends AbstractModel implements IdentityInterface, UrlInterface, TagInterface
 {
     const CACHE_TAG = 'blog_tag';
 
@@ -23,8 +18,8 @@ class Tag extends AbstractModel implements IdentityInterface, UrlInterface
     protected $url;
 
     /**
-     * @param Url      $url
-     * @param Context  $context
+     * @param Url $url
+     * @param Context $context
      * @param Registry $registry
      */
     public function __construct(
@@ -56,21 +51,53 @@ class Tag extends AbstractModel implements IdentityInterface, UrlInterface
     }
 
     /**
-     * @param string $tag
-     * @return $this
+     * {@inheritdoc}
      */
-    public function getOrCreate($tag)
+    public function setName($value)
     {
-        $tag = trim($tag);
-        $this->load($tag, 'name');
-
-        if (!$this->getId()) {
-            $this->setName($tag)
-                ->save();
-        }
-
-        return $this;
+        return $this->setData(self::NAME, $value);
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getName()
+    {
+        return $this->getData(self::NAME);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function setUrlKey($value)
+    {
+        return $this->setData(self::URL_KEY, $value);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getUrlKey()
+    {
+        return $this->getData(self::URL_KEY);
+    }
+
+    //    /**
+    //     * @param string $tag
+    //     * @return $this
+    //     */
+    //    public function getOrCreate($tag)
+    //    {
+    //        $tag = trim($tag);
+    //        $this->load($tag, 'name');
+    //
+    //        if (!$this->getId()) {
+    //            $this->setName($tag)
+    //                ->save();
+    //        }
+    //
+    //        return $this;
+    //    }
 
     /**
      * @param array $urlParams

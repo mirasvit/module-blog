@@ -7,18 +7,20 @@ $post = $block->getPost();
 ?>
 
 <footer class="blog__post-footer">
-        <span class="blog__post-footer-categories">
+    <span class="blog__post-footer-categories">
             <i class="fa fa-fw fa-folder-open"></i>
-            <?php foreach ($post->getCategories() as $category): ?>
-                <a href="<?= $category->getUrl() ?>" rel="category tag"><?= $category->getName() ?></a>
-            <?php endforeach ?>
-        </span>
+        <?php foreach ($post->getCategories() as $category): ?>
+            <a href="<?= $category->getUrl() ?>" rel="category tag"><?= $category->getName() ?></a>
+        <?php endforeach ?>
+    </span>
+
     <?php if ($post->getTags()->count()): ?>
         <span class="blog__post-footer-tags">
-                <i class="fa fa-fw fa-tags"></i>
+            <i class="fa fa-fw fa-tags"></i>
+
             <?php foreach ($post->getTags() as $tag): ?>
                 <a href="<?= $tag->getUrl() ?>" rel="tag"><?= $tag->getName() ?></a>
             <?php endforeach ?>
-            </span>
+        </span>
     <?php endif ?>
 </footer>

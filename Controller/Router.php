@@ -1,4 +1,5 @@
 <?php
+
 namespace Mirasvit\Blog\Controller;
 
 use Magento\Framework\App\ActionFactory;
@@ -14,23 +15,18 @@ class Router implements RouterInterface
     /**
      * @var ActionFactory
      */
-    protected $actionFactory;
+    private $actionFactory;
 
     /**
      * @var EventManagerInterface
      */
-    protected $eventManager;
+    private $eventManager;
 
     /**
      * @var Url
      */
-    protected $url;
+    private $url;
 
-    /**
-     * @param Url                   $url
-     * @param ActionFactory         $actionFactory
-     * @param EventManagerInterface $eventManager
-     */
     public function __construct(
         Url $url,
         ActionFactory $actionFactory,
@@ -51,7 +47,7 @@ class Router implements RouterInterface
         $identifier = trim($request->getPathInfo(), '/');
         $this->eventManager->dispatch('core_controller_router_match_before', [
             'router'    => $this,
-            'condition' => new DataObject(['identifier' => $identifier, 'continue' => true])
+            'condition' => new DataObject(['identifier' => $identifier, 'continue' => true]),
         ]);
 
         $pathInfo = $request->getPathInfo();

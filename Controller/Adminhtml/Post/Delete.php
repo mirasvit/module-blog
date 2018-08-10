@@ -2,6 +2,7 @@
 
 namespace Mirasvit\Blog\Controller\Adminhtml\Post;
 
+use Mirasvit\Blog\Api\Data\PostInterface;
 use Mirasvit\Blog\Controller\Adminhtml\Post;
 
 class Delete extends Post
@@ -17,17 +18,17 @@ class Delete extends Post
 
         if ($model->getId()) {
             try {
-                $model->delete();
+                $this->postRepository->delete($model);
 
-                $this->messageManager->addSuccess(__('The post has been deleted.'));
+                $this->messageManager->addSuccessMessage(__('The post has been deleted.'));
 
                 return $resultRedirect->setPath('*/*/');
             } catch (\Exception $e) {
-                $this->messageManager->addError($e->getMessage());
-                return $resultRedirect->setPath('*/*/edit', ['id' => $model->getId()]);
+                $this->messageManager->addErrorMessage($e->getMessage());
+                return $resultRedirect->setPath('*/*/edit', [PostInterface::ID => $model->getId()]);
             }
         } else {
-            $this->messageManager->addError(__('This post no longer exists.'));
+            $this->messageManager->addErrorMessage(__('This post no longer exists.'));
 
             return $resultRedirect->setPath('*/*/');
         }

@@ -1,10 +1,13 @@
 <?php
+
 namespace Mirasvit\Blog\Model;
 
 use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\UrlInterface as MagentoUrlInterface;
 use Magento\Framework\DataObject;
+use Mirasvit\Blog\Api\Data\CategoryInterface;
+use Mirasvit\Blog\Api\Data\PostInterface;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -48,13 +51,13 @@ class Url
 
     /**
      * @param StoreManagerInterface $storeManager
-     * @param Config                $config
-     * @param ScopeConfigInterface  $scopeConfig
-     * @param PostFactory           $postFactory
-     * @param CategoryFactory       $categoryFactory
-     * @param TagFactory            $tagFactory
-     * @param AuthorFactory         $authorFactory
-     * @param MagentoUrlInterface   $urlManager
+     * @param Config $config
+     * @param ScopeConfigInterface $scopeConfig
+     * @param PostFactory $postFactory
+     * @param CategoryFactory $categoryFactory
+     * @param TagFactory $tagFactory
+     * @param AuthorFactory $authorFactory
+     * @param MagentoUrlInterface $urlManager
      */
     public function __construct(
         StoreManagerInterface $storeManager,
@@ -66,14 +69,14 @@ class Url
         AuthorFactory $authorFactory,
         MagentoUrlInterface $urlManager
     ) {
-        $this->storeManager    = $storeManager;
-        $this->config          = $config;
-        $this->scopeConfig     = $scopeConfig;
-        $this->postFactory     = $postFactory;
+        $this->storeManager = $storeManager;
+        $this->config = $config;
+        $this->scopeConfig = $scopeConfig;
+        $this->postFactory = $postFactory;
         $this->categoryFactory = $categoryFactory;
-        $this->tagFactory      = $tagFactory;
-        $this->authorFactory   = $authorFactory;
-        $this->urlManager      = $urlManager;
+        $this->tagFactory = $tagFactory;
+        $this->authorFactory = $authorFactory;
+        $this->urlManager = $urlManager;
     }
 
     /**
@@ -96,7 +99,7 @@ class Url
 
     /**
      * @param Category $category
-     * @param array    $urlParams
+     * @param array $urlParams
      * @return string
      */
     public function getCategoryUrl($category, $urlParams = [])
@@ -118,7 +121,7 @@ class Url
     }
 
     /**
-     * @param Tag   $tag
+     * @param Tag $tag
      * @param array $urlParams
      * @return string
      */
@@ -129,7 +132,7 @@ class Url
 
     /**
      * @param Author $author
-     * @param array  $urlParams
+     * @param array $urlParams
      * @return string
      */
     public function getAuthorUrl($author, $urlParams = [])
@@ -149,7 +152,7 @@ class Url
     /**
      * @param string $route
      * @param string $type
-     * @param array  $urlParams
+     * @param array $urlParams
      * @return string
      */
     protected function getUrl($route, $type, $urlParams = [])
@@ -272,7 +275,7 @@ class Url
                     'module_name'     => 'blog',
                     'controller_name' => 'category',
                     'action_name'     => 'rss',
-                    'params'          => ['id' => $category->getId()],
+                    'params'          => [CategoryInterface::ID => $category->getId()],
                 ]);
             } else {
                 return false;
@@ -297,7 +300,7 @@ class Url
                 'module_name'     => 'blog',
                 'controller_name' => 'post',
                 'action_name'     => 'view',
-                'params'          => ['id' => $post->getId()],
+                'params'          => [PostInterface::ID => $post->getId()],
             ]);
         }
 
@@ -310,7 +313,7 @@ class Url
                 'module_name'     => 'blog',
                 'controller_name' => 'category',
                 'action_name'     => 'view',
-                'params'          => ['id' => $category->getId()],
+                'params'          => [CategoryInterface::ID => $category->getId()],
             ]);
         }
 

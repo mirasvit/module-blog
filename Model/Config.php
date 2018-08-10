@@ -33,10 +33,10 @@ class Config
     protected $urlManager;
 
     /**
-     * @param ScopeConfigInterface  $scopeConfig
+     * @param ScopeConfigInterface $scopeConfig
      * @param StoreManagerInterface $storeManager
-     * @param Filesystem            $filesystem
-     * @param MagentoUrlInterface   $urlManager
+     * @param Filesystem $filesystem
+     * @param MagentoUrlInterface $urlManager
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
@@ -44,10 +44,10 @@ class Config
         Filesystem $filesystem,
         MagentoUrlInterface $urlManager
     ) {
-        $this->scopeConfig  = $scopeConfig;
+        $this->scopeConfig = $scopeConfig;
         $this->storeManager = $storeManager;
-        $this->filesystem   = $filesystem;
-        $this->urlManager   = $urlManager;
+        $this->filesystem = $filesystem;
+        $this->urlManager = $urlManager;
     }
 
     /**
@@ -225,7 +225,7 @@ class Config
     /**
      * @return string
      */
-    public function getMediaPath()
+    public function getMediaPath($image)
     {
         $path = $this->filesystem
                 ->getDirectoryRead(DirectoryList::MEDIA)
@@ -237,7 +237,7 @@ class Config
                 ->create($path);
         }
 
-        return $path;
+        return $path . '/' . $image;
     }
 
     /**
