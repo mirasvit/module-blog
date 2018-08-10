@@ -17,12 +17,10 @@ class Save extends Post
      * @var TagRepositoryInterface
      */
     private $tagRepository;
-
     /**
      * @var JsonFactory
      */
     private $jsonFactory;
-
 
     public function __construct(
         TagRepositoryInterface $tagRepository,
@@ -33,7 +31,6 @@ class Save extends Post
     ) {
         $this->tagRepository = $tagRepository;
         $this->jsonFactory = $jsonFactory;
-
         parent::__construct($postRepository, $registry, $context);
     }
 
@@ -44,38 +41,28 @@ class Save extends Post
     {
         $id = $this->getRequest()->getParam(PostInterface::ID);
         $resultRedirect = $this->resultRedirectFactory->create();
-
         $data = $this->filterPostData($this->getRequest()->getParams());
-
         if ($data) {
             /** @var \Mirasvit\Blog\Model\Post $model */
             $model = $this->initModel();
-
             if (!$model->getId() && $id) {
                 $this->messageManager->addErrorMessage(__('This post no longer exists.'));
-
                 return $resultRedirect->setPath('*/*/');
             }
-
             $model->addData($data);
-
             try {
                 if ($this->getRequest()->getParam('isAjax')) {
                     return $this->handlePreviewRequest($model);
                 } else {
                     $this->postRepository->save($model);
-
                     $this->messageManager->addSuccessMessage(__('You saved the post.'));
-
                     if ($this->getRequest()->getParam('back') == 'edit') {
                         return $resultRedirect->setPath('*/*/edit', [PostInterface::ID => $model->getId()]);
                     }
-
                     return $this->context->getResultRedirectFactory()->create()->setPath('*/*/');
                 }
             } catch (\Exception $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
-
                 return $resultRedirect->setPath(
                     '*/*/edit',
                     [PostInterface::ID => $this->getRequest()->getParam(PostInterface::ID)]
@@ -84,7 +71,6 @@ class Save extends Post
         } else {
             $resultRedirect->setPath('*/*/');
             $this->messageManager->addErrorMessage('No data to save.');
-
             return $resultRedirect;
         }
     }
@@ -95,22 +81,17 @@ class Save extends Post
         $scopeResolver = $om->create('Magento\Framework\Url\ScopeResolverInterface', [
             'areaCode' => \Magento\Framework\App\Area::AREA_FRONTEND,
         ]);
-
         # preview mode save as revision
         $model->setId(false);
         $model->setType(PostInterface::TYPE_REVISION);
         $this->postRepository->save($model);
-
         $resultJson = $this->jsonFactory->create();
-
         $url = $om->create('Magento\Framework\Url', ['scopeResolver' => $scopeResolver])
             ->getUrl('blog/post/view', [
                 PostInterface::ID => $model->getId(),
                 '_scope_to_url'   => false,
                 '_nosid'          => true,
             ]);
-
-
         return $resultJson->setData([
             PostInterface::ID => $model->getId(),
             'url'             => $url,
@@ -124,7 +105,6 @@ class Save extends Post
     private function filterPostData(array $rawData)
     {
         $data = $rawData;
-
         foreach ([PostInterface::FEATURED_IMAGE] as $key) {
             if (isset($data[$key]) && is_array($data[$key])) {
                 if (!empty($data[$key]['delete'])) {
@@ -136,45 +116,19 @@ class Save extends Post
                 }
             }
         }
-<<<<<<< HEAD
-        if (!isset($result['featured_show_on_home'])) {
-            $result['featured_show_on_home'] = false;
-        }
-        if (isset($result['store_ids'])) {
-            $result['store_ids'] = explode(',', $result['store_ids']);
-        }
-        $formatter = new \IntlDateFormatter(
-            $this->context->getLocaleResolver()->getLocale(),
-            \IntlDateFormatter::MEDIUM,
-            \IntlDateFormatter::SHORT,
-            null,
-            null,
-            'MMM. d, y h:mm a'
-        );
-        if (!empty($result['created_at'])) {
-            $result['created_at'] = $formatter->parse($result['created_at']);
-        } else {
-            $formatter->setPattern('yyyy-MM-dd h:mm:s');
-            $result['created_at'] = $formatter->parse(date('Y-m-d h:i:s'));
-=======
         if (!isset($data[PostInterface::FEATURED_IMAGE])) {
             $data[PostInterface::FEATURED_IMAGE] = '';
->>>>>>> master
         }
-
         if (isset($data[PostInterface::TAG_IDS])) {
             foreach ($data[PostInterface::TAG_IDS] as $idx => $tagId) {
                 if (!is_numeric($tagId)) {
                     $tag = $this->tagRepository->create()
                         ->setName($tagId);
-
                     $tag = $this->tagRepository->ensure($tag);
-
                     $data[PostInterface::TAG_IDS][$idx] = $tag->getId();
                 }
             }
         }
-
         if (isset($data['blog_post_form_product_listing'])) {
             $productIds = [];
             foreach ($data['blog_post_form_product_listing'] as $item) {
@@ -182,11 +136,9 @@ class Save extends Post
             }
             $data[PostInterface::PRODUCT_IDS] = $productIds;
         }
-
-//        echo '<pre>';
-//        print_r($data);
-//        die();
-
+        //        echo '<pre>';
+        //        print_r($data);
+        //        die();
         return $data;
     }
 }
