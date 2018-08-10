@@ -1,18 +1,20 @@
-.blog__copyright-wrapper {
-    display: block;
-    float: right;
-    clear: both;
-    margin-top: 5rem;
-    font-size: .8rem !important;
-    text-transform: none;
-    color: #e8e8e8 !important;
-
-    h3 {
-        margin-top: 0;
-        font-size: .8rem !important;
+& when (@media-common = true) {
+    .blog__copyright-wrapper {
         display: block;
-    }
-    a {
+        float: right;
+        clear: both;
+        margin-top: 5rem;
+        font-size: .8rem !important;
+        text-transform: none;
         color: #e8e8e8 !important;
+
+        h3 {
+            margin-top: 0;
+            font-size: .8rem !important;
+            display: block;
+        }
+        a {
+            color: #e8e8e8 !important;
+        }
     }
 }

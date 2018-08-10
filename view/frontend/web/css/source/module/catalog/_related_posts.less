@@ -1,27 +1,30 @@
-.blog__post-catalog-related-posts {
-    ol {
-        list-style: none;
-        padding: 0;
+& when (@media-common = true) {
+    .blog__post-catalog-related-posts {
+        ol {
+            list-style: none;
+            padding: 0;
 
-        li {
-            .lib-clearfix();
-            margin-bottom: 3rem;
+            li {
+                .lib-clearfix();
+                margin-bottom: 3rem;
 
-            .post-image {
-                width: 30%;
-                max-width: 10rem;
-                float: left;
-                padding: 0 1rem 1rem 0;
-                border-radius: 3px;
-            }
+                .post-image {
+                    width: 30%;
+                    max-width: 10rem;
+                    float: left;
+                    padding: 0 1rem 1rem 0;
+                    border-radius: 3px;
+                }
 
-            .post-name {
-                display: block;
-                font-weight: 500;
+                .post-name {
+                    display: block;
+                    font-weight: 500;
+                }
             }
         }
     }
 }
+
 //
 //  Mobile
 //  _____________________________________________
