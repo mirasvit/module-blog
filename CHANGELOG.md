@@ -1,3 +1,12 @@
+## 1.0.24
+*(2018-08-13)*
+
+#### Fixed
+* Issue with compilation
+* Issue with Excerpt checkbox
+
+---
+
 ## 1.0.23
 *(2018-08-10)*
 
