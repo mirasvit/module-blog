@@ -38,4 +38,24 @@ Magento 2 Blog MX allows you to open a blog and engage more and more customers t
 ## 4. Sample Data
 [https://github.com/mirasvit/module-blog-sample-data](https://github.com/mirasvit/module-blog-sample-data)
 
+-----
+
+## Mirasvit Magento 2 Extension
+* [Elastic Search Ultimate](https://mirasvit.com/magento-2-extensions/elastic-search-ultimate.html)
+* [Sphinx Search Ultimate](https://mirasvit.com/magento-2-extensions/sphinx-search-ultimate.html)
+* [Layered Navigation for Magento 2](https://mirasvit.com/magento-2-extensions/layered-navigation.html)
+* [Help Desk MX](https://mirasvit.com/magento-2-extensions/helpdesk.html)
+* [RMA for Magento 2](https://mirasvit.com/magento-2-extensions/rma.html)
+* [Store Credit & Refund](https://mirasvit.com/magento-2-extensions/store-credit-refund.html)
+* [Advanced Product Feeds](https://mirasvit.com/magento-2-extensions/advanced-product-feeds.html)
+* [Affiliate for Magento 2](https://mirasvit.com/magento-2-extensions/affiliate.html)
+* [Follow Up Emails](https://mirasvit.com/magento-2-extensions/follow-up-email.html)
+* [Reward Points and Referral Program](https://mirasvit.com/magento-2-extensions/reward-points-referral-program.html)
+* [Customer Segmentation Suite](https://mirasvit.com/magento-2-extensions/customer-segmentation-suite.html)
+* [Advanced Reports](https://mirasvit.com/magento-2-extensions/advanced-reports.html)
+* [Advanced SEO Suite](https://mirasvit.com/magento-2-extensions/advanced-seo-suite.html)
+* [SEO Monitoring](https://mirasvit.com/magento-2-extensions/seo-monitoring-reports.html)
+* [Page Cache Warmer](https://mirasvit.com/magento-2-extensions/full-page-cache-warmer.html)
+* [Imrpoved Reindex](https://mirasvit.com/magento-2-extensions/improved-asynchronous-reindex.html)
+* [Stability Suite](https://mirasvit.com/magento-2-extensions/stability-suite.html)
 
