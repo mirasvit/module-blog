@@ -1,3 +1,11 @@
+## 1.0.25
+*(2018-08-17)*
+
+#### Fixed
+* Issue with saving post without tags
+
+---
+
 ## 1.0.24
 *(2018-08-13)*
 
