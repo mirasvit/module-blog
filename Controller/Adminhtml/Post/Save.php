@@ -119,7 +119,7 @@ class Save extends Post
         if (!isset($data[PostInterface::FEATURED_IMAGE])) {
             $data[PostInterface::FEATURED_IMAGE] = '';
         }
-        if (isset($data[PostInterface::TAG_IDS])) {
+        if (isset($data[PostInterface::TAG_IDS]) && is_array($data[PostInterface::TAG_IDS])) {
             foreach ($data[PostInterface::TAG_IDS] as $idx => $tagId) {
                 if (!is_numeric($tagId)) {
                     $tag = $this->tagRepository->create()
