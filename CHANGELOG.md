@@ -1,3 +1,11 @@
+## 1.0.26
+*(2018-08-20)*
+
+#### Fixed
+* [#111](../../issues/111) Wrong table when trying to save a post "mage_mst_blog_post_prodct"
+
+---
+
 ## 1.0.25
 *(2018-08-17)*
 
