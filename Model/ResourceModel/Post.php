@@ -307,7 +307,7 @@ class Post extends AbstractEntity
     {
         $connection = $this->getConnection();
 
-        $table = $this->getTable('mage_mst_blog_post_product');
+        $table = $this->getTable('mst_blog_post_product');
 
         if (!$model->getProductIds()) {
             return $this;
