@@ -539,40 +539,4 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
     {
         return $this->config->getMediaUrl($this->getFeaturedImage());
     }
-    //
-    //    /**
-    //     * @param int $width
-    //     * @param int $height
-    //     * @return string
-    //     */
-    //    public function getWidgetFeaturedImageUrl($width = 0, $height = 0)
-    //    {
-    //        $dirname = '';
-    //        if ($width && $height && $this->getFeaturedImage()) {
-    //            $dirname = $width . 'x' . $height . DIRECTORY_SEPARATOR;
-    //            $filename = $this->config->getWidgetMediaPath($dirname) . $this->getFeaturedImage();
-    //            $processor = $this->getImageProcessor();
-    //            $processor->resize($width, $height);
-    //            $processor->save($filename);
-    //        }
-    //
-    //        return $this->config->getMediaUrl($dirname . $this->getFeaturedImage());
-    //    }
-    //
-    //    /**
-    //     * @return MagentoImage
-    //     */
-    //    protected function getImageProcessor()
-    //    {
-    //        if (!$this->_processor) {
-    //            $filename = $this->config->getMediaPath() . DIRECTORY_SEPARATOR . $this->getFeaturedImage();
-    //            $this->_processor = $this->imageFactory->create($filename);
-    //        }
-    //        $this->_processor->keepAspectRatio(true);
-    //        $this->_processor->keepFrame(false);
-    //        $this->_processor->keepTransparency(true);
-    //        $this->_processor->constrainOnly(true);
-    //
-    //        return $this->_processor;
-    //    }
 }
