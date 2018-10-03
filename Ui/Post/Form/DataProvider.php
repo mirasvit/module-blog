@@ -6,6 +6,8 @@ use Magento\Ui\DataProvider\AbstractDataProvider;
 use Mirasvit\Blog\Api\Data\PostInterface;
 use Mirasvit\Blog\Api\Repository\PostRepositoryInterface;
 use Mirasvit\Blog\Model\Config;
+use Magento\Catalog\Model\Product\Attribute\Source\Status;
+use Magento\Catalog\Helper\Image as ImageHelper;
 
 class DataProvider extends AbstractDataProvider
 {
@@ -22,6 +24,8 @@ class DataProvider extends AbstractDataProvider
     public function __construct(
         PostRepositoryInterface $postRepository,
         Config $config,
+        Status $status,
+        ImageHelper $imageHelper,
         $name,
         $primaryFieldName,
         $requestFieldName,
@@ -31,6 +35,8 @@ class DataProvider extends AbstractDataProvider
         $this->postRepository = $postRepository;
         $this->collection = $this->postRepository->getCollection();
         $this->config = $config;
+        $this->status = $status;
+        $this->imageHelper = $imageHelper;
 
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
     }
@@ -82,6 +88,8 @@ class DataProvider extends AbstractDataProvider
                 $result[$post->getId()]['links']['products'][] = [
                     'id'   => $product->getId(),
                     'name' => $product->getName(),
+                    'status' => $this->status->getOptionText($product->getStatus()),
+                    'thumbnail' => $this->imageHelper->init($product, 'product_listing_thumbnail')->getUrl(),
                 ];
             }
         }
