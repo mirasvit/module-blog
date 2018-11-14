@@ -11,13 +11,15 @@ $post = $block->getPost();
         <?= $block->toDateFormat($post->getCreatedAt()) ?>
     </time>
 
-    <span class="blog__post-meta-author" itemprop="author" itemscope=""
-          itemtype="http://schema.org/Person">
-        <i class="fa fa-fw fa-user"></i>
-        <span itemprop="name">
-            <a href="<?= $post->getAuthor()->getUrl() ?>"><?= $post->getAuthor()->getName() ?></a>
+    <?php if ($post->getAuthor()): ?>
+        <span class="blog__post-meta-author" itemprop="author" itemscope=""
+              itemtype="http://schema.org/Person">
+            <i class="fa fa-fw fa-user"></i>
+            <span itemprop="name">
+                <a href="<?= $post->getAuthor()->getUrl() ?>"><?= $post->getAuthor()->getName() ?></a>
+            </span>
         </span>
-    </span>
+    <?php endif; ?>
 
     <?php if ($block->getCommentProvider() == 'disqus'): ?>
         <span class="blog__post-meta-comments">
