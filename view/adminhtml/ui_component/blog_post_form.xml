@@ -18,8 +18,7 @@
             <item name="back" xsi:type="string">Mirasvit\Blog\Ui\Post\Form\Control\BackButton</item>
             <item name="delete" xsi:type="string">Mirasvit\Blog\Ui\Post\Form\Control\DeleteButton</item>
             <item name="save" xsi:type="string">Mirasvit\Blog\Ui\Post\Form\Control\SaveButton</item>
-            <item name="save_and_continue" xsi:type="string">Mirasvit\Blog\Ui\Post\Form\Control\SaveAndContinueButton
-            </item>
+            <item name="save_and_continue" xsi:type="string">Mirasvit\Blog\Ui\Post\Form\Control\SaveAndContinueButton</item>
         </item>
     </argument>
     <dataSource name="blog_post_form_data_source">
