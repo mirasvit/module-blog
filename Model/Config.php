@@ -241,23 +241,6 @@ class Config
     }
 
     /**
-     * @param string $dirname
-     * @return string
-     */
-    public function getWidgetMediaPath($dirname)
-    {
-        $path = $this->getMediaPath() . DIRECTORY_SEPARATOR . $dirname;
-
-        if (!file_exists($path) || !is_dir($path)) {
-            $this->filesystem
-                ->getDirectoryWrite(DirectoryList::MEDIA)
-                ->create($path);
-        }
-
-        return $path;
-    }
-
-    /**
      * @param string $image
      * @return string
      */

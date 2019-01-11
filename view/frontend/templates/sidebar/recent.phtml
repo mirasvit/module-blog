@@ -14,7 +14,7 @@ $collection = $block->getCollection()
         <ol class="items">
             <?php foreach ($collection as $post): ?>
                 <?php
-                $imgPath = $post->getWidgetFeaturedImageUrl($block->getImageWidth(), $block->getImageHeight());
+                $imgPath = $post->getFeaturedImageUrl();
                 ?>
                 <li class="item">
                     <?php if ($imgPath): ?>
