@@ -22,7 +22,9 @@ $config = $block->getConfig();
                 <title><![CDATA[<?=$post->getName() ?>]]></title>
                 <link><![CDATA[<?=$post->getUrl() ?>]]></link>
                 <pubDate><?=date('D, d M Y H:i:s +0000', strtotime($post->getCreatedAt())) ?></pubDate>
-                <dc:creator><?=$post->getAuthor()->getName() ?></dc:creator>
+                <?php if ($post->getAuthor()): ?>
+                    <dc:creator><?=$post->getAuthor()->getName() ?></dc:creator>
+                <?php endif; ?>
                 <guid isPermaLink="false"><![CDATA[<?=$post->getUrl() ?>]]></guid>
                 <description><![CDATA[<?=$post->getShortContent() ?>]]></description>
                 <image>
