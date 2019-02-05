@@ -468,14 +468,18 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
     //        return in_array(0, $this->getStoreIds()) || in_array($storeId, $this->getStoreIds());
     //    }
     //
-    //    /**
-    //     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
-    //     */
+        /**
+         * @return mixed|\Magento\Catalog\Model\ResourceModel\Product\Collection
+         */
     public function getRelatedProducts()
     {
         $ids = $this->getProductIds();
+        $url = \Magento\Framework\App\ObjectManager::getInstance()
+            ->get('Magento\Framework\UrlInterface');
+        if (strpos( $url->getCurrentUrl(), 'rest/all/V1/blog') > 0) {
+            return $ids;
+        }
         $ids[] = 0;
-
         $collection = $this->productCollectionFactory->create()
             ->addAttributeToSelect('*')
             ->addFieldToFilter('entity_id', $ids);

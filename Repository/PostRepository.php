@@ -8,6 +8,7 @@ use Mirasvit\Blog\Model\Post;
 use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory;
 use Mirasvit\Blog\Api\Data\PostInterfaceFactory;
 use Magento\Framework\Filter\FilterManager;
+use Magento\Framework\Exception\InputException;
 
 class PostRepository implements PostRepositoryInterface
 {
@@ -67,6 +68,39 @@ class PostRepository implements PostRepositoryInterface
         }
 
         return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function update($id, PostInterface $post)
+    {
+        /** @var Post $model */
+        $model = $this->create();
+        $model->getResource()->load($model, $id);
+        if (!$model->getId()) {
+            throw new InputException(__("The post doesn't exist."));
+        }
+        $json = json_decode(file_get_contents("php://input"));
+        foreach($json->post as $k => $v) {
+            $model->setData($k, $post->getData($k));
+        }
+        $model->getResource()->save($model);
+        return $model;
+    }
+    /**
+     * {@inheritdoc}
+     */
+    public function apidelete($id)
+    {
+        /** @var Post $post */
+        $post = $this->create();
+        $post->getResource()->load($post, $id);
+        if (!$post->getId()) {
+            throw new InputException(__("The post doesn't exist."));
+        }
+        $post->getResource()->delete($post);
+        return true;
     }
 
     /**
