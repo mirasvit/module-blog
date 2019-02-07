@@ -21,6 +21,11 @@ interface PostRepositoryInterface
     public function save(\Mirasvit\Blog\Api\Data\PostInterface $model);
 
     /**
+     * @return \Mirasvit\Blog\Api\Data\PostInterface[]
+     */
+    public function getList();
+
+    /**
      * @param int $id
      * @return \Mirasvit\Blog\Api\Data\PostInterface|false
      */
