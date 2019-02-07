@@ -128,6 +128,11 @@ class Save extends Post
                     $data[PostInterface::TAG_IDS][$idx] = $tag->getId();
                 }
             }
+        } else {
+            $data[PostInterface::TAG_IDS] = [null];
+        }
+        if (!isset($data['category_ids'])) {
+            $data['category_ids'] = [null];
         }
         if (isset($data['blog_post_form_product_listing'])) {
             $productIds = [];
@@ -135,10 +140,9 @@ class Save extends Post
                 $productIds[] = $item['entity_id'];
             }
             $data[PostInterface::PRODUCT_IDS] = $productIds;
+        } else {
+            $data[PostInterface::PRODUCT_IDS] = [null];
         }
-        //        echo '<pre>';
-        //        print_r($data);
-        //        die();
         return $data;
     }
 }
