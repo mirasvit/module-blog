@@ -241,10 +241,12 @@ class PostList extends AbstractBlock implements IdentityInterface
                 return substr($post->getContent(), 0, $exerpt);
             } elseif ($post->getShortContent()) {
                 return $post->getShortContent();
-            } elseif (preg_match('/^.{1,' . $size . '}\b/s', $this->stripTags($post->getContent()), $match)) {
+            } elseif (preg_match('/^.{1,' . $size . '}\b/s', $this->stripTags(
+                preg_replace("/<style\\b[^>]*>(.*?)<\\/style>/s", "",$post->getContent())
+            ), $match)) {
                 return $match[0];
             }
-            return $this->stripTags($post->getContent());
+            return $post->getContent();
         }
         return '';
     }
