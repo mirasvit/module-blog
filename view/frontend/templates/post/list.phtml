@@ -27,7 +27,7 @@ $collection = $block->getPostCollection();
                             </a>
                         <?php endif ?>
 
-                        <?= $post->getShortContent() ?>
+                        <?= $block->getContentMoreTag($post) ?>
 
                         <a class="read-more" href="<?= $post->getUrl() ?>"><?= __('Read more...') ?></a>
                     </div>
