@@ -31,7 +31,7 @@ interface PostRepositoryInterface
      * @return bool
      * @throws \Magento\Framework\Exception\StateException
      */
-    public function apidelete($id);
+    public function apiDelete($id);
     /**
      * @param int $id
      * @param \Mirasvit\Blog\Api\Data\PostInterface $post

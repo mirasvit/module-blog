@@ -1,3 +1,11 @@
+## 1.0.29
+*(2019-02-05)*
+
+#### Improvements
+* Added API for manage posts
+
+---
+
 ## 1.0.28
 *(2018-12-13)*
 
