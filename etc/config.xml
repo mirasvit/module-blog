@@ -11,6 +11,8 @@
 
             <display>
                 <main_menu>1</main_menu>
+                <enable_excerpts>1</enable_excerpts>
+                <excerpt_size>350</excerpt_size>
             </display>
 
             <comments>

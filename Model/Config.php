@@ -86,6 +86,23 @@ class Config
     }
 
     /**
+     * @return bool
+     */
+    public function getExcerptsEnabled()
+    {
+        return $this->scopeConfig->getValue('blog/display/enable_excerpts',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+    }
+    /**
+     * @return string
+     */
+    public function getExcerptSize()
+    {
+        return $this->scopeConfig->getValue('blog/display/excerpt_size',
+            \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+    }
+
+    /**
      * @param null|string $store
      * @return string
      */

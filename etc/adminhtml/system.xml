@@ -33,6 +33,15 @@
                     <label>Visible Navigation Menu</label>
                     <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
                 </field>
+                <field id="enable_excerpts" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable excerpts on list page</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment>When enabeled excerpts will be inserted as follows, if there is a &#x3C;br&#x3E; &#x3C;b&#x3E; &#x26;#x3C;!--more--&#x26;#x3E; &#x3C;/b&#x3E; tag in the post content the excerpt will go until that tag, then if the post has an excerpt that will be used, lastly the first &#x3C;i&#x3E; n &#x3C;/i&#x3E; charechters of the post (as set below) will be displayed.</comment>
+                </field>
+                <field id="excerpt_size" translate="label" type="text" sortOrder="11" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Defualt Excerpt Character size</label>
+                    <validate>validate-digits</validate>
+                </field>
             </group>
 
             <group id="seo" showInDefault="1" showInWebsite="1" showInStore="1" sortOrder="30">
