@@ -41,6 +41,7 @@ Magento 2 Blog MX allows you to open a blog and engage more and more customers t
 -----
 
 ## Mirasvit Magento 2 Extension
+* [Improved Sorting](https://mirasvit.com/magento-2-improved-sorting.html)
 * [Elastic Search Ultimate](https://mirasvit.com/magento-2-extensions/elastic-search-ultimate.html)
 * [Sphinx Search Ultimate](https://mirasvit.com/magento-2-extensions/sphinx-search-ultimate.html)
 * [Layered Navigation for Magento 2](https://mirasvit.com/magento-2-extensions/layered-navigation.html)
