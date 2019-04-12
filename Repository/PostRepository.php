@@ -167,7 +167,7 @@ class PostRepository implements PostRepositoryInterface
                     $tag = $this->tagRepository->ensure($tag);
                     $tags[] = $tag->getId();
                 } else {
-                    $cats[] = $tagId;
+                    $tags[] = $tagId;
                 }
             }
             $model->setTagIds($tags);
