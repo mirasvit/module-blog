@@ -1,6 +1,7 @@
 {
   "name": "mirasvit/module-blog",
   "description": "Mirasvit Blog MX",
+  "version": "1.0.26",
   "require": {
     "magento/framework": "100.1.*|100.2.*|101.0.*"
   },
