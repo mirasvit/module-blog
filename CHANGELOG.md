@@ -1,3 +1,35 @@
+## 1.0.30
+*(2019-02-12)*
+
+#### Fixed
+* Web API
+
+---
+
+## 1.0.29
+*(2019-02-05)*
+
+#### Improvements
+* Added API for manage posts
+
+---
+
+## 1.0.28
+*(2018-12-13)*
+
+#### Fixed
+* Issue with author url [#124]()
+
+---
+
+## 1.0.27
+*(2018-12-03)*
+
+#### Fixed
+* Compatibility with Magento 2.3
+
+---
+
 ## 1.0.26
 *(2018-08-20)*
 

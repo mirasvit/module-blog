@@ -2,35 +2,52 @@
 
 namespace Mirasvit\Blog\Api\Repository;
 
-use Mirasvit\Blog\Api\Data\PostInterface;
-
 interface PostRepositoryInterface
 {
     /**
-     * @return \Mirasvit\Blog\Model\ResourceModel\Post\Collection | PostInterface[]
+     * @return \Mirasvit\Blog\Model\ResourceModel\Post\Collection | \Mirasvit\Blog\Api\Data\PostInterface[]
      */
     public function getCollection();
 
     /**
-     * @return PostInterface
+     * @return \Mirasvit\Blog\Api\Data\PostInterface
      */
     public function create();
 
     /**
-     * @param PostInterface $model
-     * @return PostInterface
+     * @param \Mirasvit\Blog\Api\Data\PostInterface $model
+     * @return \Mirasvit\Blog\Api\Data\PostInterface
      */
-    public function save(PostInterface $model);
+    public function save(\Mirasvit\Blog\Api\Data\PostInterface $model);
+
+    /**
+     * @return \Mirasvit\Blog\Api\Data\PostInterface[]
+     */
+    public function getList();
 
     /**
      * @param int $id
-     * @return PostInterface|false
+     * @return \Mirasvit\Blog\Api\Data\PostInterface|false
      */
     public function get($id);
 
     /**
-     * @param PostInterface $model
+     * @param int $id
+     * @return bool
+     * @throws \Magento\Framework\Exception\StateException
+     */
+    public function apiDelete($id);
+    /**
+     * @param int $id
+     * @param \Mirasvit\Blog\Api\Data\PostInterface $post
+     * @return \Mirasvit\Blog\Api\Data\PostInterface
+     * @throws \Magento\Framework\Exception\StateException
+     */
+    public function update($id, \Mirasvit\Blog\Api\Data\PostInterface $post);
+
+    /**
+     * @param \Mirasvit\Blog\Api\Data\PostInterface $model
      * @return bool
      */
-    public function delete(PostInterface $model);
+    public function delete(\Mirasvit\Blog\Api\Data\PostInterface $model);
 }

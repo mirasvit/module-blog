@@ -194,51 +194,51 @@ interface PostInterface
     public function setIsPinned($value);
 
     /**
-     * @return array
+     * @return mixed
      */
     public function getCategoryIds();
 
     /**
-     * @param array $value
+     * @param mixed $value
      * @return $this
      */
     public function setCategoryIds(array $value);
 
     /**
-     * @return array
+     * @return mixed
      */
     public function getStoreIds();
 
     /**
-     * @param array $value
+     * @param mixed $value
      * @return $this
      */
     public function setStoreIds(array $value);
 
     /**
-     * @return array
+     * @return mixed
      */
     public function getTagIds();
 
     /**
-     * @param array $value
+     * @param mixed $value
      * @return $this
      */
     public function setTagIds(array $value);
 
     /**
-     * @return array
+     * @return mixed
      */
     public function getProductIds();
 
     /**
-     * @param array $value
+     * @param mixed $value
      * @return $this
      */
     public function setProductIds(array $value);
 
     /**
-     * @return \Magento\Catalog\Model\ResourceModel\Product\Collection
+     * @return mixed|\Magento\Catalog\Model\ResourceModel\Product\Collection
      */
     public function getRelatedProducts();
 }

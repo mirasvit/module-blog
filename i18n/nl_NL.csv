@@ -1,0 +1,115 @@
+Save,Opslaan
+Save & Continue Edit,Opslaan en doorgaan met bewerken
+Author Information,Informatie auteur
+Display Name,Schermnaam
+Biographical Info,Biografie
+Username,Gebruikersnaam
+First Name,Voornaam
+Last Name,Achternaam
+General Information,Algemene informatie
+Title,Titel
+Parent Category,Hoofdcategorie
+Status,Status
+Disabled,Uitgeschakeld
+Enabled,Ingeschakeld
+Order,Volgorde
+Search Engine Optimization,Zoekmachine optimalisatie
+URL Key,URL sleutel
+Meta Title,Meta titel
+Meta Description,Meta omschrijving
+Meta Keywords,Meta zoekwoorden
+Save & Close,Opslaan & Sluiten
+Author,Auteur
+Categories,Categorieën
+Featured Image,Afbeelding
+Alt,Alt
+Is show on Blog Home page,Toon op homepage blog
+Publish,Plaats
+Published on,Geplaatst op
+Pin post at the top,Zet bericht vast aan bovenzijde
+Store Views,Winkelzichten
+All Store Views,Alle winkelzichten
+Excerpt,Samenvatting
+Position,Positie
+ID,ID
+Name,Naam
+SKU,Artikelnummer
+Visibility,Zichtbaarheid
+Related Products,Gerelateerde producten
+Author: %1,Auteur: %1
+Home,Home
+Go to Home Page, Ga naar homepage
+Blog,Blog
+Related Posts %1, Gerelateerde posts %1
+Date,Datum
+Search results for: '%1',Zoekresultaten voor: '%1'
+Tag: %1,Tag: %1
+Mirasvit Blog MX,Mirasvit Blog MX
+Authors,Auteurs
+This author no longer exists.,Deze auteur bestaat niet meer.
+Author was successfully saved, Auteur succesvol opgeslagen
+The category has been deleted.,De categorie is verwijderd.
+This category no longer exists.,Deze categorie bestaat niet meer.
+New Category,Nieuwe Categorie
+Category was successfully saved,Categorie succesvol opgeslagen
+Posts,Berichten
+The post has been deleted.,Het bericht is verwijderd.
+This post no longer exists.,Dit bericht bestaat niet meer.
+New Post,Nieuw Bericht
+All Posts,Alle Berichten
+Please correct the data sent.,Pas a.u.b. de data aan.
+Something went wrong while saving the post.,Er is een fout opgetreden bij het opslaan van het bericht.
+Post was successfully saved,Bericht succesvol opgeslagen
+Page not found,Pagina niet gevonden
+[GLOBAL],[GLOBAL]
+Disable comments,Schakel reacties uit
+Draft,Concept
+Pending Review,In afwachting review
+Published,Gepubliceerd
+"File type not allowed (only JPG, JPEG, PNG & GIF files are allowed)","Bestandsformaat niet toegestaan (alleen JPG, JPEG, PNG & GIF zijn toegestaan)"
+Edit,Bewerk
+Delete,Verwijder
+Delete ${ $.$data.name },Verwijder ${ $.$data.name }
+Are you sure you wan't to delete a ${ $.$data.name } record?,Weet je zeker dat je ${ $.$data.name } wilt verwijderen?
+Preview Changes,Bekijk wijzigingen
+a,a
+p,p
+Read more...,Lees verder...
+There are no posts available for this category.,Er zijn geen berichten beschikbaar voor deze categorie.
+Items %1-%2 of %3,Berichten %1-%2 van %3
+%1 Item,%1 Bericht
+%1 Items,%1 Berichten
+Show,Toon
+per page,per pagina
+Sort By,Sorteer op
+Set Ascending Direction,Selecteer oplopende weergave
+Set Descending Direction,Selecteer aflopende weergave
+0 Comments,0 opmerkingen
+Featured Posts, Aanbevolen berichten
+Related Posts,Gerelateerde berichten
+Your search returned no results.,Uw zoekopdracht heeft geen reultaat opgeleverd.
+Recent Posts,Recente berichten
+Search...,Zoek...
+Mirasvit Extensions,Mirasvit Extensie
+Blog MX,Blog MX
+Top Menu Title,Hoofdmenu titel
+Blog Name,Naam Blog
+Date Format,Weergave datum
+Visible Navigation Menu,Zichtbaar navigatie menu
+Base URL,Standaard URL
+Base Meta Title,Standaard Meta titel
+Base Meta Description,Standaard Meta omschrijving
+Base Meta Keywords,Standaard Meta zoekwoorden
+URL Suffix for Posts,URL Suffix berichten
+URL Suffix for Categories,URL suffix categorieën
+Provider,Provider
+Disqus Blog Shortname,Disqus Blog Shortname
+Enable AddThis Sharing Buttons,Gebruik AddThis Sharing Buttons
+Blog MX: Recent Posts,Blog MX: Recente berichten
+List of Blog Posts,Lijst van berichten
+Number of Posts to display,Aantal berichten tonen
+Image width (px),Afbeelding breedte (px)
+Image height (px),Afbeelding hoogte (px)
+Add New Post,Voeg nieuw bericht toe
+Category,Categorie
+Published On,Gepubliceerd op

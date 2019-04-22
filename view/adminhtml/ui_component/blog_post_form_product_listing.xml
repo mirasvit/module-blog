@@ -125,6 +125,15 @@
             </argument>
         </column>
 
+        <column name="status_text" class="Magento\Catalog\Ui\Component\Listing\Columns\StatusText">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="label" xsi:type="string" translate="true">StatusText</item>
+                    <item name="visible" xsi:type="boolean">false</item>
+                </item>
+            </argument>
+        </column>
+
         <column name="type_id">
             <argument name="data" xsi:type="array">
                 <item name="options" xsi:type="object">Magento\Catalog\Model\Product\Type</item>

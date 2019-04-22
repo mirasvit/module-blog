@@ -18,8 +18,7 @@
             <item name="back" xsi:type="string">Mirasvit\Blog\Ui\Post\Form\Control\BackButton</item>
             <item name="delete" xsi:type="string">Mirasvit\Blog\Ui\Post\Form\Control\DeleteButton</item>
             <item name="save" xsi:type="string">Mirasvit\Blog\Ui\Post\Form\Control\SaveButton</item>
-            <item name="save_and_continue" xsi:type="string">Mirasvit\Blog\Ui\Post\Form\Control\SaveAndContinueButton
-            </item>
+            <item name="save_and_continue" xsi:type="string">Mirasvit\Blog\Ui\Post\Form\Control\SaveAndContinueButton</item>
         </item>
     </argument>
     <dataSource name="blog_post_form_data_source">
@@ -485,7 +484,8 @@
                         <item name="map" xsi:type="array">
                             <item name="id" xsi:type="string">entity_id</item>
                             <item name="name" xsi:type="string">name</item>
-                            <item name="status" xsi:type="string">status</item>
+                            <item name="status" xsi:type="string">status_text</item>
+                            <item name="thumbnail" xsi:type="string">thumbnail_src</item>
                         </item>
                         <item name="links" xsi:type="array">
                             <item name="insertData" xsi:type="string">${ $.provider }:${ $.dataProvider }</item>
@@ -514,6 +514,17 @@
                             </item>
                         </argument>
                     </field>
+                    <field name="thumbnail">
+                        <argument name="data" xsi:type="array">
+                            <item name="config" xsi:type="array">
+                                <item name="elementTmpl" xsi:type="string">ui/dynamic-rows/cells/thumbnail</item>
+                                <item name="formElement" xsi:type="string">input</item>
+                                <item name="dataType" xsi:type="string">text</item>
+                                <item name="dataScope" xsi:type="string">thumbnail</item>
+                                <item name="label" xsi:type="string" translate="true">Thumbnail</item>
+                            </item>
+                        </argument>
+                    </field>
                     <field name="name">
                         <argument name="data" xsi:type="array">
                             <item name="config" xsi:type="array">
@@ -523,6 +534,18 @@
                                 <item name="dataType" xsi:type="string">text</item>
                                 <item name="dataScope" xsi:type="string">name</item>
                                 <item name="label" xsi:type="string" translate="true">Name</item>
+                            </item>
+                        </argument>
+                    </field>
+                    <field name="status">
+                        <argument name="data" xsi:type="array">
+                            <item name="config" xsi:type="array">
+                                <item name="formElement" xsi:type="string">input</item>
+                                <item name="elementTmpl" xsi:type="string">ui/dynamic-rows/cells/text</item>
+                                <item name="component" xsi:type="string">Magento_Ui/js/form/element/text</item>
+                                <item name="dataType" xsi:type="string">text</item>
+                                <item name="dataScope" xsi:type="string">status</item>
+                                <item name="label" xsi:type="string" translate="true">Status</item>
                             </item>
                         </argument>
                     </field>
