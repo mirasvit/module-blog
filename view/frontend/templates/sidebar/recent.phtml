@@ -4,6 +4,9 @@
 /** @var \Mirasvit\Blog\Block\Sidebar\Recent $block */
 $collection = $block->getCollection()
     ->setPageSize($this->getPageSize());
+if ($collection->getSize() === 0) {
+    return;
+}
 ?>
 <div class="block blog__sidebar-recent">
     <div class="block-title">
