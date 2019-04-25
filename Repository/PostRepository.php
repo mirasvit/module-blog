@@ -157,21 +157,14 @@ class PostRepository implements PostRepositoryInterface
         if (!$model->getType()) {
             $model->setType(PostInterface::TYPE_POST);
         }
+
         if (!$model->getUrlKey()) {
             $model->setUrlKey($this->filterManager->translitUrl($model->getName()));
         }
+
         if ($model->getTagIds()) {
-            $tags = [];
-            foreach ($model->getTagIds() as $tagId) {
-                if (!is_numeric($tagId)) {
-                    $tag    = $this->tagRepository->create()->setName($tagId);
-                    $tag    = $this->tagRepository->ensure($tag);
-                    $tags[] = $tag->getId();
-                } else {
-                    $tags[] = $tagId;
-                }
-            }
-            $model->setTagIds($tags);
+            $tagsIds = array_filter($model->getTagIds());
+            $model->setTagIds($tagsIds);
         }
 
         if ($model->getCategoryIds()) {
