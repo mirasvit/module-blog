@@ -2,35 +2,33 @@
 
 namespace Mirasvit\Blog\Model;
 
+use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
+use Magento\Framework\Api\AttributeValueFactory;
+use Magento\Framework\Api\ExtensionAttributesFactory;
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Image as MagentoImage;
 use Magento\Framework\Image\Factory as ImageFactory;
 use Magento\Framework\Model\AbstractExtensibleModel;
-use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\Model\Context;
 use Magento\Framework\Registry;
-use Magento\Framework\Api\ExtensionAttributesFactory;
 use Magento\Store\Model\StoreManagerInterface;
-use Magento\Framework\DataObject\IdentityInterface;
 use Mirasvit\Blog\Api\Data\CategoryInterface;
 use Mirasvit\Blog\Api\Data\PostInterface;
 use Mirasvit\Blog\Api\Data\TagInterface;
 use Mirasvit\Blog\Api\Repository\AuthorRepositoryInterface;
 use Mirasvit\Blog\Api\Repository\CategoryRepositoryInterface;
 use Mirasvit\Blog\Api\Repository\TagRepositoryInterface;
-use Mirasvit\Blog\Model\ResourceModel\Tag\CollectionFactory as TagCollectionFactory;
-use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
 
 /**
  * @method string getFeaturedShowOnHome()
  * @method int getParentId()
  * @method $this setParentId($parent)
- *
  * @method ResourceModel\Post getResource()
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
  */
 class Post extends AbstractExtensibleModel implements IdentityInterface, PostInterface
 {
-    const ENTITY = 'blog_post';
+    const ENTITY    = 'blog_post';
     const CACHE_TAG = 'blog_post';
 
     /**
@@ -82,14 +80,14 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
         ExtensionAttributesFactory $extensionFactory,
         AttributeValueFactory $customAttributeFactory
     ) {
-        $this->categoryRepository = $categoryRepository;
-        $this->tagRepository = $tagRepository;
-        $this->authorRepository = $authorRepository;
+        $this->categoryRepository       = $categoryRepository;
+        $this->tagRepository            = $tagRepository;
+        $this->authorRepository         = $authorRepository;
         $this->productCollectionFactory = $productCollectionFactory;
-        $this->config = $config;
-        $this->url = $url;
-        $this->storeManager = $storeManager;
-        $this->imageFactory = $imageFactory;
+        $this->config                   = $config;
+        $this->url                      = $url;
+        $this->storeManager             = $storeManager;
+        $this->imageFactory             = $imageFactory;
 
         parent::__construct($context, $registry, $extensionFactory, $customAttributeFactory);
     }
@@ -419,7 +417,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
      */
     public function getCategories()
     {
-        $ids = $this->getCategoryIds();
+        $ids   = $this->getCategoryIds();
         $ids[] = 0;
 
         $collection = $this->categoryRepository->getCollection()
@@ -434,7 +432,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
      */
     public function getTags()
     {
-        $ids = $this->getTagIds();
+        $ids   = $this->getTagIds();
         $ids[] = 0;
 
         $collection = $this->tagRepository->getCollection()
@@ -468,18 +466,18 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
     //        return in_array(0, $this->getStoreIds()) || in_array($storeId, $this->getStoreIds());
     //    }
     //
-        /**
-         * @return mixed|\Magento\Catalog\Model\ResourceModel\Product\Collection
-         */
+    /**
+     * @return mixed|\Magento\Catalog\Model\ResourceModel\Product\Collection
+     */
     public function getRelatedProducts()
     {
         $ids = $this->getProductIds();
         $url = \Magento\Framework\App\ObjectManager::getInstance()
             ->get('Magento\Framework\UrlInterface');
-        if (strpos( $url->getCurrentUrl(), 'rest/all/V1/blog') > 0) {
+        if (strpos($url->getCurrentUrl(), 'rest/all/V1/blog') > 0) {
             return $ids;
         }
-        $ids[] = 0;
+        $ids[]      = 0;
         $collection = $this->productCollectionFactory->create()
             ->addAttributeToSelect('*')
             ->addFieldToFilter('entity_id', $ids);
@@ -517,6 +515,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
 
     /**
      * @param bool $useSid
+     *
      * @return string
      */
     public function getUrl($useSid = true)

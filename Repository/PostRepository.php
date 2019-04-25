@@ -2,15 +2,15 @@
 
 namespace Mirasvit\Blog\Repository;
 
+use Magento\Framework\Exception\InputException;
+use Magento\Framework\Filter\FilterManager;
 use Mirasvit\Blog\Api\Data\PostInterface;
+use Mirasvit\Blog\Api\Data\PostInterfaceFactory;
+use Mirasvit\Blog\Api\Repository\CategoryRepositoryInterface;
 use Mirasvit\Blog\Api\Repository\PostRepositoryInterface;
 use Mirasvit\Blog\Api\Repository\TagRepositoryInterface;
-use Mirasvit\Blog\Api\Repository\CategoryRepositoryInterface;
 use Mirasvit\Blog\Model\Post;
 use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory;
-use Mirasvit\Blog\Api\Data\PostInterfaceFactory;
-use Magento\Framework\Filter\FilterManager;
-use Magento\Framework\Exception\InputException;
 
 class PostRepository implements PostRepositoryInterface
 {
@@ -69,6 +69,7 @@ class PostRepository implements PostRepositoryInterface
     {
         /** @var \Mirasvit\Blog\Model\ResourceModel\Post\Collection $collection */
         $collection = $this->getCollection();
+
         return $collection->getItems();
     }
 
@@ -163,8 +164,8 @@ class PostRepository implements PostRepositoryInterface
             $tags = [];
             foreach ($model->getTagIds() as $tagId) {
                 if (!is_numeric($tagId)) {
-                    $tag = $this->tagRepository->create()->setName($tagId);
-                    $tag = $this->tagRepository->ensure($tag);
+                    $tag    = $this->tagRepository->create()->setName($tagId);
+                    $tag    = $this->tagRepository->ensure($tag);
                     $tags[] = $tag->getId();
                 } else {
                     $tags[] = $tagId;
@@ -174,22 +175,8 @@ class PostRepository implements PostRepositoryInterface
         }
 
         if ($model->getCategoryIds()) {
-            $cats = [];
-            foreach ($model->getCategoryIds() as $catId) {
-                if (!is_numeric($catId)) {
-                    if (!count($this->catRepository->getCollection()
-                        ->addFieldToFilter('name', $catId))) {
-                        $cat = $this->catRepository->create()->setName($catId)->setStatus(1)->setLevel(1)->setParentId(1);
-                        $this->catRepository->save($cat);
-                    }
-                    $cat = $this->catRepository->getCollection()
-                        ->addFieldToFilter('name', $catId)->getFirstItem();
-                    $cats[] = (integer) $cat->getId();
-                } else {
-                    $cats[] = $catId;
-                }
-            }
-            $model->setCategoryIds($cats);
+            $categoryIds = array_filter($model->getCategoryIds());
+            $model->setCategoryIds($categoryIds);
         }
 
         /** @var Post $model */

@@ -2,14 +2,13 @@
 
 namespace Mirasvit\Blog\Model\ResourceModel;
 
-use Magento\Framework\DataObject;
 use Magento\Eav\Model\Entity\AbstractEntity;
 use Magento\Eav\Model\Entity\Context;
+use Magento\Framework\DataObject;
+use Magento\Framework\Filter\FilterManager;
 use Mirasvit\Blog\Api\Data\PostInterface;
 use Mirasvit\Blog\Model\Config;
-use Magento\Framework\Filter\FilterManager;
 use Mirasvit\Blog\Model\TagFactory as TagModelFactory;
-use Magento\Framework\File\Uploader as FileUploader;
 
 class Post extends AbstractEntity
 {
@@ -36,8 +35,8 @@ class Post extends AbstractEntity
         $data = []
     ) {
         $this->tagFactory = $tagFactory;
-        $this->config = $config;
-        $this->filter = $filter;
+        $this->config     = $config;
+        $this->filter     = $filter;
 
         parent::__construct($context, $data);
     }
@@ -82,6 +81,7 @@ class Post extends AbstractEntity
 
     /**
      * @param PostInterface $model
+     *
      * @return array
      */
     private function getCategoryIds(PostInterface $model)
@@ -101,6 +101,7 @@ class Post extends AbstractEntity
 
     /**
      * @param PostInterface $model
+     *
      * @return $this
      */
     private function saveCategoryIds(PostInterface $model)
@@ -113,7 +114,7 @@ class Post extends AbstractEntity
             return $this;
         }
 
-        $categoryIds = $model->getCategoryIds();
+        $categoryIds    = $model->getCategoryIds();
         $oldCategoryIds = $this->getCategoryIds($model);
 
         $insert = array_diff($categoryIds, $oldCategoryIds);
@@ -125,6 +126,7 @@ class Post extends AbstractEntity
                 if (empty($categoryId)) {
                     continue;
                 }
+
                 $data[] = [
                     'category_id' => (int)$categoryId,
                     'post_id'     => (int)$model->getId(),
@@ -148,6 +150,7 @@ class Post extends AbstractEntity
 
     /**
      * @param PostInterface $model
+     *
      * @return array
      */
     private function getStoreIds(PostInterface $model)
@@ -167,6 +170,7 @@ class Post extends AbstractEntity
 
     /**
      * @param PostInterface $model
+     *
      * @return $this
      */
     private function saveStoreIds(PostInterface $model)
@@ -182,7 +186,7 @@ class Post extends AbstractEntity
             return $this;
         }
 
-        $storeIds = $model->getStoreIds();
+        $storeIds    = $model->getStoreIds();
         $oldStoreIds = $this->getStoreIds($model);
 
         $insert = array_diff($storeIds, $oldStoreIds);
@@ -217,12 +221,13 @@ class Post extends AbstractEntity
 
     /**
      * @param PostInterface $model
+     *
      * @return array
      */
     private function getTagIds(PostInterface $model)
     {
         $connection = $this->getConnection();
-        $select = $connection->select()->from(
+        $select     = $connection->select()->from(
             $this->getTable('mst_blog_tag_post'),
             'tag_id'
         )->where(
@@ -235,6 +240,7 @@ class Post extends AbstractEntity
 
     /**
      * @param PostInterface $model
+     *
      * @return $this
      */
     private function saveTagIds(PostInterface $model)
@@ -247,7 +253,7 @@ class Post extends AbstractEntity
             return $this;
         }
 
-        $tagIds = $model->getTagIds();
+        $tagIds    = $model->getTagIds();
         $oldTagIds = $this->getTagIds($model);
 
         $insert = array_diff($tagIds, $oldTagIds);
@@ -282,6 +288,7 @@ class Post extends AbstractEntity
 
     /**
      * @param PostInterface $model
+     *
      * @return array
      */
     private function getProductIds(PostInterface $model)
@@ -301,6 +308,7 @@ class Post extends AbstractEntity
 
     /**
      * @param PostInterface $model
+     *
      * @return $this
      */
     private function saveProductIds(PostInterface $model)
@@ -313,7 +321,7 @@ class Post extends AbstractEntity
             return $this;
         }
 
-        $productIds = $model->getProductIds();
+        $productIds    = $model->getProductIds();
         $oldProductIds = $this->getProductIds($model);
 
         $insert = array_diff($productIds, $oldProductIds);

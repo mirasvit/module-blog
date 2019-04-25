@@ -1,12 +1,13 @@
 <?php
+
 namespace Mirasvit\Blog\Model\ResourceModel;
 
-use Magento\Framework\DataObject;
 use Magento\Eav\Model\Entity\AbstractEntity;
-use Magento\Framework\App\ObjectManager;
 use Magento\Eav\Model\Entity\Context;
-use Mirasvit\Blog\Model\Config;
+use Magento\Framework\App\ObjectManager;
+use Magento\Framework\DataObject;
 use Magento\Framework\Filter\FilterManager;
+use Mirasvit\Blog\Model\Config;
 
 /**
  * @SuppressWarnings(PHPMD.NPathComplexity)
@@ -47,7 +48,7 @@ class Category extends AbstractEntity
      */
     protected function _getDefaultAttributes()
     {
-        $attributes = parent::_getDefaultAttributes();
+        $attributes   = parent::_getDefaultAttributes();
         $attributes[] = 'sort_order';
 
         return $attributes;
@@ -98,8 +99,8 @@ class Category extends AbstractEntity
                 $category->setPosition($this->getMaxPosition($category->getPath()) + 1);
             }
 
-            $path = explode('/', $category->getPath());
-            $level = count($path) - ($category->getId() ? 1 : 0);
+            $path          = explode('/', $category->getPath());
+            $level         = count($path) - ($category->getId() ? 1 : 0);
             $toUpdateChild = array_diff($path, [$category->getId()]);
 
             if (!$category->hasPosition()) {
@@ -150,6 +151,7 @@ class Category extends AbstractEntity
      * Update path field
      *
      * @param \Mirasvit\Blog\Model\Category $object
+     *
      * @return $this
      */
     protected function savePath($object)
@@ -172,6 +174,7 @@ class Category extends AbstractEntity
      * @param \Mirasvit\Blog\Model\Category $category
      * @param \Mirasvit\Blog\Model\Category $newParent
      * @param null|int                      $afterCategoryId
+     *
      * @return $this
      */
     public function changeParent(
@@ -180,10 +183,10 @@ class Category extends AbstractEntity
         $afterCategoryId = null
     ) {
         $childrenCount = $this->getChildrenCount($category->getId()) + 1;
-        $table = $this->getEntityTable();
-        $connection = $this->getConnection();
-        $levelFiled = $connection->quoteIdentifier('level');
-        $pathField = $connection->quoteIdentifier('path');
+        $table         = $this->getEntityTable();
+        $connection    = $this->getConnection();
+        $levelFiled    = $connection->quoteIdentifier('level');
+        $pathField     = $connection->quoteIdentifier('path');
 
         /**
          * Decrease children count for all old category parent categories
@@ -205,8 +208,8 @@ class Category extends AbstractEntity
 
         $position = $this->processPositions($category, $newParent, $afterCategoryId);
 
-        $newPath = sprintf('%s/%s', $newParent->getPath(), $category->getId());
-        $newLevel = $newParent->getLevel() + 1;
+        $newPath          = sprintf('%s/%s', $newParent->getPath(), $category->getId());
+        $newLevel         = $newParent->getLevel() + 1;
         $levelDisposition = $newLevel - $category->getLevel();
 
         /**
@@ -222,7 +225,7 @@ class Category extends AbstractEntity
                         $newPath . '/'
                     ) . ')'
                 ),
-                'level' => new \Zend_Db_Expr($levelFiled . ' + ' . $levelDisposition)
+                'level' => new \Zend_Db_Expr($levelFiled . ' + ' . $levelDisposition),
             ],
             [$pathField . ' LIKE ?' => $category->getPath() . '/%']
         );
@@ -249,6 +252,7 @@ class Category extends AbstractEntity
      * Get child categories count
      *
      * @param int $categoryId
+     *
      * @return int
      */
     public function getChildrenCount($categoryId)
@@ -259,7 +263,7 @@ class Category extends AbstractEntity
         )->where(
             'entity_id = :entity_id'
         );
-        $bind = ['entity_id' => $categoryId];
+        $bind   = ['entity_id' => $categoryId];
 
         return $this->getConnection()->fetchOne($select, $bind);
     }
@@ -268,15 +272,16 @@ class Category extends AbstractEntity
      * @param \Mirasvit\Blog\Model\Category $category
      * @param \Mirasvit\Blog\Model\Category $newParent
      * @param null|int                      $afterCategoryId
+     *
      * @return int
      */
     protected function processPositions($category, $newParent, $afterCategoryId)
     {
-        $table = $this->getEntityTable();
-        $connection = $this->getConnection();
+        $table         = $this->getEntityTable();
+        $connection    = $this->getConnection();
         $positionField = $connection->quoteIdentifier('position');
 
-        $bind = ['position' => new \Zend_Db_Expr($positionField . ' - 1')];
+        $bind  = ['position' => new \Zend_Db_Expr($positionField . ' - 1')];
         $where = [
             'parent_id = ?'         => $category->getParentId(),
             $positionField . ' > ?' => $category->getPosition(),
@@ -287,14 +292,14 @@ class Category extends AbstractEntity
          * Prepare position value
          */
         if ($afterCategoryId) {
-            $select = $connection->select()->from($table, 'position')->where('entity_id = :entity_id');
+            $select   = $connection->select()->from($table, 'position')->where('entity_id = :entity_id');
             $position = $connection->fetchOne($select, ['entity_id' => $afterCategoryId]);
             $position += 1;
         } else {
             $position = 1;
         }
 
-        $bind = ['position' => new \Zend_Db_Expr($positionField . ' + 1')];
+        $bind  = ['position' => new \Zend_Db_Expr($positionField . ' + 1')];
         $where = ['parent_id = ?' => $newParent->getId(), $positionField . ' >= ?' => $position];
         $connection->update($table, $bind, $where);
 
@@ -305,15 +310,16 @@ class Category extends AbstractEntity
      * Get maximum position of child categories by specific tree path
      *
      * @param string $path
+     *
      * @return int
      */
     protected function getMaxPosition($path)
     {
-        $connection = $this->getConnection();
+        $connection    = $this->getConnection();
         $positionField = $connection->quoteIdentifier('position');
-        $level = count(explode('/', $path));
-        $bind = ['c_level' => $level, 'c_path' => $path . '/%'];
-        $select = $connection->select()->from(
+        $level         = count(explode('/', $path));
+        $bind          = ['c_level' => $level, 'c_path' => $path . '/%'];
+        $select        = $connection->select()->from(
             $this->getTable('mst_blog_category_entity'),
             'MAX(' . $positionField . ')'
         )->where(
@@ -324,6 +330,7 @@ class Category extends AbstractEntity
         if (!$position) {
             $position = 0;
         }
+
         return $position;
     }
 }
