@@ -105,7 +105,7 @@ class Storeview extends \Magento\Framework\App\Helper\AbstractHelper
                                                 "dataScope" => "",
                                                 "config"    => [
                                                     "component"     => "Magento_Ui/js/form/components/group",
-                                                    "label"         => __(""),
+                                                    "label"         => '',
                                                     "breakLine"     => false,
                                                     "formElement"   => "container",
                                                     "componentType" => "container",
