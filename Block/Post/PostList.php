@@ -111,6 +111,7 @@ class PostList extends AbstractBlock implements IdentityInterface
 
     /**
      * @param \Mirasvit\Blog\Model\ResourceModel\Post\Collection $collection
+     *
      * @return $this
      */
     public function setCollection($collection)
@@ -122,7 +123,6 @@ class PostList extends AbstractBlock implements IdentityInterface
 
     /**
      * Return identifiers for post content.
-     *
      * @return array
      */
     public function getIdentities()
@@ -138,7 +138,6 @@ class PostList extends AbstractBlock implements IdentityInterface
 
     /**
      * Retrieve current category model object.
-     *
      * @return \Mirasvit\Blog\Model\Category
      */
     public function getCategory()
@@ -196,7 +195,6 @@ class PostList extends AbstractBlock implements IdentityInterface
                 $collection->addSearchFilter($q);
             }
 
-
             $collection->setCurPage($this->getCurrentPage());
 
             $limit = (int)$toolbar->getLimit();
@@ -222,15 +220,17 @@ class PostList extends AbstractBlock implements IdentityInterface
 
     /**
      * @param \Mirasvit\Blog\Model\Post $post
+     *
      * @return string
      */
     public function getFeaturedAlt($post)
     {
-        return $post->getFeaturedAlt() ?: $post->getName();
+        return $post->getFeaturedAlt() ? : $post->getName();
     }
 
     /**
      * @param \Mirasvit\Blog\Model\Post $post
+     *
      * @return string
      */
     public function getContentMoreTag($post)
@@ -242,12 +242,14 @@ class PostList extends AbstractBlock implements IdentityInterface
             } elseif ($post->getShortContent()) {
                 return $post->getShortContent();
             } elseif (preg_match('/^.{1,' . $size . '}\b/s', $this->stripTags(
-                preg_replace("/<style\\b[^>]*>(.*?)<\\/style>/s", "",$post->getContent())
+                preg_replace("/<style\\b[^>]*>(.*?)<\\/style>/s", "", $post->getContent())
             ), $match)) {
                 return $match[0];
             }
+
             return $post->getContent();
         }
+
         return '';
     }
 }
