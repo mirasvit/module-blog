@@ -1,3 +1,13 @@
+## 1.0.32
+*(2019-05-08)*
+
+#### Fixed
+* Change default sort from updated_at to created_at
+* Fix 147
+* Fix 146
+
+---
+
 ## 1.0.31
 *(2019-04-22)*
 
