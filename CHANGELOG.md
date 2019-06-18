@@ -1,3 +1,11 @@
+## 1.0.33
+*(2019-06-18)*
+
+#### Fixed
+* Issue with fulltext search (posts list)
+
+---
+
 ## 1.0.32
 *(2019-05-08)*
 
