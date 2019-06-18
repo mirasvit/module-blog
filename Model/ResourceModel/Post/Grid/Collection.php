@@ -1,4 +1,5 @@
 <?php
+
 namespace Mirasvit\Blog\Model\ResourceModel\Post\Grid;
 
 use Magento\Framework\Api\Search\SearchResultInterface;
@@ -9,7 +10,7 @@ use Mirasvit\Blog\Model\ResourceModel\Post\Collection as PostCollection;
 class Collection extends PostCollection implements SearchResultInterface
 {
     const CAT_PROD_LINK_ALIAS = 'category_ids_table';
-    const CAT_PROD_LINK = 'mst_blog_category_post';
+    const CAT_PROD_LINK       = 'mst_blog_category_post';
 
     /**
      * {@inheritdoc}
@@ -79,17 +80,18 @@ class Collection extends PostCollection implements SearchResultInterface
      * Overrides the basic implementation of this to add special handling for the `category_ids`
      * column. This adds the category ids filter to be used in the Magento admin and joins that
      * table in (grouping by the post entity_id column).
-     * 
+     *
      * @param array|int|\Magento\Eav\Model\Entity\Attribute\AttributeInterface|string $attribute
-     * @param null $condition
-     * @param string $joinType
+     * @param null                                                                    $condition
+     * @param string                                                                  $joinType
+     *
      * @return $this
      */
     public function addAttributeToFilter($attribute, $condition = null, $joinType = 'inner')
     {
         $select = $this->getSelect();
 
-        if ($attribute !== "category_ids" ) {
+        if ($attribute !== "category_ids") {
             return parent::addAttributeToFilter($attribute, $condition, $joinType);
         }
 
@@ -105,8 +107,9 @@ class Collection extends PostCollection implements SearchResultInterface
 
     /**
      * Joins the category / post linking table into this queyr.
-     * 
+     *
      * @param \Magento\Framework\DB\Select $select
+     *
      * @return void
      */
     private function joinCategoryIdsTable(\Magento\Framework\DB\Select $select)
@@ -121,9 +124,10 @@ class Collection extends PostCollection implements SearchResultInterface
 
     /**
      * Adds the condition relating to category ids.
-     * 
+     *
      * @param \Magento\Framework\DB\Select $select
-     * @param null $condition
+     * @param null                         $condition
+     *
      * @return void
      */
     private function addConditionToSelect(\Magento\Framework\DB\Select $select, $condition = null)
