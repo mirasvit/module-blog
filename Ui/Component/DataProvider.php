@@ -1,16 +1,18 @@
 <?php
+
 namespace Mirasvit\Blog\Ui\Component;
 
-use Magento\Customer\Api\Data\AttributeMetadataInterface;
 use Magento\Customer\Ui\Component\Listing\AttributeRepository;
 use Magento\Framework\Api\FilterBuilder;
 use Magento\Framework\Api\Search\SearchCriteriaBuilder;
+use Magento\Framework\Api\Search\SearchResultInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\View\Element\UiComponent\DataProvider\Reporting;
-use Magento\Framework\Api\Search\SearchResultInterface;
 
 class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider
 {
+    private $collection;
+
     /**
      * @var AttributeRepository
      */
@@ -58,11 +60,12 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
 
     /**
      * @param SearchResultInterface $searchResult
+     *
      * @return array
      */
     protected function searchResultToOutput(SearchResultInterface $searchResult)
     {
-        $arrItems = [];
+        $arrItems                 = [];
         $arrItems['totalRecords'] = $searchResult->getTotalCount();
 
         $arrItems['items'] = [];
@@ -73,25 +76,34 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
         return $arrItems;
     }
 
+    public function getCollection()
+    {
+        if (!$this->collection) {
+            /** @var \Mirasvit\Blog\Model\ResourceModel\Post\Collection $collection */
+            $this->collection = $this->getSearchResult();
+
+            $this->collection
+                ->addAttributeToSelect([
+                    'name',
+                    'status',
+                    'content',
+                    'meta_title',
+                    'meta_keywords',
+                    'meta_description',
+                    'url_key',
+                ])
+                ->addPostFilter();
+        }
+
+        return $this->collection;
+    }
+
     /**
      * {@inheritdoc}
      */
     public function getData()
     {
-        /** @var \Mirasvit\Blog\Model\ResourceModel\Post\Collection $collection */
-        $collection = $this->getSearchResult();
-
-        $collection
-            ->addAttributeToSelect([
-                'name',
-                'status',
-                'content',
-                'meta_title',
-                'meta_keywords',
-                'meta_description',
-                'url_key'
-            ])
-            ->addPostFilter();
+        $collection = $this->getCollection();
 
         foreach ($collection as $post) {
             $post->setData('category_ids', $post->getCategoryIds());
@@ -100,5 +112,15 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
         $data = $this->searchResultToOutput($collection);
 
         return $data;
+    }
+
+    public function addFilter(\Magento\Framework\Api\Filter $filter)
+    {
+        if ($filter->getField() === 'fulltext') {
+            $collection = $this->getCollection();
+            $collection->addFieldToFilter('name', ['like' => '%' . $filter->getValue() . '%']);
+        } else {
+            return parent::addFilter($filter);
+        }
     }
 }
