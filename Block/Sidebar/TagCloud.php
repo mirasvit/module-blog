@@ -54,8 +54,11 @@ class TagCloud extends Template
     public function getCollection()
     {
         if (!$this->collection) {
-            $this->collection = $this->tagCollectionFactory->create()
-                ->joinPopularity();
+            $storeId = $this->context->getStoreManager()->getStore()->getId();
+            $this->collection = $this->tagCollectionFactory->create();
+            $this->collection
+                ->joinPopularity()
+                ->addStoreFilter($storeId);
         }
 
         return $this->collection;
