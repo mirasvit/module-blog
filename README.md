@@ -2,7 +2,7 @@
 
 FREE, fully featured, powerful Blog solution for your online store!
 
-Magento 2 Blog MX allows you to open a blog and engage more and more customers to your shop activities using any type of content: images, video, articles etc.
+Magento 2 Blog MX allows you to open a blog and engage more and more customers to your shop activities using any type of content: images, articles etc.
 
 [![Total Downloads](https://poser.pugx.org/mirasvit/module-blog/downloads)](https://packagist.org/packages/mirasvit/module-blog)
 [![Latest Stable Version](https://poser.pugx.org/mirasvit/module-blog/v/stable)](https://packagist.org/packages/mirasvit/module-blog)
