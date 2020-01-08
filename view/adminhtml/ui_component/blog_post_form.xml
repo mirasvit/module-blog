@@ -270,7 +270,7 @@
                 </argument>
             </field>
 
-            <field name="content">
+            <field name="content" formElement="wysiwyg">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
                         <item name="label" xsi:type="string" translate="true">Content</item>
@@ -278,6 +278,10 @@
                         <item name="formElement" xsi:type="string">wysiwyg</item>
                         <item name="template" xsi:type="string">ui/form/field</item>
                         <item name="wysiwyg" xsi:type="boolean">true</item>
+                        <item name="wysiwygConfigData" xsi:type="array">
+                            <item name="is_pagebuilder_enabled" xsi:type="boolean">true</item>
+                            <item name="pagebuilder_button" xsi:type="boolean">true</item>
+                        </item>
                     </item>
                 </argument>
             </field>
@@ -296,7 +300,7 @@
                 </argument>
             </field>
 
-            <field name="short_content">
+            <field name="short_content" formElement="wysiwyg">
                 <argument name="data" xsi:type="array">
                     <item name="config" xsi:type="array">
                         <item name="label" xsi:type="string" translate="true">Excerpt</item>
@@ -304,6 +308,10 @@
                         <item name="formElement" xsi:type="string">wysiwyg</item>
                         <item name="template" xsi:type="string">ui/form/field</item>
                         <item name="wysiwyg" xsi:type="boolean">true</item>
+                        <item name="wysiwygConfigData" xsi:type="array">
+                            <item name="is_pagebuilder_enabled" xsi:type="boolean">true</item>
+                            <item name="pagebuilder_button" xsi:type="boolean">true</item>
+                        </item>
                         <item name="imports" xsi:type="array">
                             <item name="visible" xsi:type="string">blog_post_form.blog_post_form:is_short_content</item>
                         </item>
@@ -447,7 +455,7 @@
                             <item name="externalProvider" xsi:type="string">blog_post_form_product_listing.blog_post_form_product_listing_data_source</item>
                             <item name="selectionsProvider" xsi:type="string">blog_post_form_product_listing.blog_post_form_product_listing.columns.ids</item>
                             <item name="ns" xsi:type="string">blog_post_form_product_listing</item>
-                            <item name="render_url" xsi:type="url" path="mui/index/render" />
+                            <item name="render_url" xsi:type="url" path="mui/index/render"/>
                             <item name="realTimeLink" xsi:type="boolean">true</item>
                             <item name="dataLinks" xsi:type="array">
                                 <item name="imports" xsi:type="boolean">false</item>
@@ -572,106 +580,4 @@
             </dynamicRows>
         </fieldset>
     </container>
-
-    <!--<fieldset name="image">-->
-    <!--<argument name="data" xsi:type="array">-->
-    <!--<item name="config" xsi:type="array">-->
-    <!--<item name="label" xsi:type="string">Banner</item>-->
-    <!--<item name="collapsible" xsi:type="boolean">true</item>-->
-    <!--<item name="opened" xsi:type="boolean">true</item>-->
-    <!--<item name="component" xsi:type="string">Mirasvit_Affiliate/js/component/fieldset</item>-->
-    <!--<item name="componentType" xsi:type="string">fieldset</item>-->
-    <!--<item name="toggle" xsi:type="array">-->
-    <!--<item name="selector" xsi:type="string">${$.provider}:data.type</item>-->
-    <!--<item name="value" xsi:type="string">image</item>-->
-    <!--</item>-->
-    <!--</item>-->
-    <!--</argument>-->
-
-    <!--<field name="link">-->
-    <!--<argument name="data" xsi:type="array">-->
-    <!--<item name="config" xsi:type="array">-->
-    <!--<item name="label" xsi:type="string" translate="true">Link</item>-->
-    <!--<item name="dataType" xsi:type="string">text</item>-->
-    <!--<item name="formElement" xsi:type="string">input</item>-->
-    <!--</item>-->
-    <!--</argument>-->
-    <!--</field>-->
-    <!--&lt;!&ndash;<field name="source_image">&ndash;&gt;-->
-    <!--&lt;!&ndash;<argument name="data" xsi:type="array">&ndash;&gt;-->
-    <!--&lt;!&ndash;<item name="config" xsi:type="array">&ndash;&gt;-->
-    <!--&lt;!&ndash;<item name="dataType" xsi:type="string">string</item>&ndash;&gt;-->
-    <!--&lt;!&ndash;<item name="label" xsi:type="string" translate="true">Image</item>&ndash;&gt;-->
-    <!--&lt;!&ndash;<item name="formElement" xsi:type="string">fileUploader</item>&ndash;&gt;-->
-    <!--&lt;!&ndash;<item name="elementTmpl" xsi:type="string">ui/form/element/uploader/uploader</item>&ndash;&gt;-->
-    <!--&lt;!&ndash;<item name="notice" xsi:type="string" translate="true">Allowed file types: jpeg, gif, png.</item>&ndash;&gt;-->
-    <!--&lt;!&ndash;<item name="uploaderConfig" xsi:type="array">&ndash;&gt;-->
-    <!--&lt;!&ndash;<item name="url" xsi:type="string">affiliate/banner/fileUpload</item>&ndash;&gt;-->
-    <!--&lt;!&ndash;</item>&ndash;&gt;-->
-    <!--&lt;!&ndash;</item>&ndash;&gt;-->
-    <!--&lt;!&ndash;</argument>&ndash;&gt;-->
-    <!--&lt;!&ndash;</field>&ndash;&gt;-->
-    <!--<field name="width">-->
-    <!--<argument name="data" xsi:type="array">-->
-    <!--<item name="config" xsi:type="array">-->
-    <!--<item name="label" xsi:type="string" translate="true">Width</item>-->
-    <!--<item name="dataType" xsi:type="string">text</item>-->
-    <!--<item name="formElement" xsi:type="string">input</item>-->
-    <!--<item name="validation" xsi:type="array">-->
-    <!--<item name="validate-number" xsi:type="boolean">true</item>-->
-    <!--<item name="validate-digits" xsi:type="boolean">true</item>-->
-    <!--</item>-->
-    <!--</item>-->
-    <!--</argument>-->
-    <!--</field>-->
-    <!--<field name="height">-->
-    <!--<argument name="data" xsi:type="array">-->
-    <!--<item name="config" xsi:type="array">-->
-    <!--<item name="label" xsi:type="string" translate="true">Height</item>-->
-    <!--<item name="dataType" xsi:type="string">text</item>-->
-    <!--<item name="formElement" xsi:type="string">input</item>-->
-    <!--<item name="suffix" xsi:type="string">px</item>-->
-    <!--<item name="validation" xsi:type="array">-->
-    <!--<item name="validate-number" xsi:type="boolean">true</item>-->
-    <!--<item name="validate-digits" xsi:type="boolean">true</item>-->
-    <!--</item>-->
-    <!--</item>-->
-    <!--</argument>-->
-    <!--</field>-->
-    <!--</fieldset>-->
-
-    <!--<fieldset name="text">-->
-    <!--<argument name="data" xsi:type="array">-->
-    <!--<item name="config" xsi:type="array">-->
-    <!--<item name="label" xsi:type="string">Text</item>-->
-    <!--<item name="collapsible" xsi:type="boolean">true</item>-->
-    <!--<item name="opened" xsi:type="boolean">true</item>-->
-    <!--<item name="component" xsi:type="string">Mirasvit_Affiliate/js/component/fieldset</item>-->
-    <!--<item name="componentType" xsi:type="string">fieldset</item>-->
-    <!--<item name="toggle" xsi:type="array">-->
-    <!--<item name="selector" xsi:type="string">${$.provider}:data.type</item>-->
-    <!--<item name="value" xsi:type="string">text</item>-->
-    <!--</item>-->
-    <!--</item>-->
-    <!--</argument>-->
-
-    <!--<field name="link">-->
-    <!--<argument name="data" xsi:type="array">-->
-    <!--<item name="config" xsi:type="array">-->
-    <!--<item name="label" xsi:type="string" translate="true">Link</item>-->
-    <!--<item name="dataType" xsi:type="string">text</item>-->
-    <!--<item name="formElement" xsi:type="string">input</item>-->
-    <!--</item>-->
-    <!--</argument>-->
-    <!--</field>-->
-    <!--<field name="source_text">-->
-    <!--<argument name="data" xsi:type="array">-->
-    <!--<item name="config" xsi:type="array">-->
-    <!--<item name="label" xsi:type="string" translate="true">Text</item>-->
-    <!--<item name="dataType" xsi:type="string">text</item>-->
-    <!--<item name="formElement" xsi:type="string">input</item>-->
-    <!--</item>-->
-    <!--</argument>-->
-    <!--</field>-->
-    <!--</fieldset>-->
 </form>
