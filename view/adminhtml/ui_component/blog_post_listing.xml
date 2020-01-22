@@ -63,20 +63,11 @@
                 </argument>
             </action>
             <action name="change_status">
-                <argument name="data" xsi:type="array">
-                    <item name="config" xsi:type="array">
-                        <item name="type" xsi:type="string">change_status</item>
-                        <item name="label" xsi:type="string" translate="true">Change status</item>
-                    </item>
-                </argument>
-                <argument name="actions" xsi:type="configurableObject">
-                    <argument name="class" xsi:type="string">Mirasvit\Blog\Ui\Component\Listing\MassStatus</argument>
-                    <argument name="data" xsi:type="array">
-                        <item name="component" xsi:type="string">Magento_Ui/js/grid/submenu</item>
-                        <item name="urlPath" xsi:type="string">blog/post/massStatus</item>
-                        <item name="paramName" xsi:type="string">status</item>
-                    </argument>
-                </argument>
+                <settings>
+                    <type>change_status</type>
+                    <label translate="true">Change Status</label>
+                    <actions class="Mirasvit\Blog\Ui\Component\Listing\MassStatus"/>
+                </settings>
             </action>
         </massaction>
         <bookmark name="bookmarks">
