@@ -63,11 +63,36 @@
                 </argument>
             </action>
             <action name="change_status">
-                <settings>
-                    <type>change_status</type>
-                    <label translate="true">Change Status</label>
-                    <actions class="Mirasvit\Blog\Ui\Component\Listing\MassStatus"/>
-                </settings>
+                <argument name="data" xsi:type="array">
+                    <item name="config" xsi:type="array">
+                        <item name="type" xsi:type="string">change_status</item>
+                        <item name="label" xsi:type="string" translate="true">Change status</item>
+                        <item name="url" xsi:type="url" path="blog/post/massStatus"/>
+                    </item>
+                </argument>
+                <argument name="actions" xsi:type="array">
+                    <item name="0" xsi:type="array">
+                        <item name="type" xsi:type="string">draft</item>
+                        <item name="label" xsi:type="string" translate="true">Draft</item>
+                        <item name="url" xsi:type="url" path="blog/post/massStatus">
+                            <param name="status">0</param>
+                        </item>
+                    </item>
+                    <item name="1" xsi:type="array">
+                        <item name="type" xsi:type="string">pending_review</item>
+                        <item name="label" xsi:type="string" translate="true">Pending Review</item>
+                        <item name="url" xsi:type="url" path="blog/post/massStatus">
+                            <param name="status">1</param>
+                        </item>
+                    </item>
+                    <item name="2" xsi:type="array">
+                        <item name="type" xsi:type="string">published</item>
+                        <item name="label" xsi:type="string" translate="true">Published</item>
+                        <item name="url" xsi:type="url" path="blog/post/massStatus">
+                            <param name="status">2</param>
+                        </item>
+                    </item>
+                </argument>
             </action>
         </massaction>
         <bookmark name="bookmarks">

@@ -21,7 +21,6 @@ class MassStatus extends \Magento\Backend\App\Action
      */
     protected $collectionFactory;
 
-
     /**
      * @param Context $context
      * @param Filter $filter
@@ -33,6 +32,7 @@ class MassStatus extends \Magento\Backend\App\Action
         $this->collectionFactory = $collectionFactory;
         parent::__construct($context);
     }
+
     /**
      * Execute action
      *
