@@ -20,10 +20,16 @@ define([
                 });
                 $el.on('tokenize:tokens:remove', function () {
                     model.value($el.val());
+                });
+                
+                var $input = $('input', $el.parent());
+                $input.on('blur', function () {
+                    $el.trigger('tokenize:tokens:add', $input.val())
+                    model.value($el.val());
                 })
             }
         }
     };
-    
+   
     return Abstract.extend({});
 });
