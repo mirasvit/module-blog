@@ -1,3 +1,19 @@
+## 1.0.34
+*(2020-01-28)*
+
+#### Fixed
+* Issue with short content present after saving post with disabled excerpt
+* Page builder issue on Magento EE
+* Invalid class argument on Magento 2.3.3
+* Sort of the Related Posts tab on the product pages
+* Issue with tags adding
+
+#### Improvements
+* MassActions in the post listing
+
+---
+
+
 ## 1.0.33
 *(2019-06-18)*
 
