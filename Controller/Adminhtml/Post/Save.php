@@ -50,6 +50,11 @@ class Save extends Post
                 return $resultRedirect->setPath('*/*/');
             }
             $model->addData($data);
+
+            if(!$data['is_short_content']) {
+                $model->setShortContent('');
+            }
+
             try {
                 if ($this->getRequest()->getParam('isAjax')) {
                     return $this->handlePreviewRequest($model);
