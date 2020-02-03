@@ -59,4 +59,7 @@ Magento 2 Blog MX allows you to open a blog and engage more and more customers t
 * [Page Cache Warmer](https://mirasvit.com/magento-2-extensions/full-page-cache-warmer.html)
 * [Improved Reindex](https://mirasvit.com/magento-2-extensions/improved-asynchronous-reindex.html)
 * [Stability Suite](https://mirasvit.com/magento-2-extensions/stability-suite.html)
+* [Automatic Related Products](https://mirasvit.com/magento-2-automatic-related-products.html)
+* [Admin Bookmarks](https://mirasvit.com/magento-2-admin-bookmarks.html)
+* [Google PageSpeed Optimizer](https://mirasvit.com/magento-2-google-page-speed-optimizer.html)
 
