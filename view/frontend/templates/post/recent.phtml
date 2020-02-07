@@ -1,12 +1,10 @@
 <?php
-//@codingStandardsIgnoreFile
+use Mirasvit\Blog\Model\Post;
 
-/** @var Recent $block */
+/** @var \Mirasvit\Blog\Block\Post\Recent $block */
 $postCollection = $block->getCollection()
     ->setPageSize($this->getPageSize());
-
-use Mirasvit\Blog\Block\Post\Recent;
-use Mirasvit\Blog\Model\Post; ?>
+?>
 
 <div class="block blog__main-recent">
     <div class="block-title">
