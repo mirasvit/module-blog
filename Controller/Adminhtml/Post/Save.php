@@ -51,7 +51,7 @@ class Save extends Post
             }
             $model->addData($data);
 
-            if(!$data['is_short_content']) {
+            if (!$data['is_short_content']) {
                 $model->setShortContent('');
             }
 

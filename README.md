@@ -2,7 +2,7 @@
 
 FREE, fully featured, powerful Blog solution for your online store!
 
-Magento 2 Blog MX allows you to open a blog and engage more and more customers to your shop activities using any type of content: images, video, articles etc.
+Magento 2 Blog MX allows you to open a blog and engage more and more customers to your shop activities using any type of content: images, articles etc.
 
 [![Total Downloads](https://poser.pugx.org/mirasvit/module-blog/downloads)](https://packagist.org/packages/mirasvit/module-blog)
 [![Latest Stable Version](https://poser.pugx.org/mirasvit/module-blog/v/stable)](https://packagist.org/packages/mirasvit/module-blog)
@@ -59,4 +59,7 @@ Magento 2 Blog MX allows you to open a blog and engage more and more customers t
 * [Page Cache Warmer](https://mirasvit.com/magento-2-extensions/full-page-cache-warmer.html)
 * [Improved Reindex](https://mirasvit.com/magento-2-extensions/improved-asynchronous-reindex.html)
 * [Stability Suite](https://mirasvit.com/magento-2-extensions/stability-suite.html)
+* [Automatic Related Products](https://mirasvit.com/magento-2-automatic-related-products.html)
+* [Admin Bookmarks](https://mirasvit.com/magento-2-admin-bookmarks.html)
+* [Google PageSpeed Optimizer](https://mirasvit.com/magento-2-google-page-speed-optimizer.html)
 

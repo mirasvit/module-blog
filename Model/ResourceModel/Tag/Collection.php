@@ -37,7 +37,7 @@ class Collection extends AbstractCollection
         $this->getSelect()
             ->joinLeft(
                 ['store_post' => $this->getTable('mst_blog_store_post')],
-                 'tag_post.post_id = store_post.post_id'
+                'tag_post.post_id = store_post.post_id'
             )->where("EXISTS (SELECT * FROM `{$this->getTable('mst_blog_store_post')}`
                 AS `store_post`
                 WHERE tag_post.post_id = store_post.post_id

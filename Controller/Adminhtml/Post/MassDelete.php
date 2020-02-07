@@ -27,7 +27,7 @@ class MassDelete extends \Magento\Backend\App\Action
         $collectionSize = $collection->getSize();
 
         foreach ($collection as $item) {
-            $item->delete();           
+            $item->delete();
         }
 
         $this->messageManager->addSuccess(__('A total of %1 post(s) have been deleted.', $collectionSize));
