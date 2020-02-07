@@ -2,11 +2,13 @@
 
 namespace Mirasvit\Blog\Block\Category;
 
-use Magento\Framework\View\Element\Template;
 use Magento\Framework\Registry;
+use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
-use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
+use Mirasvit\Blog\Model\Category;
 use Mirasvit\Blog\Model\Config;
+use Mirasvit\Blog\Model\Post;
+use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
 use Mirasvit\Blog\Model\Url;
 
 class Rss extends Template
@@ -46,23 +48,15 @@ class Rss extends Template
         Context $context
     ) {
         $this->postCollectionFactory = $postCollectionFactory;
-        $this->config = $config;
-        $this->url = $url;
-        $this->registry = $registry;
+        $this->config                = $config;
+        $this->url                   = $url;
+        $this->registry              = $registry;
 
         parent::__construct($context);
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Category|false
-     */
-    public function getCategory()
-    {
-        return $this->registry->registry('current_blog_category');
-    }
-
-    /**
-     * @return \Mirasvit\Blog\Model\Post[]
+     * @return Post[]
      */
     public function getCollection()
     {
@@ -76,6 +70,14 @@ class Rss extends Template
         }
 
         return $collection;
+    }
+
+    /**
+     * @return Category|false
+     */
+    public function getCategory()
+    {
+        return $this->registry->registry('current_blog_category');
     }
 
     /**

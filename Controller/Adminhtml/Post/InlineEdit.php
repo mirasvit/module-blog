@@ -2,11 +2,13 @@
 
 namespace Mirasvit\Blog\Controller\Adminhtml\Post;
 
+use Exception;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\Controller\Result\Json;
+use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Registry;
 use Mirasvit\Blog\Api\Repository\PostRepositoryInterface;
 use Mirasvit\Blog\Controller\Adminhtml\Post;
-use Magento\Framework\Controller\Result\JsonFactory;
 
 class InlineEdit extends Post
 {
@@ -31,10 +33,10 @@ class InlineEdit extends Post
      */
     public function execute()
     {
-        /** @var \Magento\Framework\Controller\Result\Json $resultJson */
+        /** @var Json $resultJson */
         $resultJson = $this->jsonFactory->create();
 
-        $error = false;
+        $error    = false;
         $messages = [];
 
         $postItems = $this->getRequest()->getParam('items', []);
@@ -56,9 +58,9 @@ class InlineEdit extends Post
 
                 $this->postRepository->save($post);
 
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $messages[] = __('Something went wrong while saving the post.');
-                $error = true;
+                $error      = true;
             }
         }
 

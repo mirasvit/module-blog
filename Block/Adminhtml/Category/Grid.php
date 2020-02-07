@@ -2,9 +2,11 @@
 
 namespace Mirasvit\Blog\Block\Adminhtml\Category;
 
-use Magento\Backend\Block\Widget\Grid\Extended as ExtendedGrid;
+use Exception;
 use Magento\Backend\Block\Widget\Context;
+use Magento\Backend\Block\Widget\Grid\Extended as ExtendedGrid;
 use Magento\Backend\Helper\Data as BackendHelper;
+use Mirasvit\Blog\Model\Category;
 use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 
 class Grid extends ExtendedGrid
@@ -29,6 +31,16 @@ class Grid extends ExtendedGrid
         $this->categoryCollectionFactory = $postCollectionFactory;
 
         parent::__construct($context, $backendHelper, $data);
+    }
+
+    /**
+     * @param Category $row
+     *
+     * @return string
+     */
+    public function getRowUrl($row)
+    {
+        return $this->getUrl('*/*/edit', ['id' => $row->getId()]);
     }
 
     /**
@@ -60,7 +72,6 @@ class Grid extends ExtendedGrid
 
     /**
      * Sort category tree
-     *
      * {@inheritdoc}
      */
     protected function _afterLoadCollection()
@@ -70,7 +81,7 @@ class Grid extends ExtendedGrid
             ->toOptionArray();
 
         $collection = clone $this->getCollection();
-        $ordered = $this->getCollection()->removeAllItems();
+        $ordered    = $this->getCollection()->removeAllItems();
         foreach ($categories as $category) {
             if ($item = $collection->getItemById($category['value'])) {
                 $ordered->addItem($item);
@@ -78,12 +89,13 @@ class Grid extends ExtendedGrid
         }
 
         $this->setCollection($ordered);
+
         return parent::_afterLoadCollection();
     }
 
     /**
      * @return $this
-     * @throws \Exception
+     * @throws Exception
      */
     protected function _prepareColumns()
     {
@@ -92,7 +104,7 @@ class Grid extends ExtendedGrid
             'index'    => 'name',
             'filter'   => false,
             'sortable' => false,
-            'renderer' => 'Mirasvit\Blog\Block\Adminhtml\Category\Grid\Renderer\Title'
+            'renderer' => 'Mirasvit\Blog\Block\Adminhtml\Category\Grid\Renderer\Title',
         ]);
 
         $this->addColumn('status', [
@@ -107,14 +119,5 @@ class Grid extends ExtendedGrid
         ]);
 
         return parent::_prepareColumns();
-    }
-
-    /**
-     * @param \Mirasvit\Blog\Model\Category $row
-     * @return string
-     */
-    public function getRowUrl($row)
-    {
-        return $this->getUrl('*/*/edit', ['id' => $row->getId()]);
     }
 }

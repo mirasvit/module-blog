@@ -2,10 +2,13 @@
 
 namespace Mirasvit\Blog\Block\Search;
 
-use Magento\Framework\View\Element\Template;
 use Magento\Framework\Registry;
+use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
+use Magento\Theme\Block\Html\Breadcrumbs;
+use Magento\Theme\Block\Html\Title;
 use Mirasvit\Blog\Model\Config;
+use Mirasvit\Blog\Model\ResourceModel\Post\Collection;
 
 class Result extends Template
 {
@@ -36,11 +39,19 @@ class Result extends Template
         Context $context,
         array $data = []
     ) {
-        $this->config = $config;
+        $this->config   = $config;
         $this->registry = $registry;
-        $this->context = $context;
+        $this->context  = $context;
 
         parent::__construct($context, $data);
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getPostCollection()
+    {
+        return $this->getChildBlock('blog.post.list')->getPostCollection();
     }
 
     /**
@@ -62,13 +73,13 @@ class Result extends Template
         $this->pageConfig->setDescription($metaDescription);
         $this->pageConfig->setKeywords($metaKeywords);
 
-        /** @var \Magento\Theme\Block\Html\Title $pageMainTitle */
+        /** @var Title $pageMainTitle */
         $pageMainTitle = $this->getLayout()->getBlock('page.main.title');
         if ($pageMainTitle) {
             $pageMainTitle->setPageTitle($title);
         }
 
-        /** @var \Magento\Theme\Block\Html\Breadcrumbs $breadcrumbs */
+        /** @var Breadcrumbs $breadcrumbs */
         if ($breadcrumbs = $this->getLayout()->getBlock('breadcrumbs')) {
             $breadcrumbs->addCrumb('home', [
                 'label' => __('Home'),
@@ -77,21 +88,13 @@ class Result extends Template
             ])->addCrumb('blog', [
                 'label' => $this->config->getBlogName(),
                 'title' => $this->config->getBlogName(),
-                'link'  => $this->config->getBaseUrl()
+                'link'  => $this->config->getBaseUrl(),
             ])->addCrumb('search', [
                 'label' => $title,
-                'title' => $title
+                'title' => $title,
             ]);
         }
 
         return $this;
-    }
-
-    /**
-     * @return \Mirasvit\Blog\Model\ResourceModel\Post\Collection
-     */
-    public function getPostCollection()
-    {
-        return $this->getChildBlock('blog.post.list')->getPostCollection();
     }
 }

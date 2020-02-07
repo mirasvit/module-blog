@@ -2,7 +2,10 @@
 
 namespace Mirasvit\Blog\Model\ResourceModel\Post\Grid;
 
+use Magento\Eav\Model\Entity\Attribute\AttributeInterface;
 use Magento\Framework\Api\Search\SearchResultInterface;
+use Magento\Framework\Api\SearchCriteriaInterface;
+use Magento\Framework\DB\Select;
 use Magento\Framework\Search\AggregationInterface;
 use Mirasvit\Blog\Model\ResourceModel\Post\Collection as PostCollection;
 
@@ -47,7 +50,7 @@ class Collection extends PostCollection implements SearchResultInterface
     /**
      * {@inheritdoc}
      */
-    public function setSearchCriteria(\Magento\Framework\Api\SearchCriteriaInterface $searchCriteria = null)
+    public function setSearchCriteria(SearchCriteriaInterface $searchCriteria = null)
     {
         return $this;
     }
@@ -81,9 +84,9 @@ class Collection extends PostCollection implements SearchResultInterface
      * column. This adds the category ids filter to be used in the Magento admin and joins that
      * table in (grouping by the post entity_id column).
      *
-     * @param array|int|\Magento\Eav\Model\Entity\Attribute\AttributeInterface|string $attribute
-     * @param null                                                                    $condition
-     * @param string                                                                  $joinType
+     * @param array|int|AttributeInterface|string $attribute
+     * @param null                                $condition
+     * @param string                              $joinType
      *
      * @return $this
      */
@@ -108,11 +111,11 @@ class Collection extends PostCollection implements SearchResultInterface
     /**
      * Joins the category / post linking table into this queyr.
      *
-     * @param \Magento\Framework\DB\Select $select
+     * @param Select $select
      *
      * @return void
      */
-    private function joinCategoryIdsTable(\Magento\Framework\DB\Select $select)
+    private function joinCategoryIdsTable(Select $select)
     {
         $select->group('entity_id');
         $select->joinInner(
@@ -125,12 +128,12 @@ class Collection extends PostCollection implements SearchResultInterface
     /**
      * Adds the condition relating to category ids.
      *
-     * @param \Magento\Framework\DB\Select $select
+     * @param Select $select
      * @param null                         $condition
      *
      * @return void
      */
-    private function addConditionToSelect(\Magento\Framework\DB\Select $select, $condition = null)
+    private function addConditionToSelect(Select $select, $condition = null)
     {
         $select->where($this->_getConditionSql(self::CAT_PROD_LINK_ALIAS . '.category_id', $condition));
     }

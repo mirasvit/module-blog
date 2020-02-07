@@ -3,28 +3,22 @@
 namespace Mirasvit\Blog\Repository;
 
 use Mirasvit\Blog\Api\Data\CategoryInterface;
+use Mirasvit\Blog\Api\Data\CategoryInterfaceFactory;
 use Mirasvit\Blog\Api\Repository\CategoryRepositoryInterface;
 use Mirasvit\Blog\Model\Category;
 use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory;
-use Mirasvit\Blog\Api\Data\CategoryInterfaceFactory;
 
 class CategoryRepository implements CategoryRepositoryInterface
 {
-    /**
-     * @var CategoryInterfaceFactory
-     */
     private $factory;
 
-    /**
-     * @var CollectionFactory
-     */
     private $collectionFactory;
 
     public function __construct(
         CategoryInterfaceFactory $factory,
         CollectionFactory $collectionFactory
     ) {
-        $this->factory = $factory;
+        $this->factory           = $factory;
         $this->collectionFactory = $collectionFactory;
     }
 
@@ -39,14 +33,6 @@ class CategoryRepository implements CategoryRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function create()
-    {
-        return $this->factory->create();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function get($id)
     {
         /** @var Category $model */
@@ -55,6 +41,14 @@ class CategoryRepository implements CategoryRepositoryInterface
         $model->getResource()->load($model, $id);
 
         return $model->getId() ? $model : false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function create()
+    {
+        return $this->factory->create();
     }
 
     /**

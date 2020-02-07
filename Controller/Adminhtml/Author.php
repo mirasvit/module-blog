@@ -3,9 +3,11 @@
 namespace Mirasvit\Blog\Controller\Adminhtml;
 
 use Magento\Backend\App\Action;
-use Mirasvit\Blog\Model\AuthorFactory;
-use Magento\Framework\Registry;
 use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Page;
+use Magento\Backend\Model\View\Result\Page\Interceptor;
+use Magento\Framework\Registry;
+use Mirasvit\Blog\Model\AuthorFactory;
 
 abstract class Author extends Action
 {
@@ -35,24 +37,10 @@ abstract class Author extends Action
         Context $context
     ) {
         $this->authorFactory = $authorFactory;
-        $this->registry = $registry;
-        $this->context = $context;
+        $this->registry      = $registry;
+        $this->context       = $context;
 
         parent::__construct($context);
-    }
-
-    /**
-     * {@inheritdoc}
-     * @param \Magento\Backend\Model\View\Result\Page $resultPage
-     * @return \Magento\Backend\Model\View\Result\Page\Interceptor
-     */
-    protected function initPage($resultPage)
-    {
-        $resultPage->setActiveMenu('Mirasvit_Blog::blog');
-        $resultPage->getConfig()->getTitle()->prepend(__('Mirasvit Blog MX'));
-        $resultPage->getConfig()->getTitle()->prepend(__('Authors'));
-
-        return $resultPage;
     }
 
     /**
@@ -68,6 +56,21 @@ abstract class Author extends Action
         $this->registry->register('current_model', $model);
 
         return $model;
+    }
+
+    /**
+     * {@inheritdoc}
+     * @param Page $resultPage
+     *
+     * @return Interceptor
+     */
+    protected function initPage($resultPage)
+    {
+        $resultPage->setActiveMenu('Mirasvit_Blog::blog');
+        $resultPage->getConfig()->getTitle()->prepend(__('Mirasvit Blog MX'));
+        $resultPage->getConfig()->getTitle()->prepend(__('Authors'));
+
+        return $resultPage;
     }
 
     /**

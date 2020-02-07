@@ -2,12 +2,15 @@
 
 namespace Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar;
 
-use Magento\Framework\Data\FormFactory;
-use Magento\Framework\Registry;
-use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 use Magento\Backend\Block\Widget\Context;
+use Magento\Backend\Block\Widget\Form;
+use Magento\Framework\Data\FormFactory;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Registry;
+use Mirasvit\Blog\Model\Post;
+use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 
-class Categories extends \Magento\Backend\Block\Widget\Form
+class Categories extends Form
 {
     /**
      * @var CategoryCollectionFactory
@@ -39,23 +42,22 @@ class Categories extends \Magento\Backend\Block\Widget\Form
         array $data = []
     ) {
         $this->categoryCollectionFactory = $postCollectionFactory;
-        $this->formFactory = $formFactory;
-        $this->registry = $registry;
+        $this->formFactory               = $formFactory;
+        $this->registry                  = $registry;
 
         parent::__construct($context, $data);
     }
 
     /**
      * @return $this
-     *
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function _prepareForm()
     {
         $form = $this->formFactory->create();
         $this->setForm($form);
 
-        /** @var \Mirasvit\Blog\Model\Post $post */
+        /** @var Post $post */
         $post = $this->registry->registry('current_model');
 
         $fieldset = $form->addFieldset('categories_fieldset', [
@@ -69,7 +71,7 @@ class Categories extends \Magento\Backend\Block\Widget\Form
         $fieldset->addField('category_ids', 'checkboxes', [
             'name'   => 'post[category_ids][]',
             'value'  => $post->getCategoryIds(),
-            'values' => $collection->toOptionArray()
+            'values' => $collection->toOptionArray(),
         ]);
 
         return parent::_prepareForm();

@@ -2,28 +2,19 @@
 
 namespace Mirasvit\Blog\Repository;
 
-use Mirasvit\Blog\Api\Data\TagInterface;
-use Mirasvit\Blog\Api\Repository\TagRepositoryInterface;
-use Mirasvit\Blog\Model\Tag;
-use Mirasvit\Blog\Model\ResourceModel\Tag\CollectionFactory;
-use Mirasvit\Blog\Api\Data\TagInterfaceFactory;
 use Magento\Framework\Filter\FilterManager;
+use Mirasvit\Blog\Api\Data\TagInterface;
+use Mirasvit\Blog\Api\Data\TagInterfaceFactory;
+use Mirasvit\Blog\Api\Repository\TagRepositoryInterface;
+use Mirasvit\Blog\Model\ResourceModel\Tag\CollectionFactory;
+use Mirasvit\Blog\Model\Tag;
 
 class TagRepository implements TagRepositoryInterface
 {
-    /**
-     * @var TagInterfaceFactory
-     */
     private $factory;
 
-    /**
-     * @var CollectionFactory
-     */
     private $collectionFactory;
 
-    /**
-     * @var FilterManager
-     */
     private $filterManager;
 
     public function __construct(
@@ -31,25 +22,9 @@ class TagRepository implements TagRepositoryInterface
         CollectionFactory $collectionFactory,
         FilterManager $filterManager
     ) {
-        $this->factory = $factory;
+        $this->factory           = $factory;
         $this->collectionFactory = $collectionFactory;
-        $this->filterManager = $filterManager;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getCollection()
-    {
-        return $this->collectionFactory->create();
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function create()
-    {
-        return $this->factory->create();
+        $this->filterManager     = $filterManager;
     }
 
     /**
@@ -68,10 +43,40 @@ class TagRepository implements TagRepositoryInterface
     /**
      * {@inheritdoc}
      */
+    public function create()
+    {
+        return $this->factory->create();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
     public function delete(TagInterface $model)
     {
         /** @var Tag $model */
         return $model->getResource()->delete($model);
+    }
+
+    public function ensure(TagInterface $model)
+    {
+        /** @var TagInterface $tag */
+        $tag = $this->getCollection()
+            ->addFieldToFilter(TagInterface::NAME, $model->getName())
+            ->getFirstItem();
+
+        if ($tag->getId()) {
+            return $tag;
+        } else {
+            return $this->save($model);
+        }
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getCollection()
+    {
+        return $this->collectionFactory->create();
     }
 
     /**
@@ -87,19 +92,5 @@ class TagRepository implements TagRepositoryInterface
         $model->getResource()->save($model);
 
         return $model;
-    }
-
-    public function ensure(TagInterface $model)
-    {
-        /** @var TagInterface $tag */
-        $tag = $this->getCollection()
-            ->addFieldToFilter(TagInterface::NAME, $model->getName())
-            ->getFirstItem();
-
-        if ($tag->getId()) {
-            return $tag;
-        } else {
-            return $this->save($model);
-        }
     }
 }

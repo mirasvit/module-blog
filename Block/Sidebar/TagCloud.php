@@ -2,9 +2,10 @@
 
 namespace Mirasvit\Blog\Block\Sidebar;
 
-use Magento\Framework\View\Element\Template;
 use Magento\Framework\Registry;
+use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
+use Mirasvit\Blog\Model\ResourceModel\Tag\Collection;
 use Mirasvit\Blog\Model\ResourceModel\Tag\CollectionFactory as TagCollectionFactory;
 
 class TagCloud extends Template
@@ -25,7 +26,7 @@ class TagCloud extends Template
     protected $context;
 
     /**
-     * @var \Mirasvit\Blog\Model\ResourceModel\Tag\Collection
+     * @var Collection
      */
     protected $collection;
 
@@ -42,26 +43,10 @@ class TagCloud extends Template
         array $data = []
     ) {
         $this->tagCollectionFactory = $postCollectionFactory;
-        $this->registry = $registry;
-        $this->context = $context;
+        $this->registry             = $registry;
+        $this->context              = $context;
 
         parent::__construct($context, $data);
-    }
-
-    /**
-     * @return \Mirasvit\Blog\Model\ResourceModel\Tag\Collection
-     */
-    public function getCollection()
-    {
-        if (!$this->collection) {
-            $storeId = $this->context->getStoreManager()->getStore()->getId();
-            $this->collection = $this->tagCollectionFactory->create();
-            $this->collection
-                ->joinPopularity()
-                ->addStoreFilter($storeId);
-        }
-
-        return $this->collection;
     }
 
     /**
@@ -77,5 +62,21 @@ class TagCloud extends Template
         }
 
         return $max;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getCollection()
+    {
+        if (!$this->collection) {
+            $storeId          = $this->context->getStoreManager()->getStore()->getId();
+            $this->collection = $this->tagCollectionFactory->create();
+            $this->collection
+                ->joinPopularity()
+                ->addStoreFilter($storeId);
+        }
+
+        return $this->collection;
     }
 }

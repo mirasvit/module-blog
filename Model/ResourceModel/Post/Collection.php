@@ -2,21 +2,16 @@
 
 namespace Mirasvit\Blog\Model\ResourceModel\Post;
 
+use Magento\Catalog\Model\Product;
 use Magento\Eav\Model\Entity\Collection\AbstractCollection;
 use Mirasvit\Blog\Api\Data\PostInterface;
+use Mirasvit\Blog\Model\Author;
+use Mirasvit\Blog\Model\Category;
 use Mirasvit\Blog\Model\Post;
-use Mirasvit\Blog\Model\Post\Attribute\Source\Status;
+use Mirasvit\Blog\Model\Tag;
 
 class Collection extends AbstractCollection
 {
-    /**
-     * {@inheritdoc}
-     */
-    protected function _construct()
-    {
-        $this->_init('Mirasvit\Blog\Model\Post', 'Mirasvit\Blog\Model\ResourceModel\Post');
-    }
-
     public function _afterLoad()
     {
         foreach ($this->_items as $item) {
@@ -38,7 +33,8 @@ class Collection extends AbstractCollection
     }
 
     /**
-     * @param \Mirasvit\Blog\Model\Category $category
+     * @param Category $category
+     *
      * @return $this
      */
     public function addCategoryFilter($category)
@@ -54,6 +50,7 @@ class Collection extends AbstractCollection
 
     /**
      * @param int $storeId
+     *
      * @return $this
      */
     public function addStoreFilter($storeId)
@@ -72,7 +69,8 @@ class Collection extends AbstractCollection
     }
 
     /**
-     * @param \Magento\Catalog\Model\Product $product
+     * @param Product $product
+     *
      * @return $this
      */
     public function addRelatedProductFilter($product)
@@ -87,7 +85,8 @@ class Collection extends AbstractCollection
     }
 
     /**
-     * @param \Mirasvit\Blog\Model\Tag|array $tag
+     * @param Tag|array $tag
+     *
      * @return $this
      */
     public function addTagFilter($tag)
@@ -112,6 +111,7 @@ class Collection extends AbstractCollection
 
     /**
      * @param string $q
+     *
      * @return $this
      */
     public function addSearchFilter($q)
@@ -131,7 +131,8 @@ class Collection extends AbstractCollection
     }
 
     /**
-     * @param \Mirasvit\Blog\Model\Author $author
+     * @param Author $author
+     *
      * @return $this
      */
     public function addAuthorFilter($author)
@@ -146,7 +147,7 @@ class Collection extends AbstractCollection
      */
     public function addPostFilter()
     {
-        $this->addFieldToFilter('type', \Mirasvit\Blog\Model\Post::TYPE_POST);
+        $this->addFieldToFilter('type', Post::TYPE_POST);
 
         return $this;
     }
@@ -160,5 +161,13 @@ class Collection extends AbstractCollection
         $this->getSelect()->order('created_at DESC');
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _construct()
+    {
+        $this->_init('Mirasvit\Blog\Model\Post', 'Mirasvit\Blog\Model\ResourceModel\Post');
     }
 }

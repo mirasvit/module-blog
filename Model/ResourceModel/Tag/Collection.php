@@ -7,14 +7,6 @@ use Magento\Framework\Model\ResourceModel\Db\Collection\AbstractCollection;
 class Collection extends AbstractCollection
 {
     /**
-     * {@inheritdoc}
-     */
-    protected function _construct()
-    {
-        $this->_init('Mirasvit\Blog\Model\Tag', 'Mirasvit\Blog\Model\ResourceModel\Tag');
-    }
-
-    /**
      * @return $this
      */
     public function joinPopularity()
@@ -48,7 +40,7 @@ class Collection extends AbstractCollection
 
         return $this;
     }
-    
+
     /**
      * @return $this
      */
@@ -63,5 +55,13 @@ class Collection extends AbstractCollection
             ->group('tag_id');
 
         return $this;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _construct()
+    {
+        $this->_init('Mirasvit\Blog\Model\Tag', 'Mirasvit\Blog\Model\ResourceModel\Tag');
     }
 }

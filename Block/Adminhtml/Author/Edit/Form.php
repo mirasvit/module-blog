@@ -2,10 +2,12 @@
 
 namespace Mirasvit\Blog\Block\Adminhtml\Author\Edit;
 
-use Magento\Framework\Data\FormFactory;
-use Magento\Framework\Registry;
-use Magento\Backend\Block\Widget\Form as WidgetForm;
 use Magento\Backend\Block\Widget\Context;
+use Magento\Backend\Block\Widget\Form as WidgetForm;
+use Magento\Framework\Data\FormFactory;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Registry;
+use Mirasvit\Blog\Model\Author;
 
 class Form extends WidgetForm
 {
@@ -30,15 +32,14 @@ class Form extends WidgetForm
         Context $context
     ) {
         $this->formFactory = $formFactory;
-        $this->registry = $registry;
+        $this->registry    = $registry;
 
         parent::__construct($context);
     }
 
     /**
      * @return $this
-     *
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function _prepareForm()
     {
@@ -54,11 +55,11 @@ class Form extends WidgetForm
 
         $this->setForm($form);
 
-        /** @var \Mirasvit\Blog\Model\Author $author */
+        /** @var Author $author */
         $author = $this->registry->registry('current_model');
 
         $fieldset = $form->addFieldset('edit_fieldset', [
-            'legend' => __('Author Information')
+            'legend' => __('Author Information'),
         ]);
 
         if ($author->getId()) {

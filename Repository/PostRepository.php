@@ -10,33 +10,19 @@ use Mirasvit\Blog\Api\Repository\CategoryRepositoryInterface;
 use Mirasvit\Blog\Api\Repository\PostRepositoryInterface;
 use Mirasvit\Blog\Api\Repository\TagRepositoryInterface;
 use Mirasvit\Blog\Model\Post;
+use Mirasvit\Blog\Model\ResourceModel\Post\Collection;
 use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory;
 
 class PostRepository implements PostRepositoryInterface
 {
-    /**
-     * @var PostInterfaceFactory
-     */
     private $factory;
 
-    /**
-     * @var CollectionFactory
-     */
     private $collectionFactory;
 
-    /**
-     * @var TagRepositoryInterface
-     */
     private $tagRepository;
 
-    /**
-     * @var CatRepositoryInterface
-     */
     private $catRepository;
 
-    /**
-     * @var FilterManager
-     */
     private $filterManager;
 
     public function __construct(
@@ -54,20 +40,11 @@ class PostRepository implements PostRepositoryInterface
     }
 
     /**
-     * {@inheritdoc}
-     */
-    public function getCollection()
-    {
-        return $this->collectionFactory->create();
-    }
-
-
-    /**
      * @inheritdoc
      */
     public function getList()
     {
-        /** @var \Mirasvit\Blog\Model\ResourceModel\Post\Collection $collection */
+        /** @var Collection $collection */
         $collection = $this->getCollection();
 
         return $collection->getItems();
@@ -76,9 +53,9 @@ class PostRepository implements PostRepositoryInterface
     /**
      * {@inheritdoc}
      */
-    public function create()
+    public function getCollection()
     {
-        return $this->factory->create();
+        return $this->collectionFactory->create();
     }
 
     /**
@@ -96,6 +73,14 @@ class PostRepository implements PostRepositoryInterface
         }
 
         return false;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function create()
+    {
+        return $this->factory->create();
     }
 
     /**

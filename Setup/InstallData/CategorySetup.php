@@ -1,19 +1,19 @@
 <?php
+
 namespace Mirasvit\Blog\Setup\InstallData;
 
-use Mirasvit\Blog\Model\CategoryFactory;
+use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
 use Magento\Eav\Model\Entity\Setup\Context;
 use Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory;
 use Magento\Eav\Setup\EavSetup;
 use Magento\Framework\App\CacheInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
-use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
+use Mirasvit\Blog\Model\CategoryFactory;
 
 class CategorySetup extends EavSetup
 {
     /**
      * Category model factory
-     *
      * @var CategoryFactory
      */
     private $categoryFactory;
@@ -38,7 +38,6 @@ class CategorySetup extends EavSetup
 
     /**
      * Default entities and attributes
-     *
      * @return array
      * @SuppressWarnings(PHPMD.ExcessiveMethodLength)
      */

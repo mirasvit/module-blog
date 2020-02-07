@@ -2,7 +2,6 @@
 
 namespace Mirasvit\Blog\Controller\Adminhtml\Post;
 
-use Magento\Framework\Controller\ResultFactory;
 use Mirasvit\Blog\Controller\Adminhtml\Post;
 
 class RelatedProductsGrid extends Post

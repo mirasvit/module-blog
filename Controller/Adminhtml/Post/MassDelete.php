@@ -2,13 +2,14 @@
 
 namespace Mirasvit\Blog\Controller\Adminhtml\Post;
 
+use Magento\Backend\App\Action;
 use Magento\Backend\App\Action\Context;
+use Magento\Backend\Model\View\Result\Redirect;
+use Magento\Framework\Controller\ResultFactory;
 use Magento\Ui\Component\MassAction\Filter;
 use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory;
-use Magento\Framework\Controller\ResultFactory;
-use Magento\Framework\App\ResponseInterface;
 
-class MassDelete extends \Magento\Backend\App\Action
+class MassDelete extends Action
 {
     protected $filter;
 
@@ -16,14 +17,14 @@ class MassDelete extends \Magento\Backend\App\Action
 
     public function __construct(Context $context, Filter $filter, CollectionFactory $collectionFactory)
     {
-        $this->filter = $filter;
+        $this->filter            = $filter;
         $this->collectionFactory = $collectionFactory;
         parent::__construct($context);
     }
 
     public function execute()
     {
-        $collection = $this->filter->getCollection($this->collectionFactory->create());
+        $collection     = $this->filter->getCollection($this->collectionFactory->create());
         $collectionSize = $collection->getSize();
 
         foreach ($collection as $item) {
@@ -31,10 +32,10 @@ class MassDelete extends \Magento\Backend\App\Action
         }
 
         $this->messageManager->addSuccess(__('A total of %1 post(s) have been deleted.', $collectionSize));
-       
-       /**
-        *  @var \Magento\Backend\Model\View\Result\Redirect $resultRedirect
-        */
+
+        /**
+         * @var Redirect $resultRedirect
+         */
         $resultRedirect = $this->resultFactory->create(ResultFactory::TYPE_REDIRECT);
 
         return $resultRedirect->setPath('*/*/');

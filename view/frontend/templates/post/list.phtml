@@ -1,14 +1,18 @@
 <?php
 //@codingStandardsIgnoreFile
 
-/** @var \Mirasvit\Blog\Block\Post\PostList $block */
+/** @var PostList $block */
+
+use Mirasvit\Blog\Api\Data\PostInterface;
+use Mirasvit\Blog\Block\Post\PostList;
+
 $collection = $block->getPostCollection();
 ?>
 
 <?php if ($collection->count()): ?>
     <div class="blog__post-list-wrapper">
         <ol class="blog__post-list">
-            <?php /** @var \Mirasvit\Blog\Api\Data\PostInterface $post */ ?>
+            <?php /** @var PostInterface $post */ ?>
             <?php foreach ($collection as $post): ?>
                 <li class="blog__post-item">
                     <header class="blog__post-header">

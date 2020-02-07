@@ -3,13 +3,15 @@
 namespace Mirasvit\Blog\Block\Category;
 
 use Magento\Framework\DataObject\IdentityInterface;
-use Magento\Framework\View\Element\Template;
 use Magento\Framework\Registry;
+use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
+use Magento\Theme\Block\Html\Breadcrumbs;
+use Magento\Theme\Block\Html\Title;
 use Mirasvit\Blog\Model\Category;
-use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
-use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 use Mirasvit\Blog\Model\Config;
+use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
+use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
 
 class View extends Template implements IdentityInterface
 {
@@ -54,13 +56,25 @@ class View extends Template implements IdentityInterface
         Context $context,
         array $data = []
     ) {
-        $this->postCollectionFactory = $postCollectionFactory;
+        $this->postCollectionFactory     = $postCollectionFactory;
         $this->categoryCollectionFactory = $categoryCollectionFactory;
-        $this->config = $config;
-        $this->registry = $registry;
-        $this->context = $context;
+        $this->config                    = $config;
+        $this->registry                  = $registry;
+        $this->context                   = $context;
 
         parent::__construct($context, $data);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getIdentities()
+    {
+        if ($this->getCategory()) {
+            return $this->getCategory()->getIdentities();
+        }
+
+        return [Category::CACHE_TAG];
     }
 
     /**
@@ -92,13 +106,13 @@ class View extends Template implements IdentityInterface
         $this->pageConfig->setDescription($metaDescription);
         $this->pageConfig->setKeywords($metaKeywords);
 
-        /** @var \Magento\Theme\Block\Html\Title $pageMainTitle */
+        /** @var Title $pageMainTitle */
         $pageMainTitle = $this->getLayout()->getBlock('page.main.title');
         if ($pageMainTitle) {
             $pageMainTitle->setPageTitle($title);
         }
 
-        /** @var \Magento\Theme\Block\Html\Breadcrumbs $breadcrumbs */
+        /** @var Breadcrumbs $breadcrumbs */
         if ($breadcrumbs = $this->getLayout()->getBlock('breadcrumbs')) {
             $breadcrumbs->addCrumb('home', [
                 'label' => __('Home'),
@@ -107,20 +121,20 @@ class View extends Template implements IdentityInterface
             ])->addCrumb('blog', [
                 'label' => $this->config->getBlogName(),
                 'title' => $this->config->getBlogName(),
-                'link'  => $this->config->getBaseUrl()
+                'link'  => $this->config->getBaseUrl(),
             ]);
 
             if ($category) {
                 $ids = $category->getParentIds();
 
-                $ids[] = 0;
+                $ids[]   = 0;
                 $parents = $this->categoryCollectionFactory->create()
                     ->addFieldToFilter('entity_id', $ids)
                     ->addNameToSelect()
                     ->excludeRoot()
                     ->setOrder('level', 'asc');
 
-                /** @var \Mirasvit\Blog\Model\Category $cat */
+                /** @var Category $cat */
                 foreach ($parents as $cat) {
                     $breadcrumbs->addCrumb($cat->getId(), [
                         'label' => $cat->getName(),
@@ -140,22 +154,10 @@ class View extends Template implements IdentityInterface
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Category
+     * @return Category
      */
     public function getCategory()
     {
         return $this->registry->registry('current_blog_category');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getIdentities()
-    {
-        if ($this->getCategory()) {
-            return $this->getCategory()->getIdentities();
-        }
-
-        return [Category::CACHE_TAG];
     }
 }

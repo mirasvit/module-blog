@@ -2,10 +2,12 @@
 
 namespace Mirasvit\Blog\Block\Adminhtml\Category\Edit\Tab;
 
-use Magento\Framework\Data\FormFactory;
-use Magento\Framework\Registry;
-use Magento\Backend\Block\Widget\Form;
 use Magento\Backend\Block\Widget\Context;
+use Magento\Backend\Block\Widget\Form;
+use Magento\Framework\Data\FormFactory;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Registry;
+use Mirasvit\Blog\Model\Category;
 
 class Meta extends Form
 {
@@ -30,26 +32,25 @@ class Meta extends Form
         Context $context
     ) {
         $this->formFactory = $formFactory;
-        $this->registry = $registry;
+        $this->registry    = $registry;
 
         parent::__construct($context);
     }
 
     /**
      * @return $this
-     *
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function _prepareForm()
     {
         $form = $this->formFactory->create();
         $this->setForm($form);
 
-        /** @var \Mirasvit\Blog\Model\Category $category */
+        /** @var Category $category */
         $category = $this->registry->registry('current_model');
 
         $fieldset = $form->addFieldset('edit_fieldset', [
-            'legend' => __('Search Engine Optimization')
+            'legend' => __('Search Engine Optimization'),
         ]);
 
         $fieldset->addField('url_key', 'text', [

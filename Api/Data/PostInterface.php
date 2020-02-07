@@ -2,37 +2,39 @@
 
 namespace Mirasvit\Blog\Api\Data;
 
+use Magento\Catalog\Model\ResourceModel\Product\Collection;
+
 interface PostInterface
 {
     const ID = 'entity_id';
 
-    const NAME = 'name';
-    const TYPE = 'type';
-    const STATUS = 'status';
-    const AUTHOR_ID = 'author_id';
-    const SHORT_CONTENT = 'short_content';
-    const CONTENT = 'content';
-    const URL_KEY = 'url_key';
-    const META_TITLE = 'meta_title';
+    const NAME             = 'name';
+    const TYPE             = 'type';
+    const STATUS           = 'status';
+    const AUTHOR_ID        = 'author_id';
+    const SHORT_CONTENT    = 'short_content';
+    const CONTENT          = 'content';
+    const URL_KEY          = 'url_key';
+    const META_TITLE       = 'meta_title';
     const META_DESCRIPTION = 'meta_description';
-    const META_KEYWORDS = 'meta_keywords';
-    const FEATURED_IMAGE = 'featured_image';
-    const FEATURED_ALT = 'featured_alt';
+    const META_KEYWORDS    = 'meta_keywords';
+    const FEATURED_IMAGE   = 'featured_image';
+    const FEATURED_ALT     = 'featured_alt';
 
     const CREATED_AT = 'created_at';
-    const IS_PINNED = 'is_pinned';
+    const IS_PINNED  = 'is_pinned';
 
     const CATEGORY_IDS = 'category_ids';
-    const STORE_IDS = 'store_ids';
-    const TAG_IDS = 'tag_ids';
-    const PRODUCT_IDS = 'product_ids';
+    const STORE_IDS    = 'store_ids';
+    const TAG_IDS      = 'tag_ids';
+    const PRODUCT_IDS  = 'product_ids';
 
-    const TYPE_POST = 'post';
+    const TYPE_POST     = 'post';
     const TYPE_REVISION = 'revision';
 
-    const STATUS_DRAFT = 0;
+    const STATUS_DRAFT          = 0;
     const STATUS_PENDING_REVIEW = 1;
-    const STATUS_PUBLISHED = 2;
+    const STATUS_PUBLISHED      = 2;
 
     /**
      * @return int
@@ -46,6 +48,7 @@ interface PostInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setType($value);
@@ -57,6 +60,7 @@ interface PostInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setStatus($value);
@@ -68,6 +72,7 @@ interface PostInterface
 
     /**
      * @param int $value
+     *
      * @return $this
      */
     public function setAuthorId($value);
@@ -79,6 +84,7 @@ interface PostInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setName($value);
@@ -90,6 +96,7 @@ interface PostInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setShortContent($value);
@@ -101,6 +108,7 @@ interface PostInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setContent($value);
@@ -112,6 +120,7 @@ interface PostInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setUrlKey($value);
@@ -123,6 +132,7 @@ interface PostInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setMetaTitle($value);
@@ -134,6 +144,7 @@ interface PostInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setMetaDescription($value);
@@ -145,6 +156,7 @@ interface PostInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setMetaKeywords($value);
@@ -156,6 +168,7 @@ interface PostInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setFeaturedImage($value);
@@ -167,6 +180,7 @@ interface PostInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setFeaturedAlt($value);
@@ -178,6 +192,7 @@ interface PostInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setCreatedAt($value);
@@ -189,6 +204,7 @@ interface PostInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setIsPinned($value);
@@ -200,6 +216,7 @@ interface PostInterface
 
     /**
      * @param mixed $value
+     *
      * @return $this
      */
     public function setCategoryIds(array $value);
@@ -211,6 +228,7 @@ interface PostInterface
 
     /**
      * @param mixed $value
+     *
      * @return $this
      */
     public function setStoreIds(array $value);
@@ -222,6 +240,7 @@ interface PostInterface
 
     /**
      * @param mixed $value
+     *
      * @return $this
      */
     public function setTagIds(array $value);
@@ -233,12 +252,13 @@ interface PostInterface
 
     /**
      * @param mixed $value
+     *
      * @return $this
      */
     public function setProductIds(array $value);
 
     /**
-     * @return mixed|\Magento\Catalog\Model\ResourceModel\Product\Collection
+     * @return mixed|Collection
      */
     public function getRelatedProducts();
 }

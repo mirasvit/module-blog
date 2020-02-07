@@ -2,18 +2,19 @@
 
 namespace Mirasvit\Blog\Controller\Adminhtml\Author;
 
+use Magento\Backend\Model\View\Result\Page;
 use Magento\Framework\Controller\ResultFactory;
 use Mirasvit\Blog\Controller\Adminhtml\Author;
 
 class Index extends Author
 {
     /**
-     * @return \Magento\Backend\Model\View\Result\Page
+     * @return Page
      */
     public function execute()
     {
 
-        /** @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        /** @var Page $resultPage */
         $resultPage = $this->context->getResultFactory()->create(ResultFactory::TYPE_PAGE);
 
         $this->initPage($resultPage)

@@ -2,10 +2,13 @@
 
 namespace Mirasvit\Blog\Block\Post;
 
+use Mirasvit\Blog\Model\Category;
+use Mirasvit\Blog\Model\Post;
+
 class Meta extends AbstractBlock
 {
     /**
-     * @return \Mirasvit\Blog\Model\Post
+     * @return Post
      */
     public function getPost()
     {
@@ -17,7 +20,7 @@ class Meta extends AbstractBlock
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Category
+     * @return Category
      */
     public function getCategory()
     {
@@ -42,6 +45,7 @@ class Meta extends AbstractBlock
 
     /**
      * @param string $date
+     *
      * @return string
      */
     public function toDateFormat($date)

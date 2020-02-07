@@ -1,7 +1,8 @@
 <?php
 // @codingStandardsIgnoreFile
-/** @var \Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar $block */
-?>
+/** @var Sidebar $block */
+
+use Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar; ?>
 
 <a href="<?= $this->getUrl('blog/post/view', ['id' => $block->getPost()->getId()]) ?>"
    class="action-default" id="post-preview-button" target="_blank"><?= __('Preview Changes') ?></a>
@@ -24,7 +25,7 @@
             $('#post-preview-button').show();
         });
 
-        $('#edit_form input#name').on('keypress', function(e) {
+        $('#edit_form input#name').on('keypress', function (e) {
             var text = $(e.currentTarget).val();
             $('h1.page-title').html(text);
         });

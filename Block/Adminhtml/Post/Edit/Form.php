@@ -2,30 +2,33 @@
 
 namespace Mirasvit\Blog\Block\Adminhtml\Post\Edit;
 
+use Magento\Backend\Block\Widget\Context;
+use Magento\Framework\Data\FormFactory;
+
 class Form extends \Magento\Backend\Block\Widget\Form
 {
     /**
-     * @var \Magento\Framework\Data\FormFactory
+     * @var FormFactory
      */
     protected $formFactory;
 
     /**
-     * @var \Magento\Backend\Block\Widget\Context
+     * @var Context
      */
     protected $context;
 
     /**
-     * @param \Magento\Framework\Data\FormFactory   $formFactory
-     * @param \Magento\Backend\Block\Widget\Context $context
+     * @param FormFactory   $formFactory
+     * @param Context $context
      * @param array                                 $data
      */
     public function __construct(
-        \Magento\Framework\Data\FormFactory $formFactory,
-        \Magento\Backend\Block\Widget\Context $context,
+        FormFactory $formFactory,
+        Context $context,
         array $data = []
     ) {
         $this->formFactory = $formFactory;
-        $this->context = $context;
+        $this->context     = $context;
 
         parent::__construct($context, $data);
     }

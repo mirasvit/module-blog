@@ -2,10 +2,14 @@
 
 namespace Mirasvit\Blog\Block\Adminhtml\Post\Edit\Tab;
 
+use Magento\Backend\Block\Widget\Context;
+use Magento\Backend\Block\Widget\Form;
 use Magento\Framework\Data\FormFactory;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
+use Mirasvit\Blog\Model\Post;
 
-class Meta extends \Magento\Backend\Block\Widget\Form
+class Meta extends Form
 {
     /**
      * @var FormFactory
@@ -20,13 +24,13 @@ class Meta extends \Magento\Backend\Block\Widget\Form
     /**
      * @param FormFactory                           $formFactory
      * @param Registry                              $registry
-     * @param \Magento\Backend\Block\Widget\Context $context
+     * @param Context $context
      * @param array                                 $data
      */
     public function __construct(
         FormFactory $formFactory,
         Registry $registry,
-        \Magento\Backend\Block\Widget\Context $context,
+        Context $context,
         array $data = []
     ) {
         $this->formFactory = $formFactory;
@@ -38,19 +42,18 @@ class Meta extends \Magento\Backend\Block\Widget\Form
 
     /**
      * @return $this
-     *
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function _prepareForm()
     {
         $form = $this->formFactory->create();
         $this->setForm($form);
 
-        /** @var \Mirasvit\Blog\Model\Post $post */
+        /** @var Post $post */
         $post = $this->registry->registry('current_model');
 
         $fieldset = $form->addFieldset('edit_fieldset', [
-            'class' => 'blog__post-fieldset'
+            'class' => 'blog__post-fieldset',
         ]);
 
         $fieldset->addField('meta_title', 'text', [

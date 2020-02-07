@@ -2,7 +2,6 @@
 
 namespace Mirasvit\Blog\Controller\Category;
 
-use Magento\Framework\Controller\ResultFactory;
 use Mirasvit\Blog\Controller\Category;
 
 class Rss extends Category

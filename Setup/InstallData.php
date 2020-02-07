@@ -2,12 +2,12 @@
 
 namespace Mirasvit\Blog\Setup;
 
+use Magento\Eav\Model\Config;
 use Magento\Framework\Setup\InstallDataInterface;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
-use Mirasvit\Blog\Setup\InstallData\PostSetupFactory;
 use Mirasvit\Blog\Setup\InstallData\CategorySetupFactory;
-use Magento\Eav\Model\Config;
+use Mirasvit\Blog\Setup\InstallData\PostSetupFactory;
 
 class InstallData implements InstallDataInterface
 {
@@ -36,9 +36,9 @@ class InstallData implements InstallDataInterface
         CategorySetupFactory $categorySetupFactory,
         Config $eavConfig
     ) {
-        $this->postSetupFactory = $postSetupFactory;
+        $this->postSetupFactory     = $postSetupFactory;
         $this->categorySetupFactory = $categorySetupFactory;
-        $this->eavConfig = $eavConfig;
+        $this->eavConfig            = $eavConfig;
     }
 
     /**

@@ -3,12 +3,14 @@
 namespace Mirasvit\Blog\Controller;
 
 use Magento\Framework\App\ActionFactory;
+use Magento\Framework\App\Request\Http;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\App\RouterInterface;
 use Magento\Framework\DataObject;
 use Magento\Framework\Event\ManagerInterface as EventManagerInterface;
-//use Magento\Framework\Url;
 use Mirasvit\Blog\Model\Url;
+
+//use Magento\Framework\Url;
 
 class Router implements RouterInterface
 {
@@ -32,9 +34,9 @@ class Router implements RouterInterface
         ActionFactory $actionFactory,
         EventManagerInterface $eventManager
     ) {
-        $this->url = $url;
+        $this->url           = $url;
         $this->actionFactory = $actionFactory;
-        $this->eventManager = $eventManager;
+        $this->eventManager  = $eventManager;
     }
 
     /**
@@ -42,7 +44,7 @@ class Router implements RouterInterface
      */
     public function match(RequestInterface $request)
     {
-        /** @var \Magento\Framework\App\Request\Http $request */
+        /** @var Http $request */
 
         $identifier = trim($request->getPathInfo(), '/');
         $this->eventManager->dispatch('core_controller_router_match_before', [

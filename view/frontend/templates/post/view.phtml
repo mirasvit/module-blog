@@ -1,16 +1,17 @@
 <?php
 //@codingStandardsIgnoreFile
 
-/** @var \Mirasvit\Blog\Block\Post\View $block */
+/** @var View $block */
 $post = $block->getPost();
-?>
+
+use Mirasvit\Blog\Block\Post\View; ?>
 
 <div class="blog__post-view">
 
     <?= $this->getPostMetaHeader()->toHtml() ?>
 
     <?php if ($post->getFeaturedImageUrl()): ?>
-        <img src="<?= $post->getFeaturedImageUrl() ?>"  alt="<?= $post->getName() ?>" class="blog__post-featured-image"/>
+        <img src="<?= $post->getFeaturedImageUrl() ?>" alt="<?= $post->getName() ?>" class="blog__post-featured-image"/>
     <?php endif ?>
 
     <?= $block->getPostContent() ?>

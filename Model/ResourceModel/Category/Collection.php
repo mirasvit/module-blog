@@ -4,6 +4,7 @@ namespace Mirasvit\Blog\Model\ResourceModel\Category;
 
 use Magento\Eav\Model\Entity\Collection\AbstractCollection;
 use Magento\Framework\App\ObjectManager;
+use Mirasvit\Blog\Model\Category;
 
 class Collection extends AbstractCollection
 {
@@ -11,26 +12,6 @@ class Collection extends AbstractCollection
      * @var bool
      */
     protected $fromRoot = true;
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function _construct()
-    {
-        $this->_init('Mirasvit\Blog\Model\Category', 'Mirasvit\Blog\Model\ResourceModel\Category');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function _initSelect()
-    {
-        parent::_initSelect();
-
-        $this->getSelect()->order('sort_order');
-
-        return $this;
-    }
 
     /**
      * @return $this
@@ -66,12 +47,26 @@ class Collection extends AbstractCollection
     public function excludeRoot()
     {
         $this->fromRoot = false;
+
         return $this->addFieldToFilter('entity_id', ['neq' => $this->getRootId()]);
     }
 
     /**
+     * @return int
+     */
+    public function getRootId()
+    {
+        $objectManager = ObjectManager::getInstance();
+        /** @var \Mirasvit\Blog\Helper\Category $helper */
+        $helper = $objectManager->get('\Mirasvit\Blog\Helper\Category');
+
+        return $helper->getRootCategory()->getId();
+    }
+
+    /**
      * @param int|null $parentId
-     * @return \Mirasvit\Blog\Model\Category[]
+     *
+     * @return Category[]
      */
     public function getTree($parentId = null)
     {
@@ -97,6 +92,14 @@ class Collection extends AbstractCollection
 
         return $list;
     }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _construct()
+    {
+        $this->_init('Mirasvit\Blog\Model\Category', 'Mirasvit\Blog\Model\ResourceModel\Category');
+    }
     //
     //    /**
     //     * {@inheritdoc}
@@ -118,14 +121,14 @@ class Collection extends AbstractCollection
     //    }
 
     /**
-     * @return int
+     * {@inheritdoc}
      */
-    public function getRootId()
+    protected function _initSelect()
     {
-        $objectManager = \Magento\Framework\App\ObjectManager::getInstance();
-        /** @var \Mirasvit\Blog\Helper\Category $helper */
-        $helper = $objectManager->get('\Mirasvit\Blog\Helper\Category');
+        parent::_initSelect();
 
-        return $helper->getRootCategory()->getId();
+        $this->getSelect()->order('sort_order');
+
+        return $this;
     }
 }

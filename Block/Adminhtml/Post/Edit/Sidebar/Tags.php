@@ -2,10 +2,12 @@
 
 namespace Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar;
 
+use Magento\Backend\Block\Widget\Context;
+use Magento\Backend\Block\Widget\Form;
 use Magento\Framework\Data\FormFactory;
 use Magento\Framework\Registry;
-use Magento\Backend\Block\Widget\Form;
-use Magento\Backend\Block\Widget\Context;
+use Mirasvit\Blog\Model\Post;
+use Mirasvit\Blog\Model\ResourceModel\Tag\Collection;
 
 class Tags extends Form
 {
@@ -35,17 +37,17 @@ class Tags extends Form
         Context $context
     ) {
         $this->formFactory = $formFactory;
-        $this->registry = $registry;
+        $this->registry    = $registry;
 
         parent::__construct($context);
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\ResourceModel\Tag\Collection
+     * @return Collection
      */
     public function getTags()
     {
-        /** @var \Mirasvit\Blog\Model\Post $post */
+        /** @var Post $post */
         $post = $this->registry->registry('current_model');
 
         return $post->getTags();

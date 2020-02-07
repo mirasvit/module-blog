@@ -1,11 +1,12 @@
 <?php
+
 namespace Mirasvit\Blog\Observer;
 
+use Magento\Framework\Data\Tree\Node as TreeNode;
 use Magento\Framework\Event\Observer as EventObserver;
 use Magento\Framework\Event\ObserverInterface;
-use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
-use Magento\Framework\Data\Tree\Node as TreeNode;
 use Mirasvit\Blog\Model\Config;
+use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 
 class TopMenuObserver implements ObserverInterface
 {
@@ -27,13 +28,12 @@ class TopMenuObserver implements ObserverInterface
         Config $config,
         CategoryCollectionFactory $categoryCollectionFactory
     ) {
-        $this->config = $config;
+        $this->config                    = $config;
         $this->categoryCollectionFactory = $categoryCollectionFactory;
     }
 
     /**
      * {@inheritdoc}
-     *
      * @param EventObserver $observer
      */
     public function execute(EventObserver $observer)
@@ -41,7 +41,7 @@ class TopMenuObserver implements ObserverInterface
         if (!$this->config->isDisplayInMenu()) {
             return;
         }
-        /** @var \Magento\Framework\Data\Tree\Node $menu */
+        /** @var TreeNode $menu */
         $menu = $observer->getData('menu');
 
         $categories = $this->categoryCollectionFactory->create()
@@ -55,7 +55,7 @@ class TopMenuObserver implements ObserverInterface
             [
                 'id'   => 'blog-node-root',
                 'name' => $this->config->getMenuTitle(),
-                'url'  => $this->config->getBaseUrl()
+                'url'  => $this->config->getBaseUrl(),
             ],
             'id',
             $menu->getTree(),
@@ -80,7 +80,7 @@ class TopMenuObserver implements ObserverInterface
                 [
                     'id'   => 'blog-node-' . $category->getId(),
                     'name' => $category->getName(),
-                    'url'  => $category->getUrl()
+                    'url'  => $category->getUrl(),
                 ],
                 'id',
                 $menu->getTree(),

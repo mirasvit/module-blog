@@ -2,11 +2,13 @@
 
 namespace Mirasvit\Blog\Controller\Author;
 
-use Magento\Framework\Controller\ResultFactory;
+use Magento\Backend\Model\View\Result\Page;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Mirasvit\Blog\Model\AuthorFactory;
+use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Registry;
+use Mirasvit\Blog\Model\Author;
+use Mirasvit\Blog\Model\AuthorFactory;
 
 class View extends Action
 {
@@ -36,19 +38,19 @@ class View extends Action
         Context $context
     ) {
         $this->authorFactory = $authorFactory;
-        $this->registry = $registry;
-        $this->resultFactory = $context->getResultFactory();;
+        $this->registry      = $registry;
+        $this->resultFactory = $context->getResultFactory();
 
         parent::__construct($context);
     }
 
     /**
-     * @return \Magento\Backend\Model\View\Result\Page
+     * @return Page
      */
     public function execute()
     {
         if ($this->initModel()) {
-            /* @var \Magento\Backend\Model\View\Result\Page $resultPage */
+            /* @var Page $resultPage */
             $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
             return $resultPage;
@@ -58,7 +60,7 @@ class View extends Action
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Author
+     * @return Author
      */
     protected function initModel()
     {

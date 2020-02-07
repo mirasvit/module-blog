@@ -1,5 +1,8 @@
 <?php
-/** @var \Mirasvit\Blog\Block\Catalog\RelatedPosts $block */
+/** @var RelatedPosts $block */
+
+use Mirasvit\Blog\Block\Catalog\RelatedPosts;
+
 $collection = $block->getCollection();
 if (!$collection->count()) {
     return;

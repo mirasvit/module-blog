@@ -3,11 +3,15 @@
 namespace Mirasvit\Blog\Block\Post;
 
 use Magento\Framework\DataObject\IdentityInterface;
-use Mirasvit\Blog\Api\Repository\PostRepositoryInterface;
-use Mirasvit\Blog\Model\Config;
-use Magento\Framework\View\Element\Template\Context;
 use Magento\Framework\Registry;
-use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
+use Magento\Framework\View\Element\Template\Context;
+use Mirasvit\Blog\Api\Repository\PostRepositoryInterface;
+use Mirasvit\Blog\Model\Author;
+use Mirasvit\Blog\Model\Category;
+use Mirasvit\Blog\Model\Config;
+use Mirasvit\Blog\Model\Post;
+use Mirasvit\Blog\Model\ResourceModel\Post\Collection;
+use Mirasvit\Blog\Model\Tag;
 
 class PostList extends AbstractBlock implements IdentityInterface
 {
@@ -17,14 +21,14 @@ class PostList extends AbstractBlock implements IdentityInterface
     protected $defaultToolbarBlock = 'Mirasvit\Blog\Block\Post\PostList\Toolbar';
 
     /**
+     * @var Collection
+     */
+    protected $collection;
+
+    /**
      * @var PostRepositoryInterface
      */
     private $postRepository;
-
-    /**
-     * @var \Mirasvit\Blog\Model\ResourceModel\Post\Collection
-     */
-    protected $collection;
 
     public function __construct(
         PostRepositoryInterface $postRepository,
@@ -35,6 +39,80 @@ class PostList extends AbstractBlock implements IdentityInterface
         $this->postRepository = $postRepository;
 
         parent::__construct($config, $registry, $context);
+    }
+
+    /**
+     * @return string
+     */
+    public function getAdditionalHtml()
+    {
+        return $this->getChildHtml('additional');
+    }
+
+    /**
+     * @return string
+     */
+    public function getToolbarHtml()
+    {
+        return $this->getChildHtml('toolbar');
+    }
+
+    /**
+     * Return identifiers for post content.
+     * @return array
+     */
+    public function getIdentities()
+    {
+        $identities = [];
+
+        foreach ($this->getPostCollection() as $post) {
+            $identities = array_merge($identities, $post->getIdentities());
+        }
+
+        return $identities;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSearchQuery()
+    {
+        return $this->registry->registry('current_blog_query');
+    }
+
+    /**
+     * @param Post $post
+     *
+     * @return string
+     */
+    public function getFeaturedAlt($post)
+    {
+        return $post->getFeaturedAlt() ? : $post->getName();
+    }
+
+    /**
+     * @param Post $post
+     *
+     * @return string
+     */
+    public function getContentMoreTag($post)
+    {
+        if ($this->config->getExcerptsEnabled()) {
+            $size = $this->config->getExcerptSize();
+            if ($exerpt = strpos($post->getContent(), '<!--more-->')) {
+                return substr($post->getContent(), 0, $exerpt);
+            } elseif ($post->getShortContent()) {
+                return $post->getShortContent();
+            } elseif (preg_match('/^.{1,' . $size . '}\b/s', $this->stripTags(
+                preg_replace("/<style\\b[^>]*>(.*?)<\\/style>/s", "", $post->getContent())
+            ), $match)) {
+                return $match[0];
+            }
+
+            return $post->getContent();
+        }
+
+        return '';
     }
 
     /**
@@ -94,83 +172,7 @@ class PostList extends AbstractBlock implements IdentityInterface
     }
 
     /**
-     * @return string
-     */
-    public function getAdditionalHtml()
-    {
-        return $this->getChildHtml('additional');
-    }
-
-    /**
-     * @return string
-     */
-    public function getToolbarHtml()
-    {
-        return $this->getChildHtml('toolbar');
-    }
-
-    /**
-     * @param \Mirasvit\Blog\Model\ResourceModel\Post\Collection $collection
-     *
-     * @return $this
-     */
-    public function setCollection($collection)
-    {
-        $this->collection = $collection;
-
-        return $this;
-    }
-
-    /**
-     * Return identifiers for post content.
-     * @return array
-     */
-    public function getIdentities()
-    {
-        $identities = [];
-
-        foreach ($this->getPostCollection() as $post) {
-            $identities = array_merge($identities, $post->getIdentities());
-        }
-
-        return $identities;
-    }
-
-    /**
-     * Retrieve current category model object.
-     * @return \Mirasvit\Blog\Model\Category
-     */
-    public function getCategory()
-    {
-        return $this->registry->registry('current_blog_category');
-    }
-
-    /**
-     * @return \Mirasvit\Blog\Model\Tag
-     */
-    public function getTag()
-    {
-        return $this->registry->registry('current_blog_tag');
-    }
-
-    /**
-     * @return \Mirasvit\Blog\Model\Author
-     */
-    public function getAuthor()
-    {
-        return $this->registry->registry('current_blog_author');
-    }
-
-    /**
-     * @return string
-     */
-    public function getSearchQuery()
-    {
-        return $this->registry->registry('current_blog_query');
-    }
-
-    /**
-     * @return \Mirasvit\Blog\Model\ResourceModel\Post\Collection
+     * @return Collection
      */
     public function getPostCollection()
     {
@@ -219,37 +221,39 @@ class PostList extends AbstractBlock implements IdentityInterface
     }
 
     /**
-     * @param \Mirasvit\Blog\Model\Post $post
-     *
-     * @return string
+     * Retrieve current category model object.
+     * @return Category
      */
-    public function getFeaturedAlt($post)
+    public function getCategory()
     {
-        return $post->getFeaturedAlt() ? : $post->getName();
+        return $this->registry->registry('current_blog_category');
     }
 
     /**
-     * @param \Mirasvit\Blog\Model\Post $post
-     *
-     * @return string
+     * @return Tag
      */
-    public function getContentMoreTag($post)
+    public function getTag()
     {
-        if ($this->config->getExcerptsEnabled()) {
-            $size = $this->config->getExcerptSize();
-            if ($exerpt = strpos($post->getContent(), '<!--more-->')) {
-                return substr($post->getContent(), 0, $exerpt);
-            } elseif ($post->getShortContent()) {
-                return $post->getShortContent();
-            } elseif (preg_match('/^.{1,' . $size . '}\b/s', $this->stripTags(
-                preg_replace("/<style\\b[^>]*>(.*?)<\\/style>/s", "", $post->getContent())
-            ), $match)) {
-                return $match[0];
-            }
+        return $this->registry->registry('current_blog_tag');
+    }
 
-            return $post->getContent();
-        }
+    /**
+     * @return Author
+     */
+    public function getAuthor()
+    {
+        return $this->registry->registry('current_blog_author');
+    }
 
-        return '';
+    /**
+     * @param Collection $collection
+     *
+     * @return $this
+     */
+    public function setCollection($collection)
+    {
+        $this->collection = $collection;
+
+        return $this;
     }
 }
