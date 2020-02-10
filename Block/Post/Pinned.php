@@ -2,9 +2,11 @@
 
 namespace Mirasvit\Blog\Block\Post;
 
-use Magento\Framework\View\Element\Template;
 use Magento\Framework\Registry;
+use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
+use Mirasvit\Blog\Model\Category;
+use Mirasvit\Blog\Model\Post;
 use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
 
 class Pinned extends Template
@@ -37,14 +39,14 @@ class Pinned extends Template
         array $data = []
     ) {
         $this->postCollectionFactory = $postCollectionFactory;
-        $this->registry = $registry;
-        $this->context = $context;
+        $this->registry              = $registry;
+        $this->context               = $context;
 
         parent::__construct($context, $data);
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Post[]
+     * @return Post[]
      */
     public function getCollection()
     {
@@ -62,7 +64,7 @@ class Pinned extends Template
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Category|false
+     * @return Category|false
      */
     public function getCategory()
     {

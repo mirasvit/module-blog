@@ -2,11 +2,11 @@
 
 namespace Mirasvit\Blog\Ui\Component\Listing\Column;
 
+use Magento\Cms\Block\Adminhtml\Page\Grid\Renderer\Action\UrlBuilder;
+use Magento\Framework\UrlInterface;
 use Magento\Framework\View\Element\UiComponent\ContextInterface;
 use Magento\Framework\View\Element\UiComponentFactory;
 use Magento\Ui\Component\Listing\Columns\Column;
-use Magento\Cms\Block\Adminhtml\Page\Grid\Renderer\Action\UrlBuilder;
-use Magento\Framework\UrlInterface;
 use Mirasvit\Blog\Api\Data\PostInterface;
 
 class PostActions extends Column
@@ -38,9 +38,9 @@ class PostActions extends Column
         array $data = [],
         $editUrl = self::POST_URL_PATH_EDIT
     ) {
-        $this->urlBuilder = $urlBuilder;
+        $this->urlBuilder       = $urlBuilder;
         $this->actionUrlBuilder = $actionUrlBuilder;
-        $this->editUrl = $editUrl;
+        $this->editUrl          = $editUrl;
 
         parent::__construct($context, $uiComponentFactory, $components, $data);
     }
@@ -49,6 +49,7 @@ class PostActions extends Column
      * Prepare Data Source
      *
      * @param array $dataSource
+     *
      * @return array
      */
     public function prepareDataSource(array $dataSource)
@@ -66,6 +67,7 @@ class PostActions extends Column
                 }
             }
         }
+
         return $dataSource;
     }
 }

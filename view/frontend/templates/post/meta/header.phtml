@@ -1,10 +1,11 @@
 <?php
 //@codingStandardsIgnoreFile
 
-/** @var \Mirasvit\Blog\Block\Post\Meta $block */
+/** @var Meta $block */
 
 $post = $block->getPost();
-?>
+
+use Mirasvit\Blog\Block\Post\Meta; ?>
 <p class="blog__post-meta">
     <time class="blog__post-meta-time" itemprop="datePublished">
         <i class="fa fa-fw fa-calendar"></i>

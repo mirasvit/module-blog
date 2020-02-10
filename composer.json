@@ -1,6 +1,6 @@
 {
   "name": "mirasvit/module-blog",
-  "description": "Mirasvit Blog MX", 
+  "description": "Mirasvit Blog MX",
   "require": {
     "magento/framework": "100.1.*|100.2.*|101.0.*|102.0.*"
   },
@@ -8,7 +8,7 @@
     "mirasvit/module-blog-sample-data": "Sample Data for Blog"
   },
   "type": "magento2-module",
-  "version": "1.0.32",
+  "version": "1.0.34",
   "license": [
     "OSL-3.0"
   ],

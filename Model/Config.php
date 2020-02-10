@@ -2,11 +2,12 @@
 
 namespace Mirasvit\Blog\Model;
 
-use Magento\Framework\Filesystem;
-use Magento\Framework\App\Filesystem\DirectoryList;
-use Magento\Store\Model\StoreManagerInterface;
-use Magento\Framework\UrlInterface as MagentoUrlInterface;
 use Magento\Framework\App\Config\ScopeConfigInterface;
+use Magento\Framework\App\Filesystem\DirectoryList;
+use Magento\Framework\Filesystem;
+use Magento\Framework\UrlInterface as MagentoUrlInterface;
+use Magento\Store\Model\ScopeInterface;
+use Magento\Store\Model\StoreManagerInterface;
 
 class Config
 {
@@ -33,10 +34,10 @@ class Config
     protected $urlManager;
 
     /**
-     * @param ScopeConfigInterface $scopeConfig
+     * @param ScopeConfigInterface  $scopeConfig
      * @param StoreManagerInterface $storeManager
-     * @param Filesystem $filesystem
-     * @param MagentoUrlInterface $urlManager
+     * @param Filesystem            $filesystem
+     * @param MagentoUrlInterface   $urlManager
      */
     public function __construct(
         ScopeConfigInterface $scopeConfig,
@@ -44,34 +45,36 @@ class Config
         Filesystem $filesystem,
         MagentoUrlInterface $urlManager
     ) {
-        $this->scopeConfig = $scopeConfig;
+        $this->scopeConfig  = $scopeConfig;
         $this->storeManager = $storeManager;
-        $this->filesystem = $filesystem;
-        $this->urlManager = $urlManager;
+        $this->filesystem   = $filesystem;
+        $this->urlManager   = $urlManager;
     }
 
     /**
      * @param null|string $store
+     *
      * @return string
      */
     public function getMenuTitle($store = null)
     {
         return $this->scopeConfig->getValue(
             'blog/appearance/menu_title',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            ScopeInterface::SCOPE_STORE,
             $store
         );
     }
 
     /**
      * @param null|string $store
+     *
      * @return string
      */
     public function getBlogName($store = null)
     {
         return $this->scopeConfig->getValue(
             'blog/appearance/blog_name',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            ScopeInterface::SCOPE_STORE,
             $store
         );
     }
@@ -82,7 +85,7 @@ class Config
     public function isDisplayInMenu()
     {
         return $this->scopeConfig->getValue('blog/display/main_menu',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+            ScopeInterface::SCOPE_STORE);
     }
 
     /**
@@ -91,62 +94,58 @@ class Config
     public function getExcerptsEnabled()
     {
         return $this->scopeConfig->getValue('blog/display/enable_excerpts',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+            ScopeInterface::SCOPE_STORE);
     }
+
     /**
      * @return string
      */
     public function getExcerptSize()
     {
         return $this->scopeConfig->getValue('blog/display/excerpt_size',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE);
+            ScopeInterface::SCOPE_STORE);
     }
 
     /**
      * @param null|string $store
+     *
      * @return string
      */
     public function getBaseMetaTitle($store = null)
     {
         return $this->scopeConfig->getValue(
             'blog/seo/base_meta_title',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            ScopeInterface::SCOPE_STORE,
             $store
         );
     }
 
     /**
      * @param null|string $store
+     *
      * @return string
      */
     public function getBaseMetaDescription($store = null)
     {
         return $this->scopeConfig->getValue(
             'blog/seo/base_meta_description',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            ScopeInterface::SCOPE_STORE,
             $store
         );
     }
 
     /**
      * @param null|string $store
+     *
      * @return string
      */
     public function getBaseMetaKeywords($store = null)
     {
         return $this->scopeConfig->getValue(
             'blog/seo/base_meta_keywords',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            ScopeInterface::SCOPE_STORE,
             $store
         );
-    }
-
-    /**
-     * @return string
-     */
-    public function getBaseRoute()
-    {
-        return $this->scopeConfig->getValue('blog/seo/base_route');
     }
 
     /**
@@ -158,27 +157,37 @@ class Config
     }
 
     /**
+     * @return string
+     */
+    public function getBaseRoute()
+    {
+        return $this->scopeConfig->getValue('blog/seo/base_route');
+    }
+
+    /**
      * @param null|string $store
+     *
      * @return string
      */
     public function getPostUrlSuffix($store = null)
     {
         return $this->scopeConfig->getValue(
             'blog/seo/post_url_suffix',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            ScopeInterface::SCOPE_STORE,
             $store
         );
     }
 
     /**
      * @param null|string $store
+     *
      * @return string
      */
     public function getCategoryUrlSuffix($store = null)
     {
         return $this->scopeConfig->getValue(
             'blog/seo/category_url_suffix',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            ScopeInterface::SCOPE_STORE,
             $store
         );
     }
@@ -186,13 +195,14 @@ class Config
 
     /**
      * @param null|string $store
+     *
      * @return string
      */
     public function getDateFormat($store = null)
     {
         return $this->scopeConfig->getValue(
             'blog/appearance/date_format',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            ScopeInterface::SCOPE_STORE,
             $store
         );
     }
@@ -207,13 +217,14 @@ class Config
 
     /**
      * @param null|string $store
+     *
      * @return string
      */
     public function getCommentProvider($store = null)
     {
         return $this->scopeConfig->getValue(
             'blog/comments/provider',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            ScopeInterface::SCOPE_STORE,
             $store
         );
     }
@@ -228,13 +239,14 @@ class Config
 
     /**
      * @param null|string $store
+     *
      * @return bool
      */
     public function isAddThisEnabled($store = null)
     {
         return $this->scopeConfig->getValue(
             'blog/sharing/enable_addthis',
-            \Magento\Store\Model\ScopeInterface::SCOPE_STORE,
+            ScopeInterface::SCOPE_STORE,
             $store
         );
     }
@@ -259,6 +271,7 @@ class Config
 
     /**
      * @param string $image
+     *
      * @return string
      */
     public function getMediaUrl($image)

@@ -2,11 +2,11 @@
 
 namespace Mirasvit\Blog\Model\ResourceModel;
 
+use Magento\Framework\Filter\FilterManager;
+use Magento\Framework\Model\AbstractModel;
 use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
 use Magento\Framework\Model\ResourceModel\Db\Context;
 use Mirasvit\Blog\Model\Config;
-use Magento\Framework\Filter\FilterManager;
-use Magento\Framework\Model\AbstractModel;
 
 class Tag extends AbstractDb
 {

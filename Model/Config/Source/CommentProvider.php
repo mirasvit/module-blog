@@ -7,6 +7,14 @@ class CommentProvider
     /**
      * @return array
      */
+    public function getAllOptions()
+    {
+        return $this->toOptionArray();
+    }
+
+    /**
+     * @return array
+     */
     public function toOptionArray()
     {
         $result = [
@@ -16,22 +24,14 @@ class CommentProvider
             ],
             [
                 'label' => 'Disqus',
-                'value' => 'disqus'
+                'value' => 'disqus',
             ],
             [
                 'label' => 'Facebook',
-                'value' => 'facebook'
-            ]
+                'value' => 'facebook',
+            ],
         ];
 
         return $result;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAllOptions()
-    {
-        return $this->toOptionArray();
     }
 }

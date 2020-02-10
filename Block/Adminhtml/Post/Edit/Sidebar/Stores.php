@@ -2,12 +2,15 @@
 
 namespace Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar;
 
+use Magento\Backend\Block\Widget\Context;
+use Magento\Backend\Block\Widget\Form;
 use Magento\Framework\Data\FormFactory;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
 use Mirasvit\Blog\Helper\Form\Post\Storeview as BlogStoreview;
-use Magento\Backend\Block\Widget\Context;
+use Mirasvit\Blog\Model\Post;
 
-class Stores extends \Magento\Backend\Block\Widget\Form
+class Stores extends Form
 {
     /**
      * @var BlogStoreview
@@ -47,15 +50,14 @@ class Stores extends \Magento\Backend\Block\Widget\Form
 
     /**
      * @return $this
-     *
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function _prepareForm()
     {
         $form = $this->formFactory->create();
         $this->setForm($form);
 
-        /** @var \Mirasvit\Blog\Model\Post $post */
+        /** @var Post $post */
         $post = $this->registry->registry('current_model');
 
         $fieldset = $form->addFieldset('stores_fieldset', [

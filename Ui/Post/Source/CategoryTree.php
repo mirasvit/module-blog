@@ -22,13 +22,14 @@ class CategoryTree implements ArrayInterface
     public function toOptionArray()
     {
         $collection = $this->categoryRepository->getCollection();
-        $rootId = $collection->getRootId();
+        $rootId     = $collection->getRootId();
 
         return [$this->getOptions($rootId)];
     }
 
     /**
      * @param int $parentId
+     *
      * @return array
      */
     private function getOptions($parentId)

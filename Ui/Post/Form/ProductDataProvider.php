@@ -10,6 +10,7 @@ class ProductDataProvider extends \Magento\Catalog\Ui\DataProvider\Product\Produ
     {
         /** @var Collection $collection */
         $collection = parent::getCollection();
+
         return $collection->addAttributeToSelect('status');
     }
 }

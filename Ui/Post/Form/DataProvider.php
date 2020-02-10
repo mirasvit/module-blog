@@ -2,12 +2,12 @@
 
 namespace Mirasvit\Blog\Ui\Post\Form;
 
+use Magento\Catalog\Helper\Image as ImageHelper;
+use Magento\Catalog\Model\Product\Attribute\Source\Status;
 use Magento\Ui\DataProvider\AbstractDataProvider;
 use Mirasvit\Blog\Api\Data\PostInterface;
 use Mirasvit\Blog\Api\Repository\PostRepositoryInterface;
 use Mirasvit\Blog\Model\Config;
-use Magento\Catalog\Model\Product\Attribute\Source\Status;
-use Magento\Catalog\Helper\Image as ImageHelper;
 
 class DataProvider extends AbstractDataProvider
 {
@@ -33,10 +33,10 @@ class DataProvider extends AbstractDataProvider
         array $data = []
     ) {
         $this->postRepository = $postRepository;
-        $this->collection = $this->postRepository->getCollection();
-        $this->config = $config;
-        $this->status = $status;
-        $this->imageHelper = $imageHelper;
+        $this->collection     = $this->postRepository->getCollection();
+        $this->config         = $config;
+        $this->status         = $status;
+        $this->imageHelper    = $imageHelper;
 
         parent::__construct($name, $primaryFieldName, $requestFieldName, $meta, $data);
     }
@@ -86,9 +86,9 @@ class DataProvider extends AbstractDataProvider
             $result[$post->getId()]['links']['products'] = [];
             foreach ($post->getRelatedProducts() as $product) {
                 $result[$post->getId()]['links']['products'][] = [
-                    'id'   => $product->getId(),
-                    'name' => $product->getName(),
-                    'status' => $this->status->getOptionText($product->getStatus()),
+                    'id'        => $product->getId(),
+                    'name'      => $product->getName(),
+                    'status'    => $this->status->getOptionText($product->getStatus()),
                     'thumbnail' => $this->imageHelper->init($product, 'product_listing_thumbnail')->getUrl(),
                 ];
             }

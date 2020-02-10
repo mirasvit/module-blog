@@ -13,7 +13,7 @@ class Edit extends Container
     {
         parent::_construct();
 
-        $this->_objectId = 'entity_id';
+        $this->_objectId   = 'entity_id';
         $this->_controller = 'adminhtml_author';
         $this->_blockGroup = 'Mirasvit_Blog';
 
@@ -36,10 +36,10 @@ class Edit extends Container
                             'mage-init' => [
                                 'button' => [
                                     'event'  => 'save',
-                                    'target' => '#edit_form'
-                                ]
-                            ]
-                        ]
+                                    'target' => '#edit_form',
+                                ],
+                            ],
+                        ],
                     ],
                     [
                         'id'             => 'save-continue-button',
@@ -48,12 +48,12 @@ class Edit extends Container
                             'mage-init' => [
                                 'button' => [
                                     'event'  => 'saveAndContinueEdit',
-                                    'target' => '#edit_form'
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
+                                    'target' => '#edit_form',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
             ]
         );
     }

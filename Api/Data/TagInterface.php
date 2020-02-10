@@ -9,7 +9,7 @@ interface TagInterface
     const TABLE = 'mst_blog_tag';
 
     const URL_KEY = 'url_key';
-    const NAME = 'name';
+    const NAME    = 'name';
 
 
     /**
@@ -24,6 +24,7 @@ interface TagInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setUrlKey($value);
@@ -35,6 +36,7 @@ interface TagInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setName($value);

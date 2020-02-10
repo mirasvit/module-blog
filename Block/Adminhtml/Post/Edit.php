@@ -2,7 +2,9 @@
 
 namespace Mirasvit\Blog\Block\Adminhtml\Post;
 
-class Edit extends \Magento\Backend\Block\Widget\Form\Container
+use Magento\Backend\Block\Widget\Form\Container;
+
+class Edit extends Container
 {
     /**
      * {@inheritdoc}
@@ -11,7 +13,7 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
     {
         parent::_construct();
 
-        $this->_objectId = 'entity_id';
+        $this->_objectId   = 'entity_id';
         $this->_controller = 'adminhtml_post';
         $this->_blockGroup = 'Mirasvit_Blog';
 
@@ -34,10 +36,10 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
                             'mage-init' => [
                                 'button' => [
                                     'event'  => 'saveAndContinueEdit',
-                                    'target' => '#edit_form'
-                                ]
-                            ]
-                        ]
+                                    'target' => '#edit_form',
+                                ],
+                            ],
+                        ],
                     ],
                     [
                         'id'             => 'save-continue-button',
@@ -46,12 +48,12 @@ class Edit extends \Magento\Backend\Block\Widget\Form\Container
                             'mage-init' => [
                                 'button' => [
                                     'event'  => 'save',
-                                    'target' => '#edit_form'
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
+                                    'target' => '#edit_form',
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
             ]
         );
     }

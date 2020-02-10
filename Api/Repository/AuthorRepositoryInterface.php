@@ -2,19 +2,20 @@
 
 namespace Mirasvit\Blog\Api\Repository;
 
-use Mirasvit\Blog\Api\Data\CategoryInterface;
-use Mirasvit\Blog\Api\Data\PostInterface;
+use Magento\User\Model\ResourceModel\User\Collection;
+use Magento\User\Model\User;
 
 interface AuthorRepositoryInterface
 {
     /**
-     * @return \Magento\User\Model\ResourceModel\User\Collection | \Magento\User\Model\User[]
+     * @return Collection | User[]
      */
     public function getCollection();
 
     /**
      * @param int $id
-     * @return \Magento\User\Model\User|false
+     *
+     * @return User|false
      */
     public function get($id);
 

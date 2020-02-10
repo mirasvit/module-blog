@@ -1,4 +1,5 @@
 <?php
+
 namespace Mirasvit\Blog\Model\Post\Attribute\Source;
 
 use Magento\Eav\Model\Entity\Attribute\Source\AbstractSource;
@@ -23,23 +24,7 @@ class Author extends AbstractSource implements SourceInterface, OptionSourceInte
     }
 
     /**
-     * Retrieve option array
-     *
-     * @return string[]
-     */
-    public function getOptionArray()
-    {
-        $result = [];
-        foreach ($this->userCollectionFactory->create() as $user) {
-            $result[$user->getId()] = $user->getName();
-        }
-
-        return $result;
-    }
-
-    /**
      * Retrieve option array with empty value
-     *
      * @return string[]
      */
     public function getAllOptions()
@@ -48,6 +33,20 @@ class Author extends AbstractSource implements SourceInterface, OptionSourceInte
 
         foreach ($this->getOptionArray() as $index => $value) {
             $result[] = ['value' => $index, 'label' => $value];
+        }
+
+        return $result;
+    }
+
+    /**
+     * Retrieve option array
+     * @return string[]
+     */
+    public function getOptionArray()
+    {
+        $result = [];
+        foreach ($this->userCollectionFactory->create() as $user) {
+            $result[$user->getId()] = $user->getName();
         }
 
         return $result;

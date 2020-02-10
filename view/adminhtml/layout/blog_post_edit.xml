@@ -3,16 +3,6 @@
       xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
     <update handle="styles"/>
     <body>
-        <referenceContainer name="after.body.start">
-            <block class="Magento\PageBuilder\Block\WysiwygSetup" name="wysiwyg.setup" template="Magento_PageBuilder::wysiwyg_setup.phtml"/>
-        </referenceContainer>
-        <block class="Magento\Framework\View\Element\Template" name="head.additional" as="head.additional" template="Magento_PageBuilder::html/container.phtml">
-            <block class="Magento\PageBuilder\Block\Adminhtml\Html\Head\BabelPolyfill" name="pagebuilder.babel.polyfill" as="pagebuilder.babel.polyfill"
-                   template="Magento_PageBuilder::html/head/babel_polyfill.phtml"/>
-        </block>
-        <referenceContainer name="before.body.end">
-            <uiComponent name="pagebuilder_modal_form"/>
-        </referenceContainer>
         <referenceContainer name="content">
             <uiComponent name="blog_post_form"/>
         </referenceContainer>

@@ -3,11 +3,13 @@
 namespace Mirasvit\Blog\Ui\Component;
 
 use Magento\Customer\Ui\Component\Listing\AttributeRepository;
+use Magento\Framework\Api\Filter;
 use Magento\Framework\Api\FilterBuilder;
 use Magento\Framework\Api\Search\SearchCriteriaBuilder;
 use Magento\Framework\Api\Search\SearchResultInterface;
 use Magento\Framework\App\RequestInterface;
 use Magento\Framework\View\Element\UiComponent\DataProvider\Reporting;
+use Mirasvit\Blog\Model\ResourceModel\Post\Collection;
 
 class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvider\DataProvider
 {
@@ -59,27 +61,25 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
     }
 
     /**
-     * @param SearchResultInterface $searchResult
-     *
-     * @return array
+     * {@inheritdoc}
      */
-    protected function searchResultToOutput(SearchResultInterface $searchResult)
+    public function getData()
     {
-        $arrItems                 = [];
-        $arrItems['totalRecords'] = $searchResult->getTotalCount();
+        $collection = $this->getCollection();
 
-        $arrItems['items'] = [];
-        foreach ($searchResult->getItems() as $item) {
-            $arrItems['items'][] = $item->getData();
+        foreach ($collection as $post) {
+            $post->setData('category_ids', $post->getCategoryIds());
         }
 
-        return $arrItems;
+        $data = $this->searchResultToOutput($collection);
+
+        return $data;
     }
 
     public function getCollection()
     {
         if (!$this->collection) {
-            /** @var \Mirasvit\Blog\Model\ResourceModel\Post\Collection $collection */
+            /** @var Collection $collection */
             $this->collection = $this->getSearchResult();
 
             $this->collection
@@ -99,22 +99,24 @@ class DataProvider extends \Magento\Framework\View\Element\UiComponent\DataProvi
     }
 
     /**
-     * {@inheritdoc}
+     * @param SearchResultInterface $searchResult
+     *
+     * @return array
      */
-    public function getData()
+    protected function searchResultToOutput(SearchResultInterface $searchResult)
     {
-        $collection = $this->getCollection();
+        $arrItems                 = [];
+        $arrItems['totalRecords'] = $searchResult->getTotalCount();
 
-        foreach ($collection as $post) {
-            $post->setData('category_ids', $post->getCategoryIds());
+        $arrItems['items'] = [];
+        foreach ($searchResult->getItems() as $item) {
+            $arrItems['items'][] = $item->getData();
         }
 
-        $data = $this->searchResultToOutput($collection);
-
-        return $data;
+        return $arrItems;
     }
 
-    public function addFilter(\Magento\Framework\Api\Filter $filter)
+    public function addFilter(Filter $filter)
     {
         if ($filter->getField() === 'fulltext') {
             $collection = $this->getCollection();

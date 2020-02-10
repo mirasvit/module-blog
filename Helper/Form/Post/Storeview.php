@@ -1,7 +1,14 @@
 <?php
+
 namespace Mirasvit\Blog\Helper\Form\Post;
 
-class Storeview extends \Magento\Framework\App\Helper\AbstractHelper
+use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Framework\App\Helper\Context;
+use Magento\Store\Api\Data\StoreInterface;
+use Magento\Store\Model\StoreManagerInterface;
+use Mirasvit\Blog\Model\Post;
+
+class Storeview extends AbstractHelper
 {
     /**
      * @var array
@@ -9,8 +16,8 @@ class Storeview extends \Magento\Framework\App\Helper\AbstractHelper
     private $storeTrees = [];
 
     public function __construct(
-        \Magento\Store\Model\StoreManagerInterface $storeManager,
-        \Magento\Framework\App\Helper\Context $context
+        StoreManagerInterface $storeManager,
+        Context $context
     ) {
         $this->storeManager = $storeManager;
         $this->context      = $context;
@@ -19,87 +26,89 @@ class Storeview extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * @param \Mirasvit\Blog\Model\Post $post
+     * @param Post $post
      * @param string                    $container
+     *
      * @return array
      */
     public function getField($post, $container)
     {
         return '
 <div>
-    <div data-role="spinner" data-component="'.$container.'.'.$container.'"
+    <div data-role="spinner" data-component="' . $container . '.' . $container . '"
         class="admin__form-loading-mask">
         <div class="spinner">
             <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
         </div>
     </div>
-    <div data-bind="scope: \''.$container.'.'.$container.'\'" class="entry-edit form-inline '.$container.'">
+    <div data-bind="scope: \'' . $container . '.' . $container . '\'" class="entry-edit form-inline ' . $container . '">
         <!-- ko template: getTemplate() --><!-- /ko -->
     </div>
 <script type="text/x-magento-init">
     {
-        ".'.$container.'": '.json_encode($this->getJsLayout($post, $container)).'
+        ".' . $container . '": ' . json_encode($this->getJsLayout($post, $container)) . '
     }
 </script>
 </div>';
     }
 
     /**
-     * @param \Mirasvit\Blog\Model\Post $post
+     * @param Post $post
      * @param string                    $container
+     *
      * @return array
      */
     public function getJsLayout($post, $container)
     {
         return [
             "Magento_Ui/js/core/app" => [
-                "types" => [
-                    "dataSource" => [
-                        "component" => "Magento_Ui/js/form/provider"
+                "types"      => [
+                    "dataSource"       => [
+                        "component" => "Magento_Ui/js/form/provider",
                     ],
-                    "container" => [
-                        "extends" => $container
+                    "container"        => [
+                        "extends" => $container,
                     ],
-                    "select" => [
-                        "extends" => $container
+                    "select"           => [
+                        "extends" => $container,
                     ],
-                    "multiselect" => [
-                        "extends" => $container
+                    "multiselect"      => [
+                        "extends" => $container,
                     ],
-                    "form.select" => [
-                        "extends" => "select"
+                    "form.select"      => [
+                        "extends" => "select",
                     ],
-                    "fieldset" => [
+                    "fieldset"         => [
                         "component" => "Magento_Ui/js/form/components/fieldset",
                         "extends"   => $container,
                     ],
-                    "html_content" => [
+                    "html_content"     => [
                         "component" => "Magento_Ui/js/form/components/html",
                         "extends"   => $container,
                     ],
                     "form.multiselect" => [
-                        "extends"   => 'multiselect',
+                        "extends" => 'multiselect',
                     ],
-                    $container => [
+                    $container         => [
                         "component" => "Magento_Ui/js/form/form",
-                        "provider"  => $container.".storeview_data_source",
-                        "deps"      => $container.".storeview_data_source",
-                        "namespace" => $container
-                    ]
+                        "provider"  => $container . ".storeview_data_source",
+                        "deps"      => $container . ".storeview_data_source",
+                        "namespace" => $container,
+                    ],
                 ],
                 "components" => [
                     $container => [
                         "children" => [
-                            $container => [
+                            $container              => [
                                 "type"     => $container,
                                 "name"     => $container,
                                 "children" => [
                                     'storeview-details' => [
-                                        "children" => [
+                                        "children"  => [
                                             "container_storeview_ids" => [
-                                                "type"     => "container",
-                                                "name"     => "container_storeview_ids",
-                                                "children" => [
+                                                "type"      => "container",
+                                                "name"      => "container_storeview_ids",
+                                                "children"  => [
                                                     "storeview_ids" => $this->getStoreviewField($post),
                                                 ],
                                                 "dataScope" => "",
@@ -110,11 +119,11 @@ class Storeview extends \Magento\Framework\App\Helper\AbstractHelper
                                                     "formElement"   => "container",
                                                     "componentType" => "container",
                                                     "scopeLabel"    => __("[GLOBAL]"),
-                                                    "sortOrder"     => 0
-                                                ]
-                                            ]
+                                                    "sortOrder"     => 0,
+                                                ],
+                                            ],
                                         ],
-                                        'config' => [
+                                        'config'    => [
                                             'collapsible'   => false,
                                             'componentType' => 'fieldset',
                                             'label'         => '',
@@ -124,30 +133,31 @@ class Storeview extends \Magento\Framework\App\Helper\AbstractHelper
                                         'dataScope' => 'data.storeview',
                                         'type'      => 'fieldset',
                                     ],
-                                ]
+                                ],
                             ],
                             "storeview_data_source" => [
                                 "type"      => "dataSource",
                                 "name"      => "storeview_data_source",
                                 "dataScope" => $container,
                                 "config"    => [
-                                    "data" => [
-                                        "post" => $post->getData()
+                                    "data"   => [
+                                        "post" => $post->getData(),
                                     ],
                                     "params" => [
-                                        "namespace" => $container
-                                    ]
-                                ]
-                            ]
-                        ]
-                    ]
-                ]
-            ]
+                                        "namespace" => $container,
+                                    ],
+                                ],
+                            ],
+                        ],
+                    ],
+                ],
+            ],
         ];
     }
 
     /**
-     * @param \Mirasvit\Blog\Model\Post $post
+     * @param Post $post
+     *
      * @return array
      */
     public function getStoreviewField($post)
@@ -179,9 +189,9 @@ class Storeview extends \Magento\Framework\App\Helper\AbstractHelper
                 "listens"          => [],
                 "config"           => [
                     "dataScope" => "storeview_ids",
-                    "sortOrder" => 10
-                ]
-            ]
+                    "sortOrder" => 10,
+                ],
+            ],
         ];
     }
 
@@ -189,6 +199,7 @@ class Storeview extends \Magento\Framework\App\Helper\AbstractHelper
      * Retrieve store tree
      *
      * @param array $storeIds
+     *
      * @return array
      */
     protected function getTree($storeIds)
@@ -198,7 +209,7 @@ class Storeview extends \Magento\Framework\App\Helper\AbstractHelper
             return $this->storeTrees[$filter];
         }
 
-        $data = [];
+        $data   = [];
         $stores = $this->storeManager->getStores(true);
         foreach ($stores as $store) {
             if (in_array($store->getId(), $storeIds)) {
@@ -214,7 +225,8 @@ class Storeview extends \Magento\Framework\App\Helper\AbstractHelper
     }
 
     /**
-     * @param \Magento\Store\Api\Data\StoreInterface $store
+     * @param StoreInterface $store
+     *
      * @return array
      */
     public function getStoreOptions($store)
@@ -229,7 +241,7 @@ class Storeview extends \Magento\Framework\App\Helper\AbstractHelper
             $option = [
                 'value'     => (int)$store->getId(),
                 'is_active' => $store->isActive(),
-                'label'     => $store->getName()
+                'label'     => $store->getName(),
             ];
         }
 

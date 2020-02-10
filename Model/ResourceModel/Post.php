@@ -66,20 +66,6 @@ class Post extends AbstractEntity
     }
 
     /**
-     * {@inheritdoc}
-     */
-    protected function _afterSave(DataObject $post)
-    {
-        /** @var PostInterface $post */
-        $this->saveCategoryIds($post);
-        $this->saveStoreIds($post);
-        $this->saveTagIds($post);
-        $this->saveProductIds($post);
-
-        return parent::_afterSave($post);
-    }
-
-    /**
      * @param PostInterface $model
      *
      * @return array
@@ -97,6 +83,79 @@ class Post extends AbstractEntity
         );
 
         return $connection->fetchCol($select);
+    }
+
+    /**
+     * @param PostInterface $model
+     *
+     * @return array
+     */
+    private function getStoreIds(PostInterface $model)
+    {
+        $connection = $this->getConnection();
+
+        $select = $connection->select()->from(
+            $this->getTable('mst_blog_store_post'),
+            'store_id'
+        )->where(
+            'post_id = ?',
+            (int)$model->getId()
+        );
+
+        return $connection->fetchCol($select);
+    }
+
+    /**
+     * @param PostInterface $model
+     *
+     * @return array
+     */
+    private function getTagIds(PostInterface $model)
+    {
+        $connection = $this->getConnection();
+        $select     = $connection->select()->from(
+            $this->getTable('mst_blog_tag_post'),
+            'tag_id'
+        )->where(
+            'post_id = ?',
+            (int)$model->getId()
+        );
+
+        return $connection->fetchCol($select);
+    }
+
+    /**
+     * @param PostInterface $model
+     *
+     * @return array
+     */
+    private function getProductIds(PostInterface $model)
+    {
+        $connection = $this->getConnection();
+
+        $select = $connection->select()->from(
+            $this->getTable('mst_blog_post_product'),
+            'product_id'
+        )->where(
+            'post_id = ?',
+            (int)$model->getId()
+        );
+
+        return $connection->fetchCol($select);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _afterSave(DataObject $post)
+    {
+        /** @var PostInterface $post */
+        $this->saveCategoryIds($post);
+        $this->saveStoreIds($post);
+        $this->saveTagIds($post);
+        $this->saveProductIds($post);
+
+        return parent::_afterSave($post);
     }
 
     /**
@@ -146,26 +205,6 @@ class Post extends AbstractEntity
         }
 
         return $this;
-    }
-
-    /**
-     * @param PostInterface $model
-     *
-     * @return array
-     */
-    private function getStoreIds(PostInterface $model)
-    {
-        $connection = $this->getConnection();
-
-        $select = $connection->select()->from(
-            $this->getTable('mst_blog_store_post'),
-            'store_id'
-        )->where(
-            'post_id = ?',
-            (int)$model->getId()
-        );
-
-        return $connection->fetchCol($select);
     }
 
     /**
@@ -222,25 +261,6 @@ class Post extends AbstractEntity
     /**
      * @param PostInterface $model
      *
-     * @return array
-     */
-    private function getTagIds(PostInterface $model)
-    {
-        $connection = $this->getConnection();
-        $select     = $connection->select()->from(
-            $this->getTable('mst_blog_tag_post'),
-            'tag_id'
-        )->where(
-            'post_id = ?',
-            (int)$model->getId()
-        );
-
-        return $connection->fetchCol($select);
-    }
-
-    /**
-     * @param PostInterface $model
-     *
      * @return $this
      */
     private function saveTagIds(PostInterface $model)
@@ -284,26 +304,6 @@ class Post extends AbstractEntity
         }
 
         return $this;
-    }
-
-    /**
-     * @param PostInterface $model
-     *
-     * @return array
-     */
-    private function getProductIds(PostInterface $model)
-    {
-        $connection = $this->getConnection();
-
-        $select = $connection->select()->from(
-            $this->getTable('mst_blog_post_product'),
-            'product_id'
-        )->where(
-            'post_id = ?',
-            (int)$model->getId()
-        );
-
-        return $connection->fetchCol($select);
     }
 
     /**

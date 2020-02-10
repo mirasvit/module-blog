@@ -1,5 +1,8 @@
 <?php
-/** @var \Mirasvit\BLog\Block\Adminhtml\Post\Edit\Sidebar\Tags $block */
+/** @var Tags $block */
+
+use Mirasvit\BLog\Block\Adminhtml\Post\Edit\Sidebar\Tags;
+
 ?>
 <div class="entry-edit form-inline">
     <fieldset class="fieldset admin__fieldset blog__post-fieldset" id="tags_fieldset">
@@ -23,8 +26,8 @@
         'Mirasvit_Blog/js/tag-it'
     ], function ($) {
         $("#myTags").tagit({
-            fieldName: 'post[tag_names][]',
-            allowSpaces: true,
+            fieldName:     'post[tag_names][]',
+            allowSpaces:   true,
             caseSensitive: false
         });
     });

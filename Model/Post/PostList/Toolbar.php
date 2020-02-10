@@ -1,5 +1,8 @@
 <?php
+
 namespace Mirasvit\Blog\Model\Post\PostList;
+
+use Magento\Framework\App\Request\Http;
 
 /**
  * Class Toolbar
@@ -33,23 +36,21 @@ class Toolbar
 
     /**
      * Request
-     *
-     * @var \Magento\Framework\App\Request\Http
+     * @var Http
      */
     protected $request;
 
     /**
-     * @param \Magento\Framework\App\Request\Http $request
+     * @param Http $request
      */
     public function __construct(
-        \Magento\Framework\App\Request\Http $request
+        Http $request
     ) {
         $this->request = $request;
     }
 
     /**
      * Get sort order
-     *
      * @return string|bool
      */
     public function getOrder()
@@ -59,7 +60,6 @@ class Toolbar
 
     /**
      * Get sort direction
-     *
      * @return string|bool
      */
     public function getDirection()
@@ -69,7 +69,6 @@ class Toolbar
 
     /**
      * Get sort mode
-     *
      * @return string|bool
      */
     public function getMode()
@@ -79,21 +78,21 @@ class Toolbar
 
     /**
      * Get products per page limit
-     *
      * @return string|bool
      */
     public function getLimit()
     {
         return $this->request->getParam(self::LIMIT_PARAM_NAME);
     }
+
     /**
      * Return current page from request
-     *
      * @return int
      */
     public function getCurrentPage()
     {
-        $page = (int) $this->request->getParam(self::PAGE_PARM_NAME);
+        $page = (int)$this->request->getParam(self::PAGE_PARM_NAME);
+
         return $page ? $page : 1;
     }
 }

@@ -2,9 +2,11 @@
 
 namespace Mirasvit\Blog\Block\Adminhtml\Author;
 
-use Magento\Backend\Block\Widget\Grid\Extended as ExtendedGrid;
+use Exception;
 use Magento\Backend\Block\Widget\Context;
+use Magento\Backend\Block\Widget\Grid\Extended as ExtendedGrid;
 use Magento\Backend\Helper\Data as BackendHelper;
+use Mirasvit\Blog\Model\Author;
 use Mirasvit\Blog\Model\AuthorFactory;
 
 class Grid extends ExtendedGrid
@@ -29,6 +31,16 @@ class Grid extends ExtendedGrid
         $this->authorFactory = $authorFactory;
 
         parent::__construct($context, $backendHelper, $data);
+    }
+
+    /**
+     * @param Author $row
+     *
+     * @return string
+     */
+    public function getRowUrl($row)
+    {
+        return $this->getUrl('*/*/edit', ['id' => $row->getId()]);
     }
 
     /**
@@ -58,34 +70,25 @@ class Grid extends ExtendedGrid
 
     /**
      * @return $this
-     * @throws \Exception
+     * @throws Exception
      */
     protected function _prepareColumns()
     {
         $this->addColumn('username', [
-            'header'   => __('Username'),
-            'index'    => 'username',
+            'header' => __('Username'),
+            'index'  => 'username',
         ]);
 
         $this->addColumn('firstname', [
-            'header'   => __('First Name'),
-            'index'    => 'firstname',
+            'header' => __('First Name'),
+            'index'  => 'firstname',
         ]);
 
         $this->addColumn('lastname', [
-            'header'   => __('Last Name'),
-            'index'    => 'lastname',
+            'header' => __('Last Name'),
+            'index'  => 'lastname',
         ]);
 
         return parent::_prepareColumns();
-    }
-
-    /**
-     * @param \Mirasvit\Blog\Model\Author $row
-     * @return string
-     */
-    public function getRowUrl($row)
-    {
-        return $this->getUrl('*/*/edit', ['id' => $row->getId()]);
     }
 }

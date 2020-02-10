@@ -2,11 +2,13 @@
 
 namespace Mirasvit\Blog\Controller\Tag;
 
-use Magento\Framework\Controller\ResultFactory;
+use Magento\Backend\Model\View\Result\Page;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Mirasvit\Blog\Model\TagFactory;
+use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Registry;
+use Mirasvit\Blog\Model\Tag;
+use Mirasvit\Blog\Model\TagFactory;
 
 class View extends Action
 {
@@ -35,20 +37,20 @@ class View extends Action
         Registry $registry,
         Context $context
     ) {
-        $this->tagFactory = $authorFactory;
-        $this->registry = $registry;
-        $this->resultFactory = $context->getResultFactory();;
+        $this->tagFactory    = $authorFactory;
+        $this->registry      = $registry;
+        $this->resultFactory = $context->getResultFactory();
 
         parent::__construct($context);
     }
 
     /**
-     * @return \Magento\Backend\Model\View\Result\Page
+     * @return Page
      */
     public function execute()
     {
         if ($this->initModel()) {
-            /* @var \Magento\Backend\Model\View\Result\Page $resultPage */
+            /* @var Page $resultPage */
             $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
             return $resultPage;
@@ -58,7 +60,7 @@ class View extends Action
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Tag
+     * @return Tag
      */
     protected function initModel()
     {

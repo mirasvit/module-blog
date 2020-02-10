@@ -2,6 +2,7 @@
 
 namespace Mirasvit\Blog\Controller\Post;
 
+use Magento\Backend\Model\View\Result\Page;
 use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\Exception\NotFoundException;
 use Mirasvit\Blog\Controller\Post;
@@ -9,7 +10,7 @@ use Mirasvit\Blog\Controller\Post;
 class View extends Post
 {
     /**
-     * @return \Magento\Backend\Model\View\Result\Page
+     * @return Page
      * @throws NotFoundException
      * @SuppressWarnings(PHPMD.ExitExpression)
      */
@@ -22,7 +23,7 @@ class View extends Post
             die;
         }
 
-        /* @var \Magento\Backend\Model\View\Result\Page $resultPage */
+        /* @var Page $resultPage */
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
         $this->_eventManager->dispatch(

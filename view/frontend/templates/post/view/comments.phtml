@@ -1,8 +1,10 @@
 <?php
 //@codingStandardsIgnoreFile
 
-/** @var \Mirasvit\Blog\Block\Post\Meta $block */
+/** @var Meta $block */
 // solve error with template minification
+use Mirasvit\Blog\Block\Post\Meta;
+
 $embedJs = '//';
 $embedJs .= $block->getDisqusShortname() . '.disqus.com/embed.js';
 ?>
@@ -27,6 +29,6 @@ $embedJs .= $block->getDisqusShortname() . '.disqus.com/embed.js';
 
 
 <?php if ($block->getCommentProvider() == 'facebook'): ?>
-    <div class="fb-comments" data-href="<?=$block->getPost()->getUrl() ?>"
+    <div class="fb-comments" data-href="<?= $block->getPost()->getUrl() ?>"
          data-numposts="5" width="100%"></div>
 <?php endif ?>

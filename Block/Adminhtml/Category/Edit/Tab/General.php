@@ -2,10 +2,12 @@
 
 namespace Mirasvit\Blog\Block\Adminhtml\Category\Edit\Tab;
 
-use Magento\Framework\Data\FormFactory;
-use Magento\Framework\Registry;
-use Magento\Backend\Block\Widget\Form;
 use Magento\Backend\Block\Widget\Context;
+use Magento\Backend\Block\Widget\Form;
+use Magento\Framework\Data\FormFactory;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Registry;
+use Mirasvit\Blog\Model\Category;
 use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 
 class General extends Form
@@ -40,27 +42,26 @@ class General extends Form
         array $data = []
     ) {
         $this->categoryCollectionFactory = $postCollectionFactory;
-        $this->formFactory = $formFactory;
-        $this->registry = $registry;
+        $this->formFactory               = $formFactory;
+        $this->registry                  = $registry;
 
         parent::__construct($context, $data);
     }
 
     /**
      * @return $this
-     *
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function _prepareForm()
     {
         $form = $this->formFactory->create();
         $this->setForm($form);
 
-        /** @var \Mirasvit\Blog\Model\Category $category */
+        /** @var Category $category */
         $category = $this->registry->registry('current_model');
 
         $fieldset = $form->addFieldset('edit_fieldset', [
-            'legend' => __('General Information')
+            'legend' => __('General Information'),
         ]);
 
         if ($category->getId()) {
@@ -95,22 +96,23 @@ class General extends Form
             'label'  => __('Status'),
             'name'   => 'status',
             'value'  => $category->getStatus(),
-            'values' => ['0' => __('Disabled'), '1' => __('Enabled')]
+            'values' => ['0' => __('Disabled'), '1' => __('Enabled')],
         ]);
 
         $fieldset->addField('sort_order', 'text', [
-            'label'  => __('Order'),
-            'name'   => 'sort_order',
-            'value'  => $category->getSortOrder(),
+            'label' => __('Order'),
+            'name'  => 'sort_order',
+            'value' => $category->getSortOrder(),
         ]);
 
         return parent::_prepareForm();
     }
 
     /**
-     * @param \Mirasvit\Blog\Model\Category $category
+     * @param Category $category
+     *
      * @return bool
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function isHideParent($category)
     {

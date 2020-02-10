@@ -2,6 +2,7 @@
 
 namespace Mirasvit\Blog\Controller\Adminhtml\Author;
 
+use Exception;
 use Mirasvit\Blog\Controller\Adminhtml\Author;
 
 class Save extends Author
@@ -11,7 +12,7 @@ class Save extends Author
      */
     public function execute()
     {
-        $id = $this->getRequest()->getParam('id');
+        $id             = $this->getRequest()->getParam('id');
         $resultRedirect = $this->resultRedirectFactory->create();
 
         if ($data = $this->getRequest()->getParams()) {
@@ -35,7 +36,7 @@ class Save extends Author
                 }
 
                 return $this->context->getResultRedirectFactory()->create()->setPath('*/*/');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
 
                 return $resultRedirect->setPath('*/*/edit', ['id' => $this->getRequest()->getParam('id')]);

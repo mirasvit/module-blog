@@ -10,11 +10,11 @@ define([
         init: function (element, valueAccessor, allBindings, model) {
             if (valueAccessor()) {
                 var $el = $('#' + element.id);
-
+                
                 $el.tokenize2({
                     tokensAllowCustom: true
                 });
-
+                
                 $el.on('tokenize:tokens:add', function () {
                     model.value($el.val());
                 });
@@ -24,12 +24,18 @@ define([
                 
                 var $input = $('input', $el.parent());
                 $input.on('blur', function () {
-                    $el.trigger('tokenize:tokens:add', $input.val())
+                    $el.trigger('tokenize:tokens:add', $input.val());
+                    model.value($el.val());
+                });
+                
+                var $input = $('input', $el.parent());
+                $input.on('blur', function () {
+                    $el.trigger('tokenize:tokens:add', $input.val());
                     model.value($el.val());
                 })
             }
         }
     };
-   
+    
     return Abstract.extend({});
 });

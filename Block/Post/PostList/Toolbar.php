@@ -2,14 +2,21 @@
 
 namespace Mirasvit\Blog\Block\Post\PostList;
 
-use Mirasvit\Blog\Model\Post\PostList\Toolbar as ToolbarModel;
-use Magento\Framework\View\Element\Template;
-use Magento\Store\Model\ScopeInterface;
-use Magento\Framework\View\Element\Template\Context;
 use Magento\Catalog\Model\Session;
-use Mirasvit\Blog\Model\Config;
-use Magento\Framework\Url\EncoderInterface;
+use Magento\Framework\DataObject;
 use Magento\Framework\Registry;
+use Magento\Framework\Url\EncoderInterface;
+use Magento\Framework\View\Element\Template;
+use Magento\Framework\View\Element\Template\Context;
+use Magento\Store\Model\ScopeInterface;
+use Mirasvit\Blog\Block\Html\Pager;
+use Mirasvit\Blog\Model\Author;
+use Mirasvit\Blog\Model\Category;
+use Mirasvit\Blog\Model\Config;
+use Mirasvit\Blog\Model\Post\PostList\Toolbar as ToolbarModel;
+use Mirasvit\Blog\Model\ResourceModel\Post\Collection;
+use Mirasvit\Blog\Model\Tag;
+use Mirasvit\Blog\Model\UrlInterface;
 
 /**
  * @SuppressWarnings(PHPMD.CouplingBetweenObjects)
@@ -17,27 +24,24 @@ use Magento\Framework\Registry;
 class Toolbar extends Template
 {
     /**
-     * @var \Mirasvit\Blog\Model\ResourceModel\Post\Collection
+     * @var Collection
      */
     protected $collection;
 
     /**
      * List of available order fields.
-     *
      * @var array
      */
     protected $availableOrder = null;
 
     /**
      * Default Order field.
-     *
      * @var string
      */
     protected $orderField = null;
 
     /**
      * Default direction.
-     *
      * @var string
      */
     protected $direction = 'desc';
@@ -49,8 +53,7 @@ class Toolbar extends Template
 
     /**
      * Catalog session.
-     *
-     * @var \Magento\Catalog\Model\Session
+     * @var Session
      */
     protected $session;
 
@@ -101,7 +104,6 @@ class Toolbar extends Template
 
     /**
      * Disable list state params memorizing.
-     *
      * @return $this
      */
     public function disableParamsMemorizing()
@@ -109,126 +111,6 @@ class Toolbar extends Template
         $this->paramsMemorizeAllowed = false;
 
         return $this;
-    }
-
-    /**
-     * Memorize parameter value for session.
-     *
-     * @param string $param Parameter name.
-     * @param string $value Parameter value.
-     *
-     * @return $this
-     */
-    protected function memorizeParam($param, $value)
-    {
-        if ($this->paramsMemorizeAllowed && !$this->session->getParamsMemorizeDisabled()) {
-            $this->session->setData($param, $value);
-        }
-
-        return $this;
-    }
-
-    /**
-     * Set collection to pager.
-     *
-     * @param \Mirasvit\Blog\Model\ResourceModel\Post\Collection $collection
-     * @return $this
-     */
-    public function setCollection($collection)
-    {
-        $this->collection = $collection;
-
-        $this->collection->setCurPage($this->getCurrentPage());
-
-        // we need to set pagination only if passed value integer and more that 0
-        $limit = (int)$this->getLimit();
-        if ($limit) {
-            $this->collection->setPageSize($limit);
-        }
-        if ($this->getCurrentOrder()) {
-            $this->collection->setOrder($this->getCurrentOrder(), $this->getCurrentDirection());
-        }
-
-        return $this;
-    }
-
-    /**
-     * @return \Mirasvit\Blog\Model\ResourceModel\Post\Collection
-     */
-    public function getCollection()
-    {
-        return $this->collection;
-    }
-
-    /**
-     * Return current page from request.
-     *
-     * @return int
-     */
-    public function getCurrentPage()
-    {
-        return $this->toolbarModel->getCurrentPage();
-    }
-
-    /**
-     * Get grit products sort order field.
-     *
-     * @return string
-     */
-    public function getCurrentOrder()
-    {
-        $order = $this->_getData('blog_current_order');
-        if ($order) {
-            return $order;
-        }
-
-        $orders = $this->getAvailableOrders();
-        $defaultOrder = $this->getOrderField();
-
-        if (!isset($orders[$defaultOrder])) {
-            $keys = array_keys($orders);
-            $defaultOrder = $keys[0];
-        }
-
-        $order = $this->toolbarModel->getOrder();
-        if (!$order || !isset($orders[$order])) {
-            $order = $defaultOrder;
-        }
-
-        if ($order != $defaultOrder) {
-            $this->memorizeParam('sort_order', $order);
-        }
-
-        $this->setData('blog_current_order', $order);
-
-        return $order;
-    }
-
-    /**
-     * Retrieve current direction.
-     *
-     * @return string
-     */
-    public function getCurrentDirection()
-    {
-        $dir = $this->_getData('blog_current_direction');
-        if ($dir) {
-            return $dir;
-        }
-
-        $directions = ['asc', 'desc'];
-        $dir = strtolower($this->toolbarModel->getDirection());
-        if (!$dir || !in_array($dir, $directions)) {
-            $dir = $this->direction;
-        }
-
-        if ($dir != $this->direction) {
-            $this->memorizeParam('sort_direction', $dir);
-        }
-
-        $this->setData('blog_current_direction', $dir);
-
-        return $dir;
     }
 
     /**
@@ -265,21 +147,10 @@ class Toolbar extends Template
     }
 
     /**
-     * Retrieve available Order fields list.
-     *
-     * @return array
-     */
-    public function getAvailableOrders()
-    {
-        $this->loadAvailableOrders();
-
-        return $this->availableOrder;
-    }
-
-    /**
      * Set Available order fields list.
      *
      * @param array $orders
+     *
      * @return $this
      */
     public function setAvailableOrders($orders)
@@ -294,6 +165,7 @@ class Toolbar extends Template
      *
      * @param string $order
      * @param string $value
+     *
      * @return $this
      */
     public function addOrderToAvailableOrders($order, $value)
@@ -308,6 +180,7 @@ class Toolbar extends Template
      * Remove order from available orders if exists.
      *
      * @param string $order
+     *
      * @return $this
      */
     public function removeOrderFromAvailableOrders($order)
@@ -325,6 +198,7 @@ class Toolbar extends Template
      * Compare defined order field with current order field.
      *
      * @param string $order
+     *
      * @return bool
      */
     public function isOrderCurrent($order)
@@ -333,24 +207,8 @@ class Toolbar extends Template
     }
 
     /**
-     * Return current URL with rewrites and additional parameters.
-     *
-     * @param array $params Query parameters.
-     * @return string
-     */
-    public function getPagerUrl($params = [])
-    {
-        $urlParams = [];
-        $urlParams['_current'] = true;
-        $urlParams['_escape'] = true;
-        $urlParams['_use_rewrite'] = true;
-        $urlParams['_query'] = $params;
-
-        return $this->getUrl('*/*/*', $urlParams);
-    }
-
-    /**
      * @param array $params
+     *
      * @return string
      */
     public function getPagerEncodedUrl($params = [])
@@ -359,56 +217,21 @@ class Toolbar extends Template
     }
 
     /**
-     * Retrieve default per page values.
+     * Return current URL with rewrites and additional parameters.
      *
-     * @return string (comma separated)
+     * @param array $params Query parameters.
+     *
+     * @return string
      */
-    public function getDefaultPerPageValue()
+    public function getPagerUrl($params = [])
     {
-        if ($default = $this->getDefaultListPerPage()) {
-            return $default;
-        }
+        $urlParams                 = [];
+        $urlParams['_current']     = true;
+        $urlParams['_escape']      = true;
+        $urlParams['_use_rewrite'] = true;
+        $urlParams['_query']       = $params;
 
-        return 10;
-    }
-
-    /**
-     * @return array
-     */
-    public function getAvailableLimit()
-    {
-        return [10 => 10, 20 => 20, 50 => 50];
-    }
-
-    /**
-     * @return int
-     */
-    public function getLimit()
-    {
-        $limit = $this->_getData('blog_current_limit');
-        if ($limit) {
-            return $limit;
-        }
-
-        $limits = $this->getAvailableLimit();
-        $defaultLimit = $this->getDefaultPerPageValue();
-        if (!$defaultLimit || !isset($limits[$defaultLimit])) {
-            $keys = array_keys($limits);
-            $defaultLimit = $keys[0];
-        }
-
-        $limit = $this->toolbarModel->getLimit();
-        if (!$limit || !isset($limits[$limit])) {
-            $limit = $defaultLimit;
-        }
-
-        if ($limit != $defaultLimit) {
-            $this->memorizeParam('limit_page', $limit);
-        }
-
-        $this->setData('blog_current_limit', $limit);
-
-        return $limit;
+        return $this->getUrl('*/*/*', $urlParams);
     }
 
     /**
@@ -429,6 +252,214 @@ class Toolbar extends Template
         $collection = $this->getCollection();
 
         return $collection->getPageSize() * ($collection->getCurPage() - 1) + 1;
+    }
+
+    /**
+     * @return Collection
+     */
+    public function getCollection()
+    {
+        return $this->collection;
+    }
+
+    /**
+     * Set collection to pager.
+     *
+     * @param Collection $collection
+     *
+     * @return $this
+     */
+    public function setCollection($collection)
+    {
+        $this->collection = $collection;
+
+        $this->collection->setCurPage($this->getCurrentPage());
+
+        // we need to set pagination only if passed value integer and more that 0
+        $limit = (int)$this->getLimit();
+        if ($limit) {
+            $this->collection->setPageSize($limit);
+        }
+        if ($this->getCurrentOrder()) {
+            $this->collection->setOrder($this->getCurrentOrder(), $this->getCurrentDirection());
+        }
+
+        return $this;
+    }
+
+    /**
+     * Return current page from request.
+     * @return int
+     */
+    public function getCurrentPage()
+    {
+        return $this->toolbarModel->getCurrentPage();
+    }
+
+    /**
+     * @return int
+     */
+    public function getLimit()
+    {
+        $limit = $this->_getData('blog_current_limit');
+        if ($limit) {
+            return $limit;
+        }
+
+        $limits       = $this->getAvailableLimit();
+        $defaultLimit = $this->getDefaultPerPageValue();
+        if (!$defaultLimit || !isset($limits[$defaultLimit])) {
+            $keys         = array_keys($limits);
+            $defaultLimit = $keys[0];
+        }
+
+        $limit = $this->toolbarModel->getLimit();
+        if (!$limit || !isset($limits[$limit])) {
+            $limit = $defaultLimit;
+        }
+
+        if ($limit != $defaultLimit) {
+            $this->memorizeParam('limit_page', $limit);
+        }
+
+        $this->setData('blog_current_limit', $limit);
+
+        return $limit;
+    }
+
+    /**
+     * @return array
+     */
+    public function getAvailableLimit()
+    {
+        return [10 => 10, 20 => 20, 50 => 50];
+    }
+
+    /**
+     * Retrieve default per page values.
+     * @return string (comma separated)
+     */
+    public function getDefaultPerPageValue()
+    {
+        if ($default = $this->getDefaultListPerPage()) {
+            return $default;
+        }
+
+        return 10;
+    }
+
+    /**
+     * Memorize parameter value for session.
+     *
+     * @param string $param Parameter name.
+     * @param string $value Parameter value.
+     *
+     * @return $this
+     */
+    protected function memorizeParam($param, $value)
+    {
+        if ($this->paramsMemorizeAllowed && !$this->session->getParamsMemorizeDisabled()) {
+            $this->session->setData($param, $value);
+        }
+
+        return $this;
+    }
+
+    /**
+     * Get grit products sort order field.
+     * @return string
+     */
+    public function getCurrentOrder()
+    {
+        $order = $this->_getData('blog_current_order');
+        if ($order) {
+            return $order;
+        }
+
+        $orders       = $this->getAvailableOrders();
+        $defaultOrder = $this->getOrderField();
+
+        if (!isset($orders[$defaultOrder])) {
+            $keys         = array_keys($orders);
+            $defaultOrder = $keys[0];
+        }
+
+        $order = $this->toolbarModel->getOrder();
+        if (!$order || !isset($orders[$order])) {
+            $order = $defaultOrder;
+        }
+
+        if ($order != $defaultOrder) {
+            $this->memorizeParam('sort_order', $order);
+        }
+
+        $this->setData('blog_current_order', $order);
+
+        return $order;
+    }
+
+    /**
+     * Retrieve available Order fields list.
+     * @return array
+     */
+    public function getAvailableOrders()
+    {
+        $this->loadAvailableOrders();
+
+        return $this->availableOrder;
+    }
+
+    /**
+     * @return $this
+     */
+    private function loadAvailableOrders()
+    {
+        if ($this->availableOrder === null) {
+            $this->availableOrder = [
+                'created_at' => __('Date'),
+                'name'       => __('Name'),
+            ];
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return string
+     */
+    protected function getOrderField()
+    {
+        if ($this->orderField === null) {
+            $this->orderField = $this->config->getDefaultSortField();
+        }
+
+        return $this->orderField;
+    }
+
+    /**
+     * Retrieve current direction.
+     * @return string
+     */
+    public function getCurrentDirection()
+    {
+        $dir = $this->_getData('blog_current_direction');
+        if ($dir) {
+            return $dir;
+        }
+
+        $directions = ['asc', 'desc'];
+        $dir        = strtolower($this->toolbarModel->getDirection());
+        if (!$dir || !in_array($dir, $directions)) {
+            $dir = $this->direction;
+        }
+
+        if ($dir != $this->direction) {
+            $this->memorizeParam('sort_direction', $dir);
+        }
+
+        $this->setData('blog_current_direction', $dir);
+
+        return $dir;
     }
 
     /**
@@ -470,13 +501,13 @@ class Toolbar extends Template
      */
     public function getPagerHtml()
     {
-        /** @var \Mirasvit\Blog\Block\Html\Pager $pagerBlock */
+        /** @var Pager $pagerBlock */
         $pagerBlock = $this->getChildBlock('pager');
         if ($this->getEntity()) {
             $pagerBlock->setEntity($this->getEntity());
         }
 
-        if ($pagerBlock instanceof \Magento\Framework\DataObject) {
+        if ($pagerBlock instanceof DataObject) {
             $pagerBlock->setAvailableLimit($this->getAvailableLimit());
 
             $pagerBlock->setUseContainer(false)
@@ -498,7 +529,7 @@ class Toolbar extends Template
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\UrlInterface|null
+     * @return UrlInterface|null
      */
     public function getEntity()
     {
@@ -515,7 +546,7 @@ class Toolbar extends Template
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Category
+     * @return Category
      */
     public function getCategory()
     {
@@ -523,7 +554,7 @@ class Toolbar extends Template
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Tag
+     * @return Tag
      */
     public function getTag()
     {
@@ -531,37 +562,10 @@ class Toolbar extends Template
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Author
+     * @return Author
      */
     public function getAuthor()
     {
         return $this->registry->registry('current_blog_author');
-    }
-
-    /**
-     * @return string
-     */
-    protected function getOrderField()
-    {
-        if ($this->orderField === null) {
-            $this->orderField = $this->config->getDefaultSortField();
-        }
-
-        return $this->orderField;
-    }
-
-    /**
-     * @return $this
-     */
-    private function loadAvailableOrders()
-    {
-        if ($this->availableOrder === null) {
-            $this->availableOrder = [
-                'created_at' => __('Date'),
-                'name'       => __('Name'),
-            ];
-        }
-
-        return $this;
     }
 }

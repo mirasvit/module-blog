@@ -18,8 +18,8 @@ class Tag extends AbstractModel implements IdentityInterface, UrlInterface, TagI
     protected $url;
 
     /**
-     * @param Url $url
-     * @param Context $context
+     * @param Url      $url
+     * @param Context  $context
      * @param Registry $registry
      */
     public function __construct(
@@ -34,20 +34,11 @@ class Tag extends AbstractModel implements IdentityInterface, UrlInterface, TagI
 
     /**
      * Get identities.
-     *
      * @return array
      */
     public function getIdentities()
     {
         return [self::CACHE_TAG . '_' . $this->getId()];
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function _construct()
-    {
-        $this->_init('Mirasvit\Blog\Model\ResourceModel\Tag');
     }
 
     /**
@@ -82,6 +73,16 @@ class Tag extends AbstractModel implements IdentityInterface, UrlInterface, TagI
         return $this->getData(self::URL_KEY);
     }
 
+    /**
+     * @param array $urlParams
+     *
+     * @return string
+     */
+    public function getUrl($urlParams = [])
+    {
+        return $this->url->getTagUrl($this, $urlParams);
+    }
+
     //    /**
     //     * @param string $tag
     //     * @return $this
@@ -100,11 +101,10 @@ class Tag extends AbstractModel implements IdentityInterface, UrlInterface, TagI
     //    }
 
     /**
-     * @param array $urlParams
-     * @return string
+     * {@inheritdoc}
      */
-    public function getUrl($urlParams = [])
+    protected function _construct()
     {
-        return $this->url->getTagUrl($this, $urlParams);
+        $this->_init('Mirasvit\Blog\Model\ResourceModel\Tag');
     }
 }

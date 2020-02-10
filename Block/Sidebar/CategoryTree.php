@@ -2,9 +2,10 @@
 
 namespace Mirasvit\Blog\Block\Sidebar;
 
-use Magento\Framework\View\Element\Template;
 use Magento\Framework\Registry;
+use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
+use Mirasvit\Blog\Model\Category;
 use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 
 class CategoryTree extends Template
@@ -37,14 +38,14 @@ class CategoryTree extends Template
         array $data = []
     ) {
         $this->categoryCollectionFactory = $postCollectionFactory;
-        $this->registry = $registry;
-        $this->context = $context;
+        $this->registry                  = $registry;
+        $this->context                   = $context;
 
         parent::__construct($context, $data);
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Category[]
+     * @return Category[]
      */
     public function getTree()
     {
@@ -56,15 +57,8 @@ class CategoryTree extends Template
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Category|false
-     */
-    public function getCurrentCategory()
-    {
-        return $this->registry->registry('current_blog_category');
-    }
-
-    /**
-     * @param \Mirasvit\Blog\Model\Category $category
+     * @param Category $category
+     *
      * @return bool
      */
     public function isCurrent($category)
@@ -74,5 +68,13 @@ class CategoryTree extends Template
         }
 
         return false;
+    }
+
+    /**
+     * @return Category|false
+     */
+    public function getCurrentCategory()
+    {
+        return $this->registry->registry('current_blog_category');
     }
 }

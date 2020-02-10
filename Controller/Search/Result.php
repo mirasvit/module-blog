@@ -2,13 +2,14 @@
 
 namespace Mirasvit\Blog\Controller\Search;
 
-use Magento\Framework\Controller\ResultFactory;
+use Magento\Backend\Model\View\Result\Page;
 use Magento\Framework\App\Action\Action;
+use Magento\Framework\Controller\ResultFactory;
 
 class Result extends Action
 {
     /**
-     * @return \Magento\Backend\Model\View\Result\Page
+     * @return Page
      */
     public function execute()
     {

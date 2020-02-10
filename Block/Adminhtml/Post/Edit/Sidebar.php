@@ -2,10 +2,14 @@
 
 namespace Mirasvit\Blog\Block\Adminhtml\Post\Edit;
 
+use Exception;
 use Magento\Backend\Block\Template;
 use Magento\Backend\Block\Template\Context;
-use Magento\Framework\Registry;
 use Magento\Framework\Locale\ResolverInterface;
+use Magento\Framework\Registry;
+use Mirasvit\Blog\Model\Post;
+use Zend_Locale_Data;
+use Zend_Locale_Exception;
 
 class Sidebar extends Template
 {
@@ -35,7 +39,7 @@ class Sidebar extends Template
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Post
+     * @return Post
      */
     public function getPost()
     {
@@ -45,14 +49,15 @@ class Sidebar extends Template
     /**
      * @param string $param
      * @param string $default
+     *
      * @return string
-     * @throws \Zend_Locale_Exception
+     * @throws Zend_Locale_Exception
      */
     public function getLocaleData($param, $default = '')
     {
         try {
-            $text = \Zend_Locale_Data::getContent($this->localeResolver->getLocale(), $param);
-        } catch (\Exception $e) {
+            $text = Zend_Locale_Data::getContent($this->localeResolver->getLocale(), $param);
+        } catch (Exception $e) {
             $text = $default;
         }
 

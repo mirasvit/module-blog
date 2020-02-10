@@ -6,17 +6,17 @@ interface CategoryInterface
 {
     const ID = 'entity_id';
 
-    const URL_KEY = 'url_key';
-    const PATH = 'path';
-    const LEVEL = 'level';
-    const POSITION = 'position';
+    const URL_KEY   = 'url_key';
+    const PATH      = 'path';
+    const LEVEL     = 'level';
+    const POSITION  = 'position';
     const PARENT_ID = 'parent_id';
 
-    const NAME = 'name';
-    const CONTENT = 'content';
-    const META_TITLE = 'meta_title';
+    const NAME             = 'name';
+    const CONTENT          = 'content';
+    const META_TITLE       = 'meta_title';
     const META_DESCRIPTION = 'meta_description';
-    const META_KEYWORDS = 'meta_keywords';
+    const META_KEYWORDS    = 'meta_keywords';
 
     const STATUS = 'status';
 
@@ -32,6 +32,7 @@ interface CategoryInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setStatus($value);
@@ -43,6 +44,7 @@ interface CategoryInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setName($value);
@@ -55,6 +57,7 @@ interface CategoryInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setContent($value);
@@ -66,6 +69,7 @@ interface CategoryInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setUrlKey($value);
@@ -77,6 +81,7 @@ interface CategoryInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setMetaTitle($value);
@@ -88,6 +93,7 @@ interface CategoryInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setMetaDescription($value);
@@ -99,6 +105,7 @@ interface CategoryInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setMetaKeywords($value);
@@ -110,6 +117,7 @@ interface CategoryInterface
 
     /**
      * @param string $value
+     *
      * @return $this
      */
     public function setPath($value);
@@ -121,6 +129,7 @@ interface CategoryInterface
 
     /**
      * @param int $value
+     *
      * @return $this
      */
     public function setLevel($value);
@@ -132,6 +141,7 @@ interface CategoryInterface
 
     /**
      * @param int $value
+     *
      * @return $this
      */
     public function setPosition($value);

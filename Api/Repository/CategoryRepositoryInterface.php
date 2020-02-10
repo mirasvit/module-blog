@@ -3,12 +3,12 @@
 namespace Mirasvit\Blog\Api\Repository;
 
 use Mirasvit\Blog\Api\Data\CategoryInterface;
-use Mirasvit\Blog\Api\Data\PostInterface;
+use Mirasvit\Blog\Model\ResourceModel\Category\Collection;
 
 interface CategoryRepositoryInterface
 {
     /**
-     * @return \Mirasvit\Blog\Model\ResourceModel\Category\Collection | CategoryInterface[]
+     * @return Collection | CategoryInterface[]
      */
     public function getCollection();
 
@@ -19,18 +19,21 @@ interface CategoryRepositoryInterface
 
     /**
      * @param CategoryInterface $model
+     *
      * @return CategoryInterface
      */
     public function save(CategoryInterface $model);
 
     /**
      * @param int $id
+     *
      * @return CategoryInterface|false
      */
     public function get($id);
 
     /**
      * @param CategoryInterface $model
+     *
      * @return bool
      */
     public function delete(CategoryInterface $model);

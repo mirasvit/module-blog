@@ -2,6 +2,8 @@
 
 namespace Mirasvit\Blog\Controller\Adminhtml\Post;
 
+use Magento\Backend\Model\View\Result\Page;
+use Magento\Backend\Model\View\Result\Page\Interceptor;
 use Magento\Framework\Controller\ResultFactory;
 use Mirasvit\Blog\Api\Data\PostInterface;
 use Mirasvit\Blog\Controller\Adminhtml\Post;
@@ -9,14 +11,14 @@ use Mirasvit\Blog\Controller\Adminhtml\Post;
 class Edit extends Post
 {
     /**
-     * @return \Magento\Backend\Model\View\Result\Page
+     * @return Page
      */
     public function execute()
     {
-        /** @var \Magento\Backend\Model\View\Result\Page\Interceptor $resultPage */
+        /** @var Interceptor $resultPage */
         $resultPage = $this->resultFactory->create(ResultFactory::TYPE_PAGE);
 
-        $id = $this->getRequest()->getParam(PostInterface::ID);
+        $id    = $this->getRequest()->getParam(PostInterface::ID);
         $model = $this->initModel();
 
         if ($id && !is_array($id) && !$model->getId()) {

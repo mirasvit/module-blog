@@ -2,14 +2,16 @@
 
 namespace Mirasvit\Blog\Controller\Adminhtml\Post;
 
+use Exception;
 use Magento\Backend\App\Action\Context;
+use Magento\Framework\App\Area;
 use Magento\Framework\App\ObjectManager;
+use Magento\Framework\Controller\Result\JsonFactory;
 use Magento\Framework\Registry;
 use Mirasvit\Blog\Api\Data\PostInterface;
 use Mirasvit\Blog\Api\Repository\PostRepositoryInterface;
 use Mirasvit\Blog\Api\Repository\TagRepositoryInterface;
 use Mirasvit\Blog\Controller\Adminhtml\Post;
-use Magento\Framework\Controller\Result\JsonFactory;
 
 class Save extends Post
 {
@@ -17,6 +19,7 @@ class Save extends Post
      * @var TagRepositoryInterface
      */
     private $tagRepository;
+
     /**
      * @var JsonFactory
      */
@@ -30,7 +33,7 @@ class Save extends Post
         Context $context
     ) {
         $this->tagRepository = $tagRepository;
-        $this->jsonFactory = $jsonFactory;
+        $this->jsonFactory   = $jsonFactory;
         parent::__construct($postRepository, $registry, $context);
     }
 
@@ -39,19 +42,20 @@ class Save extends Post
      */
     public function execute()
     {
-        $id = $this->getRequest()->getParam(PostInterface::ID);
+        $id             = $this->getRequest()->getParam(PostInterface::ID);
         $resultRedirect = $this->resultRedirectFactory->create();
-        $data = $this->filterPostData($this->getRequest()->getParams());
+        $data           = $this->filterPostData($this->getRequest()->getParams());
         if ($data) {
             /** @var \Mirasvit\Blog\Model\Post $model */
             $model = $this->initModel();
             if (!$model->getId() && $id) {
                 $this->messageManager->addErrorMessage(__('This post no longer exists.'));
+
                 return $resultRedirect->setPath('*/*/');
             }
             $model->addData($data);
 
-            if(!$data['is_short_content']) {
+            if (!$data['is_short_content']) {
                 $model->setShortContent('');
             }
 
@@ -64,10 +68,12 @@ class Save extends Post
                     if ($this->getRequest()->getParam('back') == 'edit') {
                         return $resultRedirect->setPath('*/*/edit', [PostInterface::ID => $model->getId()]);
                     }
+
                     return $this->context->getResultRedirectFactory()->create()->setPath('*/*/');
                 }
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
+
                 return $resultRedirect->setPath(
                     '*/*/edit',
                     [PostInterface::ID => $this->getRequest()->getParam(PostInterface::ID)]
@@ -76,35 +82,14 @@ class Save extends Post
         } else {
             $resultRedirect->setPath('*/*/');
             $this->messageManager->addErrorMessage('No data to save.');
+
             return $resultRedirect;
         }
     }
 
-    private function handlePreviewRequest(PostInterface $model)
-    {
-        $om = ObjectManager::getInstance();
-        $scopeResolver = $om->create('Magento\Framework\Url\ScopeResolverInterface', [
-            'areaCode' => \Magento\Framework\App\Area::AREA_FRONTEND,
-        ]);
-        # preview mode save as revision
-        $model->setId(false);
-        $model->setType(PostInterface::TYPE_REVISION);
-        $this->postRepository->save($model);
-        $resultJson = $this->jsonFactory->create();
-        $url = $om->create('Magento\Framework\Url', ['scopeResolver' => $scopeResolver])
-            ->getUrl('blog/post/view', [
-                PostInterface::ID => $model->getId(),
-                '_scope_to_url'   => false,
-                '_nosid'          => true,
-            ]);
-        return $resultJson->setData([
-            PostInterface::ID => $model->getId(),
-            'url'             => $url,
-        ]);
-    }
-
     /**
      * @param array $rawData
+     *
      * @return array
      */
     private function filterPostData(array $rawData)
@@ -127,9 +112,9 @@ class Save extends Post
         if (isset($data[PostInterface::TAG_IDS]) && is_array($data[PostInterface::TAG_IDS])) {
             foreach ($data[PostInterface::TAG_IDS] as $idx => $tagId) {
                 if (!is_numeric($tagId)) {
-                    $tag = $this->tagRepository->create()
+                    $tag                                = $this->tagRepository->create()
                         ->setName($tagId);
-                    $tag = $this->tagRepository->ensure($tag);
+                    $tag                                = $this->tagRepository->ensure($tag);
                     $data[PostInterface::TAG_IDS][$idx] = $tag->getId();
                 }
             }
@@ -148,6 +133,31 @@ class Save extends Post
         } else {
             $data[PostInterface::PRODUCT_IDS] = [null];
         }
+
         return $data;
+    }
+
+    private function handlePreviewRequest(PostInterface $model)
+    {
+        $om            = ObjectManager::getInstance();
+        $scopeResolver = $om->create('Magento\Framework\Url\ScopeResolverInterface', [
+            'areaCode' => Area::AREA_FRONTEND,
+        ]);
+        # preview mode save as revision
+        $model->setId(false);
+        $model->setType(PostInterface::TYPE_REVISION);
+        $this->postRepository->save($model);
+        $resultJson = $this->jsonFactory->create();
+        $url        = $om->create('Magento\Framework\Url', ['scopeResolver' => $scopeResolver])
+            ->getUrl('blog/post/view', [
+                PostInterface::ID => $model->getId(),
+                '_scope_to_url'   => false,
+                '_nosid'          => true,
+            ]);
+
+        return $resultJson->setData([
+            PostInterface::ID => $model->getId(),
+            'url'             => $url,
+        ]);
     }
 }

@@ -2,13 +2,14 @@
 
 namespace Mirasvit\Blog\Controller\Category;
 
+use Magento\Backend\Model\View\Result\Page;
 use Magento\Framework\Controller\ResultFactory;
 use Mirasvit\Blog\Controller\Category;
 
 class Index extends Category
 {
     /**
-     * @return \Magento\Backend\Model\View\Result\Page
+     * @return Page
      */
     public function execute()
     {

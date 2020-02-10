@@ -1,4 +1,5 @@
 <?php
+
 namespace Mirasvit\Blog\Model\Post\Attribute\Source;
 
 use Magento\Eav\Model\Entity\Attribute\Source\AbstractSource;
@@ -15,7 +16,6 @@ class Status extends AbstractSource implements SourceInterface, OptionSourceInte
 
     /**
      * Retrieve Visible Status Ids
-     *
      * @return int[]
      */
     public function getVisibleStatusIds()
@@ -24,22 +24,7 @@ class Status extends AbstractSource implements SourceInterface, OptionSourceInte
     }
 
     /**
-     * Retrieve option array
-     *
-     * @return string[]
-     */
-    public static function getOptionArray()
-    {
-        return [
-            self::STATUS_DRAFT          => __('Draft'),
-            self::STATUS_PENDING_REVIEW => __('Pending Review'),
-            self::STATUS_PUBLISHED      => __('Published')
-        ];
-    }
-
-    /**
      * Retrieve option array with empty value
-     *
      * @return string[]
      */
     public function getAllOptions()
@@ -54,9 +39,23 @@ class Status extends AbstractSource implements SourceInterface, OptionSourceInte
     }
 
     /**
+     * Retrieve option array
+     * @return string[]
+     */
+    public static function getOptionArray()
+    {
+        return [
+            self::STATUS_DRAFT          => __('Draft'),
+            self::STATUS_PENDING_REVIEW => __('Pending Review'),
+            self::STATUS_PUBLISHED      => __('Published'),
+        ];
+    }
+
+    /**
      * Retrieve option text by option value
      *
      * @param string $optionId
+     *
      * @return string
      */
     public function getOptionText($optionId)

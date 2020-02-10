@@ -5,7 +5,7 @@ define([
     
     return uiComponent.extend({
         defaults: {
-            template:  'Mirasvit_Blog/post/form/area'
+            template: 'Mirasvit_Blog/post/form/area'
         }
     })
 });

@@ -1,7 +1,9 @@
 <?php
+
 namespace Mirasvit\Blog\Block\Html;
 
 use Magento\Framework\App\ObjectManager;
+use Mirasvit\Blog\Model\UrlInterface;
 
 /**
  * Html pager block
@@ -10,7 +12,7 @@ use Magento\Framework\App\ObjectManager;
 class Pager extends \Magento\Theme\Block\Html\Pager
 {
     /**
-     * @var \Mirasvit\Blog\Model\UrlInterface
+     * @var UrlInterface
      */
     protected $entity;
 
@@ -18,11 +20,12 @@ class Pager extends \Magento\Theme\Block\Html\Pager
      * Retrieve page URL by defined parameters
      *
      * @param array $params
+     *
      * @return string
      */
     public function getPagerUrl($params = [])
     {
-        $urlParams = [];
+        $urlParams             = [];
         $urlParams['_current'] = false;
         $urlParams['_escape']  = true;
         $urlParams['_query']   = $params;
@@ -31,9 +34,9 @@ class Pager extends \Magento\Theme\Block\Html\Pager
         if ($this->getEntity()) {
             $path = $this->getEntity()->getUrl($urlParams);
         } elseif ($this->getRequest()->getControllerName() == 'search') {
-            $url = ObjectManager::getInstance()->get('Mirasvit\Blog\Model\Url');
+            $url                   = ObjectManager::getInstance()->get('Mirasvit\Blog\Model\Url');
             $urlParams['_current'] = true;
-            $path = $url->getSearchUrl($urlParams);
+            $path                  = $url->getSearchUrl($urlParams);
         }
 
         return $path;
@@ -50,7 +53,7 @@ class Pager extends \Magento\Theme\Block\Html\Pager
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\UrlInterface|null
+     * @return UrlInterface|null
      */
     public function getEntity()
     {
@@ -58,7 +61,8 @@ class Pager extends \Magento\Theme\Block\Html\Pager
     }
 
     /**
-     * @param \Mirasvit\Blog\Model\UrlInterface $entity
+     * @param UrlInterface $entity
+     *
      * @return $this
      */
     public function setEntity($entity)

@@ -2,9 +2,9 @@
 
 namespace Mirasvit\Blog\Block\Post;
 
+use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
-use Magento\Framework\Registry;
 use Mirasvit\Blog\Model\Config;
 
 class AbstractBlock extends Template
@@ -34,20 +34,21 @@ class AbstractBlock extends Template
         Registry $registry,
         Context $context
     ) {
-        $this->config = $config;
+        $this->config   = $config;
         $this->registry = $registry;
-        $this->context = $context;
+        $this->context  = $context;
 
         parent::__construct($context);
     }
 
     /**
      * @param object|null $post
-     * @return \Mirasvit\Blog\Block\Post\Meta
+     *
+     * @return Meta
      */
     public function getPostMetaHeader($post = null)
     {
-        /** @var \Mirasvit\Blog\Block\Post\Meta $block */
+        /** @var Meta $block */
         $block = $this->getLayout()->createBlock('Mirasvit\Blog\Block\Post\Meta');
 
         $block->setTemplate('post/meta/header.phtml');
@@ -61,11 +62,12 @@ class AbstractBlock extends Template
 
     /**
      * @param object|null $post
-     * @return \Mirasvit\Blog\Block\Post\Meta
+     *
+     * @return Meta
      */
     public function getPostMetaFooter($post = null)
     {
-        /** @var \Mirasvit\Blog\Block\Post\Meta $block */
+        /** @var Meta $block */
         $block = $this->getLayout()->createBlock('Mirasvit\Blog\Block\Post\Meta');
 
         $block->setTemplate('post/meta/footer.phtml');
