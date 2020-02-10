@@ -33,6 +33,7 @@ class FileUpload extends Post
     public function execute()
     {
         $result = $this->fileProcessor->save(key($_FILES));
+
         return $this->resultFactory->create(ResultFactory::TYPE_JSON)->setData($result);
     }
 }

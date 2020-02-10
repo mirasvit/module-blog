@@ -2,11 +2,13 @@
 
 namespace Mirasvit\Blog\Block\Adminhtml\Post\Edit\Tab;
 
-use Magento\Framework\Data\FormFactory;
-use Magento\Framework\Registry;
 use Magento\Backend\Block\Widget\Context;
 use Magento\Backend\Block\Widget\Form;
 use Magento\Cms\Model\Wysiwyg\Config as WysiwygConfig;
+use Magento\Framework\Data\FormFactory;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Registry;
+use Mirasvit\Blog\Model\Post;
 
 class General extends Form
 {
@@ -38,27 +40,26 @@ class General extends Form
         Context $context
     ) {
         $this->wysiwygConfig = $wysiwygConfig;
-        $this->formFactory = $formFactory;
-        $this->registry = $registry;
+        $this->formFactory   = $formFactory;
+        $this->registry      = $registry;
 
         parent::__construct($context);
     }
 
     /**
      * @return $this
-     *
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function _prepareForm()
     {
         $form = $this->formFactory->create();
         $this->setForm($form);
 
-        /** @var \Mirasvit\Blog\Model\Post $post */
+        /** @var Post $post */
         $post = $this->registry->registry('current_model');
 
         $fieldset = $form->addFieldset('edit_fieldset', [
-            'class' => 'blog__post-fieldset'
+            'class' => 'blog__post-fieldset',
         ]);
 
         if ($post->getId()) {
@@ -91,7 +92,7 @@ class General extends Form
             'value'   => $post->getShortContent(),
             'wysiwyg' => true,
             'style'   => 'height:5em',
-            'config'  => $editorConfig
+            'config'  => $editorConfig,
         ]);
 
 

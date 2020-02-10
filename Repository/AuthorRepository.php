@@ -2,27 +2,21 @@
 
 namespace Mirasvit\Blog\Repository;
 
-use Mirasvit\Blog\Api\Repository\AuthorRepositoryInterface;
 use Magento\User\Model\ResourceModel\User\CollectionFactory;
+use Mirasvit\Blog\Api\Repository\AuthorRepositoryInterface;
 use Mirasvit\Blog\Model\AuthorFactory;
 
 class AuthorRepository implements AuthorRepositoryInterface
 {
-    /**
-     * @var AuthorFactory
-     */
     private $factory;
 
-    /**
-     * @var CollectionFactory
-     */
     private $collectionFactory;
 
     public function __construct(
         AuthorFactory $factory,
         CollectionFactory $collectionFactory
     ) {
-        $this->factory = $factory;
+        $this->factory           = $factory;
         $this->collectionFactory = $collectionFactory;
     }
 

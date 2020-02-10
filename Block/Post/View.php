@@ -2,12 +2,15 @@
 
 namespace Mirasvit\Blog\Block\Post;
 
+use Magento\Cms\Model\Template\FilterProvider;
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template\Context;
-use Magento\Framework\DataObject\IdentityInterface;
-use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
+use Magento\Theme\Block\Html\Breadcrumbs;
+use Magento\Theme\Block\Html\Title;
 use Mirasvit\Blog\Model\Config;
-use Magento\Cms\Model\Template\FilterProvider;
+use Mirasvit\Blog\Model\Post;
+use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory as CategoryCollectionFactory;
 
 /**
  * @SuppressWarnings(PHPMD.CyclomaticComplexity)
@@ -45,10 +48,28 @@ class View extends AbstractBlock implements IdentityInterface
         Context $context
     ) {
         $this->categoryCollectionFactory = $postCollectionFactory;
-        $this->config = $config;
-        $this->filterProvider = $filterProvider;
+        $this->config                    = $config;
+        $this->filterProvider            = $filterProvider;
 
         parent::__construct($config, $registry, $context);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getIdentities()
+    {
+        return $this->getPost()->getIdentities();
+    }
+
+    /**
+     * @return string
+     */
+    public function getPostContent()
+    {
+        return $this->filterProvider->getPageFilter()->filter(
+            $this->getPost()->getShortContent() . $this->getPost()->getContent()
+        );
     }
 
     /**
@@ -78,13 +99,13 @@ class View extends AbstractBlock implements IdentityInterface
         $this->pageConfig->setDescription($metaDescription);
         $this->pageConfig->setKeywords($metaKeywords);
 
-        /** @var \Magento\Theme\Block\Html\Title $pageMainTitle */
+        /** @var Title $pageMainTitle */
         $pageMainTitle = $this->getLayout()->getBlock('page.main.title');
         if ($pageMainTitle) {
             $pageMainTitle->setPageTitle($title);
         }
 
-        /** @var \Magento\Theme\Block\Html\Breadcrumbs $breadcrumbs */
+        /** @var Breadcrumbs $breadcrumbs */
         if ($breadcrumbs = $this->getLayout()->getBlock('breadcrumbs')) {
             $breadcrumbs->addCrumb('home', [
                 'label' => __('Home'),
@@ -93,7 +114,7 @@ class View extends AbstractBlock implements IdentityInterface
             ])->addCrumb('blog', [
                 'label' => $this->config->getBlogName(),
                 'title' => $this->config->getBlogName(),
-                'link'  => $this->config->getBaseUrl()
+                'link'  => $this->config->getBaseUrl(),
             ]);
 
             $breadcrumbs->addCrumb('postname', [
@@ -104,28 +125,10 @@ class View extends AbstractBlock implements IdentityInterface
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Post
+     * @return Post
      */
     public function getPost()
     {
         return $this->registry->registry('current_blog_post');
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getIdentities()
-    {
-        return $this->getPost()->getIdentities();
-    }
-
-    /**
-     * @return string
-     */
-    public function getPostContent()
-    {
-        return $this->filterProvider->getPageFilter()->filter(
-            $this->getPost()->getShortContent() . $this->getPost()->getContent()
-        );
     }
 }

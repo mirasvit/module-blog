@@ -2,13 +2,14 @@
 
 namespace Mirasvit\Blog\Block\Adminhtml\Post\Edit\Tab;
 
-use Magento\Framework\Data\FormFactory;
-use Magento\Framework\Registry;
+use Magento\Backend\Block\Widget\Context;
 use Magento\Backend\Block\Widget\Grid\Extended as ExtendedGrid;
-use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
 use Magento\Backend\Helper\Data as BackendHelper;
 use Magento\Catalog\Model\Product\Attribute\Source\Status as ProductStatus;
 use Magento\Catalog\Model\Product\Visibility as ProductVisibility;
+use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
+use Magento\Framework\Registry;
+use Mirasvit\Blog\Model\Post;
 
 class Products extends ExtendedGrid
 {
@@ -38,7 +39,7 @@ class Products extends ExtendedGrid
         ProductCollectionFactory $productCollectionFactory,
         ProductStatus $status,
         ProductVisibility $visibility,
-        \Magento\Backend\Block\Widget\Context $context,
+        Context $context,
         BackendHelper $backendHelper
     ) {
         $this->productCollectionFactory = $productCollectionFactory;
@@ -47,6 +48,18 @@ class Products extends ExtendedGrid
         $this->status                   = $status;
 
         parent::__construct($context, $backendHelper);
+    }
+
+    /**
+     * Retrive grid URL
+     * @return string
+     */
+    public function getGridUrl()
+    {
+        return $this->getUrl(
+            'blog/post/relatedProductsGrid',
+            ['_current' => true]
+        );
     }
 
     /**
@@ -63,6 +76,14 @@ class Products extends ExtendedGrid
         if ($this->getPost() && $this->getPost()->getId()) {
             $this->setDefaultFilter(['in_products' => 1]);
         }
+    }
+
+    /**
+     * @return Post
+     */
+    public function getPost()
+    {
+        return $this->registry->registry('current_model');
     }
 
     /**
@@ -91,6 +112,34 @@ class Products extends ExtendedGrid
     }
 
     /**
+     * Retrieve selected related products
+     * @return array
+     */
+    protected function getSelectedProducts()
+    {
+        $products = $this->getProductsRelated();
+        if (!is_array($products)) {
+            $products = array_keys($this->getSelectedRelatedProducts());
+        }
+
+        return $products;
+    }
+
+    /**
+     * Retrieve related products
+     * @return array
+     */
+    public function getSelectedRelatedProducts()
+    {
+        $products = [];
+        foreach ($this->getPost()->getRelatedProducts() as $product) {
+            $products[$product->getId()] = ['position' => 0];
+        }
+
+        return $products;
+    }
+
+    /**
      * @return $this
      */
     protected function _prepareCollection()
@@ -115,7 +164,7 @@ class Products extends ExtendedGrid
             'align'            => 'center',
             'index'            => 'entity_id',
             'header_css_class' => 'col-select',
-            'column_css_class' => 'col-select'
+            'column_css_class' => 'col-select',
         ]);
 
         $this->addColumn('position', [
@@ -127,7 +176,7 @@ class Products extends ExtendedGrid
             'editable'         => true,
             'is_system'        => 1,
             'header_css_class' => 'col-hidden',
-            'column_css_class' => 'col-hidden'
+            'column_css_class' => 'col-hidden',
         ]);
 
         $this->addColumn('id', [
@@ -159,56 +208,5 @@ class Products extends ExtendedGrid
             'type'    => 'options',
             'options' => $this->visibility->getOptionArray(),
         ]);
-    }
-
-    /**
-     * Retrive grid URL
-     *
-     * @return string
-     */
-    public function getGridUrl()
-    {
-        return $this->getUrl(
-            'blog/post/relatedProductsGrid',
-            ['_current' => true]
-        );
-    }
-
-    /**
-     * Retrieve selected related products
-     *
-     * @return array
-     */
-    protected function getSelectedProducts()
-    {
-        $products = $this->getProductsRelated();
-        if (!is_array($products)) {
-            $products = array_keys($this->getSelectedRelatedProducts());
-        }
-
-        return $products;
-    }
-
-    /**
-     * Retrieve related products
-     *
-     * @return array
-     */
-    public function getSelectedRelatedProducts()
-    {
-        $products = [];
-        foreach ($this->getPost()->getRelatedProducts() as $product) {
-            $products[$product->getId()] = ['position' => 0];
-        }
-
-        return $products;
-    }
-
-    /**
-     * @return \Mirasvit\Blog\Model\Post
-     */
-    public function getPost()
-    {
-        return $this->registry->registry('current_model');
     }
 }

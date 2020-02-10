@@ -85,6 +85,7 @@ class Url
     /**
      * @param Post $post
      * @param bool $useSid
+     *
      * @return string
      */
     public function getPostUrl($post, $useSid = true)
@@ -93,61 +94,10 @@ class Url
     }
 
     /**
-     * @param Category $category
-     * @param array    $urlParams
-     * @return string
-     */
-    public function getCategoryUrl($category, $urlParams = [])
-    {
-        return $this->getUrl('/' . $category->getUrlKey(), 'category', $urlParams);
-    }
-
-    /**
-     * @param Category $category
-     * @return string
-     */
-    public function getRssUrl($category = null)
-    {
-        if ($category) {
-            return $this->getUrl('/rss/' . $category->getUrlKey(), 'rss');
-        }
-
-        return $this->getUrl('/rss', 'rss');
-    }
-
-    /**
-     * @param Tag   $tag
-     * @param array $urlParams
-     * @return string
-     */
-    public function getTagUrl($tag, $urlParams = [])
-    {
-        return $this->getUrl('/tag/' . strtolower($tag->getUrlKey()), 'tag', $urlParams);
-    }
-
-    /**
-     * @param Author $author
-     * @param array  $urlParams
-     * @return string
-     */
-    public function getAuthorUrl($author, $urlParams = [])
-    {
-        return $this->getUrl('/author/' . strtolower($author->getId()), 'author', $urlParams);
-    }
-
-    /**
-     * @param array $urlParams
-     * @return string
-     */
-    public function getSearchUrl($urlParams = [])
-    {
-        return $this->getUrl('/search/', 'search', $urlParams);
-    }
-
-    /**
      * @param string $route
      * @param string $type
      * @param array  $urlParams
+     *
      * @return string
      */
     protected function getUrl($route, $type, $urlParams = [])
@@ -168,6 +118,7 @@ class Url
     /**
      * @param string $url
      * @param string $suffix
+     *
      * @return string
      */
     private function addSuffix($url, $suffix)
@@ -179,7 +130,65 @@ class Url
     }
 
     /**
+     * @param Category $category
+     * @param array    $urlParams
+     *
+     * @return string
+     */
+    public function getCategoryUrl($category, $urlParams = [])
+    {
+        return $this->getUrl('/' . $category->getUrlKey(), 'category', $urlParams);
+    }
+
+    /**
+     * @param Category $category
+     *
+     * @return string
+     */
+    public function getRssUrl($category = null)
+    {
+        if ($category) {
+            return $this->getUrl('/rss/' . $category->getUrlKey(), 'rss');
+        }
+
+        return $this->getUrl('/rss', 'rss');
+    }
+
+    /**
+     * @param Tag   $tag
+     * @param array $urlParams
+     *
+     * @return string
+     */
+    public function getTagUrl($tag, $urlParams = [])
+    {
+        return $this->getUrl('/tag/' . strtolower($tag->getUrlKey()), 'tag', $urlParams);
+    }
+
+    /**
+     * @param Author $author
+     * @param array  $urlParams
+     *
+     * @return string
+     */
+    public function getAuthorUrl($author, $urlParams = [])
+    {
+        return $this->getUrl('/author/' . strtolower($author->getId()), 'author', $urlParams);
+    }
+
+    /**
+     * @param array $urlParams
+     *
+     * @return string
+     */
+    public function getSearchUrl($urlParams = [])
+    {
+        return $this->getUrl('/search/', 'search', $urlParams);
+    }
+
+    /**
      * @param string $pathInfo
+     *
      * @return bool|DataObject
      * @SuppressWarnings(PHPMD.CyclomaticComplexity)
      * @SuppressWarnings(PHPMD.NPathComplexity)
@@ -317,7 +326,9 @@ class Url
 
     /**
      * Return url without suffix
+     *
      * @param string $key
+     *
      * @return string
      */
     protected function trimSuffix($key)

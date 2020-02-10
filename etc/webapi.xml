@@ -3,7 +3,7 @@
     <route url="/V1/blog" method="GET">
         <service class="Mirasvit\Blog\Api\Repository\PostRepositoryInterface" method="getList"/>
         <resources>
-            <resource ref="Magento_Catalog::products" />
+            <resource ref="Magento_Catalog::products"/>
         </resources>
     </route>
     <route url="/V1/blog/:id" method="GET">

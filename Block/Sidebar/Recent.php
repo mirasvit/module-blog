@@ -2,11 +2,13 @@
 
 namespace Mirasvit\Blog\Block\Sidebar;
 
-use Magento\Framework\View\Element\Template;
 use Magento\Framework\Registry;
+use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
-use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
 use Magento\Widget\Block\BlockInterface;
+use Mirasvit\Blog\Model\Category;
+use Mirasvit\Blog\Model\Post;
+use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
 
 class Recent extends Template implements BlockInterface
 {
@@ -50,7 +52,7 @@ class Recent extends Template implements BlockInterface
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Post[]
+     * @return Post[]
      */
     public function getCollection()
     {
@@ -62,15 +64,8 @@ class Recent extends Template implements BlockInterface
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Category|false
-     */
-    public function getCurrentCategory()
-    {
-        return $this->registry->registry('current_blog_category');
-    }
-
-    /**
-     * @param \Mirasvit\Blog\Model\Category $category
+     * @param Category $category
+     *
      * @return bool
      */
     public function isCurrent($category)
@@ -80,6 +75,14 @@ class Recent extends Template implements BlockInterface
         }
 
         return false;
+    }
+
+    /**
+     * @return Category|false
+     */
+    public function getCurrentCategory()
+    {
+        return $this->registry->registry('current_blog_category');
     }
 
     /**

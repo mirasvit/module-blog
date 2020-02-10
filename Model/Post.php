@@ -2,9 +2,11 @@
 
 namespace Mirasvit\Blog\Model;
 
+use Magento\Catalog\Model\ResourceModel\Product\Collection;
 use Magento\Catalog\Model\ResourceModel\Product\CollectionFactory as ProductCollectionFactory;
 use Magento\Framework\Api\AttributeValueFactory;
 use Magento\Framework\Api\ExtensionAttributesFactory;
+use Magento\Framework\App\ObjectManager;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Image as MagentoImage;
 use Magento\Framework\Image\Factory as ImageFactory;
@@ -47,6 +49,13 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
     protected $storeManager;
 
     /**
+     * @var Config
+     */
+    protected $config;
+
+    protected $productCollectionFactory;
+
+    /**
      * @var CategoryRepositoryInterface
      */
     private $categoryRepository;
@@ -60,11 +69,6 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
      * @var AuthorRepositoryInterface
      */
     private $authorRepository;
-
-    /**
-     * @var Config
-     */
-    protected $config;
 
     public function __construct(
         CategoryRepositoryInterface $categoryRepository,
@@ -90,14 +94,6 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
         $this->imageFactory             = $imageFactory;
 
         parent::__construct($context, $registry, $extensionFactory, $customAttributeFactory);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    protected function _construct()
-    {
-        $this->_init('Mirasvit\Blog\Model\ResourceModel\Post');
     }
 
     /**
@@ -138,14 +134,6 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
     public function setStatus($value)
     {
         return $this->setData(self::STATUS, $value);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
-    public function getAuthorId()
-    {
-        return $this->getData(self::AUTHOR_ID);
     }
 
     /**
@@ -271,14 +259,6 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
     /**
      * {@inheritdoc}
      */
-    public function getFeaturedImage()
-    {
-        return $this->getData(self::FEATURED_IMAGE);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function setFeaturedImage($value)
     {
         return $this->setData(self::FEATURED_IMAGE, $value);
@@ -335,14 +315,6 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
     /**
      * {@inheritdoc}
      */
-    public function getCategoryIds()
-    {
-        return $this->getData(self::CATEGORY_IDS);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function setCategoryIds(array $value)
     {
         return $this->setData(self::CATEGORY_IDS, $value);
@@ -367,14 +339,6 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
     /**
      * {@inheritdoc}
      */
-    public function getTagIds()
-    {
-        return $this->getData(self::TAG_IDS);
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function setTagIds(array $value)
     {
         return $this->setData(self::TAG_IDS, $value);
@@ -383,17 +347,81 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
     /**
      * {@inheritdoc}
      */
-    public function getProductIds()
+    public function setProductIds(array $value)
     {
-        return $this->getData(self::PRODUCT_IDS);
+        return $this->setData(self::PRODUCT_IDS, $value);
+    }
+
+    /**
+     * @return ResourceModel\Category\Collection
+     */
+    public function getCategories()
+    {
+        $ids   = $this->getCategoryIds();
+        $ids[] = 0;
+
+        $collection = $this->categoryRepository->getCollection()
+            ->addAttributeToSelect(['*'])
+            ->addFieldToFilter(CategoryInterface::ID, $ids);
+
+        return $collection;
     }
 
     /**
      * {@inheritdoc}
      */
-    public function setProductIds(array $value)
+    public function getCategoryIds()
     {
-        return $this->setData(self::PRODUCT_IDS, $value);
+        return $this->getData(self::CATEGORY_IDS);
+    }
+
+    /**
+     * @return ResourceModel\Tag\Collection
+     */
+    public function getTags()
+    {
+        $ids   = $this->getTagIds();
+        $ids[] = 0;
+
+        $collection = $this->tagRepository->getCollection()
+            ->addFieldToFilter(TagInterface::ID, $ids);
+
+        return $collection;
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getTagIds()
+    {
+        return $this->getData(self::TAG_IDS);
+    }
+
+    /**
+     * @return mixed|Collection
+     */
+    public function getRelatedProducts()
+    {
+        $ids = $this->getProductIds();
+        $url = ObjectManager::getInstance()
+            ->get('Magento\Framework\UrlInterface');
+        if (strpos($url->getCurrentUrl(), 'rest/all/V1/blog') > 0) {
+            return $ids;
+        }
+
+        $ids[] = 0;
+
+        return $this->productCollectionFactory->create()
+            ->addAttributeToSelect('*')
+            ->addFieldToFilter('entity_id', $ids);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getProductIds()
+    {
+        return $this->getData(self::PRODUCT_IDS);
     }
 
     //    /**
@@ -412,33 +440,27 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
     //        return $category;
     //    }
     //
+
     /**
-     * @return ResourceModel\Category\Collection
+     * @param bool $useSid
+     *
+     * @return string
      */
-    public function getCategories()
+    public function getUrl($useSid = true)
     {
-        $ids   = $this->getCategoryIds();
-        $ids[] = 0;
-
-        $collection = $this->categoryRepository->getCollection()
-            ->addAttributeToSelect(['*'])
-            ->addFieldToFilter(CategoryInterface::ID, $ids);
-
-        return $collection;
+        return $this->url->getPostUrl($this, $useSid);
     }
 
     /**
-     * @return ResourceModel\Tag\Collection
+     * @return Author
      */
-    public function getTags()
+    public function getAuthor()
     {
-        $ids   = $this->getTagIds();
-        $ids[] = 0;
+        if (!$this->hasData('author')) {
+            $this->setData('author', $this->authorRepository->get($this->getAuthorId()));
+        }
 
-        $collection = $this->tagRepository->getCollection()
-            ->addFieldToFilter(TagInterface::ID, $ids);
-
-        return $collection;
+        return $this->getData('author');
     }
     //
     //    /**
@@ -466,73 +488,13 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
     //        return in_array(0, $this->getStoreIds()) || in_array($storeId, $this->getStoreIds());
     //    }
     //
-    /**
-     * @return mixed|\Magento\Catalog\Model\ResourceModel\Product\Collection
-     */
-    public function getRelatedProducts()
-    {
-        $ids = $this->getProductIds();
-        $url = \Magento\Framework\App\ObjectManager::getInstance()
-            ->get('Magento\Framework\UrlInterface');
-        if (strpos($url->getCurrentUrl(), 'rest/all/V1/blog') > 0) {
-            return $ids;
-        }
-        $ids[]      = 0;
-        $collection = $this->productCollectionFactory->create()
-            ->addAttributeToSelect('*')
-            ->addFieldToFilter('entity_id', $ids);
-
-        return $collection;
-    }
-    //
-    //    /**
-    //     * @return ResourceModel\Tag\Collection
-    //     */
-    //    public function getTags()
-    //    {
-    //        $ids = $this->getTagIds();
-    //        $ids[] = 0;
-    //
-    //        $collection = $this->tagCollectionFactory->create()
-    //            ->addFieldToFilter('tag_id', $ids);
-    //
-    //        return $collection;
-    //    }
-
-    //    /**
-    //     * @return Post
-    //     */
-    //    public function saveAsRevision()
-    //    {
-    //        $clone = clone $this;
-    //        $clone->setId('')
-    //            ->setParentId($this->getId())
-    //            ->setType(self::TYPE_REVISION)
-    //            ->save();
-    //
-    //        return $clone;
-    //    }
 
     /**
-     * @param bool $useSid
-     *
-     * @return string
+     * {@inheritdoc}
      */
-    public function getUrl($useSid = true)
+    public function getAuthorId()
     {
-        return $this->url->getPostUrl($this, $useSid);
-    }
-
-    /**
-     * @return Author
-     */
-    public function getAuthor()
-    {
-        if (!$this->hasData('author')) {
-            $this->setData('author', $this->authorRepository->get($this->getAuthorId()));
-        }
-
-        return $this->getData('author');
+        return $this->getData(self::AUTHOR_ID);
     }
 
     /**
@@ -541,5 +503,21 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
     public function getFeaturedImageUrl()
     {
         return $this->config->getMediaUrl($this->getFeaturedImage());
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    public function getFeaturedImage()
+    {
+        return $this->getData(self::FEATURED_IMAGE);
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _construct()
+    {
+        $this->_init('Mirasvit\Blog\Model\ResourceModel\Post');
     }
 }

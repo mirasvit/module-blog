@@ -2,6 +2,7 @@
 
 namespace Mirasvit\Blog\Controller\Adminhtml\Category;
 
+use Exception;
 use Mirasvit\Blog\Controller\Adminhtml\Category;
 
 class Delete extends Category
@@ -22,8 +23,9 @@ class Delete extends Category
                 $this->messageManager->addSuccess(__('The category has been deleted.'));
 
                 return $resultRedirect->setPath('*/*/');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->messageManager->addError($e->getMessage());
+
                 return $resultRedirect->setPath('*/*/edit', ['id' => $model->getId()]);
             }
         } else {

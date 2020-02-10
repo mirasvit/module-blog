@@ -2,9 +2,11 @@
 
 namespace Mirasvit\Blog\Block\Author;
 
-use Magento\Framework\View\Element\Template;
+use Magento\Framework\Exception\LocalizedException;
 use Magento\Framework\Registry;
+use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
+use Mirasvit\Blog\Model\Author;
 
 class View extends Template
 {
@@ -29,15 +31,14 @@ class View extends Template
         array $data = []
     ) {
         $this->registry = $registry;
-        $this->context = $context;
+        $this->context  = $context;
 
         parent::__construct($context, $data);
     }
 
     /**
      * @return $this
-     *
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function _prepareLayout()
     {
@@ -73,7 +74,7 @@ class View extends Template
     }
 
     /**
-     * @return \Mirasvit\Blog\Model\Author
+     * @return Author
      */
     public function getAuthor()
     {

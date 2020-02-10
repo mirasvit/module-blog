@@ -1,16 +1,21 @@
 <?php
+
 namespace Mirasvit\Blog\Helper;
 
-class Category extends \Magento\Framework\App\Helper\AbstractHelper
+use Magento\Framework\App\Helper\AbstractHelper;
+use Magento\Framework\App\Helper\Context;
+use Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory;
+
+class Category extends AbstractHelper
 {
 
     /**
-     * @param \Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory
-     * @param \Magento\Framework\App\Helper\Context $context
+     * @param CollectionFactory $categoryCollectionFactory
+     * @param Context                         $context
      */
     public function __construct(
-        \Mirasvit\Blog\Model\ResourceModel\Category\CollectionFactory $categoryCollectionFactory,
-        \Magento\Framework\App\Helper\Context $context
+        CollectionFactory $categoryCollectionFactory,
+        Context $context
     ) {
         $this->categoryCollectionFactory = $categoryCollectionFactory;
 

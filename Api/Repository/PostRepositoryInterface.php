@@ -2,52 +2,62 @@
 
 namespace Mirasvit\Blog\Api\Repository;
 
+use Magento\Framework\Exception\StateException;
+use Mirasvit\Blog\Api\Data\PostInterface;
+use Mirasvit\Blog\Model\ResourceModel\Post\Collection;
+
 interface PostRepositoryInterface
 {
     /**
-     * @return \Mirasvit\Blog\Model\ResourceModel\Post\Collection | \Mirasvit\Blog\Api\Data\PostInterface[]
+     * @return Collection | PostInterface[]
      */
     public function getCollection();
 
     /**
-     * @return \Mirasvit\Blog\Api\Data\PostInterface
+     * @return PostInterface
      */
     public function create();
 
     /**
-     * @param \Mirasvit\Blog\Api\Data\PostInterface $model
-     * @return \Mirasvit\Blog\Api\Data\PostInterface
+     * @param PostInterface $model
+     *
+     * @return PostInterface
      */
-    public function save(\Mirasvit\Blog\Api\Data\PostInterface $model);
+    public function save(PostInterface $model);
 
     /**
-     * @return \Mirasvit\Blog\Api\Data\PostInterface[]
+     * @return PostInterface[]
      */
     public function getList();
 
     /**
      * @param int $id
-     * @return \Mirasvit\Blog\Api\Data\PostInterface|false
+     *
+     * @return PostInterface|false
      */
     public function get($id);
 
     /**
      * @param int $id
+     *
      * @return bool
-     * @throws \Magento\Framework\Exception\StateException
+     * @throws StateException
      */
     public function apiDelete($id);
-    /**
-     * @param int $id
-     * @param \Mirasvit\Blog\Api\Data\PostInterface $post
-     * @return \Mirasvit\Blog\Api\Data\PostInterface
-     * @throws \Magento\Framework\Exception\StateException
-     */
-    public function update($id, \Mirasvit\Blog\Api\Data\PostInterface $post);
 
     /**
-     * @param \Mirasvit\Blog\Api\Data\PostInterface $model
+     * @param int                                   $id
+     * @param PostInterface $post
+     *
+     * @return PostInterface
+     * @throws StateException
+     */
+    public function update($id, PostInterface $post);
+
+    /**
+     * @param PostInterface $model
+     *
      * @return bool
      */
-    public function delete(\Mirasvit\Blog\Api\Data\PostInterface $model);
+    public function delete(PostInterface $model);
 }

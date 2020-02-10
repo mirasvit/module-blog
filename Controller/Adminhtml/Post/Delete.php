@@ -2,6 +2,7 @@
 
 namespace Mirasvit\Blog\Controller\Adminhtml\Post;
 
+use Exception;
 use Mirasvit\Blog\Api\Data\PostInterface;
 use Mirasvit\Blog\Controller\Adminhtml\Post;
 
@@ -23,8 +24,9 @@ class Delete extends Post
                 $this->messageManager->addSuccessMessage(__('The post has been deleted.'));
 
                 return $resultRedirect->setPath('*/*/');
-            } catch (\Exception $e) {
+            } catch (Exception $e) {
                 $this->messageManager->addErrorMessage($e->getMessage());
+
                 return $resultRedirect->setPath('*/*/edit', [PostInterface::ID => $model->getId()]);
             }
         } else {

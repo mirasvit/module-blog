@@ -2,13 +2,11 @@
 
 namespace Mirasvit\Blog\Controller;
 
-use Magento\Framework\Controller\ResultFactory;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
-use Magento\Customer\Model\Session;
+use Magento\Framework\Registry;
 use Mirasvit\Blog\Api\Data\CategoryInterface;
 use Mirasvit\Blog\Model\CategoryFactory;
-use Magento\Framework\Registry;
 
 abstract class Category extends Action
 {
@@ -28,9 +26,9 @@ abstract class Category extends Action
         Context $context
     ) {
         $this->categoryFactory = $authorFactory;
-        $this->registry = $registry;
-        $this->context = $context;
-        $this->resultFactory = $context->getResultFactory();
+        $this->registry        = $registry;
+        $this->context         = $context;
+        $this->resultFactory   = $context->getResultFactory();
 
         parent::__construct($context);
     }

@@ -1,4 +1,5 @@
 <?php
+
 namespace Mirasvit\Blog\Block\Adminhtml\Category\Grid\Renderer;
 
 use Magento\Backend\Block\Widget\Grid\Column\Renderer\AbstractRenderer;
@@ -11,6 +12,6 @@ class Title extends AbstractRenderer
      */
     public function render(DataObject $row)
     {
-        return str_repeat('&nbsp;', $row->getLevel() * 10).$row->getName();
+        return str_repeat('&nbsp;', $row->getLevel() * 10) . $row->getName();
     }
 }

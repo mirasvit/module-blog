@@ -1,11 +1,13 @@
 <?php
+
 namespace Mirasvit\Blog\Setup;
 
 use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
-use Magento\Framework\Setup\UpgradeDataInterface;
+use Magento\Eav\Setup\EavSetupFactory;
 use Magento\Framework\Setup\ModuleContextInterface;
 use Magento\Framework\Setup\ModuleDataSetupInterface;
-use Magento\Eav\Setup\EavSetupFactory;
+use Magento\Framework\Setup\UpgradeDataInterface;
+use Mirasvit\Blog\Setup\InstallData\PostSetup;
 use Mirasvit\Blog\Setup\InstallData\PostSetupFactory;
 
 class UpgradeData implements UpgradeDataInterface
@@ -24,7 +26,7 @@ class UpgradeData implements UpgradeDataInterface
     {
         $setup->startSetup();
         if (version_compare($context->getVersion(), '1.0.5') < 0) {
-            /** @var \Mirasvit\Blog\Setup\InstallData\PostSetup $postSetup */
+            /** @var PostSetup $postSetup */
             $postSetup = $this->postSetupFactory->create(['setup' => $setup]);
             foreach ($this->getAttributes() as $code => $data) {
                 $postSetup->addAttribute('blog_post', $code, $data);
@@ -40,7 +42,7 @@ class UpgradeData implements UpgradeDataInterface
     private function getAttributes()
     {
         return [
-            'featured_alt' => [
+            'featured_alt'          => [
                 'type'   => 'varchar',
                 'label'  => 'Alt',
                 'input'  => 'text',
@@ -52,7 +54,7 @@ class UpgradeData implements UpgradeDataInterface
                 'input'   => 'text',
                 'global'  => ScopedAttributeInterface::SCOPE_STORE,
                 'default' => 1,
-            ]
+            ],
         ];
     }
 }

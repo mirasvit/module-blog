@@ -2,10 +2,12 @@
 
 namespace Mirasvit\Blog\Block\Adminhtml\Post\Edit\Sidebar;
 
-use Magento\Framework\Data\FormFactory;
-use Magento\Framework\Registry;
-use Magento\Backend\Block\Widget\Form;
 use Magento\Backend\Block\Widget\Context;
+use Magento\Backend\Block\Widget\Form;
+use Magento\Framework\Data\FormFactory;
+use Magento\Framework\Exception\LocalizedException;
+use Magento\Framework\Registry;
+use Mirasvit\Blog\Model\Post;
 
 class Image extends Form
 {
@@ -30,22 +32,21 @@ class Image extends Form
         Context $context
     ) {
         $this->formFactory = $formFactory;
-        $this->registry = $registry;
+        $this->registry    = $registry;
 
         parent::__construct($context);
     }
 
     /**
      * @return $this
-     *
-     * @throws \Magento\Framework\Exception\LocalizedException
+     * @throws LocalizedException
      */
     protected function _prepareForm()
     {
         $form = $this->formFactory->create();
         $this->setForm($form);
 
-        /** @var \Mirasvit\Blog\Model\Post $post */
+        /** @var Post $post */
         $post = $this->registry->registry('current_model');
 
         $fieldset = $form->addFieldset('image_fieldset', [
@@ -61,7 +62,7 @@ class Image extends Form
 
         $fieldset->addField('featured_alt', 'text', [
             'required' => false,
-            'label'   => __('Alt'),
+            'label'    => __('Alt'),
             'name'     => 'post[featured_alt]',
             'value'    => $post->getFeaturedAlt(),
         ]);

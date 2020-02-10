@@ -5,8 +5,8 @@
             <resource id="Magento_Backend::admin">
                 <resource id="Magento_Backend::content">
                     <resource id="Mirasvit_Blog::blog" title="Blog MX by Mirasvit">
-                        <resource id="Mirasvit_Blog::blog_post" title="All Posts" sortOrder="10" />
-                        <resource id="Mirasvit_Blog::blog_category" title="Categories" sortOrder="11" />
+                        <resource id="Mirasvit_Blog::blog_post" title="All Posts" sortOrder="10"/>
+                        <resource id="Mirasvit_Blog::blog_category" title="Categories" sortOrder="11"/>
                     </resource>
                 </resource>
                 <resource id="Magento_Backend::stores">

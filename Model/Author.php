@@ -2,14 +2,13 @@
 
 namespace Mirasvit\Blog\Model;
 
-use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\App\ObjectManager;
+use Magento\Framework\DataObject\IdentityInterface;
 use Magento\User\Model\User;
 
 /**
  * @method string getName()
  * @method $this setName($name)
- *
  * @method string getUrlKey()
  */
 class Author extends User implements IdentityInterface, UrlInterface
@@ -18,7 +17,6 @@ class Author extends User implements IdentityInterface, UrlInterface
 
     /**
      * Get identities.
-     *
      * @return array
      */
     public function getIdentities()
@@ -28,11 +26,12 @@ class Author extends User implements IdentityInterface, UrlInterface
 
     /**
      * @param array $urlParams
+     *
      * @return string
      */
     public function getUrl($urlParams = [])
     {
-        /** @var \Mirasvit\Blog\Model\Url $url */
+        /** @var Url $url */
         $url = ObjectManager::getInstance()->get('Mirasvit\Blog\Model\Url');
 
         return $url->getAuthorUrl($this, $urlParams);

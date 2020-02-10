@@ -8,6 +8,7 @@ use Magento\Framework\App\ObjectManager;
 use Magento\Framework\DataObject;
 use Magento\Framework\Filter\FilterManager;
 use Mirasvit\Blog\Model\Config;
+use Zend_Db_Expr;
 
 /**
  * @SuppressWarnings(PHPMD.NPathComplexity)
@@ -46,17 +47,6 @@ class Category extends AbstractEntity
     /**
      * {@inheritdoc}
      */
-    protected function _getDefaultAttributes()
-    {
-        $attributes   = parent::_getDefaultAttributes();
-        $attributes[] = 'sort_order';
-
-        return $attributes;
-    }
-
-    /**
-     * {@inheritdoc}
-     */
     public function getEntityType()
     {
         if (empty($this->_type)) {
@@ -64,6 +54,17 @@ class Category extends AbstractEntity
         }
 
         return parent::getEntityType();
+    }
+
+    /**
+     * {@inheritdoc}
+     */
+    protected function _getDefaultAttributes()
+    {
+        $attributes   = parent::_getDefaultAttributes();
+        $attributes[] = 'sort_order';
+
+        return $attributes;
     }
 
     /**
@@ -117,12 +118,40 @@ class Category extends AbstractEntity
 
             $this->getConnection()->update(
                 $this->getEntityTable(),
-                ['children_count' => new \Zend_Db_Expr('children_count+1')],
+                ['children_count' => new Zend_Db_Expr('children_count+1')],
                 ['entity_id IN(?)' => $toUpdateChild]
             );
         }
 
         return $this;
+    }
+
+    /**
+     * Get maximum position of child categories by specific tree path
+     *
+     * @param string $path
+     *
+     * @return int
+     */
+    protected function getMaxPosition($path)
+    {
+        $connection    = $this->getConnection();
+        $positionField = $connection->quoteIdentifier('position');
+        $level         = count(explode('/', $path));
+        $bind          = ['c_level' => $level, 'c_path' => $path . '/%'];
+        $select        = $connection->select()->from(
+            $this->getTable('mst_blog_category_entity'),
+            'MAX(' . $positionField . ')'
+        )->where(
+            $connection->quoteIdentifier('path') . ' LIKE :c_path'
+        )->where($connection->quoteIdentifier('level') . ' = :c_level');
+
+        $position = $connection->fetchOne($select, $bind);
+        if (!$position) {
+            $position = 0;
+        }
+
+        return $position;
     }
 
     /**
@@ -138,7 +167,7 @@ class Category extends AbstractEntity
         }
 
         if ($object->dataHasChangedFor('parent_id')) {
-            $newParent = \Magento\Framework\App\ObjectManager::getInstance()
+            $newParent = ObjectManager::getInstance()
                 ->create('Mirasvit\Blog\Model\Category')
                 ->load($object->getParentId());
             $this->changeParent($object, $newParent);
@@ -193,7 +222,7 @@ class Category extends AbstractEntity
          */
         $connection->update(
             $table,
-            ['children_count' => new \Zend_Db_Expr('children_count - ' . $childrenCount)],
+            ['children_count' => new Zend_Db_Expr('children_count - ' . $childrenCount)],
             ['entity_id IN(?)' => $category->getParentIds()]
         );
 
@@ -202,7 +231,7 @@ class Category extends AbstractEntity
          */
         $connection->update(
             $table,
-            ['children_count' => new \Zend_Db_Expr('children_count + ' . $childrenCount)],
+            ['children_count' => new Zend_Db_Expr('children_count + ' . $childrenCount)],
             ['entity_id IN(?)' => $newParent->getPathIds()]
         );
 
@@ -218,14 +247,14 @@ class Category extends AbstractEntity
         $connection->update(
             $table,
             [
-                'path'  => new \Zend_Db_Expr(
+                'path'  => new Zend_Db_Expr(
                     'REPLACE(' . $pathField . ',' . $connection->quote(
                         $category->getPath() . '/'
                     ) . ', ' . $connection->quote(
                         $newPath . '/'
                     ) . ')'
                 ),
-                'level' => new \Zend_Db_Expr($levelFiled . ' + ' . $levelDisposition),
+                'level' => new Zend_Db_Expr($levelFiled . ' + ' . $levelDisposition),
             ],
             [$pathField . ' LIKE ?' => $category->getPath() . '/%']
         );
@@ -281,7 +310,7 @@ class Category extends AbstractEntity
         $connection    = $this->getConnection();
         $positionField = $connection->quoteIdentifier('position');
 
-        $bind  = ['position' => new \Zend_Db_Expr($positionField . ' - 1')];
+        $bind  = ['position' => new Zend_Db_Expr($positionField . ' - 1')];
         $where = [
             'parent_id = ?'         => $category->getParentId(),
             $positionField . ' > ?' => $category->getPosition(),
@@ -299,37 +328,9 @@ class Category extends AbstractEntity
             $position = 1;
         }
 
-        $bind  = ['position' => new \Zend_Db_Expr($positionField . ' + 1')];
+        $bind  = ['position' => new Zend_Db_Expr($positionField . ' + 1')];
         $where = ['parent_id = ?' => $newParent->getId(), $positionField . ' >= ?' => $position];
         $connection->update($table, $bind, $where);
-
-        return $position;
-    }
-
-    /**
-     * Get maximum position of child categories by specific tree path
-     *
-     * @param string $path
-     *
-     * @return int
-     */
-    protected function getMaxPosition($path)
-    {
-        $connection    = $this->getConnection();
-        $positionField = $connection->quoteIdentifier('position');
-        $level         = count(explode('/', $path));
-        $bind          = ['c_level' => $level, 'c_path' => $path . '/%'];
-        $select        = $connection->select()->from(
-            $this->getTable('mst_blog_category_entity'),
-            'MAX(' . $positionField . ')'
-        )->where(
-            $connection->quoteIdentifier('path') . ' LIKE :c_path'
-        )->where($connection->quoteIdentifier('level') . ' = :c_level');
-
-        $position = $connection->fetchOne($select, $bind);
-        if (!$position) {
-            $position = 0;
-        }
 
         return $position;
     }

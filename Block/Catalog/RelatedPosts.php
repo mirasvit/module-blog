@@ -2,11 +2,14 @@
 
 namespace Mirasvit\Blog\Block\Catalog;
 
-use Magento\Framework\View\Element\Template;
+use Magento\Catalog\Model\Product;
 use Magento\Framework\Registry;
+use Magento\Framework\View\Element\Template;
 use Magento\Framework\View\Element\Template\Context;
-use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
 use Mirasvit\Blog\Model\Config;
+use Mirasvit\Blog\Model\Post;
+use Mirasvit\Blog\Model\ResourceModel\Post\Collection;
+use Mirasvit\Blog\Model\ResourceModel\Post\CollectionFactory as PostCollectionFactory;
 use Mirasvit\Blog\Model\Url;
 
 class RelatedPosts extends Template
@@ -46,9 +49,9 @@ class RelatedPosts extends Template
         Context $context
     ) {
         $this->postCollectionFactory = $postCollectionFactory;
-        $this->config = $config;
-        $this->url = $url;
-        $this->registry = $registry;
+        $this->config                = $config;
+        $this->url                   = $url;
+        $this->registry              = $registry;
 
         parent::__construct($context);
 
@@ -57,12 +60,11 @@ class RelatedPosts extends Template
 
     /**
      * Set tab title
-     *
      * @return void
      */
     public function setTabTitle()
     {
-        $size = $this->getCollection()->count();
+        $size  = $this->getCollection()->count();
         $title = $size
             ? __('Related Posts %1', '<span class="counter">' . $size . '</span>')
             : '';
@@ -70,15 +72,7 @@ class RelatedPosts extends Template
     }
 
     /**
-     * @return \Magento\Catalog\Model\Product|false
-     */
-    public function getProduct()
-    {
-        return $this->registry->registry('current_product');
-    }
-
-    /**
-     * @return \Mirasvit\Blog\Model\ResourceModel\Post\Collection|\Mirasvit\Blog\Model\Post[]
+     * @return Collection|Post[]
      */
     public function getCollection()
     {
@@ -93,6 +87,14 @@ class RelatedPosts extends Template
         }
 
         return $collection;
+    }
+
+    /**
+     * @return Product|false
+     */
+    public function getProduct()
+    {
+        return $this->registry->registry('current_product');
     }
 
     /**

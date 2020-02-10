@@ -2,12 +2,12 @@
 
 namespace Mirasvit\Blog\Controller;
 
-use Magento\Store\Model\StoreManagerInterface;
 use Magento\Framework\App\Action\Action;
 use Magento\Framework\App\Action\Context;
+use Magento\Framework\Registry;
+use Magento\Store\Model\StoreManagerInterface;
 use Mirasvit\Blog\Api\Data\PostInterface;
 use Mirasvit\Blog\Model\PostFactory;
-use Magento\Framework\Registry;
 
 abstract class Post extends Action
 {
@@ -27,11 +27,11 @@ abstract class Post extends Action
         Registry $registry,
         Context $context
     ) {
-        $this->storeManager = $storeManager;
-        $this->postFactory = $authorFactory;
-        $this->registry = $registry;
-        $this->context = $context;
-        $this->resultFactory = $context->getResultFactory();;
+        $this->storeManager  = $storeManager;
+        $this->postFactory   = $authorFactory;
+        $this->registry      = $registry;
+        $this->context       = $context;
+        $this->resultFactory = $context->getResultFactory();
 
         parent::__construct($context);
     }
