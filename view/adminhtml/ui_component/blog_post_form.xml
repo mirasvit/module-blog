@@ -306,7 +306,7 @@
                         <item name="formElement" xsi:type="string">wysiwyg</item>
                         <item name="wysiwyg" xsi:type="boolean">true</item>
                         <item name="wysiwygConfigData" xsi:type="array">
-                            <item name="is_pagebuilder_enabled" xsi:type="boolean">true</item>
+                            <item name="is_pagebuilder_enabled" xsi:type="boolean">false</item>
                         </item>
                         <item name="imports" xsi:type="array">
                             <item name="visible" xsi:type="string">blog_post_form.blog_post_form:is_short_content</item>
