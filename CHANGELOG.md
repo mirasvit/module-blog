@@ -1,3 +1,14 @@
+# Change Log
+## 1.0.36
+*(2020-03-12)*
+
+#### Fixed
+* Issue with posts per page limit
+
+
+---
+
+
 ## 1.0.34
 *(2020-01-28)*
 

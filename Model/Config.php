@@ -84,8 +84,10 @@ class Config
      */
     public function isDisplayInMenu()
     {
-        return $this->scopeConfig->getValue('blog/display/main_menu',
-            ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue(
+            'blog/display/main_menu',
+            ScopeInterface::SCOPE_STORE
+        );
     }
 
     /**
@@ -93,8 +95,10 @@ class Config
      */
     public function getExcerptsEnabled()
     {
-        return $this->scopeConfig->getValue('blog/display/enable_excerpts',
-            ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue(
+            'blog/display/enable_excerpts',
+            ScopeInterface::SCOPE_STORE
+        );
     }
 
     /**
@@ -102,8 +106,10 @@ class Config
      */
     public function getExcerptSize()
     {
-        return $this->scopeConfig->getValue('blog/display/excerpt_size',
-            ScopeInterface::SCOPE_STORE);
+        return $this->scopeConfig->getValue(
+            'blog/display/excerpt_size',
+            ScopeInterface::SCOPE_STORE
+        );
     }
 
     /**

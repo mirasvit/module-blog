@@ -9,7 +9,6 @@ use Magento\Framework\DB\Select;
 use Magento\Framework\Search\AggregationInterface;
 use Mirasvit\Blog\Model\ResourceModel\Post\Collection as PostCollection;
 
-
 class Collection extends PostCollection implements SearchResultInterface
 {
     const CAT_PROD_LINK_ALIAS = 'category_ids_table';

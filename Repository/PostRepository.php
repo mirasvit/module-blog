@@ -162,5 +162,4 @@ class PostRepository implements PostRepositoryInterface
 
         return $model;
     }
-
 }
