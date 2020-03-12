@@ -77,4 +77,3 @@ class Image extends Form
         return parent::_prepareForm();
     }
 }
-

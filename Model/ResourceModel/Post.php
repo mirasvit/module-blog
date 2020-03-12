@@ -353,5 +353,4 @@ class Post extends AbstractEntity
 
         return $this;
     }
-
 }

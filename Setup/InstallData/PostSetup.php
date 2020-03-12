@@ -2,7 +2,6 @@
 
 namespace Mirasvit\Blog\Setup\InstallData;
 
-
 use Magento\Eav\Model\Entity\Attribute\ScopedAttributeInterface;
 use Magento\Eav\Model\Entity\Setup\Context;
 use Magento\Eav\Model\ResourceModel\Entity\Attribute\Group\CollectionFactory;

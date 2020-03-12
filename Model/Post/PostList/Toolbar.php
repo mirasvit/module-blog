@@ -32,7 +32,7 @@ class Toolbar
     /**
      * Products per page limit order cookie name
      */
-    const LIMIT_PARAM_NAME = 'kb_article_list_limit';
+    const LIMIT_PARAM_NAME = 'limit';
 
     /**
      * Request
