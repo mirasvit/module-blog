@@ -57,7 +57,6 @@ class InlineEdit extends Post
                 $post->addData($data);
 
                 $this->postRepository->save($post);
-
             } catch (Exception $e) {
                 $messages[] = __('Something went wrong while saving the post.');
                 $error      = true;
