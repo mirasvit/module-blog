@@ -1,3 +1,11 @@
+## 1.0.35
+*(2020-02-10)*
+
+#### Fixed
+* Page builder issue on Magento CE / EE
+
+---
+
 ## 1.0.34
 *(2020-01-28)*
 
