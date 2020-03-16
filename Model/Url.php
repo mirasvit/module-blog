@@ -4,7 +4,7 @@ namespace Mirasvit\Blog\Model;
 
 use Magento\Framework\App\Config\ScopeConfigInterface;
 use Magento\Framework\DataObject;
-use Magento\Framework\UrlInterface as MagentoUrlInterface;
+use Magento\Framework\Url as urlManager;
 use Magento\Store\Model\StoreManagerInterface;
 use Mirasvit\Blog\Api\Data\CategoryInterface;
 use Mirasvit\Blog\Api\Data\PostInterface;
@@ -45,7 +45,7 @@ class Url
     protected $authorFactory;
 
     /**
-     * @var MagentoUrlInterface
+     * @var urlManager
      */
     protected $urlManager;
 
@@ -62,7 +62,7 @@ class Url
         CategoryFactory $categoryFactory,
         TagFactory $tagFactory,
         AuthorFactory $authorFactory,
-        MagentoUrlInterface $urlManager
+        urlManager $urlManager
     ) {
         $this->storeManager    = $storeManager;
         $this->config          = $config;
