@@ -71,7 +71,8 @@ class Stores extends Form
                 'name'             => 'post[store_ids]',
                 'value'            => implode(',', $post->getStoreIds()),
                 'after_element_js' => $this->blogStoreview->getField(
-                    $post, $container
+                    $post,
+                    $container
                 ),
             ]);
         } else {

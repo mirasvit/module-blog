@@ -18,5 +18,4 @@ interface AuthorRepositoryInterface
      * @return User|false
      */
     public function get($id);
-
 }
