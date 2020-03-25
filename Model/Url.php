@@ -90,7 +90,7 @@ class Url
      *
      * @return string
      */
-    public function getPostUrl($post, $useSid, $storeId)
+    public function getPostUrl($post, $useSid, $storeId = 1)
     {
         $urlParams = [
             '_nosid' => !$useSid,

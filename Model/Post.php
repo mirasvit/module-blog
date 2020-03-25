@@ -445,7 +445,7 @@ class Post extends AbstractExtensibleModel implements IdentityInterface, PostInt
      * @param $storeId
      * @return string
      */
-    public function getUrl($storeId)
+    public function getUrl($storeId = 1)
     {
         return $this->url->getPostUrl($this, $useSid = true, $storeId);
     }
