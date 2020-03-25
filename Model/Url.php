@@ -63,15 +63,16 @@ class Url
         TagFactory $tagFactory,
         AuthorFactory $authorFactory,
         UrlManager $urlManager
-    ) {
-        $this->storeManager    = $storeManager;
-        $this->config          = $config;
-        $this->scopeConfig     = $scopeConfig;
-        $this->postFactory     = $postFactory;
+    )
+    {
+        $this->storeManager = $storeManager;
+        $this->config = $config;
+        $this->scopeConfig = $scopeConfig;
+        $this->postFactory = $postFactory;
         $this->categoryFactory = $categoryFactory;
-        $this->tagFactory      = $tagFactory;
-        $this->authorFactory   = $authorFactory;
-        $this->urlManager      = $urlManager;
+        $this->tagFactory = $tagFactory;
+        $this->authorFactory = $authorFactory;
+        $this->urlManager = $urlManager;
     }
 
     /**
@@ -85,18 +86,29 @@ class Url
     /**
      * @param Post $post
      * @param bool $useSid
+     * @param int $storeId
      *
      * @return string
      */
-    public function getPostUrl($post, $useSid = true)
+    public function getPostUrl($post, $useSid, $storeId)
     {
-        return $this->getUrl('/' . $post->getUrlKey(), 'post', ['_nosid' => !$useSid]);
+        $urlParams = [
+            '_nosid' => !$useSid,
+            '_scope' => $this->getStoreCodeByStoreId($storeId)
+        ];
+
+        return $this->getUrl('/' . $post->getUrlKey(), 'post', $urlParams);
+    }
+
+    public function getStoreCodeByStoreId($storeId)
+    {
+        return $this->storeManager->getStore($storeId)->getCode();
     }
 
     /**
      * @param string $route
      * @param string $type
-     * @param array  $urlParams
+     * @param array $urlParams
      *
      * @return string
      */
@@ -123,7 +135,7 @@ class Url
      */
     private function addSuffix($url, $suffix)
     {
-        $parts    = explode('?', $url, 2);
+        $parts = explode('?', $url, 2);
         $parts[0] = rtrim($parts[0], '/') . $suffix;
 
         return implode('?', $parts);
@@ -131,7 +143,7 @@ class Url
 
     /**
      * @param Category $category
-     * @param array    $urlParams
+     * @param array $urlParams
      *
      * @return string
      */
@@ -155,7 +167,7 @@ class Url
     }
 
     /**
-     * @param Tag   $tag
+     * @param Tag $tag
      * @param array $urlParams
      *
      * @return string
@@ -167,7 +179,7 @@ class Url
 
     /**
      * @param Author $author
-     * @param array  $urlParams
+     * @param array $urlParams
      *
      * @return string
      */
@@ -197,7 +209,7 @@ class Url
     public function match($pathInfo)
     {
         $identifier = trim($pathInfo, '/');
-        $parts      = explode('/', $identifier);
+        $parts = explode('/', $identifier);
 
         if (count($parts) >= 1) {
             $parts[count($parts) - 1] = $this->trimSuffix($parts[count($parts) - 1]);
@@ -209,7 +221,7 @@ class Url
 
         if (count($parts) > 1) {
             unset($parts[0]);
-            $parts  = array_values($parts);
+            $parts = array_values($parts);
             $urlKey = implode('/', $parts);
             $urlKey = urldecode($urlKey);
             $urlKey = $this->trimSuffix($urlKey);
@@ -219,19 +231,19 @@ class Url
 
         if ($urlKey == '') {
             return new DataObject([
-                'module_name'     => 'blog',
+                'module_name' => 'blog',
                 'controller_name' => 'category',
-                'action_name'     => 'index',
-                'params'          => [],
+                'action_name' => 'index',
+                'params' => [],
             ]);
         }
 
         if ($parts[0] == 'search') {
             return new DataObject([
-                'module_name'     => 'blog',
+                'module_name' => 'blog',
                 'controller_name' => 'search',
-                'action_name'     => 'result',
-                'params'          => [],
+                'action_name' => 'result',
+                'params' => [],
             ]);
         }
 
@@ -242,10 +254,10 @@ class Url
 
             if ($tag->getId()) {
                 return new DataObject([
-                    'module_name'     => 'blog',
+                    'module_name' => 'blog',
                     'controller_name' => 'tag',
-                    'action_name'     => 'view',
-                    'params'          => ['id' => $tag->getId()],
+                    'action_name' => 'view',
+                    'params' => ['id' => $tag->getId()],
                 ]);
             } else {
                 return false;
@@ -259,10 +271,10 @@ class Url
 
             if ($author->getId()) {
                 return new DataObject([
-                    'module_name'     => 'blog',
+                    'module_name' => 'blog',
                     'controller_name' => 'author',
-                    'action_name'     => 'view',
-                    'params'          => ['id' => $author->getId()],
+                    'action_name' => 'view',
+                    'params' => ['id' => $author->getId()],
                 ]);
             } else {
                 return false;
@@ -276,20 +288,20 @@ class Url
 
             if ($category->getId()) {
                 return new DataObject([
-                    'module_name'     => 'blog',
+                    'module_name' => 'blog',
                     'controller_name' => 'category',
-                    'action_name'     => 'rss',
-                    'params'          => [CategoryInterface::ID => $category->getId()],
+                    'action_name' => 'rss',
+                    'params' => [CategoryInterface::ID => $category->getId()],
                 ]);
             } else {
                 return false;
             }
         } elseif ($parts[0] == 'rss') {
             return new DataObject([
-                'module_name'     => 'blog',
+                'module_name' => 'blog',
                 'controller_name' => 'category',
-                'action_name'     => 'rss',
-                'params'          => [],
+                'action_name' => 'rss',
+                'params' => [],
             ]);
         }
 
@@ -301,10 +313,10 @@ class Url
 
         if ($post->getId()) {
             return new DataObject([
-                'module_name'     => 'blog',
+                'module_name' => 'blog',
                 'controller_name' => 'post',
-                'action_name'     => 'view',
-                'params'          => [PostInterface::ID => $post->getId()],
+                'action_name' => 'view',
+                'params' => [PostInterface::ID => $post->getId()],
             ]);
         }
 
@@ -314,10 +326,10 @@ class Url
 
         if ($category->getId()) {
             return new DataObject([
-                'module_name'     => 'blog',
+                'module_name' => 'blog',
                 'controller_name' => 'category',
-                'action_name'     => 'view',
-                'params'          => [CategoryInterface::ID => $category->getId()],
+                'action_name' => 'view',
+                'params' => [CategoryInterface::ID => $category->getId()],
             ]);
         }
 
