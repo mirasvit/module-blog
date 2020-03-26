@@ -83,14 +83,18 @@ class Url
     }
 
     /**
-     * @param Post $post
+     * @param $post
      * @param bool $useSid
-     *
      * @return string
+     * @throws \Magento\Framework\Exception\NoSuchEntityException
      */
     public function getPostUrl($post, $useSid = true)
     {
-        return $this->getUrl('/' . $post->getUrlKey(), 'post', ['_nosid' => !$useSid]);
+        $storeCode = $this->storeManager->getStore($post->getStoreId())->getCode();
+        return $this->getUrl(
+            '/' . $post->getUrlKey(),
+            'post',
+            ['_nosid' => !$useSid, '_scope' => $storeCode]);
     }
 
     /**
