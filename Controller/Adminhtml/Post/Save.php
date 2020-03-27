@@ -64,6 +64,7 @@ class Save extends Post
                     return $this->handlePreviewRequest($model);
                 } else {
                     $this->postRepository->save($model);
+                    $this->removePreviewed($model);
                     $this->messageManager->addSuccessMessage(__('You saved the post.'));
                     if ($this->getRequest()->getParam('back') == 'edit') {
                         return $resultRedirect->setPath('*/*/edit', [PostInterface::ID => $model->getId()]);
@@ -144,6 +145,10 @@ class Save extends Post
             'areaCode' => Area::AREA_FRONTEND,
         ]);
         # preview mode save as revision
+
+        if($id = $model->getId()) {
+            $model->setParentId($id);
+        }
         $model->setId(false);
         $model->setType(PostInterface::TYPE_REVISION);
         $this->postRepository->save($model);
@@ -159,5 +164,20 @@ class Save extends Post
             PostInterface::ID => $model->getId(),
             'url'             => $url,
         ]);
+    }
+
+    /**
+     * Remove preview versions of particular post and all previews of not saved posts
+     *
+     * @param PostInterface $model
+     */
+    private function removePreviews(PostInterface $model)
+    {
+        $collection = $this->postRepository->getCollection();
+        $collection->addFieldToFilter('type', PostInterface::TYPE_REVISION);
+        $collection->addFieldToFilter('parent_id', ['in' => [0, $model->getId()]]);
+        foreach ($collection as $item) {
+            $this->postRepository->delete($item);
+        }
     }
 }
