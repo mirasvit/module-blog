@@ -21,7 +21,7 @@ if (!$collection->count()) {
 
                 <a href="<?= $post->getUrl() ?>" class="post-name"><?= $post->getName() ?></a>
 
-                <?= substr(strip_tags($post->getShortContent()), 0, 450) ?>
+                <?= mb_substr(strip_tags($post->getShortContent()), 0, 450) ?>
             </li>
         <?php endforeach ?>
     </ol>
