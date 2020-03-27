@@ -64,7 +64,7 @@ class Save extends Post
                     return $this->handlePreviewRequest($model);
                 } else {
                     $this->postRepository->save($model);
-                    $this->removePreviewed($model);
+                    $this->removeRevisions($model);
                     $this->messageManager->addSuccessMessage(__('You saved the post.'));
                     if ($this->getRequest()->getParam('back') == 'edit') {
                         return $resultRedirect->setPath('*/*/edit', [PostInterface::ID => $model->getId()]);
@@ -171,7 +171,7 @@ class Save extends Post
      *
      * @param PostInterface $model
      */
-    private function removePreviews(PostInterface $model)
+    private function removeRevisions(PostInterface $model)
     {
         $collection = $this->postRepository->getCollection();
         $collection->addFieldToFilter('type', PostInterface::TYPE_REVISION);
