@@ -1,14 +1,19 @@
 # Change Log
+## 1.0.37
+*(2020-03-30)*
+
+#### Fixed
+* Issue with importing posts URL to the Advanced SEO Sitemap
+
+---
+
 ## 1.0.36
 *(2020-03-12)*
 
 #### Fixed
 * Issue with posts per page limit
 
-
 ---
-
-
 
 ## 1.0.35
 *(2020-02-10)*
@@ -17,7 +22,6 @@
 * Page builder issue on Magento CE / EE
 
 ---
-
 
 ## 1.0.34
 *(2020-01-28)*
@@ -33,7 +37,6 @@
 * MassActions in the post listing
 
 ---
-
 
 ## 1.0.33
 *(2019-06-18)*

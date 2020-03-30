@@ -22,7 +22,7 @@ use Mirasvit\Blog\Block\Post\View\RelatedPosts; ?>
 
                 <a href="<?= $post->getUrl() ?>" class="post-name"><?= $post->getName() ?></a>
 
-                <?= substr(strip_tags($post->getShortContent()), 0, 250) ?>
+                <?= mb_substr(strip_tags($post->getShortContent()), 0, 250) ?>
             </li>
         <?php endforeach ?>
     </ol>
