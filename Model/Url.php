@@ -63,8 +63,7 @@ class Url
         TagFactory $tagFactory,
         AuthorFactory $authorFactory,
         UrlManager $urlManager
-    )
-    {
+    ) {
         $this->storeManager = $storeManager;
         $this->config = $config;
         $this->scopeConfig = $scopeConfig;
@@ -95,7 +94,8 @@ class Url
         return $this->getUrl(
             '/' . $post->getUrlKey(),
             'post',
-            ['_nosid' => !$useSid, '_scope' => $storeCode]);
+            ['_nosid' => !$useSid, '_scope' => $storeCode]
+        );
     }
 
     /**
