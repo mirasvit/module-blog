@@ -91,10 +91,11 @@ class Url
      */
     public function getPostUrl($post, $useSid = true)
     {
+        $storeCode = $this->storeManager->getStore($post->getStoreId())->getCode();
         return $this->getUrl(
             '/' . $post->getUrlKey(),
             'post',
-            ['_nosid' => !$useSid, '_scope' => $post->getStoreId()]);
+            ['_nosid' => !$useSid, '_scope' => $storeCode]);
     }
 
     /**
