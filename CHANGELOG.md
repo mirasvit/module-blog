@@ -1,4 +1,12 @@
 # Change Log
+## 1.0.38
+*(2020-03-31)*
+
+#### Fixed
+* Issue with posts URL on frontend
+
+---
+
 ## 1.0.37
 *(2020-03-30)*
 
