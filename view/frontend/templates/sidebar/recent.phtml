@@ -23,7 +23,13 @@ use Mirasvit\Blog\Block\Sidebar\Recent; ?>
                 <li class="item">
                     <?php if ($imgPath): ?>
                         <a href="<?= $post->getUrl() ?>">
-                            <img src="<?= $imgPath ?>" alt="<?= $post->getName() ?>" class="blog__post-featured-image"/>
+                            <img
+                                    src="<?= $imgPath ?>" 
+                                    alt="<?= $post->getName() ?>" 
+                                    class="blog__post-featured-image"
+                                <?= $block->getImageWidth() ? "width=\"" . $block->getImageWidth() . "px\"" : '' ?>
+                                <?= $block->getImageHeight() ? "height=\"" . $block->getImageHeight() . "px\"" : '' ?>
+                            />
                         </a>
                     <?php endif ?>
 
