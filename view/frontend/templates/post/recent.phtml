@@ -28,7 +28,12 @@ $postCollection = $block->getCollection()
                             <div class="blog__post-excerpt" itemprop="text">
                                 <?php if ($post->getFeaturedImageUrl() && $post->getFeaturedShowOnHome()): ?>
                                     <a href="<?= $post->getUrl() ?>">
-                                        <img src="<?= $post->getFeaturedImageUrl() ?>" alt="<?= $block->getFeaturedAlt($post) ?>"/>
+                                        <img 
+                                                src="<?= $post->getFeaturedImageUrl() ?>" 
+                                                alt="<?= $block->getFeaturedAlt($post) ?>"
+                                            <?= $block->getImageWidth() ? "width=\"" . $block->getImageWidth() . "px\"" : '' ?>
+                                            <?= $block->getImageHeight() ? "height=\"" . $block->getImageHeight() . "px\"" : '' ?>
+                                        />
                                     </a>
                                 <?php endif ?>
 
