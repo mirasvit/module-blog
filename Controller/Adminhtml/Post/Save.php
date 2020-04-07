@@ -146,7 +146,7 @@ class Save extends Post
         ]);
         # preview mode save as revision
 
-        if($id = $model->getId()) {
+        if ($id = $model->getId()) {
             $model->setParentId($id);
         }
         $model->setId(false);

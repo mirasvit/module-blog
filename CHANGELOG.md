@@ -1,4 +1,12 @@
 # Change Log
+## 1.0.39
+*(2020-04-07)*
+
+#### Fixed
+* Issue with setting image size for widgets.
+
+---
+
 ## 1.0.38
 *(2020-03-31)*
 
