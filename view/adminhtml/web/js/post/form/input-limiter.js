@@ -52,7 +52,10 @@ define([
                     this.warn(false);
                 }
             } else {
-                this.notice('');
+                // For Magento 2.1.*
+                try {
+                    this.notice('');
+                } catch (e) {}
             }
         }
     });
