@@ -47,6 +47,7 @@ class RelatedPosts extends Template
             ->addTagFilter($tags)
             ->addFieldToFilter('entity_id', ['neq' => $this->getCurrentPost()->getId()])
             ->addVisibilityFilter()
+            ->addStoreFilter($this->_storeManager->getStore()->getId())
             ->addAttributeToSelect('*');
 
         return $collection;

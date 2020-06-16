@@ -28,6 +28,7 @@ class Collection extends AbstractCollection
     {
         $this->addAttributeToFilter(PostInterface::STATUS, PostInterface::STATUS_PUBLISHED);
         $this->addFieldToFilter(PostInterface::TYPE, PostInterface::TYPE_POST);
+        $this->addFieldToFilter(PostInterface::CREATED_AT, ['lteq' => date(DATE_ATOM)]);
 
         return $this;
     }

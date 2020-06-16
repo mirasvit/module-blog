@@ -1,4 +1,14 @@
 # Change Log
+## 1.0.40
+*(2020-06-16)*
+
+#### Fixed
+* Issue with creating posts (Magento 2.1.* only).
+* Issue with posts from other storeviews in related posts on the post page.
+* Issue with displaying posts with "Published at" higher than current date.
+
+---
+
 ## 1.0.39
 *(2020-04-07)*
 

@@ -37,6 +37,10 @@ define([
         
         updateNote: function (value) {
             var len = value ? value.length : 0;
+
+            if(!this.notice) { //For Magento 2.1.* (this.notice is not a function)
+                return;
+            }
             
             if (len > 0) {
                 this.notice(
@@ -52,7 +56,8 @@ define([
                     this.warn(false);
                 }
             } else {
-                this.notice('');
+                    this.notice('');
+                
             }
         }
     });
