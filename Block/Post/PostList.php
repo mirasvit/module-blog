@@ -5,6 +5,7 @@ namespace Mirasvit\Blog\Block\Post;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template\Context;
+use Mirasvit\Blog\Api\Data\PostInterface;
 use Mirasvit\Blog\Api\Repository\PostRepositoryInterface;
 use Mirasvit\Blog\Model\Author;
 use Mirasvit\Blog\Model\Category;
