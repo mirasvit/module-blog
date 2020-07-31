@@ -1,4 +1,15 @@
 # Change Log
+## 1.0.41
+*(2020-07-31)*
+
+#### Fixed
+* Magento 2.4.0 compatibility
+* Fixed issue with images in short content 
+
+
+---
+
+
 ## 1.0.40
 *(2020-06-16)*
 
