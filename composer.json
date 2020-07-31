@@ -2,7 +2,7 @@
   "name": "mirasvit/module-blog",
   "description": "Mirasvit Blog MX",
   "require": {
-    "magento/framework": "100.1.*|100.2.*|101.0.*|102.0.*"
+    "magento/framework": "100.1.*|100.2.*|101.0.*|102.0.*|103.0.*"
   },
   "suggest": {
     "mirasvit/module-blog-sample-data": "Sample Data for Blog"
