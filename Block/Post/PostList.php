@@ -2,6 +2,7 @@
 
 namespace Mirasvit\Blog\Block\Post;
 
+use Magento\Cms\Model\Template\FilterProvider;
 use Magento\Framework\DataObject\IdentityInterface;
 use Magento\Framework\Registry;
 use Magento\Framework\View\Element\Template\Context;
@@ -30,13 +31,20 @@ class PostList extends AbstractBlock implements IdentityInterface
      */
     private $postRepository;
 
+    /**
+     * @var FilterProvider 
+     */
+    private $filterProvider;
+
     public function __construct(
         PostRepositoryInterface $postRepository,
         Config $config,
+        FilterProvider $filterProvider,
         Registry $registry,
         Context $context
     ) {
         $this->postRepository = $postRepository;
+        $this->filterProvider = $filterProvider;
 
         parent::__construct($config, $registry, $context);
     }
@@ -100,16 +108,16 @@ class PostList extends AbstractBlock implements IdentityInterface
         if ($this->config->getExcerptsEnabled()) {
             $size = $this->config->getExcerptSize();
             if ($exerpt = strpos($post->getContent(), '<!--more-->')) {
-                return substr($post->getContent(), 0, $exerpt);
+                return $this->filterProvider->getPageFilter()->filter(substr($post->getContent(), 0, $exerpt));
             } elseif ($post->getShortContent()) {
-                return $post->getShortContent();
+                return $this->filterProvider->getPageFilter()->filter($post->getShortContent());
             } elseif (preg_match('/^.{1,' . $size . '}\b/s', $this->stripTags(
                 preg_replace("/<style\\b[^>]*>(.*?)<\\/style>/s", "", $post->getContent())
             ), $match)) {
                 return $match[0];
             }
 
-            return $post->getContent();
+            return $this->filterProvider->getPageFilter()->filter($post->getContent());
         }
 
         return '';
