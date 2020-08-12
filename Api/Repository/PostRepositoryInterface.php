@@ -9,7 +9,7 @@ use Mirasvit\Blog\Model\ResourceModel\Post\Collection;
 interface PostRepositoryInterface
 {
     /**
-     * @return Collection | PostInterface[]
+     * @return Collection | Mirasvit\Blog\Api\Data\PostInterface[]
      */
     public function getCollection();
 
@@ -19,21 +19,21 @@ interface PostRepositoryInterface
     public function create();
 
     /**
-     * @param PostInterface $model
+     * @param Mirasvit\Blog\Api\Data\PostInterface $model
      *
-     * @return PostInterface
+     * @return Mirasvit\Blog\Api\Data\PostInterface
      */
     public function save(PostInterface $model);
 
     /**
-     * @return PostInterface[]
+     * @return Mirasvit\Blog\Api\Data\PostInterface[]
      */
     public function getList();
 
     /**
      * @param int $id
      *
-     * @return PostInterface|false
+     * @return Mirasvit\Blog\Api\Data\PostInterface|false
      */
     public function get($id);
 
@@ -47,15 +47,15 @@ interface PostRepositoryInterface
 
     /**
      * @param int                                   $id
-     * @param PostInterface $post
+     * @param Mirasvit\Blog\Api\Data\PostInterface $post
      *
-     * @return PostInterface
+     * @return Mirasvit\Blog\Api\Data\PostInterface
      * @throws StateException
      */
     public function update($id, PostInterface $post);
 
     /**
-     * @param PostInterface $model
+     * @param Mirasvit\Blog\Api\Data\PostInterface $model
      *
      * @return bool
      */
