@@ -21,19 +21,19 @@ interface PostRepositoryInterface
     /**
      * @param PostInterface $model
      *
-     * @return PostInterface
+     * @return \Mirasvit\Blog\Api\Data\PostInterface
      */
     public function save(PostInterface $model);
 
     /**
-     * @return PostInterface[]
+     * @return \Mirasvit\Blog\Api\Data\PostInterface[]
      */
     public function getList();
 
     /**
      * @param int $id
      *
-     * @return PostInterface|false
+     * @return \Mirasvit\Blog\Api\Data\PostInterface|false
      */
     public function get($id);
 
@@ -49,7 +49,7 @@ interface PostRepositoryInterface
      * @param int                                   $id
      * @param PostInterface $post
      *
-     * @return PostInterface
+     * @return \Mirasvit\Blog\Api\Data\PostInterface
      * @throws StateException
      */
     public function update($id, PostInterface $post);
