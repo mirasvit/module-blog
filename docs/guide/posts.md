@@ -60,3 +60,7 @@ This section contains edit workspace, which you can use to create blog. In turn,
 After you had completed with post contents, you can **Preview Changes**. This button, located at the top buttons pane, allows to see post as it will be displayed - without actual publishing.
 
 To save blog post, just push **Save** button.
+
+%%% panel
+Note: You can place a block of [Related Products for Magento 2](https://mirasvit.com/magento-2-automatic-related-products.html) on your blog pages by making changes in layout files.
+%%%
