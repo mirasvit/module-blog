@@ -63,7 +63,7 @@ class Rss extends Template
         $collection = $this->postCollectionFactory->create()
             ->addAttributeToSelect('*')
             ->addVisibilityFilter()
-            ->setOrder('created_at')
+            ->setOrder('created_at', 'DESC')
             ->setPageSize(10);
         if ($category = $this->getCategory()) {
             $collection->addCategoryFilter($category);
