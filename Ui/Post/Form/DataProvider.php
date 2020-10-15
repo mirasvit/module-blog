@@ -72,7 +72,7 @@ class DataProvider extends AbstractDataProvider
                 'is_short_content' => $post->getShortContent() ? true : false,
             ];
 
-            if ($post->getFeaturedImage()) {
+            if ($post->getFeaturedImage() && file_exists($this->config->getMediaPath($post->getFeaturedImage()))) {
                 $result[$post->getId()]['featured_image'] = [
                     [
                         'name' => $post->getFeaturedImage(),
