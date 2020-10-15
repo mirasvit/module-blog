@@ -1,4 +1,13 @@
 # Change Log
+## 1.0.42
+*(2020-09-18)*
+
+#### Fixed
+* Fixed issue with REST compatibility (The PostInterface class doesn't exist and the namespace must be specified) ([#205]())
+
+---
+
+
 ## 1.0.41
 *(2020-07-31)*
 
