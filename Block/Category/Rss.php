@@ -34,6 +34,11 @@ class Rss extends Template
     protected $url;
 
     /**
+     * @var Context
+     */
+    protected $context;
+
+    /**
      * @param PostCollectionFactory $postCollectionFactory
      * @param Config                $config
      * @param Url                   $url
@@ -51,6 +56,7 @@ class Rss extends Template
         $this->config                = $config;
         $this->url                   = $url;
         $this->registry              = $registry;
+        $this->context               = $context;
 
         parent::__construct($context);
     }
@@ -63,6 +69,7 @@ class Rss extends Template
         $collection = $this->postCollectionFactory->create()
             ->addAttributeToSelect('*')
             ->addVisibilityFilter()
+            ->addStoreFilter($this->context->getStoreManager()->getStore()->getId())
             ->setOrder('created_at', 'DESC')
             ->setPageSize(10);
         if ($category = $this->getCategory()) {
