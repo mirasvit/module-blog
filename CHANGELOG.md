@@ -1,4 +1,13 @@
 # Change Log
+## 1.0.43
+*(2020-10-15)*
+
+#### Fixed
+* Fixed issues with posts in RSS ([#209]())
+
+---
+
+
 ## 1.0.42
 *(2020-09-18)*
 
