@@ -208,6 +208,7 @@
                     <item name="resizeEnabled" xsi:type="boolean">false</item>
                     <item name="resizeDefaultWidth" xsi:type="string">55</item>
                     <item name="indexField" xsi:type="string">entity_id</item>
+                    <item name="preserveSelectionsOnFilter" xsi:type="boolean">true</item>
                 </item>
             </argument>
         </selectionsColumn>
