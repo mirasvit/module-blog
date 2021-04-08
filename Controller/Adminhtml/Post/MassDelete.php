@@ -24,14 +24,22 @@ class MassDelete extends Action
 
     public function execute()
     {
-        $collection     = $this->filter->getCollection($this->collectionFactory->create());
+        $selected = $this->getRequest()->getParam('selected');
+
+        if (!$selected) {
+            $this->messageManager->addErrorMessage((string)__('Something went wrong.'));
+        }
+
+        $collection = $this->collectionFactory->create()
+            ->addFieldToFilter('entity_id', ['in' => $selected]);
+
         $collectionSize = $collection->getSize();
 
         foreach ($collection as $item) {
             $item->delete();
         }
 
-        $this->messageManager->addSuccess(__('A total of %1 post(s) have been deleted.', $collectionSize));
+        $this->messageManager->addSuccess((string)__('A total of %1 post(s) have been deleted.', $collectionSize));
 
         /**
          * @var Redirect $resultRedirect
