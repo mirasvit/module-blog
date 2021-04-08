@@ -58,6 +58,9 @@ class Save extends Post
             if (!$data['is_short_content']) {
                 $model->setShortContent('');
             }
+            if (!$data[PostInterface::CREATED_AT]) {
+                $model->setCreatedAt(date('Y-m-d H:i:s'));
+            }
 
             try {
                 if ($this->getRequest()->getParam('isAjax')) {
